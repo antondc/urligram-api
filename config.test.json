@@ -1,0 +1,9 @@
+{
+  "database": {
+    "username": "database_local",
+    "database": "database_local",
+    "password": "database_local",
+    "dialect": "mysql",
+    "host": "127.0.0.1"
+  }
+}
