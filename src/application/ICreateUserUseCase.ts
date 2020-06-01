@@ -1,3 +1,5 @@
+import { ICreateUserDTO } from './ICreateUserDTO';
+
 export interface ICreateUserUseCase {
-  execute: () => void;
+  execute: (createUserDTO: ICreateUserDTO) => void;
 }

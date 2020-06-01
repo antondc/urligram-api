@@ -3,18 +3,16 @@ import http from 'http';
 import { CreateUserController } from 'Adapter/CreateUserController';
 import { CreateUserRepo } from 'Infrastructure/DB/CreateUserRepo';
 import { CreateUserUseCase } from 'Application/CreateUserUseCase';
-import { User } from 'Domain/User';
 import { ICreateUserDTO } from 'Application/ICreateUserDTO';
 
 const app = express();
 
 app.post('/user', (req: Request) => {
-  const userData: ICreateUserDTO = req.body;
-  const user = new User(userData);
+  const createUserDTO: ICreateUserDTO = req.body;
 
-  const userRepo = new CreateUserRepo(user);
-  const createUserUseCase = new CreateUserUseCase(user, userRepo);
-  const createUserController = new CreateUserController(createUserUseCase);
+  const userRepo = new CreateUserRepo();
+  const createUserUseCase = new CreateUserUseCase(userRepo);
+  const createUserController = new CreateUserController(createUserUseCase, createUserDTO);
 
   createUserController.createUser();
 });

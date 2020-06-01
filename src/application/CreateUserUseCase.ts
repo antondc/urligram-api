@@ -1,16 +1,16 @@
 import { User } from 'Domain/User';
 import { ICreateUserRepo } from './ICreateUserRepo';
+import { ICreateUserDTO } from './ICreateUserDTO';
 
 export class CreateUserUseCase {
-  private user: User;
   private createUserRepo: ICreateUserRepo;
 
-  constructor(user: User, createUserRepo: ICreateUserRepo) {
-    this.user = user;
+  constructor(createUserRepo: ICreateUserRepo) {
     this.createUserRepo = createUserRepo;
   }
 
-  public execute() {
-    this.createUserRepo.save(this.user);
+  public execute(createUserDTO: ICreateUserDTO) {
+    const user = new User(createUserDTO);
+    this.createUserRepo.save(user);
   }
 }
