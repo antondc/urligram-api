@@ -4,12 +4,12 @@ import { CreateUserController } from 'Adapter/CreateUserController';
 import { CreateUserRepo } from 'Infrastructure/DB/CreateUserRepo';
 import { CreateUserUseCase } from 'Application/CreateUserUseCase';
 import { User } from 'Domain/User';
-import { IUserDTO } from 'Domain/IUserDTO';
+import { ICreateUserDTO } from 'Application/ICreateUserDTO';
 
 const app = express();
 
 app.post('/user', (req: Request) => {
-  const userData: IUserDTO = req.body;
+  const userData: ICreateUserDTO = req.body;
   const user = new User(userData);
 
   const userRepo = new CreateUserRepo(user);

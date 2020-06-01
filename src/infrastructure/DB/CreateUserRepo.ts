@@ -1,13 +1,13 @@
 import mysql from 'mysql2';
 import { ICreateUserRepo } from 'Application/ICreateUserRepo';
-import { IUser } from 'Domain/IUser';
 import config from 'Root/config.test.json';
+import { User } from 'Domain/User';
 
 export class CreateUserRepo implements ICreateUserRepo {
-  private user: IUser;
+  private user: User;
   mySQL: any;
 
-  constructor(user: IUser) {
+  constructor(user: User) {
     this.user = user;
 
     this.mySQL = mysql.createConnection(config.database);

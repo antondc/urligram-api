@@ -1,11 +1,11 @@
-import { IUser } from 'Domain/IUser';
+import { User } from 'Domain/User';
 import { ICreateUserRepo } from './ICreateUserRepo';
 
 export class CreateUserUseCase {
-  private user: IUser;
+  private user: User;
   private createUserRepo: ICreateUserRepo;
 
-  constructor(user: IUser, createUserRepo: ICreateUserRepo) {
+  constructor(user: User, createUserRepo: ICreateUserRepo) {
     this.user = user;
     this.createUserRepo = createUserRepo;
   }

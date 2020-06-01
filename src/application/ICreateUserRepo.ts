@@ -1,5 +1,5 @@
-import { IUser } from 'Domain/IUser';
+import { ICreateUserDTO } from 'Root/src/application/ICreateUserDTO';
 
 export interface ICreateUserRepo {
-  save: (user: IUser) => void;
+  save: (user: ICreateUserDTO) => void;
 }
