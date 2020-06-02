@@ -1,4 +1,4 @@
-import { User } from 'Domain/User';
+import { User } from '@domain/User';
 import { ICreateUserRepo } from './ICreateUserRepo';
 import { ICreateUserDTO } from './ICreateUserDTO';
 

@@ -1,22 +1,25 @@
+import 'module-alias/register';
 import express, { Request } from 'express';
 import http from 'http';
-import { CreateUserController } from 'Adapter/CreateUserController';
-import { CreateUserRepo } from 'Infrastructure/DB/CreateUserRepo';
-import { CreateUserUseCase } from 'Application/CreateUserUseCase';
-import { ICreateUserDTO } from 'Application/ICreateUserDTO';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import UserController from './Controllers/UserController';
+
+import config from '@root/config.test.json';
 
 const app = express();
 
-app.post('/user', (req: Request) => {
-  const createUserDTO: ICreateUserDTO = req.body;
+// Parsing - - - - - - - - - - - - - - - -
+app.use(bodyParser.urlencoded({ extended: false })); // Parsing application/x-www-form-urlencoded:
 
-  const userRepo = new CreateUserRepo();
-  const createUserUseCase = new CreateUserUseCase(userRepo);
-  const createUserController = new CreateUserController(createUserUseCase, createUserDTO);
+app.use(bodyParser.json()); // Parsing body
+app.use(express.json()); // Parsing JSON
+app.use(express.urlencoded({ extended: false })); // Parsing req.body
+app.use(cookieParser()); // Parsing cookies
+// - - - - - - - - - - - - - - - - - - - -
 
-  createUserController.createUser();
-});
+app.use('/v1/user', UserController);
 
 const server = http.createServer(app);
 
-server.listen(3000);
+server.listen(config[process.env.NODE_ENV].PORT_SERVER);

@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "outDir": "./dist/",
     "allowJs": true,
     "sourceMap": true,
@@ -13,11 +13,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
-      "Root/*": ["./*"],
-      "Infrastructure/*": ["./src/infrastructure/*"],
-      "Domain/*": ["./src/domain/*"],
-      "Application/*": ["./src/application/*"],
-      "Adapter/*": ["./src/adapter/*"]
+      "@root*": ["./*"],
+      "@infrastructure*": ["src/infrastructure/*"],
+      "@domain*": ["src/domain/*"],
+      "@application*": ["src/application/*"],
+      "@adapter*": ["src/adapter/*"]
     }
   },
   "include": ["./src/**/*", "./*"]

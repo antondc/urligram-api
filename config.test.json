@@ -1,9 +1,42 @@
 {
-  "database": {
-    "username": "database_local",
-    "database": "database_local",
-    "password": "database_local",
-    "dialect": "mysql",
-    "host": "127.0.0.1"
-  }
+  "development": {
+    "database": {
+      "user": "test_database",
+      "database": "test_database",
+      "password": "test_database",
+      "dialect": "mysql",
+      "host": "127.0.0.1"
+    },
+    "PORT_SERVER": "4000",
+    "ENDPOINT_CLIENT": "http://0.0.0.0:4000"
+  },
+  "staging": {
+    "database": {
+      "user": "test_database",
+      "database": "test_database",
+      "password": "test_database",
+      "dialect": "mysql",
+      "host": "127.0.0.1"
+    },
+    "PORT_SERVER": "3000",
+    "ENDPOINT_CLIENT": "https://linking-staging.antoniodiaz.me"
+  },
+  "production": {
+    "database": {
+      "user": "test_database",
+      "database": "test_database",
+      "password": "test_database",
+      "dialect": "mysql",
+      "host": "127.0.0.1"
+    },
+    "PORT_SERVER": "12406",
+    "ENDPOINT_CLIENT": "https://linking-production.antoniodiaz.me"
+  },
+  "SECRET": "superSecret",
+  "SESSION_DURATION": 3600,
+  "MEDIA": "media",
+  "MEDIA_FOLDER": "media",
+  "MEDIA_IMAGES": "media/images",
+  "TEMP_FILES": "media/temp_files",
+  "DEFAULT_IMAGE": "/img/default-image.png"
 }

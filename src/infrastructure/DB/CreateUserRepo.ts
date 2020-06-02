@@ -1,13 +1,13 @@
 import mysql from 'mysql2';
-import config from 'Root/config.test.json';
-import { ICreateUserRepo } from 'Application/ICreateUserRepo';
-import { ICreateUserDTO } from 'Root/src/application/ICreateUserDTO';
+import config from '@root/config.test.json';
+import { ICreateUserRepo } from '@application/ICreateUserRepo';
+import { ICreateUserDTO } from '@root/src/application/ICreateUserDTO';
 
 export class CreateUserRepo implements ICreateUserRepo {
   mySQL: mysql;
 
   constructor() {
-    this.mySQL = mysql.createConnection(config.database);
+    this.mySQL = mysql.createConnection(config[process.env.NODE_ENV].database);
   }
 
   public save(createUserDTO: ICreateUserDTO) {

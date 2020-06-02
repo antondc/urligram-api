@@ -1,0 +1,14 @@
+.DS*Store
+.DS_Store?
+.*_
+.Spotlight-V100
+.Trashes
+yarn.lock
+package-lock.json
+node_modules
+ehthumbs.db
+Thumbs.db
+media/*
+dist/*
+__snapshots__
+node_modules

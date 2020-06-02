@@ -4,14 +4,33 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently \"npm run build:dev\" \"npm run run:dev\" ",
+    "build": "tsc",
+    "build:dev": "tsc --watch",
+    "run:dev": "env NODE_ENV=development nodemon dist/src/infrastructure/http/http.js",
+    "run:stage": "env NODE_ENV=staging node dist/src/infrastructure/http/http.js",
+    "run:prod": "env NODE_ENV=production node dist/src/infrastructure/http/http.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.17.6",
     "@types/node": "^14.0.6",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "http": "0.0.1-security",
-    "mysql2": "^2.1.0"
+    "module-alias": "^2.2.2",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.4",
+    "typescript": "^3.9.3"
+  },
+  "_moduleAliases": {
+    "@root": "dist",
+    "@infrastructure": "dist/infrastructure",
+    "@domain": "dist/domain",
+    "@application": "dist/application",
+    "@adapter": "dist/adapter"
   }
 }
