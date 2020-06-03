@@ -138,6 +138,9 @@ BEGIN
     JSON_UNQUOTE(@name),
     JSON_UNQUOTE(@surname)
   );
+  SET @last_user = LAST_INSERT_ID();
+  SELECT * FROM user
+  WHERE id = @last_user;
 END $$
 DELIMITER ;
 
