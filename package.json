@@ -1,8 +1,13 @@
 {
-  "name": "clean-test",
+  "name": "clean-architecture-node-api-starter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Clean Architecture API starter kit",
   "main": "src/infrastructure/http/http.ts",
+  "keywords": [
+    "node",
+    "clean-architecture",
+    "api"
+  ],
   "scripts": {
     "dev": "concurrently \"npm run build:dev\" \"npm run run:dev\" ",
     "build": "tsc",
@@ -11,7 +16,7 @@
     "run:stage": "env NODE_ENV=staging node dist/src/infrastructure/http/http.js",
     "run:prod": "env NODE_ENV=production node dist/src/infrastructure/http/http.js"
   },
-  "author": "",
+  "author": "Antonio Díaz",
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.6",
@@ -22,7 +27,7 @@
     "express": "^4.17.1",
     "http": "0.0.1-security",
     "module-alias": "^2.2.2",
-    "mysql2": "^2.1.0",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
     "typescript": "^3.9.3"
   },

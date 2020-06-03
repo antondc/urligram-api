@@ -9,8 +9,11 @@ export class CreateUserUseCase {
     this.createUserRepo = createUserRepo;
   }
 
-  public execute(createUserDTO: ICreateUserDTO) {
-    const user = new User(createUserDTO);
-    this.createUserRepo.save(user);
+  public async execute(createUserDTO: ICreateUserDTO) {
+    const user = await new User(createUserDTO);
+
+    const response = await this.createUserRepo.save(user);
+
+    return response;
   }
 }

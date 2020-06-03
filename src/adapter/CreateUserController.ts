@@ -10,7 +10,9 @@ export class CreateUserController {
     this.createUserUseCase = createUserUseCase;
   }
 
-  createUser() {
-    this.createUserUseCase.execute(this.createUserDTO);
+  async createUser() {
+    const response = await this.createUserUseCase.execute(this.createUserDTO);
+
+    return response;
   }
 }
