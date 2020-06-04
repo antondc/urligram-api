@@ -3,7 +3,8 @@ import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import UserController from '@infrastructure/http/routes/User';
+import User from '@infrastructure/http/routes/User';
+import ResetContent from '@root/src/infrastructure/http/routes/ResetContent';
 import config from '@root/config.test.json';
 
 const app = express();
@@ -21,7 +22,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 /* - - - - - - - Parsing - - - - - - - - - */
 
-app.use('/v1/user', UserController);
+app.use('/v1/user', User);
+app.use('/v1/reset-content', ResetContent);
 
 const server = http.createServer(app);
 

@@ -9,7 +9,8 @@
     "api"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run build:dev\" \"npm run run:dev\" ",
+    "dev": "concurrently \"npm run build:dev\" \"npm run copy:sql\" \"npm run run:dev\" ",
+    "copy:sql": "rsync -a --prune-empty-dirs --exclude 'dist/*' --include '*/' --include '*.sql' --exclude '*' ./ ./dist/",
     "build": "tsc",
     "build:dev": "tsc --watch",
     "run:dev": "env NODE_ENV=development nodemon dist/src/infrastructure/http/http.js",
