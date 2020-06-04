@@ -3,7 +3,7 @@ import { ICreateUserDTO } from '@root/src/application/ICreateUserDTO';
 import { MySQL } from '@infrastructure/services/MySQL';
 
 export class CreateUserRepo implements ICreateUserRepo {
-  private mySQL;
+  private mySQL: MySQL;
 
   constructor() {
     this.mySQL = new MySQL();
