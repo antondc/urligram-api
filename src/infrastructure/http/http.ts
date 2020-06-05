@@ -3,8 +3,8 @@ import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import User from '@root/src/infrastructure/http/routes/CreateUser';
-import ResetContent from '@root/src/infrastructure/http/routes/ResetContent';
+import User from '@root/src/infrastructure/http/controllers/CreateUser';
+import ResetContent from '@root/src/infrastructure/http/controllers/ResetContent';
 import config from '@root/config.test.json';
 
 const app = express();
