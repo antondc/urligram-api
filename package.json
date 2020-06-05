@@ -2,20 +2,22 @@
   "name": "clean-architecture-node-api-starter",
   "version": "1.0.0",
   "description": "Clean Architecture API starter kit",
-  "main": "src/infrastructure/http/http.ts",
   "keywords": [
     "node",
     "clean-architecture",
     "api"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run build:dev\" \"npm run copy:sql\" \"npm run run:dev\" ",
+    "http:dev": "concurrently \"npm run build:dev\" \"npm run copy:sql\" \"npm run run:http:dev\" ",
+    "cli:dev": "concurrently --raw --kill-others \"npm run build:dev\" \"npm run run:cli:dev\" ",
     "copy:sql": "rsync -a --prune-empty-dirs --exclude 'dist/*' --include '*/' --include '*.sql' --exclude '*' ./ ./dist/",
     "build": "tsc",
     "build:dev": "tsc --watch",
-    "run:dev": "env NODE_ENV=development nodemon dist/src/infrastructure/http/http.js",
-    "run:stage": "env NODE_ENV=staging node dist/src/infrastructure/http/http.js",
-    "run:prod": "env NODE_ENV=production node dist/src/infrastructure/http/http.js"
+    "run:http:dev": "env NODE_ENV=development nodemon --inspect dist/src/infrastructure/http/http.js",
+    "run:http:stage": "env NODE_ENV=staging node dist/src/infrastructure/http/http.js",
+    "run:http:prod": "env NODE_ENV=production node dist/src/infrastructure/http/http.js",
+    "run:cli:dev": "env NODE_ENV=production nodemon --inspect dist/src/infrastructure/cli/cli.js",
+    "run:cli:prod": "env NODE_ENV=production node dist/src/infrastructure/cli/cli.js"
   },
   "author": "Antonio Díaz",
   "license": "ISC",
@@ -26,10 +28,12 @@
     "concurrently": "^5.2.0",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
+    "figlet": "^1.4.0",
     "http": "0.0.1-security",
     "module-alias": "^2.2.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
+    "prompt": "^1.0.0",
     "typescript": "^3.9.3"
   },
   "_moduleAliases": {
