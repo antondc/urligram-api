@@ -1,4 +1,4 @@
-import { ResetContentController } from '@adapter/ResetContentController';
+import { ResetContentAdapter } from '@root/src/adapter/ResetContentAdapter';
 import { ResetContentRepo } from '@infrastructure/persistence/mySQL/repositories/ResetContentRepo';
 import { ResetContentUseCase } from '@application/ResetContentUseCase';
 
@@ -6,9 +6,9 @@ export class ResetContent {
   async execute() {
     const resetContentRepo = new ResetContentRepo();
     const resetContentUseCase = new ResetContentUseCase(resetContentRepo);
-    const resetContentController = new ResetContentController(resetContentUseCase);
+    const resetContentAdapter = new ResetContentAdapter(resetContentUseCase);
 
-    const response = await resetContentController.resetContent();
+    const response = await resetContentAdapter.resetContent();
 
     return response;
   }

@@ -1,4 +1,4 @@
-import { CreateUserController } from '@adapter/CreateUserController';
+import { CreateUserAdapter } from '@root/src/adapter/CreateUserAdapter';
 import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
 import { CreateUserUseCase } from '@application/CreateUserUseCase';
 import { ICreateUserDTO } from '@application/ICreateUserDTO';
@@ -13,9 +13,9 @@ export class CreateUser {
   async execute() {
     const userRepo = new CreateUserRepo();
     const createUserUseCase = new CreateUserUseCase(userRepo);
-    const createUserController = new CreateUserController(createUserUseCase, this.createUserDTO);
+    const createUserAdapter = new CreateUserAdapter(createUserUseCase, this.createUserDTO);
 
-    const response = await createUserController.createUser();
+    const response = await createUserAdapter.createUser();
 
     return response;
   }

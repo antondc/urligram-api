@@ -1,7 +1,7 @@
 import { ICreateUserUseCase } from '@application/ICreateUserUseCase';
 import { ICreateUserDTO } from '@application/ICreateUserDTO';
 
-export class CreateUserController {
+export class CreateUserAdapter {
   createUserUseCase: ICreateUserUseCase;
   createUserDTO: ICreateUserDTO;
 
