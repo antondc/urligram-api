@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { ResetContentController } from '@adapter/ResetContentController';
-import { ResetContentRepo } from '@infrastructure/http/repositories/ResetContentRepo';
+import { ResetContentRepo } from '@infrastructure/persistence/mySQL/repositories/ResetContentRepo';
 import { ResetContentUseCase } from '@application/ResetContentUseCase';
 
 const router = express.Router();

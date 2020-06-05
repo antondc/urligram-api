@@ -1,6 +1,6 @@
 import { ICreateUserRepo } from '@application/ICreateUserRepo';
 import { ICreateUserDTO } from '@root/src/application/ICreateUserDTO';
-import { MySQL } from '@infrastructure/services/MySQL';
+import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 
 export class CreateUserRepo implements ICreateUserRepo {
   private mySQL: MySQL;
