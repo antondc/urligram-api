@@ -9,6 +9,7 @@ import cors from 'cors';
 import HealthCheckController from '@infrastructure/http/controllers/HealthCheckController';
 import CreateUserController from '@infrastructure/http/controllers/CreateUserController';
 import ResetContentController from '@infrastructure/http/controllers/ResetContentController';
+import LoginController from '@infrastructure/http/controllers/LoginController';
 import config from '@root/config.test.json';
 
 const app = express();
@@ -49,7 +50,7 @@ app.use(logger('dev'));
 // '*' [GET:/*] + [POST:'/v1/login'] are public; [POST], [PUT] and [DELETE] need valid token.
 // app.use('*', FilterRequestsController);
 app.use('/v1/health-check', HealthCheckController);
-// app.use('/v1/login', LoginController);
+app.use('/v1/login', LoginController);
 app.use('/v1/user', CreateUserController);
 app.use('/v1/reset-content', ResetContentController);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

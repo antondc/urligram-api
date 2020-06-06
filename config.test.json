@@ -1,9 +1,9 @@
 {
   "development": {
     "database": {
-      "user": "test_database",
-      "database": "test_database",
-      "password": "test_database",
+      "user": "user_linking_local",
+      "database": "db_linking_local",
+      "password": "o0IApFBrADXajxwd",
       "dialect": "mysql",
       "host": "127.0.0.1"
     },
@@ -13,9 +13,9 @@
   },
   "staging": {
     "database": {
-      "user": "test_database",
-      "database": "test_database",
-      "password": "test_database",
+      "user": "user_linking_local",
+      "database": "db_linking_local",
+      "password": "o0IApFBrADXajxwd",
       "dialect": "mysql",
       "host": "127.0.0.1"
     },
@@ -25,9 +25,9 @@
   },
   "production": {
     "database": {
-      "user": "test_database",
-      "database": "test_database",
-      "password": "test_database",
+      "user": "user_linking_local",
+      "database": "db_linking_local",
+      "password": "o0IApFBrADXajxwd",
       "dialect": "mysql",
       "host": "127.0.0.1"
     },
