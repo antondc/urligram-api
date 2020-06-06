@@ -12,9 +12,9 @@ export class User {
     this.loginUserRepo = loginUserRepo;
   }
 
-  async authenticate(loginUserDTO: ILoginUserDTO) {
-    const response = await this.loginUserRepo.authenticateUser(loginUserDTO);
+  async authenticate(loginUserDTORequest: ILoginUserDTO) {
+    const user = await this.loginUserRepo.authenticateUser(loginUserDTORequest);
 
-    return response;
+    return user;
   }
 }

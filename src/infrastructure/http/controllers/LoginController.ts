@@ -1,10 +1,9 @@
 import express, { Request, Response } from 'express';
-import { CreateUserAdapter } from '@adapter/CreateUserAdapter';
 import { LoginUserRepo } from '@infrastructure/persistence/mySQL/repositories/LoginUserRepo';
 import { ILoginUserDTO } from '@domain/ILoginUserDTO';
-import { User } from '@domain/User';
 import { LoginUserAdapter } from '@adapter/LoginUserAdapter';
 import { LoginUserUseCase } from '@application/LoginUserUseCase';
+import { TokenCreator } from '@infrastructure/services/TokenCreator';
 
 const router = express.Router();
 
@@ -15,9 +14,25 @@ router.post('/', async (req: Request, res: Response) => {
   const loginUserUseCase = new LoginUserUseCase(userRepo);
   const loginUserAdapter = new LoginUserAdapter(loginUserUseCase, loginUserDTO);
 
-  const response = await loginUserAdapter.authenticate();
+  const [[user]] = await loginUserAdapter.authenticate();
 
-  return res.status(200).send(response);
+  if (!user) res.status(403).send('Logged failed').end();
+
+  const tokenCreator = new TokenCreator();
+  const token = tokenCreator.createToken(user);
+
+  return res
+    .cookie('sessionToken', token, {
+      maxAge: 900000,
+      httpOnly: true,
+      path: '/',
+    })
+    .json({ user })
+    .end();
+});
+
+router.delete('/', function (req, res, next) {
+  res.clearCookie('sessionToken', { path: '/' }).status(200).send('Cookie cleared').end();
 });
 
 export default router;

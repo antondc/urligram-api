@@ -9,7 +9,7 @@
     },
     "PORT_SERVER": "4000",
     "ENDPOINT_CLIENT": "http://0.0.0.0:4000",
-    "SECRET": "secret"
+    "SECRET": "superSecret"
   },
   "staging": {
     "database": {
@@ -21,7 +21,7 @@
     },
     "PORT_SERVER": "3000",
     "ENDPOINT_CLIENT": "https://linking-staging.antoniodiaz.me",
-    "SECRET": "secret"
+    "SECRET": "superSecret"
   },
   "production": {
     "database": {
@@ -33,7 +33,7 @@
     },
     "PORT_SERVER": "12406",
     "ENDPOINT_CLIENT": "https://linking-production.antoniodiaz.me",
-    "SECRET": "secret"
+    "SECRET": "superSecret"
   },
   "SESSION_DURATION": 3600,
   "MEDIA": "media",

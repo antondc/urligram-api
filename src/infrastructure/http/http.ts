@@ -1,7 +1,8 @@
 import 'module-alias/register';
 import express from 'express';
 import http from 'http';
-// import passport from 'passport';
+import passport from 'passport';
+import { PassportLocalStrategy } from './middlewares/PassportLocalStrategy';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
@@ -43,7 +44,7 @@ app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - Loggers - - - - - - - - - - - - - */
-// passport.use(PassportStrategy);
+// passport.use(PassportLocalStrategy);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
