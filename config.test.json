@@ -7,7 +7,7 @@
       "dialect": "mysql",
       "host": "127.0.0.1"
     },
-    "PORT_SERVER": "4000",
+    "PORT_SERVER": "3000",
     "ENDPOINT_CLIENT": "http://0.0.0.0:4000",
     "SECRET": "superSecret"
   },

@@ -15,7 +15,7 @@ import LoginController from '@infrastructure/http/controllers/LoginController';
 const app = express();
 
 /* - - - - - - - - - - - Cors - - - - - - - - - - - - - - */
-app.use(cors({ credentials: true, origin: process.env.URL_CLIENT }));
+app.use(cors({ credentials: true, origin: config[process.env.NODE_ENV].ENDPOINT_CLIENT }));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 /* - - - - - - - - - - - Static - - - - - - - - - - - - - */
