@@ -1,9 +1,9 @@
 import 'module-alias/register';
 import figlet from 'figlet';
 import prompts from 'prompts';
-import { ResetContent } from '@root/src/infrastructure/cli/controllers/ResetContentController';
-import { CreateUser } from '@root/src/infrastructure/cli/controllers/CreateUserController';
-import { HealthCheck } from '@root/src/infrastructure/cli/controllers/HealthCheckController';
+import { ResetContent } from '@infrastructure/cli/controllers/ResetContentController';
+import { CreateUser } from '@infrastructure/cli/controllers/CreateUserController';
+import { HealthCheck } from '@infrastructure/cli/controllers/HealthCheckController';
 
 console.log(figlet.textSync('clean test app'));
 

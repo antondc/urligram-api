@@ -1,14 +1,15 @@
 import 'module-alias/register';
 import express from 'express';
 import http from 'http';
+// import passport from 'passport';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import HealthCheck from '@root/src/infrastructure/http/controllers/HealthCheckController';
-import User from '@root/src/infrastructure/http/controllers/CreateUserController';
-import ResetContent from '@root/src/infrastructure/http/controllers/ResetContentController';
-import config from '@root/config.test.json';
 import logger from 'morgan';
 import cors from 'cors';
+import HealthCheckController from '@infrastructure/http/controllers/HealthCheckController';
+import CreateUserController from '@infrastructure/http/controllers/CreateUserController';
+import ResetContentController from '@infrastructure/http/controllers/ResetContentController';
+import config from '@root/config.test.json';
 
 const app = express();
 
@@ -40,10 +41,17 @@ app.use(cookieParser());
 app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+/* - - - - - - - - - - - Loggers - - - - - - - - - - - - - */
+// passport.use(PassportStrategy);
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
-app.use('/v1/health-check', HealthCheck);
-app.use('/v1/user', User);
-app.use('/v1/reset-content', ResetContent);
+// '*' [GET:/*] + [POST:'/v1/login'] are public; [POST], [PUT] and [DELETE] need valid token.
+// app.use('*', FilterRequestsController);
+app.use('/v1/health-check', HealthCheckController);
+// app.use('/v1/login', LoginController);
+app.use('/v1/user', CreateUserController);
+app.use('/v1/reset-content', ResetContentController);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - Errors - - - - - - - - - - - - - -*/
