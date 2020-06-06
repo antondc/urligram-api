@@ -3,7 +3,7 @@ import { LoginUserRepo } from '@infrastructure/persistence/mySQL/repositories/Lo
 import { ILoginUserDTO } from '@domain/ILoginUserDTO';
 import { LoginUserAdapter } from '@adapter/LoginUserAdapter';
 import { LoginUserUseCase } from '@application/LoginUserUseCase';
-import { TokenCreator } from '@infrastructure/services/TokenCreator';
+import { TokenService } from '@infrastructure/services/TokenService';
 
 const router = express.Router();
 
@@ -18,8 +18,8 @@ router.post('/', async (req: Request, res: Response) => {
 
   if (!user) res.status(403).send('Logged failed').end();
 
-  const tokenCreator = new TokenCreator();
-  const token = tokenCreator.createToken(user);
+  const tokenService = new TokenService();
+  const token = tokenService.createToken(user);
 
   return res
     .cookie('sessionToken', token, {
@@ -32,7 +32,7 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 router.delete('/', function (req, res, next) {
-  res.clearCookie('sessionToken', { path: '/' }).status(200).send('Cookie cleared').end();
+  res.clearCookie('sessionToken', { path: '/' }).status(205).send('205 RESET CONTENT').end();
 });
 
 export default router;
