@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { ResetContentAdapter } from '@root/src/adapter/ResetContentAdapter';
+import { ResetContentAdapter } from '@adapter/ResetContentAdapter';
 import { ResetContentRepo } from '@infrastructure/persistence/mySQL/repositories/ResetContentRepo';
 import { ResetContentUseCase } from '@application/ResetContentUseCase';
 

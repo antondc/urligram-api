@@ -3,6 +3,7 @@ import figlet from 'figlet';
 import prompts from 'prompts';
 import { ResetContent } from '@infrastructure/cli/controllers/ResetContent';
 import { CreateUser } from '@infrastructure/cli/controllers/CreateUser';
+import { HealthCheck } from '@infrastructure/cli/controllers/HealthCheck';
 import { exec } from 'child_process';
 
 console.log(figlet.textSync('clean test app'));
@@ -14,11 +15,23 @@ const main = async () => {
       name: 'actions',
       message: 'Which action should I take',
       choices: [
+        { title: 'Health check', value: 'healthCheck' },
         { title: 'Reset database', value: 'reset' },
         { title: 'Insert user', value: 'insertUser' },
       ],
     },
   ]);
+
+  if (actions.includes('healthCheck')) {
+    try {
+      const healthCheck = new HealthCheck();
+      const response = await healthCheck.execute();
+      await console.log('System healthy');
+      await console.log(JSON.stringify(response, null, 4));
+    } catch (err) {
+      await console.log('There was an error checking health');
+    }
+  }
 
   if (actions.includes('reset')) {
     try {

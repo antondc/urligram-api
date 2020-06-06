@@ -1,4 +1,4 @@
-import { CreateUserAdapter } from '@root/src/adapter/CreateUserAdapter';
+import { CreateUserAdapter } from '@adapter/CreateUserAdapter';
 import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
 import { CreateUserUseCase } from '@application/CreateUserUseCase';
 import { ICreateUserDTO } from '@application/ICreateUserDTO';
