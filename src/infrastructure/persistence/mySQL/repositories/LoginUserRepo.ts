@@ -9,9 +9,9 @@ export class LoginUserRepo implements ILoginUserRepo {
     this.mySQL = new MySQL();
   }
 
-  public async authenticateUser(loginUserDTO: ILoginUserDTO) {
+  public async authenticateUser(loginUserDTO: ILoginUserDTO): Promise<ILoginUserDTO> {
     const authenticateUserQuery = `CALL authenticate_user('${JSON.stringify(loginUserDTO)}')`;
-    const results = await this.mySQL.query(authenticateUserQuery);
+    const [[results]] = await this.mySQL.query(authenticateUserQuery);
 
     return results;
   }
