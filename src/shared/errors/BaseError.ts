@@ -8,5 +8,6 @@ export class BaseError extends Error {
     this.message = message;
     this.category = category;
     this.statusCode = statusCode;
+    Object.setPrototypeOf(this, BaseError.prototype);
   }
 }

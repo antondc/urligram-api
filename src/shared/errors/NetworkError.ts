@@ -13,5 +13,6 @@ export class NetWorkError extends BaseError {
     this.status = status;
     this.category = 'Network Error';
     this.error = error;
+    Object.setPrototypeOf(this, NetWorkError.prototype);
   }
 }

@@ -33,7 +33,7 @@
       "dialect": "mysql",
       "host": "127.0.0.1"
     },
-    "PORT_SERVER": "12406",
+    "PORT_SERVER": "3000",
     "ENDPOINT_CLIENT": "https://linking-production.antoniodiaz.me",
     "SECRET": "superSecret",
     "LOGGING": false

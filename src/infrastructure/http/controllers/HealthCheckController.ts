@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import { HealthCheckAdapter } from '@adapter/HealthCheckAdapter';
 import { HealthCheckRepo } from '@infrastructure/persistence/mySQL/repositories/HealthCheckRepo';
 import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
-import { nextTick } from 'process';
 
 const router = express.Router();
 

@@ -11,5 +11,6 @@ export class RequestError extends BaseError {
     this.message = message;
     this.statusCode = statusCode;
     this.category = 'Response Error';
+    Object.setPrototypeOf(this, RequestError.prototype);
   }
 }

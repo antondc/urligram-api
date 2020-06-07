@@ -13,5 +13,6 @@ export class AuthenticationError extends BaseError {
     this.statusCode = statusCode;
     this.category = 'Authentication Error';
     this.error = error;
+    Object.setPrototypeOf(this, AuthenticationError.prototype);
   }
 }
