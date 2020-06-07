@@ -1,6 +1,6 @@
-import { User } from '@domain/User';
-import { ICreateUserRepo } from './ICreateUserRepo';
-import { ICreateUserDTO } from './ICreateUserDTO';
+import { User } from '@domain/user/entities/User';
+import { ICreateUserRepo } from '../repositories/ICreateUserRepo';
+import { ICreateUserDTO } from '../dto/ICreateUserDTO';
 
 export class CreateUserUseCase {
   private createUserRepo: ICreateUserRepo;

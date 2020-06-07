@@ -1,5 +1,5 @@
-import { ICreateUserUseCase } from '@application/ICreateUserUseCase';
-import { ICreateUserDTO } from '@application/ICreateUserDTO';
+import { ICreateUserUseCase } from '@domain/user/useCases/ICreateUserUseCase';
+import { ICreateUserDTO } from '@domain/user/dto/ICreateUserDTO';
 
 export class CreateUserAdapter {
   createUserUseCase: ICreateUserUseCase;

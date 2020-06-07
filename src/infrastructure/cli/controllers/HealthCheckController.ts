@@ -1,6 +1,6 @@
 import { HealthCheckAdapter } from '@adapter/HealthCheckAdapter';
 import { HealthCheckRepo } from '@infrastructure/persistence/mySQL/repositories/HealthCheckRepo';
-import { HealthCheckUseCase } from '@application/HealthCheckUseCase';
+import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 
 export class HealthCheck {
   async execute() {

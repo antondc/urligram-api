@@ -1,4 +1,4 @@
-import { IHealthCheckUseCase } from '@application/IHealthCheckUseCase';
+import { IHealthCheckUseCase } from '@domain/persistence/useCases/IHealthCheckUseCase';
 
 export class HealthCheckAdapter {
   healthCheckUseCase: IHealthCheckUseCase;

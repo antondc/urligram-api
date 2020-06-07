@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import { LoginUserRepo } from '@infrastructure/persistence/mySQL/repositories/LoginUserRepo';
-import { ILoginUserDTO } from '@domain/ILoginUserDTO';
+import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
 import { LoginUserAdapter } from '@adapter/LoginUserAdapter';
-import { LoginUserUseCase } from '@application/LoginUserUseCase';
+import { LoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
 
 const router = express.Router();

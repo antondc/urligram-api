@@ -1,4 +1,4 @@
-import { IResetContentRepo } from './IResetContentRepo';
+import { IResetContentRepo } from '../repositories/IResetContentRepo';
 
 export class ResetContentUseCase {
   private resetContentRepo: IResetContentRepo;

@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { ResetContentAdapter } from '@adapter/ResetContentAdapter';
 import { ResetContentRepo } from '@infrastructure/persistence/mySQL/repositories/ResetContentRepo';
-import { ResetContentUseCase } from '@application/ResetContentUseCase';
+import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
 
 const router = express.Router();
 

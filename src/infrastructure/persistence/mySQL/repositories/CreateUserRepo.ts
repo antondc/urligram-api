@@ -1,5 +1,5 @@
-import { ICreateUserRepo } from '@application/ICreateUserRepo';
-import { ICreateUserDTO } from '@application/ICreateUserDTO';
+import { ICreateUserRepo } from '@domain/user/repositories/ICreateUserRepo';
+import { ICreateUserDTO } from '@domain/user/dto/ICreateUserDTO';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 
 export class CreateUserRepo implements ICreateUserRepo {

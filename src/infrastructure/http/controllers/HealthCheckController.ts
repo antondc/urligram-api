@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { HealthCheckAdapter } from '@adapter/HealthCheckAdapter';
 import { HealthCheckRepo } from '@infrastructure/persistence/mySQL/repositories/HealthCheckRepo';
-import { HealthCheckUseCase } from '@application/HealthCheckUseCase';
+import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 
 const router = express.Router();
 

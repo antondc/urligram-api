@@ -41,7 +41,6 @@
   "_moduleAliases": {
     "@infrastructure": "dist/src/infrastructure",
     "@domain": "dist/src/domain",
-    "@application": "dist/src/application",
     "@adapter": "dist/src/adapter",
     "@root": "dist"
   }

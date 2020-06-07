@@ -1,4 +1,4 @@
-import { IHealthCheckRepo } from './IHealthCheckRepo';
+import { IHealthCheckRepo } from '../repositories/IHealthCheckRepo';
 
 export class HealthCheckUseCase {
   private healthCheckRepo: IHealthCheckRepo;

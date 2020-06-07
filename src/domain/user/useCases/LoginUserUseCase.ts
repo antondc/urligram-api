@@ -1,6 +1,6 @@
-import { User } from '@domain/User';
-import { ILoginUserDTO } from '@domain/ILoginUserDTO';
-import { ILoginUserRepo } from './ILoginUserRepo';
+import { User } from '@domain/user/entities/User';
+import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
+import { ILoginUserRepo } from '../repositories/ILoginUserRepo';
 
 export class LoginUserUseCase {
   loginUserRepo: ILoginUserRepo;

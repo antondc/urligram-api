@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import { CreateUserAdapter } from '@adapter/CreateUserAdapter';
 import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
-import { CreateUserUseCase } from '@application/CreateUserUseCase';
-import { ICreateUserDTO } from '@application/ICreateUserDTO';
+import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
+import { ICreateUserDTO } from '@domain/user/dto/ICreateUserDTO';
 
 const router = express.Router();
 

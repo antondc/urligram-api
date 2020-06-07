@@ -1,5 +1,5 @@
-import { ILoginUserRepo } from '@application/ILoginUserRepo';
-import { ILoginUserDTO } from '@domain/ILoginUserDTO';
+import { ILoginUserRepo } from '@domain/user/repositories/ILoginUserRepo';
+import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
 
 export interface IUser {
   name: string;
