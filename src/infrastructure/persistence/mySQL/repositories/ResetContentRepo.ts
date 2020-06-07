@@ -5,6 +5,7 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 export class ResetContentRepo {
   private mySQL: MySQL;
   private dropAllTables: string;
+  private debugMessages: string;
   private user: string;
   private userData: string;
   private post: string;
@@ -13,6 +14,7 @@ export class ResetContentRepo {
   private tagData: string;
   private postTag: string;
   private postTagData: string;
+  private debuggerProcedure: string;
   private authenticateUserProcedure: string;
   private insertUserProcedure: string;
   private insertPostProcedure: string;
@@ -23,10 +25,14 @@ export class ResetContentRepo {
     this.dropAllTables = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/dropAllTables.sql'))
       .toString();
+    this.debugMessages = fs.readFileSync(path.resolve(__dirname, '../sql/models/debugMessages.sql')).toString();
     this.user = fs.readFileSync(path.resolve(__dirname, '../sql/models/user.sql')).toString();
     this.post = fs.readFileSync(path.resolve(__dirname, '../sql/models/post.sql')).toString();
     this.tag = fs.readFileSync(path.resolve(__dirname, '../sql/models/tag.sql')).toString();
     this.postTag = fs.readFileSync(path.resolve(__dirname, '../sql/models/postTag.sql')).toString();
+    this.debuggerProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql'))
+      .toString();
     this.authenticateUserProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/authenticateUser.sql'))
       .toString();
@@ -49,8 +55,12 @@ export class ResetContentRepo {
     try {
       this.mySQL.beginTransaction();
 
+      // Drop all tables
       const createDropAllTables = await this.mySQL.query(this.dropAllTables);
       const dropAllTables = await this.mySQL.query(`CALL drop_all_tables()`);
+
+      // Create tables
+      const createDebuggerTable = await this.mySQL.query(this.debugMessages);
       const createUserTable = await this.mySQL.query(this.user);
       const insertUserData = await this.mySQL.query(this.userData);
       const createPostTable = await this.mySQL.query(this.post);
@@ -59,6 +69,9 @@ export class ResetContentRepo {
       const insertTagData = await this.mySQL.query(this.tagData);
       const createPostTagTable = await this.mySQL.query(this.postTag);
       const insertPostTagData = await this.mySQL.query(this.postTagData);
+      
+      // Create procedures
+      const createDebuggerProcedure = await this.mySQL.query(this.debuggerProcedure);
       const createAuthenticateUserProcedure = await this.mySQL.query(this.authenticateUserProcedure);
       const createInsertUserProcedure = await this.mySQL.query(this.insertUserProcedure);
       const createInsertPostProcedure = await this.mySQL.query(this.insertPostProcedure);
@@ -68,6 +81,7 @@ export class ResetContentRepo {
 
       return {
         ...createDropAllTables,
+        ...createDebuggerTable,
         ...dropAllTables,
         ...createUserTable,
         ...insertUserData,
@@ -77,6 +91,8 @@ export class ResetContentRepo {
         ...insertTagData,
         ...createPostTagTable,
         ...insertPostTagData,
+        ...createDebuggerProcedure,
+        ...createAuthenticateUserProcedure,
         ...createInsertUserProcedure,
         ...createInsertPostProcedure,
         ...createSelectAllPostsProcedure,

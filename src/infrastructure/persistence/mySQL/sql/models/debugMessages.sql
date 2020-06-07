@@ -1,0 +1,6 @@
+CREATE TABLE _debug_messages (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `message` VARCHAR(45) NULL,
+  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);

@@ -1,7 +1,7 @@
 import { TokenService } from '@infrastructure/services/TokenService';
 
 export const FilterAllRequestsController = (req, res, next) => {
-  if (req.method === 'GET' || req.baseUrl === '/v1/login') {
+  if (req.method === 'GET' || req.baseUrl === '/v1/login' || req.baseUrl === '/v1/reset-content') {
     return next();
   }
 
