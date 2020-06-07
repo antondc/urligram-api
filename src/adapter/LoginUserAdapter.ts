@@ -10,7 +10,7 @@ export class LoginUserAdapter {
     this.loginUserUseCase = loginUserUseCase;
   }
 
-  async authenticate() {
+  async authenticate(): Promise<ILoginUserDTO> {
     const response = await this.loginUserUseCase.execute(this.loginUserDTO);
 
     return response;

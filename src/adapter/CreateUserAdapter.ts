@@ -10,7 +10,7 @@ export class CreateUserAdapter {
     this.createUserUseCase = createUserUseCase;
   }
 
-  async createUser() {
+  async createUser(): Promise<ICreateUserDTO> {
     const response = await this.createUserUseCase.execute(this.createUserDTO);
 
     return response;

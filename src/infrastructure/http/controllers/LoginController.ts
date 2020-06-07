@@ -14,7 +14,7 @@ router.post('/', async (req: Request, res: Response) => {
   const loginUserUseCase = new LoginUserUseCase(userRepo);
   const loginUserAdapter = new LoginUserAdapter(loginUserUseCase, loginUserDTO);
 
-  const [[user]] = await loginUserAdapter.authenticate();
+  const user = await loginUserAdapter.authenticate();
 
   if (!user) res.status(403).send('Logged failed').end();
 

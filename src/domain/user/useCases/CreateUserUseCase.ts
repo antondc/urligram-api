@@ -3,7 +3,7 @@ import { ICreateUserRepo } from '../repositories/ICreateUserRepo';
 import { ICreateUserDTO } from '../dto/ICreateUserDTO';
 
 export interface ICreateUserUseCase {
-  execute: (createUserDTO: ICreateUserDTO) => void;
+  execute: (createUserDTO: ICreateUserDTO) => Promise<ICreateUserDTO>;
 }
 
 export class CreateUserUseCase {
@@ -13,7 +13,7 @@ export class CreateUserUseCase {
     this.createUserRepo = createUserRepo;
   }
 
-  public async execute(createUserDTO: ICreateUserDTO) {
+  public async execute(createUserDTO: ICreateUserDTO): Promise<ICreateUserDTO> {
     const user = await new User(createUserDTO);
 
     const response = await this.createUserRepo.save(user);

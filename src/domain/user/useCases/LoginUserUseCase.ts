@@ -3,7 +3,7 @@ import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
 import { ILoginUserRepo } from '../repositories/ILoginUserRepo';
 
 export interface ILoginUserUseCase {
-  execute: (loginUserDTO: ILoginUserDTO) => Promise<[[ILoginUserDTO]]>;
+  execute: (loginUserDTO: ILoginUserDTO) => Promise<ILoginUserDTO>;
 }
 
 export class LoginUserUseCase {
@@ -13,7 +13,7 @@ export class LoginUserUseCase {
     this.loginUserRepo = loginUserRepo;
   }
 
-  public async execute(loginUserDTO: ILoginUserDTO) {
+  public async execute(loginUserDTO: ILoginUserDTO): Promise<ILoginUserDTO> {
     const user = await new User(undefined, this.loginUserRepo);
 
     const response = await user.authenticate(loginUserDTO);
