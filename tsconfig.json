@@ -13,11 +13,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
-      "@root/*": ["./*"],
       "@infrastructure/*": ["src/infrastructure/*"],
       "@domain/*": ["src/domain/*"],
       "@application/*": ["src/application/*"],
-      "@adapter/*": ["src/adapter/*"]
+      "@adapter/*": ["src/adapter/*"],
+      "@root/*": ["./*"]
     }
   },
   "include": ["./src/**/*", "./*"]

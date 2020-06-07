@@ -39,10 +39,10 @@
   },
   "devDependencies": {},
   "_moduleAliases": {
-    "@root": "dist",
     "@infrastructure": "dist/src/infrastructure",
     "@domain": "dist/src/domain",
     "@application": "dist/src/application",
-    "@adapter": "dist/src/adapter"
+    "@adapter": "dist/src/adapter",
+    "@root": "dist"
   }
 }
