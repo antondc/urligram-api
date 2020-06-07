@@ -1,4 +1,4 @@
-import { ILoginUserUseCase } from '@domain/user/useCases/ILoginUserUseCase';
+import { ILoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
 
 export class LoginUserAdapter {

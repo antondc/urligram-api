@@ -1,4 +1,4 @@
-import { ICreateUserUseCase } from '@domain/user/useCases/ICreateUserUseCase';
+import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserDTO } from '@domain/user/dto/ICreateUserDTO';
 
 export class CreateUserAdapter {

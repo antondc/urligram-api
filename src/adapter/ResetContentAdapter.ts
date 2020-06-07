@@ -1,4 +1,4 @@
-import { IResetContentUseCase } from '@domain/persistence/useCases/IResetContentUseCase';
+import { IResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
 
 export class ResetContentAdapter {
   resetContentUseCase: IResetContentUseCase;

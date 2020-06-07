@@ -2,6 +2,10 @@ import { User } from '@domain/user/entities/User';
 import { ICreateUserRepo } from '../repositories/ICreateUserRepo';
 import { ICreateUserDTO } from '../dto/ICreateUserDTO';
 
+export interface ICreateUserUseCase {
+  execute: (createUserDTO: ICreateUserDTO) => void;
+}
+
 export class CreateUserUseCase {
   private createUserRepo: ICreateUserRepo;
 

@@ -2,6 +2,10 @@ import { User } from '@domain/user/entities/User';
 import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
 import { ILoginUserRepo } from '../repositories/ILoginUserRepo';
 
+export interface ILoginUserUseCase {
+  execute: (loginUserDTO: ILoginUserDTO) => Promise<[[ILoginUserDTO]]>;
+}
+
 export class LoginUserUseCase {
   loginUserRepo: ILoginUserRepo;
 

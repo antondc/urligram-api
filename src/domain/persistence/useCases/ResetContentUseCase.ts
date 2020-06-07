@@ -1,5 +1,9 @@
 import { IResetContentRepo } from '../repositories/IResetContentRepo';
 
+export interface IResetContentUseCase {
+  execute: () => void;
+}
+
 export class ResetContentUseCase {
   private resetContentRepo: IResetContentRepo;
 

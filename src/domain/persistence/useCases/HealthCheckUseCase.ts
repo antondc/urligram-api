@@ -1,5 +1,9 @@
 import { IHealthCheckRepo } from '../repositories/IHealthCheckRepo';
 
+export interface IHealthCheckUseCase {
+  execute: () => void;
+}
+
 export class HealthCheckUseCase {
   private healthCheckRepo: IHealthCheckRepo;
 
