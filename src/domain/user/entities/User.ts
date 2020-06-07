@@ -12,7 +12,7 @@ export class User {
     this.loginUserRepo = loginUserRepo;
   }
 
-  async authenticate(loginUserDTORequest: ILoginUserDTO) {
+  async authenticate(loginUserDTORequest: ILoginUserDTO): Promise<ILoginUserDTO> {
     const user = await this.loginUserRepo.authenticateUser(loginUserDTORequest);
 
     return user;

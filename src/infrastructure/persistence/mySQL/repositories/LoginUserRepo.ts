@@ -1,6 +1,7 @@
 import { ILoginUserRepo } from '@domain/user/repositories/ILoginUserRepo';
 import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
+import { RequestError } from '@root/src/shared/errors/RequestError';
 
 export class LoginUserRepo implements ILoginUserRepo {
   private mySQL: MySQL;
@@ -11,8 +12,12 @@ export class LoginUserRepo implements ILoginUserRepo {
 
   public async authenticateUser(loginUserDTO: ILoginUserDTO): Promise<ILoginUserDTO> {
     const authenticateUserQuery = `CALL authenticate_user('${JSON.stringify(loginUserDTO)}')`;
-    const [[results]] = await this.mySQL.query(authenticateUserQuery);
 
-    return results;
+    const [[user]] = await this.mySQL.query(authenticateUserQuery);
+    await this.mySQL.close();
+
+    if (!user) throw new RequestError('Email or user incorrect', 401);
+
+    return user;
   }
 }

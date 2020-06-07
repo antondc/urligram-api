@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
+import { NetWorkError } from '@root/src/shared/errors/NetworkError';
 
 export class ResetContentRepo {
   private mySQL: MySQL;
@@ -69,7 +70,7 @@ export class ResetContentRepo {
       const insertTagData = await this.mySQL.query(this.tagData);
       const createPostTagTable = await this.mySQL.query(this.postTag);
       const insertPostTagData = await this.mySQL.query(this.postTagData);
-      
+
       // Create procedures
       const createDebuggerProcedure = await this.mySQL.query(this.debuggerProcedure);
       const createAuthenticateUserProcedure = await this.mySQL.query(this.authenticateUserProcedure);
@@ -99,7 +100,7 @@ export class ResetContentRepo {
       };
     } catch (err) {
       this.mySQL.rollback();
-      console.log(err);
+      throw new NetWorkError('There was a problem resetting the DB', 500, err);
     } finally {
       await this.mySQL.close();
     }

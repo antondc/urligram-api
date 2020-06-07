@@ -6,11 +6,12 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import config from '@root/config.test.json';
-import { FilterAllRequestsController } from '@infrastructure/http/controllers/FilterAllRequestsController';
+import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
 import HealthCheckController from '@infrastructure/http/controllers/HealthCheckController';
 import CreateUserController from '@infrastructure/http/controllers/CreateUserController';
 import ResetContentController from '@infrastructure/http/controllers/ResetContentController';
 import LoginController from '@infrastructure/http/controllers/LoginController';
+import { ErrorHandlerMiddleware } from './middlewares/ErrorHandlerMiddleware';
 
 const app = express();
 
@@ -41,21 +42,16 @@ app.use(cookieParser());
 /* - - - - - - - - - - - Loggers - - - - - - - - - - - - - */
 app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
-app.use('*', FilterAllRequestsController);
+app.use('*', AuthMiddleware);
 app.use('/v1/health-check', HealthCheckController);
 app.use('/v1/login', LoginController);
 app.use('/v1/user', CreateUserController);
 app.use('/v1/reset-content', ResetContentController);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-/* - - - - - - - - - - - Errors - - - - - - - - - - - - - -*/
-app.use(function (err: any, req: any, res: any, next: any) {
-  if (err) console.log(err);
-
-  return next(err);
-});
+/* - - - - - - - - - - - Errors Handler - - - - - - - - - - - - - -*/
+app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - Server - - - - - - - - - - - - - -*/

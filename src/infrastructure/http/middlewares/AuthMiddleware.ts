@@ -1,6 +1,8 @@
+import { Request, Response, NextFunction } from 'express';
 import { TokenService } from '@infrastructure/services/TokenService';
+import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';
 
-export const FilterAllRequestsController = (req, res, next) => {
+export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (req.method === 'GET' || req.baseUrl === '/v1/login' || req.baseUrl === '/v1/reset-content') {
     return next();
   }
@@ -11,6 +13,6 @@ export const FilterAllRequestsController = (req, res, next) => {
 
     return next();
   } catch (err) {
-    res.clearCookie('sessionToken', { path: '/' }).status(401).send('401 UNAUTHORIZED').end();
+    throw new AuthenticationError('Unauthorized', 401, err);
   }
 };

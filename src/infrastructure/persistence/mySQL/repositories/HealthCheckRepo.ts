@@ -8,14 +8,9 @@ export class HealthCheckRepo {
   }
 
   public async test() {
-    try {
-      const results = await this.mySQL.query('SELECT version()');
+    const response = await this.mySQL.query('SELECT version()');
+    await this.mySQL.close();
 
-      return results;
-    } catch (err) {
-      console.log(err);
-    } finally {
-      await this.mySQL.close();
-    }
+    return response;
   }
 }
