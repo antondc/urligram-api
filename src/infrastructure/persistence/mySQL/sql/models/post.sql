@@ -1,6 +1,0 @@
-CREATE TABLE post (
-  id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(45) NULL,
-  body TEXT NULL,
-  my_data TEXT NULL,
-  PRIMARY KEY (id));

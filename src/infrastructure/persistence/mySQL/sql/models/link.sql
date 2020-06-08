@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS `link` ;
+
+CREATE TABLE IF NOT EXISTS `link` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `path` VARCHAR(255) NOT NULL,
+  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `domain_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `compositeIndex` (`path` ASC) VISIBLE,
+  INDEX `fk_link_domain1_idx` (`domain_id` ASC) VISIBLE,
+  CONSTRAINT `fk_link_domain1`
+    FOREIGN KEY (`domain_id`)
+    REFERENCES `domain` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;

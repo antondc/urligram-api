@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS `list` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255) NULL DEFAULT NULL,
+  `isPublic` TINYINT(1) NULL DEFAULT '0',
+  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `list_type_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name` (`name` ASC) VISIBLE,
+  INDEX `fk_list_list_type1_idx` (`list_type_id` ASC) VISIBLE,
+  CONSTRAINT `fk_list_list_type1`
+    FOREIGN KEY (`list_type_id`)
+    REFERENCES `list_type` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
