@@ -16,7 +16,5 @@ CREATE TABLE IF NOT EXISTS `link_user_list` (
     FOREIGN KEY (`link_user_id`)
     REFERENCES `link_user` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+    ON UPDATE NO ACTION
+);

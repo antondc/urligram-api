@@ -13,8 +13,5 @@ CREATE TABLE IF NOT EXISTS `list` (
     FOREIGN KEY (`list_type_id`)
     REFERENCES `list_type` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+    ON UPDATE NO ACTION
+);

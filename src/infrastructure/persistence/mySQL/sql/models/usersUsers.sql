@@ -15,7 +15,5 @@ CREATE TABLE IF NOT EXISTS `user_user` (
     FOREIGN KEY (`user_id1`)
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci;
+    ON UPDATE NO ACTION
+);
