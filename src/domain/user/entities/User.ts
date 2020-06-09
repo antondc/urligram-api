@@ -1,5 +1,6 @@
 import { ILoginUserRepo } from '@domain/user/repositories/ILoginUserRepo';
-import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
+import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
+import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
 
 export class User {
   name: string;
@@ -12,7 +13,7 @@ export class User {
     this.loginUserRepo = loginUserRepo;
   }
 
-  async authenticate(loginUserDTORequest: ILoginUserDTO): Promise<ILoginUserDTO> {
+  async authenticate(loginUserDTORequest: ILoginUserRequestDTO): Promise<ILoginUserResponseDTO> {
     const user = await this.loginUserRepo.authenticateUser(loginUserDTORequest);
 
     return user;

@@ -1,4 +1,4 @@
-import { IResetContentRepo } from '../repositories/IResetContentRepo';
+import { IResetContentRepo } from '@domain/persistence/repositories/IResetContentRepo';
 
 export interface IResetContentUseCase {
   execute: () => void;

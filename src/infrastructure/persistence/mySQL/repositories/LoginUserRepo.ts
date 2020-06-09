@@ -1,5 +1,6 @@
 import { ILoginUserRepo } from '@domain/user/repositories/ILoginUserRepo';
-import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
+import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
+import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { RequestError } from '@root/src/shared/errors/RequestError';
 
@@ -10,7 +11,7 @@ export class LoginUserRepo implements ILoginUserRepo {
     this.mySQL = new MySQL();
   }
 
-  public async authenticateUser(loginUserDTO: ILoginUserDTO): Promise<ILoginUserDTO> {
+  public async authenticateUser(loginUserDTO: ILoginUserRequestDTO): Promise<ILoginUserResponseDTO> {
     const authenticateUserQuery = `CALL authenticate_user('${JSON.stringify(loginUserDTO)}')`;
 
     const [[user]] = await this.mySQL.query(authenticateUserQuery);

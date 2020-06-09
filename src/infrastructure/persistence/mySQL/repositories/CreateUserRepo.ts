@@ -1,5 +1,6 @@
 import { ICreateUserRepo } from '@domain/user/repositories/ICreateUserRepo';
-import { ICreateUserDTO } from '@domain/user/dto/ICreateUserDTO';
+import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
+import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 
 export class CreateUserRepo implements ICreateUserRepo {
@@ -9,7 +10,7 @@ export class CreateUserRepo implements ICreateUserRepo {
     this.mySQL = new MySQL();
   }
 
-  public async save(createUserDTO: ICreateUserDTO) {
+  public async save(createUserDTO: ICreateUserRequestDTO): Promise<ICreateUserResponseDTO> {
     const insertPostQuery = `CALL insert_user('${JSON.stringify(createUserDTO)}')`;
     const results = await this.mySQL.query(insertPostQuery);
     await this.mySQL.close();

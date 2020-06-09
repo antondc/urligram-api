@@ -1,5 +1,6 @@
-import { ILoginUserDTO } from '@domain/user/dto/ILoginUserDTO';
+import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
+import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
 
 export interface ILoginUserRepo {
-  authenticateUser: (loginUserDTO: ILoginUserDTO) => Promise<ILoginUserDTO>;
+  authenticateUser: (loginUserDTO: ILoginUserRequestDTO) => Promise<ILoginUserResponseDTO>;
 }

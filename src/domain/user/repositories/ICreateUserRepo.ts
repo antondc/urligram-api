@@ -1,5 +1,6 @@
-import { ICreateUserDTO } from '@domain/user/dto/ICreateUserDTO';
+import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
+import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 
 export interface ICreateUserRepo {
-  save: (createUserDTO: ICreateUserDTO) => Promise<ICreateUserDTO>;
+  save: (createUserDTO: ICreateUserRequestDTO) => Promise<ICreateUserResponseDTO>;
 }

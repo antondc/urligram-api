@@ -1,16 +1,17 @@
 import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
-import { ICreateUserDTO } from '@domain/user/dto/ICreateUserDTO';
+import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
+import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 
 export class CreateUserAdapter {
   createUserUseCase: ICreateUserUseCase;
-  createUserDTO: ICreateUserDTO;
+  createUserDTO: ICreateUserRequestDTO;
 
-  constructor(createUserUseCase: ICreateUserUseCase, createUserDTO: ICreateUserDTO) {
+  constructor(createUserUseCase: ICreateUserUseCase, createUserDTO: ICreateUserRequestDTO) {
     this.createUserDTO = createUserDTO;
     this.createUserUseCase = createUserUseCase;
   }
 
-  async createUser(): Promise<ICreateUserDTO> {
+  async createUser(): Promise<ICreateUserResponseDTO> {
     const response = await this.createUserUseCase.execute(this.createUserDTO);
 
     return response;
