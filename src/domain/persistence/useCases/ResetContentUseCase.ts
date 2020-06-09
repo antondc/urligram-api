@@ -1,7 +1,7 @@
 import { IResetContentRepo } from '@domain/persistence/repositories/IResetContentRepo';
 
 export interface IResetContentUseCase {
-  execute: () => void;
+  execute: () => unknown;
 }
 
 export class ResetContentUseCase {

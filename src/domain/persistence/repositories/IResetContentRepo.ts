@@ -1,3 +1,3 @@
 export interface IResetContentRepo {
-  reset: () => void;
+  reset: () => unknown;
 }

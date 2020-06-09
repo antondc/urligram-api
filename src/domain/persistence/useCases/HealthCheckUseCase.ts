@@ -1,7 +1,7 @@
 import { IHealthCheckRepo } from '../repositories/IHealthCheckRepo';
 
 export interface IHealthCheckUseCase {
-  execute: () => void;
+  execute: () => unknown;
 }
 
 export class HealthCheckUseCase {
