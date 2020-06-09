@@ -24,7 +24,7 @@ export class ResetContentRepo {
   private userListRole: string;
   private userList: string;
   private userLogins: string;
-  private usersUsers: string;
+  private userUser: string;
 
   // Procedures
   private debuggerProcedure: string;
@@ -32,6 +32,21 @@ export class ResetContentRepo {
   private insertUserProcedure: string;
   private insertPostProcedure: string;
   private selectAllPostsProcedure: string;
+
+  // Data
+  private domainData: string;
+  private languageData: string;
+  private linkData: string;
+  private userData: string;
+  private linkUserData: string;
+  private listTypeData: string;
+  private listData: string;
+  private linkUserListData: string;
+  private tagData: string;
+  private linkUserTagData: string;
+  private userListRoleData: string;
+  private userListData: string;
+  private userLoginData: string;
 
   constructor() {
     this.mySQL = new MySQL({ multipleStatements: true });
@@ -55,8 +70,8 @@ export class ResetContentRepo {
     this.linkUserTag = fs.readFileSync(path.resolve(__dirname, '../sql/models/linkUserTag.sql')).toString();
     this.userListRole = fs.readFileSync(path.resolve(__dirname, '../sql/models/userListRole.sql')).toString();
     this.userList = fs.readFileSync(path.resolve(__dirname, '../sql/models/userList.sql')).toString();
-    this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLogins.sql')).toString();
-    this.usersUsers = fs.readFileSync(path.resolve(__dirname, '../sql/models/usersUsers.sql')).toString();
+    this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLogin.sql')).toString();
+    this.userUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/userUser.sql')).toString();
 
     // Stored procedures
     this.debuggerProcedure = fs
@@ -76,9 +91,19 @@ export class ResetContentRepo {
       .toString();
 
     //  Data
-    // this.insertUserData = fs
-    //   .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/user.sql'))
-    //   .toString();
+    this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
+    this.languageData = fs.readFileSync(path.resolve(__dirname, '../sql/data/language.sql')).toString();
+    this.linkData = fs.readFileSync(path.resolve(__dirname, '../sql/data/link.sql')).toString();
+    this.userData = fs.readFileSync(path.resolve(__dirname, '../sql/data/user.sql')).toString();
+    this.linkUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUser.sql')).toString();
+    this.listTypeData = fs.readFileSync(path.resolve(__dirname, '../sql/data/listType.sql')).toString();
+    this.listData = fs.readFileSync(path.resolve(__dirname, '../sql/data/list.sql')).toString();
+    this.linkUserListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUserList.sql')).toString();
+    this.tagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/tag.sql')).toString();
+    this.linkUserTagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUserTag.sql')).toString();
+    this.userListRoleData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userListRole.sql')).toString();
+    this.userListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userList.sql')).toString();
+    this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLogin.sql')).toString();
   }
 
   public async reset() {
@@ -104,7 +129,7 @@ export class ResetContentRepo {
       const createUserListRoleTable = await this.mySQL.query(this.userListRole);
       const createUserListTable = await this.mySQL.query(this.userList);
       const createUserLoginsTable = await this.mySQL.query(this.userLogins);
-      const createUsersUsersTable = await this.mySQL.query(this.usersUsers);
+      const createUsersUsersTable = await this.mySQL.query(this.userUser);
 
       // Create procedures
       const createDebuggerProcedure = await this.mySQL.query(this.debuggerProcedure);
@@ -112,6 +137,21 @@ export class ResetContentRepo {
       const createInsertUserProcedure = await this.mySQL.query(this.insertUserProcedure);
       const createInsertPostProcedure = await this.mySQL.query(this.insertPostProcedure);
       const createSelectAllPostsProcedure = await this.mySQL.query(this.selectAllPostsProcedure);
+
+      // Insert data
+      const insertDomainData = await this.mySQL.query(this.domainData);
+      const insertLanguageData = await this.mySQL.query(this.languageData);
+      const insertLinkData = await this.mySQL.query(this.linkData);
+      const insertUserData = await this.mySQL.query(this.userData);
+      const insertLinkUserData = await this.mySQL.query(this.linkUserData);
+      const insertListTypeData = await this.mySQL.query(this.listTypeData);
+      const insertListData = await this.mySQL.query(this.listData);
+      const insertLinkUserListData = await this.mySQL.query(this.linkUserListData);
+      const insertTagData = await this.mySQL.query(this.tagData);
+      const insertLinkUserTagData = await this.mySQL.query(this.linkUserTagData);
+      const insertUserListRoleData = await this.mySQL.query(this.userListRoleData);
+      const insertUserListData = await this.mySQL.query(this.userListData);
+      const insertUserLogin = await this.mySQL.query(this.userLoginData);
 
       this.mySQL.commit();
 
@@ -147,7 +187,19 @@ export class ResetContentRepo {
         ...createSelectAllPostsProcedure,
 
         // Insert data
-        // ...
+        ...insertDomainData,
+        ...insertLanguageData,
+        ...insertLinkData,
+        ...insertUserData,
+        ...insertLinkUserData,
+        ...insertListTypeData,
+        ...insertListData,
+        ...insertLinkUserListData,
+        ...insertTagData,
+        ...insertLinkUserTagData,
+        ...insertUserListRoleData,
+        ...insertUserListData,
+        ...insertUserLogin,
       };
     } catch (err) {
       this.mySQL.rollback();
