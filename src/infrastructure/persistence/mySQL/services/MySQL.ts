@@ -1,6 +1,6 @@
 import { promisify } from 'util';
 import mysql from 'mysql';
-import config from '@root/config.test.json';
+import { DATABASE_SETTINGS } from '@shared/constants/env';
 
 export class MySQL {
   private mySQL;
@@ -9,7 +9,7 @@ export class MySQL {
     const { multipleStatements } = options;
 
     this.mySQL = mysql.createConnection({
-      ...config[process.env.NODE_ENV].database,
+      ...DATABASE_SETTINGS,
       multipleStatements,
     });
   }

@@ -12,11 +12,12 @@ import CreateUserController from '@infrastructure/http/controllers/CreateUserCon
 import ResetContentController from '@infrastructure/http/controllers/ResetContentController';
 import LoginController from '@infrastructure/http/controllers/LoginController';
 import { ErrorHandlerMiddleware } from './middlewares/ErrorHandlerMiddleware';
+import { ENDPOINT_CLIENT, PORT_SERVER } from '@shared/constants/env';
 
 const app = express();
 
 /* - - - - - - - - - - - Cors - - - - - - - - - - - - - - */
-app.use(cors({ credentials: true, origin: config[process.env.NODE_ENV].ENDPOINT_CLIENT }));
+app.use(cors({ credentials: true, origin: ENDPOINT_CLIENT }));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 /* - - - - - - - - - - - Static - - - - - - - - - - - - - */
@@ -57,5 +58,5 @@ app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - Server - - - - - - - - - - - - - -*/
 const server = http.createServer(app);
 
-server.listen(config[process.env.NODE_ENV].PORT_SERVER);
+server.listen(PORT_SERVER);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

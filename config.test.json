@@ -7,6 +7,7 @@
       "dialect": "mysql",
       "host": "127.0.0.1"
     },
+    "HOST_SERVER": "0.0.0.0",
     "PORT_SERVER": "3000",
     "ENDPOINT_CLIENT": "http://0.0.0.0:4000",
     "SECRET": "superSecret",
@@ -20,6 +21,7 @@
       "dialect": "mysql",
       "host": "127.0.0.1"
     },
+    "HOST_SERVER": "linking-api-staging.antoniodiaz.me",
     "PORT_SERVER": "3000",
     "ENDPOINT_CLIENT": "https://linking-staging.antoniodiaz.me",
     "SECRET": "superSecret",
@@ -33,6 +35,7 @@
       "dialect": "mysql",
       "host": "127.0.0.1"
     },
+    "HOST_SERVER": "linking-api-production.antoniodiaz.me",
     "PORT_SERVER": "3000",
     "ENDPOINT_CLIENT": "https://linking-production.antoniodiaz.me",
     "SECRET": "superSecret",

@@ -16,6 +16,8 @@
       "@infrastructure/*": ["src/infrastructure/*"],
       "@domain/*": ["src/domain/*"],
       "@adapter/*": ["src/adapter/*"],
+      "@shared/*": ["src/shared/*"],
+      "@tools/*": ["src/tools/*"],
       "@root/*": ["./*"]
     }
   },

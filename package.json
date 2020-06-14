@@ -43,6 +43,8 @@
     "@infrastructure": "dist/src/infrastructure",
     "@domain": "dist/src/domain",
     "@adapter": "dist/src/adapter",
+    "@shared": "dist/src/shared",
+    "@tools": "dist/src/tools",
     "@root": "dist"
   }
 }
