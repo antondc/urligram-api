@@ -25,12 +25,7 @@ export class LoginUserAdapter {
           session: {
             self: URL_SERVER + '/users/me',
           },
-          attributes: {
-            order: response.order,
-            name: response.name,
-            email: response.email,
-            status: response.status,
-          },
+          attributes: response,
           relationships: {},
         },
       ],

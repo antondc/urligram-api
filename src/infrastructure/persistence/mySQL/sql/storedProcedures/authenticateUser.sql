@@ -10,7 +10,8 @@ BEGIN
   SET @password = JSON_EXTRACT(user_data, '$.password');
 
   -- Select user
-  SELECT `id`, `order`, `name`, `email`, `status` FROM user
+  SELECT `id`, `name`, `level`, `email`, `status`, `statement`, `location`, `order`, `createdAt`,
+`updatedAt` FROM user
   WHERE `name` = JSON_UNQUOTE(@name) AND `password` = JSON_UNQUOTE(@password);
 
 END
