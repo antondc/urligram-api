@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { LoginUserRepo } from '@infrastructure/persistence/mySQL/repositories/LoginUserRepo';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
-import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
 import { LoginUserAdapter } from '@adapter/LoginUserAdapter';
 import { LoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
@@ -16,10 +15,10 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     const loginUserUseCase = new LoginUserUseCase(userRepo);
     const loginUserAdapter = new LoginUserAdapter(loginUserUseCase, loginUserDTO);
 
-    const user: ILoginUserResponseDTO = await loginUserAdapter.authenticate();
+    const response = await loginUserAdapter.authenticate();
 
     const tokenService = new TokenService();
-    const token = tokenService.createToken(user);
+    const token = tokenService.createToken(response.data);
 
     return res
       .cookie('sessionToken', token, {
@@ -27,7 +26,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         httpOnly: true,
         path: '/',
       })
-      .json({ user })
+      .json(response)
       .end();
   } catch (err) {
     return next(err);
