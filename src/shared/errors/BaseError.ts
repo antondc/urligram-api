@@ -1,13 +1,14 @@
 export class BaseError extends Error {
   message: string;
-  category: string;
   statusCode: number;
+  category: string;
+  error: {} | undefined;
 
-  constructor(message: string, category?: string, statusCode?: number) {
+  constructor(message: string, statusCode: number, error?: {}) {
     super();
     this.message = message;
-    this.category = category;
     this.statusCode = statusCode;
+    this.error = error;
     Object.setPrototypeOf(this, BaseError.prototype);
   }
 }

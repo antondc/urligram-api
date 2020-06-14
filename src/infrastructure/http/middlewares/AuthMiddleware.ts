@@ -13,6 +13,6 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     return next();
   } catch (err) {
-    throw new AuthenticationError('Unauthorized', 401, err);
+    throw new AuthenticationError('401 Unauthorized', 401, err);
   }
 };

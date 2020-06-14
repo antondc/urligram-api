@@ -3,14 +3,14 @@ import { BaseError } from './BaseError';
 export class NetWorkError extends BaseError {
   message: string;
   category: string;
-  status: number;
-  error: string;
+  statusCode: number;
+  error: {};
 
-  constructor(message: string, status: number, error: string) {
-    super(message);
+  constructor(message: string, statusCode: number, error?: {}) {
+    super(message, statusCode);
 
     this.message = message;
-    this.status = status;
+    this.statusCode = statusCode;
     this.category = 'Network Error';
     this.error = error;
     Object.setPrototypeOf(this, NetWorkError.prototype);
