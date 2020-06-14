@@ -1,18 +1,18 @@
-DROP PROCEDURE IF EXISTS insert_user;
+DROP PROCEDURE IF EXISTS create_user;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE insert_user(
+CREATE PROCEDURE create_user(
   IN user JSON
 )
 BEGIN
   -- Retrieve values from JSON
   SET @name = JSON_EXTRACT(user, '$.name');
-  SET @surname = JSON_EXTRACT(user, '$.surname');
+  SET @email = JSON_EXTRACT(user, '$.email');
 
   -- Insert user
-  INSERT INTO user (name, surname) VALUES (
+  INSERT INTO user (name, email) VALUES (
     JSON_UNQUOTE(@name),
-    JSON_UNQUOTE(@surname)
+    JSON_UNQUOTE(@email)
   );
 
   -- Retrieve inserted id to select it

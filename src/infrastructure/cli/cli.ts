@@ -13,7 +13,7 @@ const main = async () => {
       choices: [
         { title: 'Health check', value: 'healthCheck' },
         { title: 'Reset database', value: 'reset' },
-        { title: 'Insert user', value: 'insertUser' },
+        { title: 'Create user', value: 'createUser' },
       ],
     },
   ]);
@@ -39,7 +39,7 @@ const main = async () => {
     }
   }
 
-  if (actions.includes('insertUser')) {
+  if (actions.includes('createUser')) {
     const user = await prompts([
       {
         type: 'text',
@@ -48,8 +48,8 @@ const main = async () => {
       },
       {
         type: 'text',
-        name: 'surname',
-        message: 'What is your surname?',
+        name: 'email',
+        message: 'What is your email?',
       },
     ]);
 

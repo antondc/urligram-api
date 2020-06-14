@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS insert_post;
+DROP PROCEDURE IF EXISTS create_post;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE insert_post(
+CREATE PROCEDURE create_post(
   IN my_data JSON
 )
 BEGIN

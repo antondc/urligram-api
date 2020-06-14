@@ -29,8 +29,8 @@ export class ResetContentRepo {
   // Procedures
   private debuggerProcedure: string;
   private authenticateUserProcedure: string;
-  private insertUserProcedure: string;
-  private insertPostProcedure: string;
+  private createUserProcedure: string;
+  private createPostProcedure: string;
   private selectAllPostsProcedure: string;
 
   // Data
@@ -80,11 +80,11 @@ export class ResetContentRepo {
     this.authenticateUserProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/authenticateUser.sql'))
       .toString();
-    this.insertUserProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/insertUser.sql'))
+    this.createUserProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createUser.sql'))
       .toString();
-    this.insertPostProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/insertPost.sql'))
+    this.createPostProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createPost.sql'))
       .toString();
     this.selectAllPostsProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/selectAllPosts.sql'))
@@ -134,8 +134,8 @@ export class ResetContentRepo {
       // Create procedures
       const createDebuggerProcedure = await this.mySQL.query(this.debuggerProcedure);
       const createAuthenticateUserProcedure = await this.mySQL.query(this.authenticateUserProcedure);
-      const createInsertUserProcedure = await this.mySQL.query(this.insertUserProcedure);
-      const createInsertPostProcedure = await this.mySQL.query(this.insertPostProcedure);
+      const createCreateUserProcedure = await this.mySQL.query(this.createUserProcedure);
+      const createCreatePostProcedure = await this.mySQL.query(this.createPostProcedure);
       const createSelectAllPostsProcedure = await this.mySQL.query(this.selectAllPostsProcedure);
 
       // Insert data
@@ -151,7 +151,7 @@ export class ResetContentRepo {
       const insertLinkUserTagData = await this.mySQL.query(this.linkUserTagData);
       const insertUserListRoleData = await this.mySQL.query(this.userListRoleData);
       const insertUserListData = await this.mySQL.query(this.userListData);
-      const insertUserLogin = await this.mySQL.query(this.userLoginData);
+      const insertUserLoginData = await this.mySQL.query(this.userLoginData);
 
       this.mySQL.commit();
 
@@ -182,8 +182,8 @@ export class ResetContentRepo {
         // Create procedures
         ...createDebuggerProcedure,
         ...createAuthenticateUserProcedure,
-        ...createInsertUserProcedure,
-        ...createInsertPostProcedure,
+        ...createCreateUserProcedure,
+        ...createCreatePostProcedure,
         ...createSelectAllPostsProcedure,
 
         // Insert data
@@ -199,7 +199,7 @@ export class ResetContentRepo {
         ...insertLinkUserTagData,
         ...insertUserListRoleData,
         ...insertUserListData,
-        ...insertUserLogin,
+        ...insertUserLoginData,
       };
     } catch (err) {
       this.mySQL.rollback();
