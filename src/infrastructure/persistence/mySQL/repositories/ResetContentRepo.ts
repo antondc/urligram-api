@@ -29,6 +29,7 @@ export class ResetContentRepo {
   // Procedures
   private debuggerProcedure: string;
   private authenticateUserProcedure: string;
+  private deauthenticateUserProcedure: string;
   private createUserProcedure: string;
   private createPostProcedure: string;
   private selectAllPostsProcedure: string;
@@ -70,7 +71,7 @@ export class ResetContentRepo {
     this.linkUserTag = fs.readFileSync(path.resolve(__dirname, '../sql/models/linkUserTag.sql')).toString();
     this.userListRole = fs.readFileSync(path.resolve(__dirname, '../sql/models/userListRole.sql')).toString();
     this.userList = fs.readFileSync(path.resolve(__dirname, '../sql/models/userList.sql')).toString();
-    this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLogin.sql')).toString();
+    this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLog.sql')).toString();
     this.userUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/userUser.sql')).toString();
 
     // Stored procedures
@@ -79,6 +80,9 @@ export class ResetContentRepo {
       .toString();
     this.authenticateUserProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/authenticateUser.sql'))
+      .toString();
+    this.deauthenticateUserProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/deauthenticateUser.sql'))
       .toString();
     this.createUserProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createUser.sql'))
@@ -103,7 +107,7 @@ export class ResetContentRepo {
     this.linkUserTagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUserTag.sql')).toString();
     this.userListRoleData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userListRole.sql')).toString();
     this.userListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userList.sql')).toString();
-    this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLogin.sql')).toString();
+    this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
   }
 
   public async reset() {
@@ -134,6 +138,7 @@ export class ResetContentRepo {
       // Create procedures
       const createDebuggerProcedure = await this.mySQL.query(this.debuggerProcedure);
       const createAuthenticateUserProcedure = await this.mySQL.query(this.authenticateUserProcedure);
+      const createDeauthenticateUserProcedure = await this.mySQL.query(this.deauthenticateUserProcedure);
       const createCreateUserProcedure = await this.mySQL.query(this.createUserProcedure);
       const createCreatePostProcedure = await this.mySQL.query(this.createPostProcedure);
       const createSelectAllPostsProcedure = await this.mySQL.query(this.selectAllPostsProcedure);
@@ -182,6 +187,7 @@ export class ResetContentRepo {
         // Create procedures
         ...createDebuggerProcedure,
         ...createAuthenticateUserProcedure,
+        ...createDeauthenticateUserProcedure,
         ...createCreateUserProcedure,
         ...createCreatePostProcedure,
         ...createSelectAllPostsProcedure,

@@ -15,7 +15,7 @@ export class LoginUserAdapter {
     const response = await this.loginUserUseCase.execute(this.loginUserDTO);
 
     const formattedResponse = {
-      session: {
+      links: {
         self: URL_SERVER + '/users/me',
       },
       data: [

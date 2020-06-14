@@ -1,6 +1,9 @@
 import { ILoginUserRepo } from '@domain/user/repositories/ILoginUserRepo';
+import { ILogOutUserRepo } from '@domain/user/repositories/ILogOutUserRepo';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
 import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
+import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
+import { ILogOutUserResponseDTO } from '@domain/user/dto/ILogOutUserResponseDTO';
 
 export class User {
   id: string;
@@ -16,8 +19,9 @@ export class User {
   updatedAt: Date;
 
   loginUserRepo: ILoginUserRepo;
+  logOutUserRepo: ILogOutUserRepo;
 
-  constructor(userDTO?, loginUserRepo?: ILoginUserRepo) {
+  constructor(userDTO?, loginUserRepo?: ILoginUserRepo, logOutUserRepo?: ILogOutUserRepo) {
     this.id = userDTO?.id;
     this.name = userDTO?.name;
     this.level = userDTO?.level;
@@ -31,10 +35,17 @@ export class User {
     this.updatedAt = userDTO?.updatedAt;
 
     this.loginUserRepo = loginUserRepo;
+    this.logOutUserRepo = logOutUserRepo;
   }
 
   async authenticate(loginUserDTORequest: ILoginUserRequestDTO): Promise<ILoginUserResponseDTO> {
     const user = await this.loginUserRepo.authenticateUser(loginUserDTORequest);
+
+    return user;
+  }
+
+  async deauthenticate(loginUserDTORequest: ILogOutUserRequestDTO): Promise<ILogOutUserResponseDTO> {
+    const user = await this.logOutUserRepo.deauthenticate(loginUserDTORequest);
 
     return user;
   }

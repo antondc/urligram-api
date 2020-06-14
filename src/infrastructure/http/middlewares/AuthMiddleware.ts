@@ -3,7 +3,11 @@ import { TokenService } from '@infrastructure/services/TokenService';
 import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';
 
 export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  if (req.method === 'GET' || req.baseUrl === '/v1/login' || req.baseUrl === '/v1/reset-content') {
+  if (
+    req.method === 'GET' ||
+    (req.method === 'POST' && req.baseUrl === '/v1/login') ||
+    req.baseUrl === '/v1/reset-content'
+  ) {
     return next();
   }
 
