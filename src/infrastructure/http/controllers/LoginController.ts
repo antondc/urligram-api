@@ -1,12 +1,12 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { LoginUserRepo } from '@infrastructure/persistence/mySQL/repositories/LoginUserRepo';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
-import { LoginUserAdapter } from '@adapter/LoginUserAdapter';
+import { LoginUserAdapter } from '@infrastructure/http/adapters/LoginUserAdapter';
 import { LoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { LogOutUserRepo } from '@infrastructure/persistence/mySQL/repositories/LogOutUserRepo';
 import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
-import { LogOutUserAdapter } from '@adapter/LogOutUserAdapter';
+import { LogOutUserAdapter } from '@infrastructure/http/adapters/LogOutUserAdapter';
 import { LogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
 import { User } from '@domain/user/entities/User';
 
@@ -43,7 +43,7 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
     const tokenService = new TokenService();
     const { id } = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const logOutUserRequestDTO = { id };
+    const logOutUserRequestDTO: ILogOutUserRequestDTO = { id };
 
     const logOutUserRepo = new LogOutUserRepo();
     const logOutUserUseCase = new LogOutUserUseCase(logOutUserRepo);

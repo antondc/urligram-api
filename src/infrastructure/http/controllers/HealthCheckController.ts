@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { HealthCheckAdapter } from '@adapter/HealthCheckAdapter';
+import { HealthCheckAdapter } from '@infrastructure/http/adapters/HealthCheckAdapter';
 import { HealthCheckRepo } from '@infrastructure/persistence/mySQL/repositories/HealthCheckRepo';
 import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 

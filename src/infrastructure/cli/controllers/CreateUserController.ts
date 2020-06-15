@@ -1,10 +1,10 @@
-import { CreateUserAdapter } from '@adapter/CreateUserAdapter';
+import { CreateUserAdapter } from '@infrastructure/cli/adapters/CreateUserAdapter';
 import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 
-export class CreateUser {
+export class CreateUserController {
   createUserDTO;
 
   constructor(createUserDTO: ICreateUserRequestDTO) {

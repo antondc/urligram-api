@@ -7,8 +7,8 @@ export interface ILogOutUserUseCase {
   execute: (logOutUserDTO: ILogOutUserRequestDTO) => Promise<ILogOutUserResponseDTO>;
 }
 
-export class LogOutUserUseCase {
-  logOutUserRepo: ILogOutUserRepo;
+export class LogOutUserUseCase implements ILogOutUserUseCase {
+  private logOutUserRepo: ILogOutUserRepo;
 
   constructor(logOutUserRepo: ILogOutUserRepo) {
     this.logOutUserRepo = logOutUserRepo;

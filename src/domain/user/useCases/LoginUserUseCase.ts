@@ -7,8 +7,8 @@ export interface ILoginUserUseCase {
   execute: (loginUserDTO: ILoginUserRequestDTO) => Promise<ILoginUserResponseDTO>;
 }
 
-export class LoginUserUseCase {
-  loginUserRepo: ILoginUserRepo;
+export class LoginUserUseCase implements ILoginUserUseCase {
+  private loginUserRepo: ILoginUserRepo;
 
   constructor(loginUserRepo: ILoginUserRepo) {
     this.loginUserRepo = loginUserRepo;

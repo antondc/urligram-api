@@ -1,8 +1,8 @@
 import 'module-alias/register';
 import prompts from 'prompts';
-import { ResetContent } from '@infrastructure/cli/controllers/ResetContentController';
-import { CreateUser } from '@infrastructure/cli/controllers/CreateUserController';
-import { HealthCheck } from '@infrastructure/cli/controllers/HealthCheckController';
+import { ResetContentController } from '@infrastructure/cli/controllers/ResetContentController';
+import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
+import { HealthCheckController } from '@infrastructure/cli/controllers/HealthCheckController';
 
 const main = async () => {
   const { actions } = await prompts([
@@ -20,8 +20,8 @@ const main = async () => {
 
   if (actions.includes('healthCheck')) {
     try {
-      const healthCheck = new HealthCheck();
-      const response = await healthCheck.execute();
+      const healthCheckController = new HealthCheckController();
+      const response = await healthCheckController.execute();
       await console.log('System healthy');
       await console.log(JSON.stringify(response, null, 4));
     } catch (err) {
@@ -31,8 +31,8 @@ const main = async () => {
 
   if (actions.includes('reset')) {
     try {
-      const resetContent = new ResetContent();
-      await resetContent.execute();
+      const resetContentController = new ResetContentController();
+      await resetContentController.execute();
       await console.log('Reseted database');
     } catch (err) {
       await console.log('There was an error resetting database');
@@ -51,11 +51,16 @@ const main = async () => {
         name: 'email',
         message: 'What is your email?',
       },
+      {
+        type: 'text',
+        name: 'password',
+        message: 'What is your password?',
+      },
     ]);
 
     try {
-      const createUser = await new CreateUser(user);
-      const result = await createUser.execute();
+      const createUserController = await new CreateUserController(user);
+      const result = await createUserController.execute();
       await console.log(JSON.stringify(result, null, 4));
     } catch (err) {
       await console.log('There was an error creating user');

@@ -1,8 +1,8 @@
-import { ResetContentAdapter } from '@adapter/ResetContentAdapter';
+import { ResetContentAdapter } from '@infrastructure/cli/adapters/ResetContentAdapter';
 import { ResetContentRepo } from '@infrastructure/persistence/mySQL/repositories/ResetContentRepo';
 import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
 
-export class ResetContent {
+export class ResetContentController {
   async execute() {
     const resetContentRepo = new ResetContentRepo();
     const resetContentUseCase = new ResetContentUseCase(resetContentRepo);

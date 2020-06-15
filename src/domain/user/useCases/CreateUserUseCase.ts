@@ -7,7 +7,7 @@ export interface ICreateUserUseCase {
   execute: (createUserDTO: ICreateUserRequestDTO) => Promise<ICreateUserResponseDTO>;
 }
 
-export class CreateUserUseCase {
+export class CreateUserUseCase implements ICreateUserUseCase {
   private createUserRepo: ICreateUserRepo;
 
   constructor(createUserRepo: ICreateUserRepo) {
@@ -15,9 +15,7 @@ export class CreateUserUseCase {
   }
 
   public async execute(createUserDTO: ICreateUserRequestDTO): Promise<ICreateUserResponseDTO> {
-    const user = await new User(createUserDTO);
-
-    const response = await this.createUserRepo.save(user);
+    const response = await this.createUserRepo.save(createUserDTO);
 
     return response;
   }

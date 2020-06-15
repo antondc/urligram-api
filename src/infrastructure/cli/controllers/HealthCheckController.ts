@@ -1,8 +1,8 @@
-import { HealthCheckAdapter } from '@adapter/HealthCheckAdapter';
+import { HealthCheckAdapter } from '@infrastructure/cli/adapters/HealthCheckAdapter';
 import { HealthCheckRepo } from '@infrastructure/persistence/mySQL/repositories/HealthCheckRepo';
 import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 
-export class HealthCheck {
+export class HealthCheckController {
   async execute() {
     const healthCheckRepo = new HealthCheckRepo();
     const healthCheckUseCase = new HealthCheckUseCase(healthCheckRepo);

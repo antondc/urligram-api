@@ -8,18 +8,19 @@ BEGIN
   -- Retrieve values from JSON
   SET @name = JSON_EXTRACT(user, '$.name');
   SET @email = JSON_EXTRACT(user, '$.email');
+  SET @password = JSON_EXTRACT(user, '$.password');
+  SET @uuid = uuid();
 
   -- Insert user
-  INSERT INTO user (name, email) VALUES (
+  INSERT INTO user (`id`, `name`, `email`, `password`) VALUES (
+    @uuid ,
     JSON_UNQUOTE(@name),
-    JSON_UNQUOTE(@email)
+    JSON_UNQUOTE(@email),
+    JSON_UNQUOTE(@password)
   );
 
-  -- Retrieve inserted id to select it
-  SET @last_user = LAST_INSERT_ID();
-
   -- Retrieve user
-  SELECT * FROM user
-  WHERE id = @last_user;
+  SELECT `id`, `name`, `email`, `status` FROM user
+  WHERE id = @uuid;
 
 END
