@@ -4,6 +4,7 @@ import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 import { User } from '../entities/User';
 import { UserError } from '@shared/errors/UserError';
+import { StringValidator } from '@shared/services/StringValidator';
 
 export interface ICreateUserUseCase {
   execute: (createUserDTO: ICreateUserRequestDTO) => Promise<ICreateUserResponseDTO>;
@@ -19,10 +20,17 @@ export class CreateUserUseCase implements ICreateUserUseCase {
   }
 
   public async execute(createUserDTO: ICreateUserRequestDTO): Promise<ICreateUserResponseDTO> {
-    const user = await new User(undefined, undefined, undefined, undefined, this.findUserRepo);
-    const foundUser = await user.find(createUserDTO);
+    const { email, password, password_repeated } = createUserDTO;
 
-    if (!!foundUser) throw new UserError('User already exist', 409);
+    if (password !== password_repeated) throw new UserError('Passwords are not equal', 409);
+
+    const stringValidator = new StringValidator(email);
+    const isEmail = stringValidator.testEmail();
+    if (!isEmail) throw new UserError('Email incorrect', 409);
+
+    const user = await new User(undefined, undefined, undefined, undefined, this.findUserRepo);
+    const userAlreadyExists = await user.find(createUserDTO);
+    if (!!userAlreadyExists) throw new UserError('User already exist', 409);
 
     const response = await this.createUserRepo.create(createUserDTO);
 
