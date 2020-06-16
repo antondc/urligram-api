@@ -4,6 +4,13 @@ import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
 import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
 import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
 import { ILogOutUserResponseDTO } from '@domain/user/dto/ILogOutUserResponseDTO';
+import { IFindUserRepo } from '../repositories/IFindUserRepo';
+import { IFindUserRequestDTO } from '../dto/IFindUserRequestDTO';
+import { IFindUserResponseDTO } from '../dto/IFindUserResponseDTO';
+import { RequestError } from '@shared/errors/RequestError';
+import { ICreateUserRepo } from '../repositories/ICreateUserRepo';
+import { ICreateUserRequestDTO } from '../dto/ICreateUserRequestDTO';
+import { ICreateUserResponseDTO } from '../dto/ICreateUserResponseDTO';
 
 export class User {
   id: string;
@@ -20,8 +27,16 @@ export class User {
 
   loginUserRepo: ILoginUserRepo;
   logOutUserRepo: ILogOutUserRepo;
+  createUserRepo: ICreateUserRepo;
+  findUserRepo: IFindUserRepo;
 
-  constructor(userDTO?, loginUserRepo?: ILoginUserRepo, logOutUserRepo?: ILogOutUserRepo) {
+  constructor(
+    userDTO?,
+    loginUserRepo?: ILoginUserRepo,
+    logOutUserRepo?: ILogOutUserRepo,
+    createUserRepo?: ICreateUserRepo,
+    findUserRepo?: IFindUserRepo
+  ) {
     this.id = userDTO?.id;
     this.name = userDTO?.name;
     this.level = userDTO?.level;
@@ -36,16 +51,32 @@ export class User {
 
     this.loginUserRepo = loginUserRepo;
     this.logOutUserRepo = logOutUserRepo;
+    this.createUserRepo = createUserRepo;
+    this.findUserRepo = findUserRepo;
   }
 
   async authenticate(loginUserDTORequest: ILoginUserRequestDTO): Promise<ILoginUserResponseDTO> {
     const user = await this.loginUserRepo.authenticateUser(loginUserDTORequest);
+
+    if (!user) throw new RequestError('Name or password incorrect', 401);
 
     return user;
   }
 
   async deauthenticate(loginUserDTORequest: ILogOutUserRequestDTO): Promise<ILogOutUserResponseDTO> {
     const user = await this.logOutUserRepo.deauthenticate(loginUserDTORequest);
+
+    return user;
+  }
+
+  async find(findUserRequestDTO: IFindUserRequestDTO): Promise<IFindUserResponseDTO> {
+    const user = await this.findUserRepo.find(findUserRequestDTO);
+
+    return user;
+  }
+
+  async create(createUserDTO: ICreateUserRequestDTO): Promise<ICreateUserResponseDTO> {
+    const user = await this.createUserRepo.create(createUserDTO);
 
     return user;
   }

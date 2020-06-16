@@ -2,16 +2,19 @@ import { User } from '@domain/user/entities/User';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
 import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
 import { ILoginUserRepo } from '../repositories/ILoginUserRepo';
+import { IFindUserRepo } from '../repositories/IFindUserRepo';
 
 export interface ILoginUserUseCase {
   execute: (loginUserDTO: ILoginUserRequestDTO) => Promise<ILoginUserResponseDTO>;
 }
 
 export class LoginUserUseCase implements ILoginUserUseCase {
-  private loginUserRepo: ILoginUserRepo;
+  loginUserRepo: ILoginUserRepo;
+  findUserRepo: IFindUserRepo;
 
-  constructor(loginUserRepo: ILoginUserRepo) {
+  constructor(loginUserRepo: ILoginUserRepo, findUserRepo: IFindUserRepo) {
     this.loginUserRepo = loginUserRepo;
+    this.findUserRepo = findUserRepo;
   }
 
   public async execute(loginUserDTO: ILoginUserRequestDTO): Promise<ILoginUserResponseDTO> {

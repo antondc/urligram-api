@@ -1,6 +1,7 @@
 import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
+import { URL_SERVER } from '@shared/constants/env';
 
 export class CreateUserAdapter {
   createUserUseCase: ICreateUserUseCase;
@@ -11,9 +12,27 @@ export class CreateUserAdapter {
     this.createUserUseCase = createUserUseCase;
   }
 
-  async createUser(): Promise<ICreateUserResponseDTO> {
+  async createUser() {
     const response = await this.createUserUseCase.execute(this.createUserDTO);
 
-    return response;
+    const formattedResponse = {
+      links: {
+        self: URL_SERVER + '/users/me',
+      },
+      data: [
+        {
+          type: 'user',
+          id: response.id,
+          session: {
+            self: URL_SERVER + '/users/me',
+          },
+          attributes: response,
+          relationships: {},
+        },
+      ],
+      included: [],
+    };
+
+    return formattedResponse;
   }
 }

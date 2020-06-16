@@ -33,6 +33,7 @@ export class ResetContentRepo {
   private createUserProcedure: string;
   private createPostProcedure: string;
   private selectAllPostsProcedure: string;
+  private findUserProcedure: string;
 
   // Data
   private domainData: string;
@@ -93,6 +94,9 @@ export class ResetContentRepo {
     this.selectAllPostsProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/selectAllPosts.sql'))
       .toString();
+    this.findUserProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/findUser.sql'))
+      .toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -142,6 +146,7 @@ export class ResetContentRepo {
       const createCreateUserProcedure = await this.mySQL.query(this.createUserProcedure);
       const createCreatePostProcedure = await this.mySQL.query(this.createPostProcedure);
       const createSelectAllPostsProcedure = await this.mySQL.query(this.selectAllPostsProcedure);
+      const createFindUserProcedure = await this.mySQL.query(this.findUserProcedure);
 
       // Insert data
       const insertDomainData = await this.mySQL.query(this.domainData);
@@ -191,6 +196,7 @@ export class ResetContentRepo {
         ...createCreateUserProcedure,
         ...createCreatePostProcedure,
         ...createSelectAllPostsProcedure,
+        ...createFindUserProcedure,
 
         // Insert data
         ...insertDomainData,

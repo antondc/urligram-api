@@ -11,7 +11,7 @@ export class CreateUserRepo implements ICreateUserRepo {
     this.mySQL = new MySQL();
   }
 
-  public async save(createUserDTO: ICreateUserRequestDTO): Promise<ICreateUserResponseDTO> {
+  public async create(createUserDTO: ICreateUserRequestDTO): Promise<ICreateUserResponseDTO> {
     try {
       const createPostQuery = `CALL create_user('${JSON.stringify(createUserDTO)}')`;
       const [[results]] = await this.mySQL.query(createPostQuery);

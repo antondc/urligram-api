@@ -20,7 +20,7 @@ BEGIN
   );
 
   -- Retrieve user
-  SELECT `id`, `name`, `email`, `status` FROM user
+  SELECT `id`, `name`, `email`, `status`, `createdAt` FROM user
   WHERE id = @uuid;
 
 END

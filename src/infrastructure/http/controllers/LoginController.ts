@@ -9,6 +9,7 @@ import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
 import { LogOutUserAdapter } from '@infrastructure/http/adapters/LogOutUserAdapter';
 import { LogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
 import { User } from '@domain/user/entities/User';
+import { FindUserRepo } from '@infrastructure/persistence/mySQL/repositories/FindUserRepo';
 
 const router = express.Router();
 
@@ -16,8 +17,9 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const loginUserDTO: ILoginUserRequestDTO = req.body;
 
-    const userRepo = new LoginUserRepo();
-    const loginUserUseCase = new LoginUserUseCase(userRepo);
+    const loginUserRepo = new LoginUserRepo();
+    const findUserRepo = new FindUserRepo();
+    const loginUserUseCase = new LoginUserUseCase(loginUserRepo, findUserRepo);
     const loginUserAdapter = new LoginUserAdapter(loginUserUseCase, loginUserDTO);
 
     const response = await loginUserAdapter.authenticate();
