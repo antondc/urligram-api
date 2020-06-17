@@ -12,6 +12,7 @@ export class ResetContentRepo {
 
   // Models
   private language: string;
+  private glossary: string;
   private domain: string;
   private link: string;
   private user: string;
@@ -31,13 +32,13 @@ export class ResetContentRepo {
   private authenticateUserProcedure: string;
   private deauthenticateUserProcedure: string;
   private createUserProcedure: string;
-  private createPostProcedure: string;
-  private selectAllPostsProcedure: string;
   private findUserProcedure: string;
+  private getAllLanguagesProcedure: string;
 
   // Data
   private domainData: string;
   private languageData: string;
+  private glossaryData: string;
   private linkData: string;
   private userData: string;
   private linkUserData: string;
@@ -61,6 +62,7 @@ export class ResetContentRepo {
 
     // Models
     this.language = fs.readFileSync(path.resolve(__dirname, '../sql/models/language.sql')).toString();
+    this.glossary = fs.readFileSync(path.resolve(__dirname, '../sql/models/glossary.sql')).toString();
     this.domain = fs.readFileSync(path.resolve(__dirname, '../sql/models/domain.sql')).toString();
     this.link = fs.readFileSync(path.resolve(__dirname, '../sql/models/link.sql')).toString();
     this.user = fs.readFileSync(path.resolve(__dirname, '../sql/models/user.sql')).toString();
@@ -88,19 +90,17 @@ export class ResetContentRepo {
     this.createUserProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createUser.sql'))
       .toString();
-    this.createPostProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createPost.sql'))
-      .toString();
-    this.selectAllPostsProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/selectAllPosts.sql'))
-      .toString();
     this.findUserProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/findUser.sql'))
+      .toString();
+    this.getAllLanguagesProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getAllLanguages.sql'))
       .toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
     this.languageData = fs.readFileSync(path.resolve(__dirname, '../sql/data/language.sql')).toString();
+    this.glossaryData = fs.readFileSync(path.resolve(__dirname, '../sql/data/glossary.sql')).toString();
     this.linkData = fs.readFileSync(path.resolve(__dirname, '../sql/data/link.sql')).toString();
     this.userData = fs.readFileSync(path.resolve(__dirname, '../sql/data/user.sql')).toString();
     this.linkUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUser.sql')).toString();
@@ -125,6 +125,7 @@ export class ResetContentRepo {
       // Create tables
       const createDebuggerTable = await this.mySQL.query(this.debugMessages);
       const createLanguageTable = await this.mySQL.query(this.language);
+      const createGlossaryTable = await this.mySQL.query(this.glossary);
       const createDomainTable = await this.mySQL.query(this.domain);
       const createLinkTable = await this.mySQL.query(this.link);
       const createUserTable = await this.mySQL.query(this.user);
@@ -144,13 +145,13 @@ export class ResetContentRepo {
       const createAuthenticateUserProcedure = await this.mySQL.query(this.authenticateUserProcedure);
       const createDeauthenticateUserProcedure = await this.mySQL.query(this.deauthenticateUserProcedure);
       const createCreateUserProcedure = await this.mySQL.query(this.createUserProcedure);
-      const createCreatePostProcedure = await this.mySQL.query(this.createPostProcedure);
-      const createSelectAllPostsProcedure = await this.mySQL.query(this.selectAllPostsProcedure);
       const createFindUserProcedure = await this.mySQL.query(this.findUserProcedure);
+      const createGetAllLanguagesProcedure = await this.mySQL.query(this.getAllLanguagesProcedure);
 
       // Insert data
       const insertDomainData = await this.mySQL.query(this.domainData);
       const insertLanguageData = await this.mySQL.query(this.languageData);
+      const insertGlossaryData = await this.mySQL.query(this.glossaryData);
       const insertLinkData = await this.mySQL.query(this.linkData);
       const insertUserData = await this.mySQL.query(this.userData);
       const insertLinkUserData = await this.mySQL.query(this.linkUserData);
@@ -175,6 +176,7 @@ export class ResetContentRepo {
 
         // Create tables
         ...createLanguageTable,
+        ...createGlossaryTable,
         ...createDomainTable,
         ...createLinkTable,
         ...createUserTable,
@@ -194,13 +196,13 @@ export class ResetContentRepo {
         ...createAuthenticateUserProcedure,
         ...createDeauthenticateUserProcedure,
         ...createCreateUserProcedure,
-        ...createCreatePostProcedure,
-        ...createSelectAllPostsProcedure,
         ...createFindUserProcedure,
+        ...createGetAllLanguagesProcedure,
 
         // Insert data
         ...insertDomainData,
         ...insertLanguageData,
+        ...insertGlossaryData,
         ...insertLinkData,
         ...insertUserData,
         ...insertLinkUserData,

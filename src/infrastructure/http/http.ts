@@ -5,12 +5,12 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
-import config from '@root/config.test.json';
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
 import HealthCheckController from '@infrastructure/http/controllers/HealthCheckController';
 import CreateUserController from '@infrastructure/http/controllers/CreateUserController';
 import ResetContentController from '@infrastructure/http/controllers/ResetContentController';
 import LoginController from '@infrastructure/http/controllers/LoginController';
+import LanguagesController from '@infrastructure/http/controllers/LanguagesController';
 import { ErrorHandlerMiddleware } from './middlewares/ErrorHandlerMiddleware';
 import { ENDPOINT_CLIENT, PORT_SERVER } from '@shared/constants/env';
 
@@ -49,6 +49,7 @@ app.use('/v1/health-check', HealthCheckController);
 app.use('/v1/login', LoginController);
 app.use('/v1/user', CreateUserController);
 app.use('/v1/reset-content', ResetContentController);
+app.use('/v1/languages', LanguagesController);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - Errors Handler - - - - - - - - - - - - - -*/
