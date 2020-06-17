@@ -34,6 +34,7 @@ export class ResetContentRepo {
   private createUserProcedure: string;
   private findUserProcedure: string;
   private getAllLanguagesProcedure: string;
+  private getLanguageBySlugProcedure: string;
 
   // Data
   private domainData: string;
@@ -96,6 +97,9 @@ export class ResetContentRepo {
     this.getAllLanguagesProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getAllLanguages.sql'))
       .toString();
+    this.getLanguageBySlugProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getLanguageBySlug.sql'))
+      .toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -147,6 +151,7 @@ export class ResetContentRepo {
       const createCreateUserProcedure = await this.mySQL.query(this.createUserProcedure);
       const createFindUserProcedure = await this.mySQL.query(this.findUserProcedure);
       const createGetAllLanguagesProcedure = await this.mySQL.query(this.getAllLanguagesProcedure);
+      const createGetLanguageBySlugProcedure = await this.mySQL.query(this.getLanguageBySlugProcedure);
 
       // Insert data
       const insertDomainData = await this.mySQL.query(this.domainData);
@@ -198,6 +203,7 @@ export class ResetContentRepo {
         ...createCreateUserProcedure,
         ...createFindUserProcedure,
         ...createGetAllLanguagesProcedure,
+        ...createGetLanguageBySlugProcedure,
 
         // Insert data
         ...insertDomainData,

@@ -13,7 +13,7 @@ export class GetLanguagesUseCase implements IGetLanguagesUseCase {
   }
 
   public async execute(): Promise<IGetLanguagesResponseDTO> {
-    const response = await this.getLanguagesRepo.get();
+    const response = await this.getLanguagesRepo.getAll();
 
     return response;
   }

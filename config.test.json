@@ -4,7 +4,6 @@
       "user": "user_linking_local",
       "database": "db_linking_local",
       "password": "o0IApFBrADXajxwd",
-      "dialect": "mysql",
       "host": "127.0.0.1"
     },
     "PROTOCOL_SERVER": "https://",
@@ -20,7 +19,6 @@
       "user": "user_linking_local",
       "database": "db_linking_local",
       "password": "o0IApFBrADXajxwd",
-      "dialect": "mysql",
       "host": "127.0.0.1"
     },
     "PROTOCOL_SERVER": "https://",
@@ -36,7 +34,6 @@
       "user": "user_linking_local",
       "database": "db_linking_local",
       "password": "o0IApFBrADXajxwd",
-      "dialect": "mysql",
       "host": "127.0.0.1"
     },
     "PROTOCOL_SERVER": "https://",

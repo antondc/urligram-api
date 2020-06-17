@@ -1,15 +1,15 @@
-import { IGetLanguagesUseCase } from '@domain/language/useCases/GetLanguagesUseCase';
+import { IGetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 
-export class GetLanguagesAdapter {
-  getLanguagesUseCase: IGetLanguagesUseCase;
+export class GetLanguageBySlugAdapter {
+  getLanguageBySlugUseCase: IGetLanguageBySlugUseCase;
 
-  constructor(getLanguagesUseCase: IGetLanguagesUseCase) {
-    this.getLanguagesUseCase = getLanguagesUseCase;
+  constructor(getLanguageBySlugUseCase: IGetLanguageBySlugUseCase) {
+    this.getLanguageBySlugUseCase = getLanguageBySlugUseCase;
   }
 
-  async getAll() {
-    const response = await this.getLanguagesUseCase.execute();
+  async getOne() {
+    const response = await this.getLanguageBySlugUseCase.execute();
 
     const formattedResponse = {
       links: {
