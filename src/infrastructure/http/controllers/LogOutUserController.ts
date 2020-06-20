@@ -3,7 +3,7 @@ import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
 import { URL_SERVER } from '@shared/constants/env';
 import { ILogOutUserResponseDTO } from '@domain/user/dto/ILogOutUserResponseDTO';
 
-export class LogOutUserAdapter {
+export class LogOutUserController {
   logOutUserUseCase: ILogOutUserUseCase;
   logOutUserRequestDTO: ILogOutUserRequestDTO;
 

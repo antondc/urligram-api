@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { CreateUserAdapter } from '@infrastructure/http/adapters/CreateUserAdapter';
+import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
@@ -14,9 +14,9 @@ UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
     const userRepo = new CreateUserRepo();
     const findUserRepo = new FindUserRepo();
     const createUserUseCase = new CreateUserUseCase(userRepo, findUserRepo);
-    const createUserAdapter = new CreateUserAdapter(createUserUseCase, createUserDTO);
+    const createUserController = new CreateUserController(createUserUseCase, createUserDTO);
 
-    const response = await createUserAdapter.createUser();
+    const response = await createUserController.createUser();
 
     return res.status(200).send(response);
   } catch (err) {

@@ -1,7 +1,7 @@
 import { IGetLanguagesUseCase } from '@domain/language/useCases/GetLanguagesUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 
-export class GetLanguagesAdapter {
+export class GetLanguagesController {
   getLanguagesUseCase: IGetLanguagesUseCase;
 
   constructor(getLanguagesUseCase: IGetLanguagesUseCase) {

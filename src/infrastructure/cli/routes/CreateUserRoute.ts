@@ -1,27 +1,26 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
+import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
 import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
+import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 import { FindUserRepo } from '@infrastructure/persistence/mySQL/repositories/FindUserRepo';
 
-const router = express.Router();
+export class CreateUserRoute {
+  createUserDTO;
 
-router.post('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const createUserDTO: ICreateUserRequestDTO = req.body;
+  constructor(createUserDTO: ICreateUserRequestDTO) {
+    this.createUserDTO = createUserDTO;
+  }
 
+  async execute(): Promise<ICreateUserResponseDTO> {
     const userRepo = new CreateUserRepo();
     const findUserRepo = new FindUserRepo();
+
     const createUserUseCase = new CreateUserUseCase(userRepo, findUserRepo);
-    const createUserController = new CreateUserController(createUserUseCase, createUserDTO);
+    const createUserController = new CreateUserController(createUserUseCase, this.createUserDTO);
 
     const response = await createUserController.createUser();
 
-    return res.status(200).send(response);
-  } catch (err) {
-    return next(err);
+    return response;
   }
-});
-
-export default router;
+}

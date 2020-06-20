@@ -1,6 +1,6 @@
 import { IResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
 
-export class ResetContentAdapter {
+export class ResetContentController {
   resetContentUseCase: IResetContentUseCase;
 
   constructor(resetContentUseCase: IResetContentUseCase) {

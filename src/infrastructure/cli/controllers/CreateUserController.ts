@@ -1,22 +1,18 @@
-import { CreateUserAdapter } from '@infrastructure/cli/adapters/CreateUserAdapter';
-import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
-import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
+import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 
 export class CreateUserController {
-  createUserDTO;
+  createUserUseCase: ICreateUserUseCase;
+  createUserDTO: ICreateUserRequestDTO;
 
-  constructor(createUserDTO: ICreateUserRequestDTO) {
+  constructor(createUserUseCase: ICreateUserUseCase, createUserDTO: ICreateUserRequestDTO) {
     this.createUserDTO = createUserDTO;
+    this.createUserUseCase = createUserUseCase;
   }
 
-  async execute(): Promise<ICreateUserResponseDTO> {
-    const userRepo = new CreateUserRepo();
-    const createUserUseCase = new CreateUserUseCase(userRepo);
-    const createUserAdapter = new CreateUserAdapter(createUserUseCase, this.createUserDTO);
-
-    const response = await createUserAdapter.createUser();
+  async createUser(): Promise<ICreateUserResponseDTO> {
+    const response = await this.createUserUseCase.execute(this.createUserDTO);
 
     return response;
   }

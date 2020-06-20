@@ -2,7 +2,7 @@ import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { URL_SERVER } from '@shared/constants/env';
 
-export class CreateUserAdapter {
+export class CreateUserController {
   createUserUseCase: ICreateUserUseCase;
   createUserDTO: ICreateUserRequestDTO;
 

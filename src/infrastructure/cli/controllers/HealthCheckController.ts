@@ -1,14 +1,14 @@
-import { HealthCheckAdapter } from '@infrastructure/cli/adapters/HealthCheckAdapter';
-import { HealthCheckRepo } from '@infrastructure/persistence/mySQL/repositories/HealthCheckRepo';
-import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
+import { IHealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 
 export class HealthCheckController {
-  async execute() {
-    const healthCheckRepo = new HealthCheckRepo();
-    const healthCheckUseCase = new HealthCheckUseCase(healthCheckRepo);
-    const healthCheckAdapter = new HealthCheckAdapter(healthCheckUseCase);
+  healthCheckUseCase: IHealthCheckUseCase;
 
-    const response = await healthCheckAdapter.resetContent();
+  constructor(healthCheckUseCase: IHealthCheckUseCase) {
+    this.healthCheckUseCase = healthCheckUseCase;
+  }
+
+  async resetContent() {
+    const response = await this.healthCheckUseCase.execute();
 
     return response;
   }

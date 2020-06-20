@@ -1,7 +1,7 @@
 import { IGetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 
-export class GetLanguageBySlugAdapter {
+export class GetLanguageBySlugController {
   getLanguageBySlugUseCase: IGetLanguageBySlugUseCase;
 
   constructor(getLanguageBySlugUseCase: IGetLanguageBySlugUseCase) {

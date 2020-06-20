@@ -2,7 +2,7 @@ import { ILoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
 import { URL_SERVER } from '@shared/constants/env';
 
-export class LoginUserAdapter {
+export class LoginUserController {
   loginUserUseCase: ILoginUserUseCase;
   loginUserDTO: ILoginUserRequestDTO;
 

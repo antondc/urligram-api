@@ -1,6 +1,6 @@
 import { IHealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 
-export class HealthCheckAdapter {
+export class HealthCheckController {
   healthCheckUseCase: IHealthCheckUseCase;
 
   constructor(healthCheckUseCase: IHealthCheckUseCase) {

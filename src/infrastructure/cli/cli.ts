@@ -1,8 +1,8 @@
 import 'module-alias/register';
 import prompts from 'prompts';
-import { ResetContentController } from '@infrastructure/cli/controllers/ResetContentController';
-import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
-import { HealthCheckController } from '@infrastructure/cli/controllers/HealthCheckController';
+import { ResetContentRoute } from '@infrastructure/cli/routes/ResetContentRoute';
+import { CreateUserRoute } from '@infrastructure/cli/routes/CreateUserRoute';
+import { HealthCheckRoute } from '@infrastructure/cli/routes/HealthCheckRoute';
 
 const main = async () => {
   const { actions } = await prompts([
@@ -20,8 +20,8 @@ const main = async () => {
 
   if (actions.includes('healthCheck')) {
     try {
-      const healthCheckController = new HealthCheckController();
-      const response = await healthCheckController.execute();
+      const healthCheckRoute = new HealthCheckRoute();
+      const response = await healthCheckRoute.execute();
       await console.log('System healthy');
       await console.log(JSON.stringify(response, null, 4));
     } catch (err) {
@@ -31,8 +31,8 @@ const main = async () => {
 
   if (actions.includes('reset')) {
     try {
-      const resetContentController = new ResetContentController();
-      await resetContentController.execute();
+      const resetContentRoute = new ResetContentRoute();
+      await resetContentRoute.execute();
       await console.log('Reseted database');
     } catch (err) {
       await console.log('There was an error resetting database');
@@ -56,11 +56,16 @@ const main = async () => {
         name: 'password',
         message: 'What is your password?',
       },
+      {
+        type: 'text',
+        name: 'password_repeated',
+        message: 'Please repeat your password',
+      },
     ]);
 
     try {
-      const createUserController = await new CreateUserController(user);
-      const result = await createUserController.execute();
+      const createUserRoute = await new CreateUserRoute(user);
+      const result = await createUserRoute.execute();
       await console.log(JSON.stringify(result, null, 4));
     } catch (err) {
       await console.log('There was an error creating user');

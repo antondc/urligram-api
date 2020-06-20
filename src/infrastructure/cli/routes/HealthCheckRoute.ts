@@ -1,22 +1,15 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { HealthCheckController } from '@infrastructure/http/controllers/HealthCheckController';
+import { HealthCheckController } from '@infrastructure/cli/controllers/HealthCheckController';
 import { HealthCheckRepo } from '@infrastructure/persistence/mySQL/repositories/HealthCheckRepo';
 import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 
-const HealthCheckRoute = express.Router();
-
-HealthCheckRoute.all('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
+export class HealthCheckRoute {
+  async execute() {
     const healthCheckRepo = new HealthCheckRepo();
     const healthCheckUseCase = new HealthCheckUseCase(healthCheckRepo);
     const healthCheckController = new HealthCheckController(healthCheckUseCase);
 
     const response = await healthCheckController.resetContent();
 
-    return res.status(200).send(response);
-  } catch (err) {
-    next(err);
+    return response;
   }
-});
-
-export { HealthCheckRoute };
+}
