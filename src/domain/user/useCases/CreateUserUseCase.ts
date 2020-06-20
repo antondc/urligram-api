@@ -24,8 +24,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
 
     if (password !== password_repeated) throw new UserError('Passwords are not equal', 409);
 
-    const stringValidator = new StringValidator(email);
-    const isEmail = stringValidator.testEmail();
+    const isEmail = StringValidator.validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409);
 
     const user = await new User(undefined, undefined, undefined, undefined, this.findUserRepo);

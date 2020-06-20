@@ -1,16 +1,20 @@
 export class StringValidator {
-  value: string | number;
-  emailRegex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  public static validateEmailAddress(email: string) {
+    const emailRegex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  constructor(value: string | number) {
-    this.value = value;
+    const isEmail = emailRegex.test(String(email).toLowerCase());
+
+    return isEmail;
   }
 
-  public testEmail() {
-    const formattedString = String(this.value).toLowerCase();
+  public static createRandomNumericString(numberDigits: number): string {
+    const chars = '0123456789';
+    let value = '';
 
-    const result = this.emailRegex.test(formattedString);
+    for (let i = numberDigits; i > 0; --i) {
+      value += chars[Math.round(Math.random() * (chars.length - 1))];
+    }
 
-    return result;
+    return value;
   }
 }
