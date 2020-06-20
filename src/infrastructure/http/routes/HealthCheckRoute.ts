@@ -3,9 +3,9 @@ import { HealthCheckAdapter } from '@infrastructure/http/adapters/HealthCheckAda
 import { HealthCheckRepo } from '@infrastructure/persistence/mySQL/repositories/HealthCheckRepo';
 import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 
-const router = express.Router();
+const HealthCheckRoute = express.Router();
 
-router.all('/', async (req: Request, res: Response, next: NextFunction) => {
+HealthCheckRoute.all('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const healthCheckRepo = new HealthCheckRepo();
     const healthCheckUseCase = new HealthCheckUseCase(healthCheckRepo);
@@ -19,4 +19,4 @@ router.all('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-export default router;
+export { HealthCheckRoute };

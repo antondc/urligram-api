@@ -3,9 +3,9 @@ import { ResetContentAdapter } from '@infrastructure/http/adapters/ResetContentA
 import { ResetContentRepo } from '@infrastructure/persistence/mySQL/repositories/ResetContentRepo';
 import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
 
-const router = express.Router();
+const ResetContentRoute = express.Router();
 
-router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
+ResetContentRoute.delete('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const resetContentRepo = new ResetContentRepo();
     const resetContentUseCase = new ResetContentUseCase(resetContentRepo);
@@ -19,4 +19,4 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-export default router;
+export { ResetContentRoute };

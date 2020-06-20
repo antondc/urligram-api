@@ -11,9 +11,9 @@ import { LogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
 import { User } from '@domain/user/entities/User';
 import { FindUserRepo } from '@infrastructure/persistence/mySQL/repositories/FindUserRepo';
 
-const router = express.Router();
+const LoginRoute = express.Router();
 
-router.post('/', async (req: Request, res: Response, next: NextFunction) => {
+LoginRoute.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const loginUserDTO: ILoginUserRequestDTO = req.body;
 
@@ -40,7 +40,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
+LoginRoute.delete('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const tokenService = new TokenService();
     const { id } = tokenService.verifyToken(req.cookies.sessionToken) as User;
@@ -59,4 +59,4 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-export default router;
+export { LoginRoute };

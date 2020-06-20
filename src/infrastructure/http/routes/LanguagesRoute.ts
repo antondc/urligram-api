@@ -6,9 +6,9 @@ import { IGetLanguageRequestDTO } from '@domain/language/dto/IGetLanguageRequest
 import { GetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
 import { GetLanguageBySlugAdapter } from '../adapters/GetLanguageBySlugAdapter';
 
-const router = express.Router();
+const LanguagesRoute = express.Router();
 
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+LanguagesRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const getLanguagesRepo = new GetLanguagesRepo();
     const getLanguagesUseCase = new GetLanguagesUseCase(getLanguagesRepo);
@@ -22,7 +22,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get('/:slug', async (req: Request, res: Response, next: NextFunction) => {
+LanguagesRoute.get('/:slug', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { slug } = req.params;
 
@@ -38,4 +38,4 @@ router.get('/:slug', async (req: Request, res: Response, next: NextFunction) => 
   }
 });
 
-export default router;
+export { LanguagesRoute };

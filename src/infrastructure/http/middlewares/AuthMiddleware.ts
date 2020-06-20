@@ -5,9 +5,9 @@ import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError
 export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (
     req.method === 'GET' ||
-    (req.method === 'POST' && req.baseUrl === '/v1/login') ||
-    (req.method === 'POST' && req.baseUrl === '/v1/user') ||
-    req.baseUrl === '/v1/reset-content'
+    (req.method === 'POST' && req.baseUrl === '/api/v1/login') ||
+    (req.method === 'POST' && req.baseUrl === '/api/v1/user') ||
+    req.baseUrl === '/api/v1/reset-content'
   ) {
     return next();
   }
