@@ -1,6 +1,5 @@
 import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
-import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 
 export class CreateUserController {
   createUserUseCase: ICreateUserUseCase;
@@ -11,7 +10,7 @@ export class CreateUserController {
     this.createUserUseCase = createUserUseCase;
   }
 
-  async createUser(): Promise<ICreateUserResponseDTO> {
+  async createUser() {
     const response = await this.createUserUseCase.execute(this.createUserDTO);
 
     return response;

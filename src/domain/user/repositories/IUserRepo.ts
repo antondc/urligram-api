@@ -1,13 +1,8 @@
-import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
-import { User } from '../entities/User';
-import { IFindUserRequestDTO } from '@domain/user/dto/IFindUserRequestDTO';
-import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
-import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
+import { User } from '@domain/user/entities/User';
 
 export interface IUserRepo {
-  create: (createUserDTO: ICreateUserRequestDTO) => Promise<User>;
-  find: (findUserDTO: IFindUserRequestDTO) => Promise<User>;
-  authenticate: (loginUserDTO: ILoginUserRequestDTO) => Promise<User>;
-  deauthenticate: (loginUserDTO: ILogOutUserRequestDTO) => Promise<ILogOutUserRequestDTO>;
-  logSession: (logData: { result: string; type: string; id: string }) => Promise<any>;
+  create: (createUserDTO) => Promise<User>;
+  find: (findUserDTO) => Promise<User>;
+  authenticate: (loginUserDTO) => Promise<User>;
+  logSession: (sessionLogData: { result: string; type: string; id: string }) => Promise<void>;
 }

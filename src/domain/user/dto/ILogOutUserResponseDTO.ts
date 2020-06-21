@@ -1,3 +1,1 @@
-export interface ILogOutUserResponseDTO {
-  id: string;
-}
+export type ILogOutUserResponseDTO = void;

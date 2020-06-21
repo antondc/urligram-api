@@ -1,10 +1,11 @@
+import { IUserRepo } from '../repositories/IUserRepo';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
 import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
-import { IUserRepo } from '../repositories/IUserRepo';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
+import { User } from '../entities/User';
 
 export interface ILoginUserUseCase {
-  execute: (loginUserDTO: ILoginUserRequestDTO) => Promise<ILoginUserResponseDTO>;
+  execute: (loginUserDTO: ILoginUserRequestDTO) => Promise<User>;
 }
 
 export class LoginUserUseCase implements ILoginUserUseCase {
@@ -19,23 +20,23 @@ export class LoginUserUseCase implements ILoginUserUseCase {
     const userFound = await this.userRepo.find(loginUserDTO);
 
     if (userAuthenticated) {
-      const logSessionData = {
+      const sessionLogData = {
         result: 'success',
         type: 'login',
         id: userFound.id,
       };
 
-      await this.userRepo.logSession(logSessionData);
+      await this.userRepo.logSession(sessionLogData);
 
       return userAuthenticated;
     } else if (!userAuthenticated && userFound) {
-      const logSessionData = {
+      const sessionLogData = {
         result: 'failure',
         type: 'login',
         id: userFound.id,
       };
 
-      await this.userRepo.logSession(logSessionData);
+      await this.userRepo.logSession(sessionLogData);
 
       throw new AuthenticationError('Username or password not correct', 500);
     } else if (!userFound) {

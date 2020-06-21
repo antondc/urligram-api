@@ -1,5 +1,3 @@
-export interface ICreateUserResponseDTO {
-  id: string;
-  name: string;
-  email: string;
-}
+import { User } from '@domain/user/entities/User';
+
+export type ICreateUserResponseDTO = User;

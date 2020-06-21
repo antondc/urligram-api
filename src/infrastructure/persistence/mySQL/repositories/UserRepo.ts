@@ -1,14 +1,11 @@
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { RequestError } from '@shared/errors/RequestError';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
-import { IFindUserRequestDTO } from '@domain/user/dto/IFindUserRequestDTO';
-import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
-import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
-import { AuthenticationError } from '@shared/errors/AuthenticationError';
+import { BaseError } from '@shared/errors/BaseError';
+import { User } from '@domain/user/entities/User';
 
 export class UserRepo implements IUserRepo {
-  public async create(createUserDTO: ICreateUserRequestDTO) {
+  public async create(createUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
       const createPostQuery = `CALL create_user('${JSON.stringify(createUserDTO)}')`;
@@ -22,7 +19,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async find(findUserDTO: IFindUserRequestDTO) {
+  public async find(findUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
       const findUserQuery = `CALL find_user('${JSON.stringify(findUserDTO)}')`;
@@ -36,7 +33,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async authenticate(loginUserDTO: ILoginUserRequestDTO) {
+  public async authenticate(loginUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
       const authenticateUserQuery = `CALL authenticate_user('${JSON.stringify(loginUserDTO)}')`;
@@ -51,27 +48,18 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async deauthenticate(logOutUserRequestDTO: ILogOutUserRequestDTO) {
+  public async logSession(sessionLogData): Promise<void> {
     const mySQL = new MySQL();
     try {
-      const deauthenticateUserQuery = `CALL deauthenticate_user('${JSON.stringify(logOutUserRequestDTO)}')`;
-      await mySQL.query(deauthenticateUserQuery);
+      const logSessionQuery = `CALL log_user_session('${JSON.stringify(sessionLogData)}')`;
 
-      return logOutUserRequestDTO;
+      await mySQL.query(logSessionQuery);
+
+      return null;
     } catch (err) {
-      throw new AuthenticationError('Error deauthenticating user', 401, err);
+      throw new BaseError('Error loggin user session', 401, err);
     } finally {
       await mySQL.close();
     }
-  }
-
-  public async logSession(logData) {
-    const mySQL = new MySQL();
-
-    const logSessionQuery = `CALL log_user_session('${JSON.stringify(logData)}')`;
-
-    await mySQL.query(logSessionQuery);
-
-    return logSessionQuery;
   }
 }
