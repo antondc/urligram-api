@@ -1,1 +1,3 @@
-export type ILogOutUserResponseDTO = void;
+export type ILogOutUserResponseDTO = {
+  id: string;
+};

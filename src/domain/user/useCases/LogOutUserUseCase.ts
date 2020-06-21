@@ -21,7 +21,9 @@ export class LogOutUserUseCase implements ILogOutUserUseCase {
     };
 
     await this.userRepo.logSession(sessionLogData);
-
-    return null;
+    const result = {
+      id: logOutUserDTO.id,
+    };
+    return result;
   }
 }
