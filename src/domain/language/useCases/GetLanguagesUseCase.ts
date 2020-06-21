@@ -1,4 +1,4 @@
-import { IGetLanguagesRepo } from '../repositories/IGetLanguagesRepo';
+import { ILanguagesRepo } from '../repositories/ILanguagesRepo';
 import { IGetLanguagesResponseDTO } from '../dto/IGetLanguagesResponseDTO';
 
 export interface IGetLanguagesUseCase {
@@ -6,14 +6,14 @@ export interface IGetLanguagesUseCase {
 }
 
 export class GetLanguagesUseCase implements IGetLanguagesUseCase {
-  private getLanguagesRepo: IGetLanguagesRepo;
+  private languagesRepo: ILanguagesRepo;
 
-  constructor(getLanguagesRepo: IGetLanguagesRepo) {
-    this.getLanguagesRepo = getLanguagesRepo;
+  constructor(languagesRepo: ILanguagesRepo) {
+    this.languagesRepo = languagesRepo;
   }
 
   public async execute(): Promise<IGetLanguagesResponseDTO> {
-    const response = await this.getLanguagesRepo.getAll();
+    const response = await this.languagesRepo.getAll();
 
     return response;
   }

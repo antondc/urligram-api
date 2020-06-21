@@ -1,10 +1,10 @@
-import { IGetLanguagesRepo } from '@domain/language/repositories/IGetLanguagesRepo';
+import { ILanguagesRepo } from '@domain/language/repositories/ILanguagesRepo';
 import { IGetLanguagesResponseDTO } from '@domain/language/dto/IGetLanguagesResponseDTO';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 import { IGetLanguageRequestDTO } from '@domain/language/dto/IGetLanguageRequestDTO';
 
-export class GetLanguagesRepo implements IGetLanguagesRepo {
+export class getLanguagesRepo implements ILanguagesRepo {
   private mySQL: MySQL;
 
   constructor() {

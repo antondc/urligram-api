@@ -8,7 +8,7 @@ export class GetLanguagesController {
     this.getLanguagesUseCase = getLanguagesUseCase;
   }
 
-  async getAll() {
+  async execute() {
     const response = await this.getLanguagesUseCase.execute();
 
     const formattedResponse = {
