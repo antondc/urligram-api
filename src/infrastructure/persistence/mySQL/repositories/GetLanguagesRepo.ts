@@ -24,7 +24,7 @@ export class GetLanguagesRepo implements IGetLanguagesRepo {
     }
   }
 
-  public async getOne(getLanguageRequestDTO: IGetLanguageRequestDTO): Promise<IGetLanguagesResponseDTO> {
+  public async getOne(getLanguageRequestDTO: IGetLanguageRequestDTO) {
     try {
       const getLanguageQuery = `CALL get_language_by_slug('${JSON.stringify(getLanguageRequestDTO)}')`;
 
