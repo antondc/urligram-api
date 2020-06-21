@@ -8,7 +8,7 @@ import { IFindUserRepo } from '../repositories/IFindUserRepo';
 import { IFindUserRequestDTO } from '../dto/IFindUserRequestDTO';
 import { IFindUserResponseDTO } from '../dto/IFindUserResponseDTO';
 import { RequestError } from '@shared/errors/RequestError';
-import { ICreateUserRepo } from '../repositories/ICreateUserRepo';
+import { IUserRepo } from '../repositories/IUserRepo';
 import { ICreateUserRequestDTO } from '../dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '../dto/ICreateUserResponseDTO';
 
@@ -27,14 +27,14 @@ export class User {
 
   loginUserRepo: ILoginUserRepo;
   logOutUserRepo: ILogOutUserRepo;
-  createUserRepo: ICreateUserRepo;
+  userRepo: IUserRepo;
   findUserRepo: IFindUserRepo;
 
   constructor(
     userDTO?,
     loginUserRepo?: ILoginUserRepo,
     logOutUserRepo?: ILogOutUserRepo,
-    createUserRepo?: ICreateUserRepo,
+    userRepo?: IUserRepo,
     findUserRepo?: IFindUserRepo
   ) {
     this.id = userDTO?.id;
@@ -51,7 +51,7 @@ export class User {
 
     this.loginUserRepo = loginUserRepo;
     this.logOutUserRepo = logOutUserRepo;
-    this.createUserRepo = createUserRepo;
+    this.userRepo = userRepo;
     this.findUserRepo = findUserRepo;
   }
 
@@ -76,7 +76,7 @@ export class User {
   }
 
   async create(createUserDTO: ICreateUserRequestDTO): Promise<ICreateUserResponseDTO> {
-    const user = await this.createUserRepo.create(createUserDTO);
+    const user = await this.userRepo.create(createUserDTO);
 
     return user;
   }

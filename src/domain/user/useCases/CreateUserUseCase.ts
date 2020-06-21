@@ -1,4 +1,4 @@
-import { ICreateUserRepo } from '@domain/user/repositories/ICreateUserRepo';
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IFindUserRepo } from '@domain/user/repositories/IFindUserRepo';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
@@ -11,11 +11,11 @@ export interface ICreateUserUseCase {
 }
 
 export class CreateUserUseCase implements ICreateUserUseCase {
-  private createUserRepo: ICreateUserRepo;
+  private userRepo: IUserRepo;
   private findUserRepo: IFindUserRepo;
 
-  constructor(createUserRepo: ICreateUserRepo, findUserRepo: IFindUserRepo) {
-    this.createUserRepo = createUserRepo;
+  constructor(userRepo: IUserRepo, findUserRepo: IFindUserRepo) {
+    this.userRepo = userRepo;
     this.findUserRepo = findUserRepo;
   }
 
@@ -31,7 +31,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
     const userAlreadyExists = await user.find(createUserDTO);
     if (!!userAlreadyExists) throw new UserError('User already exist', 409);
 
-    const response = await this.createUserRepo.create(createUserDTO);
+    const response = await this.userRepo.create(createUserDTO);
 
     return response;
   }

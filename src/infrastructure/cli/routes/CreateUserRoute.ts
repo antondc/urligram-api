@@ -1,5 +1,5 @@
 import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
-import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
+import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
@@ -13,7 +13,7 @@ export class CreateUserRoute {
   }
 
   async execute(): Promise<ICreateUserResponseDTO> {
-    const userRepo = new CreateUserRepo();
+    const userRepo = new UserRepo();
     const findUserRepo = new FindUserRepo();
 
     const createUserUseCase = new CreateUserUseCase(userRepo, findUserRepo);

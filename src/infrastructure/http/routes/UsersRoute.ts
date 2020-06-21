@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
-import { CreateUserRepo } from '@infrastructure/persistence/mySQL/repositories/CreateUserRepo';
+import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { FindUserRepo } from '@infrastructure/persistence/mySQL/repositories/FindUserRepo';
@@ -11,7 +11,7 @@ UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
   try {
     const createUserDTO: ICreateUserRequestDTO = req.body;
 
-    const userRepo = new CreateUserRepo();
+    const userRepo = new UserRepo();
     const findUserRepo = new FindUserRepo();
     const createUserUseCase = new CreateUserUseCase(userRepo, findUserRepo);
     const createUserController = new CreateUserController(createUserUseCase, createUserDTO);

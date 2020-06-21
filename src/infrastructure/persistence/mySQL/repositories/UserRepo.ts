@@ -1,10 +1,10 @@
-import { ICreateUserRepo } from '@domain/user/repositories/ICreateUserRepo';
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { RequestError } from '@shared/errors/RequestError';
 
-export class CreateUserRepo implements ICreateUserRepo {
+export class UserRepo implements IUserRepo {
   private mySQL: MySQL;
 
   constructor() {
