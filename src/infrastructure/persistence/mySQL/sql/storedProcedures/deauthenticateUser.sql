@@ -9,7 +9,7 @@ BEGIN
   SET @id = JSON_EXTRACT(user_data, '$.id');
 
   -- Select user
-  INSERT INTO `user_log` (
+  INSERT INTO `user_session_log` (
     `result`,
     `type`,
     `user_id`

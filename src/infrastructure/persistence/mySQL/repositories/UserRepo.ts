@@ -64,4 +64,14 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async logSession(logData) {
+    const mySQL = new MySQL();
+
+    const logSessionQuery = `CALL log_user_session('${JSON.stringify(logData)}')`;
+
+    await mySQL.query(logSessionQuery);
+
+    return logSessionQuery;
+  }
 }

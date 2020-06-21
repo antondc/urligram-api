@@ -6,7 +6,7 @@ export class AuthenticationError extends BaseError {
   statusCode: number;
   error: {};
 
-  constructor(message: string, statusCode: number, error: {}) {
+  constructor(message: string, statusCode: number, error?: {}) {
     super(message, statusCode);
 
     this.message = message;
