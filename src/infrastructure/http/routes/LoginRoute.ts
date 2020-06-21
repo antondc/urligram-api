@@ -1,15 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { LoginUserRepo } from '@infrastructure/persistence/mySQL/repositories/LoginUserRepo';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
 import { LoginUserController } from '@infrastructure/http/controllers/LoginUserController';
 import { LoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
-import { LogOutUserRepo } from '@infrastructure/persistence/mySQL/repositories/LogOutUserRepo';
 import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
 import { LogOutUserController } from '@infrastructure/http/controllers/LogOutUserController';
 import { LogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
+import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { User } from '@domain/user/entities/User';
-import { FindUserRepo } from '@infrastructure/persistence/mySQL/repositories/FindUserRepo';
 
 const LoginRoute = express.Router();
 
@@ -17,12 +15,11 @@ LoginRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
   try {
     const loginUserDTO: ILoginUserRequestDTO = req.body;
 
-    const loginUserRepo = new LoginUserRepo();
-    const findUserRepo = new FindUserRepo();
-    const loginUserUseCase = new LoginUserUseCase(loginUserRepo, findUserRepo);
-    const loginUserController = new LoginUserController(loginUserUseCase, loginUserDTO);
+    const userRepo = new UserRepo();
+    const loginUserUseCase = new LoginUserUseCase(userRepo);
+    const loginUserController = new LoginUserController(loginUserUseCase);
 
-    const response = await loginUserController.authenticate();
+    const response = await loginUserController.execute(loginUserDTO);
 
     const tokenService = new TokenService();
     const token = tokenService.createToken(response.data[0].attributes);
@@ -47,11 +44,11 @@ LoginRoute.delete('/', async (req: Request, res: Response, next: NextFunction) =
 
     const logOutUserRequestDTO: ILogOutUserRequestDTO = { id };
 
-    const logOutUserRepo = new LogOutUserRepo();
-    const logOutUserUseCase = new LogOutUserUseCase(logOutUserRepo);
-    const logOutUserController = new LogOutUserController(logOutUserUseCase, logOutUserRequestDTO);
+    const userRepo = new UserRepo();
+    const logOutUserUseCase = new LogOutUserUseCase(userRepo);
+    const logOutUserController = new LogOutUserController(logOutUserUseCase);
 
-    const response = await logOutUserController.deauthenticate();
+    const response = await logOutUserController.execute(logOutUserRequestDTO);
 
     res.clearCookie('sessionToken', { path: '/' }).status(205).send(response);
   } catch (err) {

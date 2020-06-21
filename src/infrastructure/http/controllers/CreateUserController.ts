@@ -1,18 +1,16 @@
+import { URL_SERVER } from '@shared/constants/env';
 import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
-import { URL_SERVER } from '@shared/constants/env';
 
 export class CreateUserController {
   createUserUseCase: ICreateUserUseCase;
-  createUserDTO: ICreateUserRequestDTO;
 
-  constructor(createUserUseCase: ICreateUserUseCase, createUserDTO: ICreateUserRequestDTO) {
-    this.createUserDTO = createUserDTO;
+  constructor(createUserUseCase: ICreateUserUseCase) {
     this.createUserUseCase = createUserUseCase;
   }
 
-  async createUser() {
-    const response = await this.createUserUseCase.execute(this.createUserDTO);
+  async execute(createUserDTO: ICreateUserRequestDTO) {
+    const response = await this.createUserUseCase.execute(createUserDTO);
 
     const formattedResponse = {
       links: {

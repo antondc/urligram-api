@@ -3,7 +3,6 @@ import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRep
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
-import { FindUserRepo } from '@infrastructure/persistence/mySQL/repositories/FindUserRepo';
 
 export class CreateUserRoute {
   createUserDTO;
@@ -14,9 +13,8 @@ export class CreateUserRoute {
 
   async execute(): Promise<ICreateUserResponseDTO> {
     const userRepo = new UserRepo();
-    const findUserRepo = new FindUserRepo();
 
-    const createUserUseCase = new CreateUserUseCase(userRepo, findUserRepo);
+    const createUserUseCase = new CreateUserUseCase(userRepo);
     const createUserController = new CreateUserController(createUserUseCase, this.createUserDTO);
 
     const response = await createUserController.createUser();

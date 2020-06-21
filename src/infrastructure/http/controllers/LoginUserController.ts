@@ -4,15 +4,13 @@ import { URL_SERVER } from '@shared/constants/env';
 
 export class LoginUserController {
   loginUserUseCase: ILoginUserUseCase;
-  loginUserDTO: ILoginUserRequestDTO;
 
-  constructor(loginUserUseCase: ILoginUserUseCase, loginUserDTO: ILoginUserRequestDTO) {
-    this.loginUserDTO = loginUserDTO;
+  constructor(loginUserUseCase: ILoginUserUseCase) {
     this.loginUserUseCase = loginUserUseCase;
   }
 
-  async authenticate() {
-    const response = await this.loginUserUseCase.execute(this.loginUserDTO);
+  async execute(loginUserDTO: ILoginUserRequestDTO) {
+    const response = await this.loginUserUseCase.execute(loginUserDTO);
 
     const formattedResponse = {
       links: {

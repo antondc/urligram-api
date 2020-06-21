@@ -1,19 +1,16 @@
 import { ILogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
 import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
 import { URL_SERVER } from '@shared/constants/env';
-import { ILogOutUserResponseDTO } from '@domain/user/dto/ILogOutUserResponseDTO';
 
 export class LogOutUserController {
   logOutUserUseCase: ILogOutUserUseCase;
-  logOutUserRequestDTO: ILogOutUserRequestDTO;
 
-  constructor(logOutUserUseCase: ILogOutUserUseCase, logOutUserRequestDTO: ILogOutUserRequestDTO) {
-    this.logOutUserRequestDTO = logOutUserRequestDTO;
+  constructor(logOutUserUseCase: ILogOutUserUseCase) {
     this.logOutUserUseCase = logOutUserUseCase;
   }
 
-  async deauthenticate() {
-    const response = await this.logOutUserUseCase.execute(this.logOutUserRequestDTO);
+  async execute(logOutUserRequestDTO: ILogOutUserRequestDTO) {
+    const response = await this.logOutUserUseCase.execute(logOutUserRequestDTO);
 
     const formattedResponse = {
       links: {

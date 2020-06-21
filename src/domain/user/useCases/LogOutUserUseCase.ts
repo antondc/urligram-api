@@ -1,23 +1,21 @@
-import { User } from '@domain/user/entities/User';
 import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
 import { ILogOutUserResponseDTO } from '@domain/user/dto/ILogOutUserResponseDTO';
-import { ILogOutUserRepo } from '../repositories/ILogOutUserRepo';
+import { IUserRepo } from '../repositories/IUserRepo';
 
 export interface ILogOutUserUseCase {
   execute: (logOutUserDTO: ILogOutUserRequestDTO) => Promise<ILogOutUserResponseDTO>;
 }
 
 export class LogOutUserUseCase implements ILogOutUserUseCase {
-  private logOutUserRepo: ILogOutUserRepo;
+  private userRepo: IUserRepo;
 
-  constructor(logOutUserRepo: ILogOutUserRepo) {
-    this.logOutUserRepo = logOutUserRepo;
+  constructor(userRepo: IUserRepo) {
+    this.userRepo = userRepo;
   }
 
   public async execute(logOutUserDTO: ILogOutUserRequestDTO): Promise<ILogOutUserResponseDTO> {
-    const user = await new User(undefined, undefined, this.logOutUserRepo);
 
-    const response = await user.deauthenticate(logOutUserDTO);
+    const response = await this.userRepo.deauthenticate(logOutUserDTO);
 
     return response;
   }
