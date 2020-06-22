@@ -1,40 +1,38 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 import { IGetLanguagesUseCase } from '@domain/language/useCases/GetLanguagesUseCase';
 import { URL_SERVER } from '@shared/constants/env';
+import { BaseController } from './BaseController';
 
-export class GetLanguagesController {
-  getLanguagesUseCase: IGetLanguagesUseCase;
+export class GetLanguagesController extends BaseController {
+  useCase: IGetLanguagesUseCase;
 
-  constructor(getLanguagesUseCase: IGetLanguagesUseCase) {
-    this.getLanguagesUseCase = getLanguagesUseCase;
+  constructor(useCase: IGetLanguagesUseCase) {
+    super();
+    this.useCase = useCase;
   }
 
-  async execute(req: Request, res: Response, next: NextFunction) {
-    try {
-      const response = await this.getLanguagesUseCase.execute();
+  async executeImpl(req: Request, res: Response) {
+    const response = await this.useCase.execute();
 
-      const formattedResponse = {
-        links: {
-          self: URL_SERVER + '/language',
-        },
-        data: [
-          {
-            type: 'language',
-            id: response.id,
-            session: {
-              self: URL_SERVER + '/language',
-            },
-            attributes: response,
-            relationships: {},
+    const formattedResponse = {
+      links: {
+        self: URL_SERVER + '/language',
+      },
+      data: [
+        {
+          type: 'language',
+          id: response.id,
+          session: {
+            self: URL_SERVER + '/language',
           },
-        ],
-        included: [],
-      };
+          attributes: response,
+          relationships: {},
+        },
+      ],
+      included: [],
+    };
 
-      return res.status(200).send(formattedResponse);
-    } catch (err) {
-      return next(err);
-    }
+    return res.status(200).send(formattedResponse);
   }
 }

@@ -1,21 +1,19 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 import { IHealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
+import { BaseController } from './BaseController';
 
-export class HealthCheckController {
-  healthCheckUseCase: IHealthCheckUseCase;
+export class HealthCheckController extends BaseController {
+  useCase: IHealthCheckUseCase;
 
-  constructor(healthCheckUseCase: IHealthCheckUseCase) {
-    this.healthCheckUseCase = healthCheckUseCase;
+  constructor(useCase: IHealthCheckUseCase) {
+    super();
+    this.useCase = useCase;
   }
 
-  async execute(req: Request, res: Response, next: NextFunction) {
-    try {
-      const response = await this.healthCheckUseCase.execute();
+  async executeImpl(req: Request, res: Response) {
+    const response = await this.useCase.execute();
 
-      return res.status(200).send(response);
-    } catch (err) {
-      next(err);
-    }
+    return res.status(200).send(response);
   }
 }

@@ -1,21 +1,19 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 import { IResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
+import { BaseController } from './BaseController';
 
-export class ResetContentController {
+export class ResetContentController extends BaseController {
   resetContentUseCase: IResetContentUseCase;
 
   constructor(resetContentUseCase: IResetContentUseCase) {
+    super();
     this.resetContentUseCase = resetContentUseCase;
   }
 
-  async execute(req: Request, res: Response, next: NextFunction) {
-    try {
-      const response = await this.resetContentUseCase.execute();
+  async executeImpl(req: Request, res: Response) {
+    const response = await this.resetContentUseCase.execute();
 
-      return res.status(200).send(response);
-    } catch (err) {
-      next(err);
-    }
+    return res.status(200).send(response);
   }
 }

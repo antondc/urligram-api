@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { SECRET } from '@shared/constants/env';
 
 export class TokenService {
-  createToken(string: string | Record<string, unknown>) {
+  createToken(string: unknown) {
     const token = jwt.sign(JSON.stringify(string), SECRET);
 
     return token;
