@@ -14,7 +14,7 @@ export class getLanguagesRepo implements ILanguagesRepo {
 
   public async getAll(): Promise<IGetLanguagesResponseDTO> {
     try {
-      const [languages] = await this.mySQL.query(`CALL get_all_languages()`);
+      const [languages] = await this.mySQL.query(`CALL languages_get_all()`);
 
       return languages;
     } catch (err) {
@@ -26,7 +26,7 @@ export class getLanguagesRepo implements ILanguagesRepo {
 
   public async getOne(getLanguageRequestDTO: IGetLanguageRequestDTO) {
     try {
-      const getLanguageQuery = `CALL get_language_by_slug('${JSON.stringify(getLanguageRequestDTO)}')`;
+      const getLanguageQuery = `CALL languages_get_one_by_slug('${JSON.stringify(getLanguageRequestDTO)}')`;
 
       const [[language]] = await this.mySQL.query(getLanguageQuery);
 

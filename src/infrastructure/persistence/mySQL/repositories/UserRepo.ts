@@ -8,8 +8,8 @@ export class UserRepo implements IUserRepo {
   public async create(createUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const createPostQuery = `CALL create_user('${JSON.stringify(createUserDTO)}')`;
-      const [[results]] = await mySQL.query(createPostQuery);
+      const createUserQuery = `CALL users_create('${JSON.stringify(createUserDTO)}')`;
+      const [[results]] = await mySQL.query(createUserQuery);
 
       return results;
     } catch (err) {
@@ -22,7 +22,7 @@ export class UserRepo implements IUserRepo {
   public async getOne(findUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const getOneUserQuery = `CALL find_user('${JSON.stringify(findUserDTO)}')`;
+      const getOneUserQuery = `CALL users_get_one('${JSON.stringify(findUserDTO)}')`;
       const [[results]] = await mySQL.query(getOneUserQuery);
 
       return results;
@@ -36,7 +36,7 @@ export class UserRepo implements IUserRepo {
   public async getAll(): Promise<User[]> {
     const mySQL = new MySQL();
     try {
-      const getAllUsersQuery = `CALL get_all_users()`;
+      const getAllUsersQuery = `CALL users_get_all()`;
       const [results] = await mySQL.query(getAllUsersQuery);
 
       return results;
@@ -50,7 +50,7 @@ export class UserRepo implements IUserRepo {
   public async authenticate(loginUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const authenticateUserQuery = `CALL authenticate_user('${JSON.stringify(loginUserDTO)}')`;
+      const authenticateUserQuery = `CALL users_authenticate('${JSON.stringify(loginUserDTO)}')`;
 
       const [[user]] = await mySQL.query(authenticateUserQuery);
 
@@ -65,7 +65,7 @@ export class UserRepo implements IUserRepo {
   public async logSession(sessionLogData): Promise<void> {
     const mySQL = new MySQL();
     try {
-      const logSessionQuery = `CALL log_user_session('${JSON.stringify(sessionLogData)}')`;
+      const logSessionQuery = `CALL users_log_session('${JSON.stringify(sessionLogData)}')`;
 
       await mySQL.query(logSessionQuery);
 

@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS deauthenticate_user;
+DROP PROCEDURE IF EXISTS users_deauthenticate;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE deauthenticate_user(
+CREATE PROCEDURE users_deauthenticate(
   IN user_data JSON
 )
 BEGIN

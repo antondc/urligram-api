@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS get_all_users;
+DROP PROCEDURE IF EXISTS users_get_all;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE get_all_users()
+CREATE PROCEDURE users_get_all()
 BEGIN
   -- Select user
   SELECT `id`, `name`, `level`, `email`, `status`, `statement`, `location`, `order`, `createdAt`,

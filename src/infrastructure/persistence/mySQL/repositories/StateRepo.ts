@@ -28,14 +28,14 @@ export class StateRepo {
 
   // Procedures
   private debuggerProcedure: string;
-  private authenticateUserProcedure: string;
-  private deauthenticateUserProcedure: string;
-  private createUserProcedure: string;
-  private getOneUserProcedure: string;
-  private getAllUsersProcedure: string;
-  private getAllLanguagesProcedure: string;
-  private getLanguageBySlugProcedure: string;
-  private logUserSessionProcedure: string;
+  private usersAuthenticateProcedure: string;
+  private usersDeauthenticateProcedure: string;
+  private usersCreateProcedure: string;
+  private usersGetOneProcedure: string;
+  private usersGetAllProcedure: string;
+  private languagesGetAllProcedure: string;
+  private languagesGetOneProcedure: string;
+  private usersLogSessionProcedure: string;
 
   // Data
   private domainData: string;
@@ -77,14 +77,14 @@ export class StateRepo {
 
     // Stored procedures
     this.debuggerProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql')).toString();
-    this.authenticateUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/authenticateUser.sql')).toString();
-    this.deauthenticateUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/deauthenticateUser.sql')).toString();
-    this.createUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createUser.sql')).toString();
-    this.getOneUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getOneUser.sql')).toString();
-    this.getAllUsersProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getAllUsers.sql')).toString();
-    this.getAllLanguagesProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getAllLanguages.sql')).toString();
-    this.getLanguageBySlugProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getLanguageBySlug.sql')).toString();
-    this.logUserSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/logUserSession.sql')).toString();
+    this.usersAuthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersAuthenticate.sql')).toString();
+    this.usersDeauthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersDeauthenticate.sql')).toString();
+    this.usersCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersCreate.sql')).toString();
+    this.usersGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetOne.sql')).toString();
+    this.usersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetAll.sql')).toString();
+    this.languagesGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languagesGetAll.sql')).toString();
+    this.languagesGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languagesGetOne.sql')).toString();
+    this.usersLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersLogSession.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -133,14 +133,14 @@ export class StateRepo {
 
       // Create procedures
       const createDebuggerProcedure = await mySQL.query(this.debuggerProcedure);
-      const createAuthenticateUserProcedure = await mySQL.query(this.authenticateUserProcedure);
-      const createDeauthenticateUserProcedure = await mySQL.query(this.deauthenticateUserProcedure);
-      const createCreateUserProcedure = await mySQL.query(this.createUserProcedure);
-      const createFindUserProcedure = await mySQL.query(this.getOneUserProcedure);
-      const createGetAllUsersProcedure = await mySQL.query(this.getAllUsersProcedure);
-      const createGetAllLanguagesProcedure = await mySQL.query(this.getAllLanguagesProcedure);
-      const createGetLanguageBySlugProcedure = await mySQL.query(this.getLanguageBySlugProcedure);
-      const createLogUserSessionProcedure = await mySQL.query(this.logUserSessionProcedure);
+      const createUsersAuthenticateProcedure = await mySQL.query(this.usersAuthenticateProcedure);
+      const createUsersDeauthenticateProcedure = await mySQL.query(this.usersDeauthenticateProcedure);
+      const createUsersCreateProcedure = await mySQL.query(this.usersCreateProcedure);
+      const createUsersGetOneProcedure = await mySQL.query(this.usersGetOneProcedure);
+      const createUsersGetAllProcedure = await mySQL.query(this.usersGetAllProcedure);
+      const createLanguagesGetAllProcedure = await mySQL.query(this.languagesGetAllProcedure);
+      const createLanguagesGetOneProcedure = await mySQL.query(this.languagesGetOneProcedure);
+      const createUsersLogSessionProcedure = await mySQL.query(this.usersLogSessionProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -187,14 +187,14 @@ export class StateRepo {
 
         // Create procedures
         ...createDebuggerProcedure,
-        ...createAuthenticateUserProcedure,
-        ...createDeauthenticateUserProcedure,
-        ...createCreateUserProcedure,
-        ...createFindUserProcedure,
-        ...createGetAllUsersProcedure,
-        ...createGetAllLanguagesProcedure,
-        ...createGetLanguageBySlugProcedure,
-        ...createLogUserSessionProcedure,
+        ...createUsersAuthenticateProcedure,
+        ...createUsersDeauthenticateProcedure,
+        ...createUsersCreateProcedure,
+        ...createUsersGetOneProcedure,
+        ...createUsersGetAllProcedure,
+        ...createLanguagesGetAllProcedure,
+        ...createLanguagesGetOneProcedure,
+        ...createUsersLogSessionProcedure,
 
         // Insert data
         ...insertDomainData,

@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS authenticate_user;
+DROP PROCEDURE IF EXISTS users_authenticate;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE authenticate_user(
+CREATE PROCEDURE users_authenticate(
   IN user_data JSON
 )
 BEGIN

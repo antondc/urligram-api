@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS log_user_session;
+DROP PROCEDURE IF EXISTS users_log_session;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE log_user_session(
+CREATE PROCEDURE users_log_session(
   IN log_data JSON
 )
 BEGIN
