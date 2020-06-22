@@ -4,6 +4,7 @@ export interface IUserRepo {
   create: (createUserDTO) => Promise<User>;
   getOne: (findUserDTO) => Promise<User>;
   getAll: () => Promise<User[]>;
+  getFollowing: (findUserDTO) => Promise<User>;
   authenticate: (loginUserDTO) => Promise<User>;
   logSession: (sessionLogData: { result: string; type: string; id: string }) => Promise<void>;
 }

@@ -47,6 +47,19 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async getFollowing(findUserDTO): Promise<User> {
+    const mySQL = new MySQL();
+    try {
+      const getOneUserQuery = `CALL users_get_following('${JSON.stringify(findUserDTO)}')`;
+      const [[results]] = await mySQL.query(getOneUserQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
   public async authenticate(loginUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {

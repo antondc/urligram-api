@@ -32,6 +32,7 @@ export class StateRepo {
   private usersDeauthenticateProcedure: string;
   private usersCreateProcedure: string;
   private usersGetOneProcedure: string;
+  private usersGetFollowingProcedure: string;
   private usersGetAllProcedure: string;
   private languagesGetAllProcedure: string;
   private languagesGetOneProcedure: string;
@@ -52,6 +53,7 @@ export class StateRepo {
   private userListRoleData: string;
   private userListData: string;
   private userLoginData: string;
+  private userUserData: string;
 
   constructor() {
     // Operational tables
@@ -81,6 +83,7 @@ export class StateRepo {
     this.usersDeauthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersDeauthenticate.sql')).toString();
     this.usersCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersCreate.sql')).toString();
     this.usersGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetOne.sql')).toString();
+    this.usersGetFollowingProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetFollowing.sql')).toString();
     this.usersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetAll.sql')).toString();
     this.languagesGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languagesGetAll.sql')).toString();
     this.languagesGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languagesGetOne.sql')).toString();
@@ -98,6 +101,7 @@ export class StateRepo {
     this.linkUserListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUserList.sql')).toString();
     this.tagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/tag.sql')).toString();
     this.linkUserTagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUserTag.sql')).toString();
+    this.userUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userUser.sql')).toString();
     this.userListRoleData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userListRole.sql')).toString();
     this.userListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userList.sql')).toString();
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
@@ -138,6 +142,7 @@ export class StateRepo {
       const createUsersCreateProcedure = await mySQL.query(this.usersCreateProcedure);
       const createUsersGetOneProcedure = await mySQL.query(this.usersGetOneProcedure);
       const createUsersGetAllProcedure = await mySQL.query(this.usersGetAllProcedure);
+      const createUsersGetFollowingProcedure = await mySQL.query(this.usersGetFollowingProcedure);
       const createLanguagesGetAllProcedure = await mySQL.query(this.languagesGetAllProcedure);
       const createLanguagesGetOneProcedure = await mySQL.query(this.languagesGetOneProcedure);
       const createUsersLogSessionProcedure = await mySQL.query(this.usersLogSessionProcedure);
@@ -157,6 +162,7 @@ export class StateRepo {
       const insertUserListRoleData = await mySQL.query(this.userListRoleData);
       const insertUserListData = await mySQL.query(this.userListData);
       const insertUserLoginData = await mySQL.query(this.userLoginData);
+      const insertUserUserData = await mySQL.query(this.userUserData);
 
       mySQL.commit();
 
@@ -191,6 +197,7 @@ export class StateRepo {
         ...createUsersDeauthenticateProcedure,
         ...createUsersCreateProcedure,
         ...createUsersGetOneProcedure,
+        ...createUsersGetFollowingProcedure,
         ...createUsersGetAllProcedure,
         ...createLanguagesGetAllProcedure,
         ...createLanguagesGetOneProcedure,
@@ -211,6 +218,7 @@ export class StateRepo {
         ...insertUserListRoleData,
         ...insertUserListData,
         ...insertUserLoginData,
+        ...insertUserUserData,
       };
     } catch (err) {
       mySQL.rollback();
