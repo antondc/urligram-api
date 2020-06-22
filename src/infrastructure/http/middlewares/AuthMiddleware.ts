@@ -5,9 +5,9 @@ import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError
 
 export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (
-    req.method === 'GET' ||
-    (req.method === 'POST' && req.baseUrl === '/api/v1/login') ||
-    (req.method === 'POST' && req.baseUrl === '/api/v1/users')
+    req.method === 'GET' || // All get are free
+    (req.method === 'POST' && req.baseUrl === '/api/v1/login') || // Allow login
+    (req.method === 'POST' && req.baseUrl === '/api/v1/users') // Allow user creation
   ) {
     return next();
   }

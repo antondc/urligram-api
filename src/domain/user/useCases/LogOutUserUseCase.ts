@@ -24,6 +24,7 @@ export class LogOutUserUseCase implements ILogOutUserUseCase {
     const result = {
       id: logOutUserDTO.id,
     };
+
     return result;
   }
 }

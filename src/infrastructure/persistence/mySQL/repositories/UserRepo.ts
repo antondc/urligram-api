@@ -57,7 +57,7 @@ export class UserRepo implements IUserRepo {
 
       return null;
     } catch (err) {
-      throw new BaseError('Error loggin user session', 401, err);
+      throw new BaseError('Error loging user session', 401, err);
     } finally {
       await mySQL.close();
     }

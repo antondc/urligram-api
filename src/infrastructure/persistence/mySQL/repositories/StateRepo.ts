@@ -54,9 +54,7 @@ export class StateRepo {
 
   constructor() {
     // Operational tables
-    this.dropAllTables = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/dropAllTables.sql'))
-      .toString();
+    this.dropAllTables = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/dropAllTables.sql')).toString();
     this.debugMessages = fs.readFileSync(path.resolve(__dirname, '../sql/models/debugMessages.sql')).toString();
 
     // Models
@@ -77,30 +75,14 @@ export class StateRepo {
     this.userUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/userUser.sql')).toString();
 
     // Stored procedures
-    this.debuggerProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql'))
-      .toString();
-    this.authenticateUserProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/authenticateUser.sql'))
-      .toString();
-    this.deauthenticateUserProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/deauthenticateUser.sql'))
-      .toString();
-    this.createUserProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createUser.sql'))
-      .toString();
-    this.findUserProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/findUser.sql'))
-      .toString();
-    this.getAllLanguagesProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getAllLanguages.sql'))
-      .toString();
-    this.getLanguageBySlugProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getLanguageBySlug.sql'))
-      .toString();
-    this.logUserSessionProcedure = fs
-      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/logUserSession.sql'))
-      .toString();
+    this.debuggerProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql')).toString();
+    this.authenticateUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/authenticateUser.sql')).toString();
+    this.deauthenticateUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/deauthenticateUser.sql')).toString();
+    this.createUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createUser.sql')).toString();
+    this.findUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/findUser.sql')).toString();
+    this.getAllLanguagesProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getAllLanguages.sql')).toString();
+    this.getLanguageBySlugProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getLanguageBySlug.sql')).toString();
+    this.logUserSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/logUserSession.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();

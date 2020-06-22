@@ -1,5 +1,5 @@
-import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
+import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 
 export class CreateUserController {
   createUserUseCase: ICreateUserUseCase;

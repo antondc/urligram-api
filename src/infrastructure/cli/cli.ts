@@ -1,13 +1,15 @@
 import 'module-alias/register';
+
 import prompts from 'prompts';
+
+import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
+import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
+import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
+import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
+import { HealthCheckController } from '@infrastructure/cli/controllers/HealthCheckController';
 import { ResetContentController } from '@infrastructure/cli/controllers/ResetContentController';
 import { StateRepo } from '@infrastructure/persistence/mySQL/repositories/StateRepo';
-import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
-import { HealthCheckController } from '@infrastructure/cli/controllers/HealthCheckController';
-import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
-import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 
 const main = async () => {
   const { actions } = await prompts([
