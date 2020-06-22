@@ -1,8 +1,13 @@
 import 'module-alias/register';
 import prompts from 'prompts';
-import { ResetContentRoute } from '@infrastructure/cli/routes/ResetContentRoute';
-import { CreateUserRoute } from '@infrastructure/cli/routes/CreateUserRoute';
-import { HealthCheckRoute } from '@infrastructure/cli/routes/HealthCheckRoute';
+import { ResetContentController } from '@infrastructure/cli/controllers/ResetContentController';
+import { StateRepo } from '@infrastructure/persistence/mySQL/repositories/StateRepo';
+import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
+import { HealthCheckController } from '@infrastructure/cli/controllers/HealthCheckController';
+import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
+import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
+import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
+import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 
 const main = async () => {
   const { actions } = await prompts([
@@ -20,8 +25,12 @@ const main = async () => {
 
   if (actions.includes('healthCheck')) {
     try {
-      const healthCheckRoute = new HealthCheckRoute();
-      const response = await healthCheckRoute.execute();
+      const stateRepo = new StateRepo();
+      const healthCheckUseCase = new HealthCheckUseCase(stateRepo);
+      const healthCheckController = new HealthCheckController(healthCheckUseCase);
+
+      const response = await healthCheckController.execute();
+
       await console.log('System healthy');
       await console.log(JSON.stringify(response, null, 4));
     } catch (err) {
@@ -31,8 +40,12 @@ const main = async () => {
 
   if (actions.includes('reset')) {
     try {
-      const resetContentRoute = new ResetContentRoute();
-      await resetContentRoute.execute();
+      const stateRepo = new StateRepo();
+      const resetContentUseCase = new ResetContentUseCase(stateRepo);
+      const resetContentController = new ResetContentController(resetContentUseCase);
+
+      await resetContentController.execute();
+
       await console.log('Reseted database');
     } catch (err) {
       await console.log('There was an error resetting database');
@@ -64,9 +77,14 @@ const main = async () => {
     ]);
 
     try {
-      const createUserRoute = await new CreateUserRoute(user);
-      const result = await createUserRoute.execute();
-      await console.log(JSON.stringify(result, null, 4));
+      const userRepo = new UserRepo();
+
+      const createUserUseCase = new CreateUserUseCase(userRepo);
+      const createUserController = new CreateUserController(createUserUseCase, user);
+
+      const response = await createUserController.execute();
+
+      await console.log(JSON.stringify(response, null, 4));
     } catch (err) {
       await console.log('There was an error creating user');
     }

@@ -7,7 +7,7 @@ export class ResetContentController {
     this.resetContentUseCase = resetContentUseCase;
   }
 
-  async resetContent() {
+  async execute() {
     const response = await this.resetContentUseCase.execute();
 
     return response;

@@ -7,7 +7,7 @@ export class HealthCheckController {
     this.healthCheckUseCase = healthCheckUseCase;
   }
 
-  async resetContent() {
+  async execute() {
     const response = await this.healthCheckUseCase.execute();
 
     return response;

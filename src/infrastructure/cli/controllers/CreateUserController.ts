@@ -10,7 +10,7 @@ export class CreateUserController {
     this.createUserUseCase = createUserUseCase;
   }
 
-  async createUser() {
+  async execute() {
     const response = await this.createUserUseCase.execute(this.createUserDTO);
 
     return response;

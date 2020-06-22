@@ -6,8 +6,7 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
   if (
     req.method === 'GET' ||
     (req.method === 'POST' && req.baseUrl === '/api/v1/login') ||
-    (req.method === 'POST' && req.baseUrl === '/api/v1/users') ||
-    req.baseUrl === '/api/v1/reset-content'
+    (req.method === 'POST' && req.baseUrl === '/api/v1/users')
   ) {
     return next();
   }

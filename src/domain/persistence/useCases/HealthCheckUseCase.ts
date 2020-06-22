@@ -1,18 +1,18 @@
-import { IHealthCheckRepo } from '../repositories/IHealthCheckRepo';
+import { IStateRepo } from '../repositories/IStateRepo';
 
 export interface IHealthCheckUseCase {
   execute: () => unknown;
 }
 
 export class HealthCheckUseCase {
-  private healthCheckRepo: IHealthCheckRepo;
+  private stateRepo: IStateRepo;
 
-  constructor(healthCheckRepo: IHealthCheckRepo) {
-    this.healthCheckRepo = healthCheckRepo;
+  constructor(stateRepo: IStateRepo) {
+    this.stateRepo = stateRepo;
   }
 
   public async execute() {
-    const response = await this.healthCheckRepo.test();
+    const response = await this.stateRepo.test();
 
     return response;
   }

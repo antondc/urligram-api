@@ -3,9 +3,7 @@ import path from 'path';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { NetWorkError } from '@root/src/shared/errors/NetworkError';
 
-export class ResetContentRepo {
-  private mySQL: MySQL;
-
+export class StateRepo {
   // Operation tables
   private dropAllTables: string;
   private debugMessages: string;
@@ -54,8 +52,6 @@ export class ResetContentRepo {
   private userLoginData: string;
 
   constructor() {
-    this.mySQL = new MySQL({ multipleStatements: true });
-
     // Operational tables
     this.dropAllTables = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/dropAllTables.sql'))
@@ -123,58 +119,60 @@ export class ResetContentRepo {
   }
 
   public async reset() {
+    const mySQL = new MySQL({ multipleStatements: true });
+
     try {
-      this.mySQL.beginTransaction();
+      mySQL.beginTransaction();
 
       // Drop all tables
-      const createDropAllTables = await this.mySQL.query(this.dropAllTables);
-      const dropAllTables = await this.mySQL.query(`CALL drop_all_tables()`);
+      const createDropAllTables = await mySQL.query(this.dropAllTables);
+      const dropAllTables = await mySQL.query(`CALL drop_all_tables()`);
 
       // Create tables
-      const createDebuggerTable = await this.mySQL.query(this.debugMessages);
-      const createLanguageTable = await this.mySQL.query(this.language);
-      const createGlossaryTable = await this.mySQL.query(this.glossary);
-      const createDomainTable = await this.mySQL.query(this.domain);
-      const createLinkTable = await this.mySQL.query(this.link);
-      const createUserTable = await this.mySQL.query(this.user);
-      const createLinkUserTable = await this.mySQL.query(this.linkUser);
-      const createListTypeTable = await this.mySQL.query(this.listType);
-      const createListTable = await this.mySQL.query(this.list);
-      const createLinkUserListTable = await this.mySQL.query(this.linkUserList);
-      const createTagTable = await this.mySQL.query(this.tag);
-      const createLinkUserTagTable = await this.mySQL.query(this.linkUserTag);
-      const createUserListRoleTable = await this.mySQL.query(this.userListRole);
-      const createUserListTable = await this.mySQL.query(this.userList);
-      const createUserLoginsTable = await this.mySQL.query(this.userLogins);
-      const createUsersUsersTable = await this.mySQL.query(this.userUser);
+      const createDebuggerTable = await mySQL.query(this.debugMessages);
+      const createLanguageTable = await mySQL.query(this.language);
+      const createGlossaryTable = await mySQL.query(this.glossary);
+      const createDomainTable = await mySQL.query(this.domain);
+      const createLinkTable = await mySQL.query(this.link);
+      const createUserTable = await mySQL.query(this.user);
+      const createLinkUserTable = await mySQL.query(this.linkUser);
+      const createListTypeTable = await mySQL.query(this.listType);
+      const createListTable = await mySQL.query(this.list);
+      const createLinkUserListTable = await mySQL.query(this.linkUserList);
+      const createTagTable = await mySQL.query(this.tag);
+      const createLinkUserTagTable = await mySQL.query(this.linkUserTag);
+      const createUserListRoleTable = await mySQL.query(this.userListRole);
+      const createUserListTable = await mySQL.query(this.userList);
+      const createUserLoginsTable = await mySQL.query(this.userLogins);
+      const createUsersUsersTable = await mySQL.query(this.userUser);
 
       // Create procedures
-      const createDebuggerProcedure = await this.mySQL.query(this.debuggerProcedure);
-      const createAuthenticateUserProcedure = await this.mySQL.query(this.authenticateUserProcedure);
-      const createDeauthenticateUserProcedure = await this.mySQL.query(this.deauthenticateUserProcedure);
-      const createCreateUserProcedure = await this.mySQL.query(this.createUserProcedure);
-      const createFindUserProcedure = await this.mySQL.query(this.findUserProcedure);
-      const createGetAllLanguagesProcedure = await this.mySQL.query(this.getAllLanguagesProcedure);
-      const createGetLanguageBySlugProcedure = await this.mySQL.query(this.getLanguageBySlugProcedure);
-      const createLogUserSessionProcedure = await this.mySQL.query(this.logUserSessionProcedure);
+      const createDebuggerProcedure = await mySQL.query(this.debuggerProcedure);
+      const createAuthenticateUserProcedure = await mySQL.query(this.authenticateUserProcedure);
+      const createDeauthenticateUserProcedure = await mySQL.query(this.deauthenticateUserProcedure);
+      const createCreateUserProcedure = await mySQL.query(this.createUserProcedure);
+      const createFindUserProcedure = await mySQL.query(this.findUserProcedure);
+      const createGetAllLanguagesProcedure = await mySQL.query(this.getAllLanguagesProcedure);
+      const createGetLanguageBySlugProcedure = await mySQL.query(this.getLanguageBySlugProcedure);
+      const createLogUserSessionProcedure = await mySQL.query(this.logUserSessionProcedure);
 
       // Insert data
-      const insertDomainData = await this.mySQL.query(this.domainData);
-      const insertLanguageData = await this.mySQL.query(this.languageData);
-      const insertGlossaryData = await this.mySQL.query(this.glossaryData);
-      const insertLinkData = await this.mySQL.query(this.linkData);
-      const insertUserData = await this.mySQL.query(this.userData);
-      const insertLinkUserData = await this.mySQL.query(this.linkUserData);
-      const insertListTypeData = await this.mySQL.query(this.listTypeData);
-      const insertListData = await this.mySQL.query(this.listData);
-      const insertLinkUserListData = await this.mySQL.query(this.linkUserListData);
-      const insertTagData = await this.mySQL.query(this.tagData);
-      const insertLinkUserTagData = await this.mySQL.query(this.linkUserTagData);
-      const insertUserListRoleData = await this.mySQL.query(this.userListRoleData);
-      const insertUserListData = await this.mySQL.query(this.userListData);
-      const insertUserLoginData = await this.mySQL.query(this.userLoginData);
+      const insertDomainData = await mySQL.query(this.domainData);
+      const insertLanguageData = await mySQL.query(this.languageData);
+      const insertGlossaryData = await mySQL.query(this.glossaryData);
+      const insertLinkData = await mySQL.query(this.linkData);
+      const insertUserData = await mySQL.query(this.userData);
+      const insertLinkUserData = await mySQL.query(this.linkUserData);
+      const insertListTypeData = await mySQL.query(this.listTypeData);
+      const insertListData = await mySQL.query(this.listData);
+      const insertLinkUserListData = await mySQL.query(this.linkUserListData);
+      const insertTagData = await mySQL.query(this.tagData);
+      const insertLinkUserTagData = await mySQL.query(this.linkUserTagData);
+      const insertUserListRoleData = await mySQL.query(this.userListRoleData);
+      const insertUserListData = await mySQL.query(this.userListData);
+      const insertUserLoginData = await mySQL.query(this.userLoginData);
 
-      this.mySQL.commit();
+      mySQL.commit();
 
       return {
         // Drop tables
@@ -228,10 +226,19 @@ export class ResetContentRepo {
         ...insertUserLoginData,
       };
     } catch (err) {
-      this.mySQL.rollback();
+      mySQL.rollback();
       throw new NetWorkError('There was a problem resetting the DB', 500, err);
     } finally {
-      await this.mySQL.close();
+      await mySQL.close();
     }
+  }
+
+  public async test() {
+    const mySQL = new MySQL();
+
+    const response = await mySQL.query('SELECT version()');
+    await mySQL.close();
+
+    return response;
   }
 }

@@ -1,18 +1,18 @@
-import { IResetContentRepo } from '@domain/persistence/repositories/IResetContentRepo';
+import { IStateRepo } from '@domain/persistence/repositories/IStateRepo';
 
 export interface IResetContentUseCase {
   execute: () => unknown;
 }
 
 export class ResetContentUseCase {
-  private resetContentRepo: IResetContentRepo;
+  private stateRepo: IStateRepo;
 
-  constructor(resetContentRepo: IResetContentRepo) {
-    this.resetContentRepo = resetContentRepo;
+  constructor(stateRepo: IStateRepo) {
+    this.stateRepo = stateRepo;
   }
 
   public async execute() {
-    const response = await this.resetContentRepo.reset();
+    const response = await this.stateRepo.reset();
 
     return response;
   }
