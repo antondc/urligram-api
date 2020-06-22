@@ -15,7 +15,7 @@ export class MySQL {
     });
   }
 
-  query(sql: string, args?: string | number | [] | {}) {
+  query(sql: string, args?: unknown) {
     return promisify(this.mySQL.query).call(this.mySQL, sql, args);
   }
 
