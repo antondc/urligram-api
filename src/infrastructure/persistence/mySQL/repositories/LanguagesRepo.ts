@@ -1,8 +1,8 @@
-import { ILanguagesRepo } from '@domain/language/repositories/ILanguagesRepo';
+import { IGetLanguageRequestDTO } from '@domain/language/dto/IGetLanguageRequestDTO';
 import { IGetLanguagesResponseDTO } from '@domain/language/dto/IGetLanguagesResponseDTO';
+import { ILanguagesRepo } from '@domain/language/repositories/ILanguagesRepo';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
-import { IGetLanguageRequestDTO } from '@domain/language/dto/IGetLanguageRequestDTO';
 
 export class getLanguagesRepo implements ILanguagesRepo {
   private mySQL: MySQL;

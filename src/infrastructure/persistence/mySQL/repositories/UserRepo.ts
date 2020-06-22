@@ -1,8 +1,8 @@
-import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
-import { RequestError } from '@shared/errors/RequestError';
-import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { BaseError } from '@shared/errors/BaseError';
 import { User } from '@domain/user/entities/User';
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
+import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
+import { BaseError } from '@shared/errors/BaseError';
+import { RequestError } from '@shared/errors/RequestError';
 
 export class UserRepo implements IUserRepo {
   public async create(createUserDTO): Promise<User> {

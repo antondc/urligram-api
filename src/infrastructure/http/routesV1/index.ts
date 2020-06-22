@@ -1,8 +1,9 @@
 import express from 'express';
-import { UsersRoute } from '@infrastructure/http/routesV1/UsersRoute';
-import { StateRoute } from '@infrastructure/http/routesV1/StateRoute';
-import { LoginRoute } from '@infrastructure/http/routesV1/LoginRoute';
+
 import { LanguagesRoute } from '@infrastructure/http/routesV1/LanguagesRoute';
+import { LoginRoute } from '@infrastructure/http/routesV1/LoginRoute';
+import { StateRoute } from '@infrastructure/http/routesV1/StateRoute';
+import { UsersRoute } from '@infrastructure/http/routesV1/UsersRoute';
 
 const RouterV1 = express.Router();
 

@@ -1,6 +1,6 @@
-import { URL_SERVER } from '@shared/constants/env';
-import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
+import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
+import { URL_SERVER } from '@shared/constants/env';
 
 export class CreateUserController {
   createUserUseCase: ICreateUserUseCase;

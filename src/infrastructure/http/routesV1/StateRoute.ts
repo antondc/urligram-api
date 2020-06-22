@@ -1,9 +1,10 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { HealthCheckController } from '@infrastructure/http/controllers/HealthCheckController';
-import { StateRepo } from '@infrastructure/persistence/mySQL/repositories/StateRepo';
+import express, { NextFunction, Request, Response } from 'express';
+
 import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
-import { ResetContentController } from '@infrastructure/http/controllers/ResetContentController';
 import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
+import { HealthCheckController } from '@infrastructure/http/controllers/HealthCheckController';
+import { ResetContentController } from '@infrastructure/http/controllers/ResetContentController';
+import { StateRepo } from '@infrastructure/persistence/mySQL/repositories/StateRepo';
 
 const StateRoute = express.Router();
 

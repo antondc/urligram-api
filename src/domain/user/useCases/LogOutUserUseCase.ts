@@ -1,6 +1,6 @@
-import { IUserRepo } from '../repositories/IUserRepo';
 import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
 import { ILogOutUserResponseDTO } from '@domain/user/dto/ILogOutUserResponseDTO';
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 
 export interface ILogOutUserUseCase {
   execute: (logOutUserDTO: ILogOutUserRequestDTO) => Promise<ILogOutUserResponseDTO>;

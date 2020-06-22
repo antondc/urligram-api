@@ -1,5 +1,5 @@
-import { ILoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
+import { ILoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 
 export class LoginUserController {

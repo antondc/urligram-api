@@ -1,9 +1,12 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { GetLanguagesController } from '@infrastructure/http/controllers/GetLanguagesController';
-import { GetLanguagesUseCase } from '@domain/language/useCases/GetLanguagesUseCase';
-import { getLanguagesRepo } from '@infrastructure/persistence/mySQL/repositories/LanguagesRepo';
+import express, { NextFunction, Request, Response } from 'express';
+
 import { GetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
-import { GetLanguageBySlugController } from '../controllers/GetLanguageBySlugController';
+import { GetLanguagesUseCase } from '@domain/language/useCases/GetLanguagesUseCase';
+import {
+    GetLanguageBySlugController
+} from '@infrastructure/http/controllers/GetLanguageBySlugController';
+import { GetLanguagesController } from '@infrastructure/http/controllers/GetLanguagesController';
+import { getLanguagesRepo } from '@infrastructure/persistence/mySQL/repositories/LanguagesRepo';
 
 const LanguagesRoute = express.Router();
 

@@ -1,6 +1,6 @@
-import { ILanguagesRepo } from '../repositories/ILanguagesRepo';
-import { IGetLanguagesResponseDTO } from '../dto/IGetLanguagesResponseDTO';
-import { IGetLanguageRequestDTO } from '../dto/IGetLanguageRequestDTO';
+import { IGetLanguageRequestDTO } from '@domain/language/dto/IGetLanguageRequestDTO';
+import { IGetLanguagesResponseDTO } from '@domain/language/dto/IGetLanguagesResponseDTO';
+import { ILanguagesRepo } from '@domain/language/repositories/ILanguagesRepo';
 
 export interface IGetLanguageBySlugUseCase {
   execute: (getLanguagesRequestDTO: IGetLanguageRequestDTO) => Promise<IGetLanguagesResponseDTO>;

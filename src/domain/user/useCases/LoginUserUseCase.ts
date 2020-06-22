@@ -1,8 +1,8 @@
-import { IUserRepo } from '../repositories/IUserRepo';
 import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
 import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
+import { User } from '@domain/user/entities/User';
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
-import { User } from '../entities/User';
 
 export interface ILoginUserUseCase {
   execute: (loginUserDTO: ILoginUserRequestDTO) => Promise<User>;

@@ -1,4 +1,4 @@
-import { IStateRepo } from '../repositories/IStateRepo';
+import { IStateRepo } from '@domain/persistence/repositories/IStateRepo';
 
 export interface IHealthCheckUseCase {
   execute: () => unknown;

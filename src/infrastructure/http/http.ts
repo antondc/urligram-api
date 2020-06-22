@@ -1,14 +1,17 @@
 import 'module-alias/register';
-import express from 'express';
-import http from 'http';
+
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import logger from 'morgan';
 import cors from 'cors';
-import { RouterV1 } from './routes';
+import express from 'express';
+import http from 'http';
+import logger from 'morgan';
+
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
-import { ErrorHandlerMiddleware } from './middlewares/ErrorHandlerMiddleware';
 import { ENDPOINT_CLIENT, PORT_SERVER } from '@shared/constants/env';
+
+import { ErrorHandlerMiddleware } from './middlewares/ErrorHandlerMiddleware';
+import { RouterV1 } from './routesV1';
 
 const app = express();
 

@@ -1,7 +1,7 @@
+import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';
 import { BaseError } from '@root/src/shared/errors/BaseError';
 import { NetWorkError } from '@root/src/shared/errors/NetworkError';
 import { RequestError } from '@root/src/shared/errors/RequestError';
-import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';
 import { LOGGING } from '@shared/constants/env';
 
 export const ErrorHandlerMiddleware = (err, req, res, next) => {

@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import { SECRET } from '@shared/constants/env';
 
 export class TokenService {

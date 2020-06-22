@@ -1,8 +1,9 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+
+import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
+import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
-import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 
 const UsersRoute = express.Router();
 

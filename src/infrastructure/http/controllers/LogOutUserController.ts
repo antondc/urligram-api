@@ -1,5 +1,5 @@
-import { ILogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
 import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
+import { ILogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 
 export class LogOutUserController {

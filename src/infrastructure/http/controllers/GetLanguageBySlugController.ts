@@ -1,5 +1,5 @@
-import { IGetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
 import { IGetLanguageRequestDTO } from '@domain/language/dto/IGetLanguageRequestDTO';
+import { IGetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 
 export class GetLanguageBySlugController {

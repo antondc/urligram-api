@@ -1,5 +1,6 @@
-import { promisify } from 'util';
 import mysql from 'mysql2';
+import { promisify } from 'util';
+
 import { DATABASE_SETTINGS } from '@shared/constants/env';
 
 export class MySQL {

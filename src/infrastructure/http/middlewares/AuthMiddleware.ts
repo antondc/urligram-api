@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
+
 import { TokenService } from '@infrastructure/services/TokenService';
 import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';
 
