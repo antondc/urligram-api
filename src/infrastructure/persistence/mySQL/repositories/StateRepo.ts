@@ -31,7 +31,8 @@ export class StateRepo {
   private authenticateUserProcedure: string;
   private deauthenticateUserProcedure: string;
   private createUserProcedure: string;
-  private findUserProcedure: string;
+  private getOneUserProcedure: string;
+  private getAllUsersProcedure: string;
   private getAllLanguagesProcedure: string;
   private getLanguageBySlugProcedure: string;
   private logUserSessionProcedure: string;
@@ -79,7 +80,8 @@ export class StateRepo {
     this.authenticateUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/authenticateUser.sql')).toString();
     this.deauthenticateUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/deauthenticateUser.sql')).toString();
     this.createUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/createUser.sql')).toString();
-    this.findUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/findUser.sql')).toString();
+    this.getOneUserProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getOneUser.sql')).toString();
+    this.getAllUsersProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getAllUsers.sql')).toString();
     this.getAllLanguagesProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getAllLanguages.sql')).toString();
     this.getLanguageBySlugProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/getLanguageBySlug.sql')).toString();
     this.logUserSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/logUserSession.sql')).toString();
@@ -134,7 +136,8 @@ export class StateRepo {
       const createAuthenticateUserProcedure = await mySQL.query(this.authenticateUserProcedure);
       const createDeauthenticateUserProcedure = await mySQL.query(this.deauthenticateUserProcedure);
       const createCreateUserProcedure = await mySQL.query(this.createUserProcedure);
-      const createFindUserProcedure = await mySQL.query(this.findUserProcedure);
+      const createFindUserProcedure = await mySQL.query(this.getOneUserProcedure);
+      const createGetAllUsersProcedure = await mySQL.query(this.getAllUsersProcedure);
       const createGetAllLanguagesProcedure = await mySQL.query(this.getAllLanguagesProcedure);
       const createGetLanguageBySlugProcedure = await mySQL.query(this.getLanguageBySlugProcedure);
       const createLogUserSessionProcedure = await mySQL.query(this.logUserSessionProcedure);
@@ -188,6 +191,7 @@ export class StateRepo {
         ...createDeauthenticateUserProcedure,
         ...createCreateUserProcedure,
         ...createFindUserProcedure,
+        ...createGetAllUsersProcedure,
         ...createGetAllLanguagesProcedure,
         ...createGetLanguageBySlugProcedure,
         ...createLogUserSessionProcedure,
