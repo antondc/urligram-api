@@ -1,5 +1,4 @@
 import 'module-alias/register';
-
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -8,10 +7,9 @@ import http from 'http';
 import logger from 'morgan';
 
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
+import { ErrorHandlerMiddleware } from '@infrastructure/http/middlewares/ErrorHandlerMiddleware';
+import { RouterV1 } from '@infrastructure/http/routesV1';
 import { ENDPOINT_CLIENT, PORT_SERVER } from '@shared/constants/env';
-
-import { ErrorHandlerMiddleware } from './middlewares/ErrorHandlerMiddleware';
-import { RouterV1 } from './routesV1';
 
 const app = express();
 

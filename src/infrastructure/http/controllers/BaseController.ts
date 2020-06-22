@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 export abstract class BaseController {
   protected abstract executeImpl(req: Request, res: Response, next: NextFunction): Promise<unknown>;

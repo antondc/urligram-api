@@ -28,6 +28,8 @@
     "concurrently": "^5.2.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
     "express": "^4.17.1",
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
