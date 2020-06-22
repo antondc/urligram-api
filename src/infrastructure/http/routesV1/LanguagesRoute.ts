@@ -11,33 +11,23 @@ import { getLanguagesRepo } from '@infrastructure/persistence/mySQL/repositories
 const LanguagesRoute = express.Router();
 
 LanguagesRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const languagesRepo = new getLanguagesRepo();
-    const getLanguagesUseCase = new GetLanguagesUseCase(languagesRepo);
-    const getLanguagesController = new GetLanguagesController(getLanguagesUseCase);
+  const languagesRepo = new getLanguagesRepo();
+  const getLanguagesUseCase = new GetLanguagesUseCase(languagesRepo);
+  const getLanguagesController = new GetLanguagesController(getLanguagesUseCase);
 
-    const response = await getLanguagesController.execute();
+  const response = await getLanguagesController.execute(req, res, next);
 
-    return res.status(200).send(response);
-  } catch (err) {
-    return next(err);
-  }
+  return response;
 });
 
 LanguagesRoute.get('/:slug', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { slug } = req.params;
+  const languagesRepo = new getLanguagesRepo();
+  const getLanguageBySlug = new GetLanguageBySlugUseCase(languagesRepo);
+  const getLanguageBySlugController = new GetLanguageBySlugController(getLanguageBySlug);
 
-    const languagesRepo = new getLanguagesRepo();
-    const getLanguageBySlug = new GetLanguageBySlugUseCase(languagesRepo);
-    const getLanguageBySlugController = new GetLanguageBySlugController(getLanguageBySlug);
+  const response = await getLanguageBySlugController.execute(req, res, next);
 
-    const response = await getLanguageBySlugController.execute({ slug });
-
-    return res.status(200).send(response);
-  } catch (err) {
-    return next(err);
-  }
+  return response;
 });
 
 export { LanguagesRoute };

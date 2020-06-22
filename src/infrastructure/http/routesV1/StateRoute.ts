@@ -9,31 +9,23 @@ import { StateRepo } from '@infrastructure/persistence/mySQL/repositories/StateR
 const StateRoute = express.Router();
 
 StateRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const stateRepo = new StateRepo();
-    const healthCheckUseCase = new HealthCheckUseCase(stateRepo);
-    const healthCheckController = new HealthCheckController(healthCheckUseCase);
+  const stateRepo = new StateRepo();
+  const healthCheckUseCase = new HealthCheckUseCase(stateRepo);
+  const healthCheckController = new HealthCheckController(healthCheckUseCase);
 
-    const response = await healthCheckController.execute();
+  const response = await healthCheckController.execute(req, res, next);
 
-    return res.status(200).send(response);
-  } catch (err) {
-    next(err);
-  }
+  return response;
 });
 
 StateRoute.delete('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const stateRepo = new StateRepo();
-    const resetContentUseCase = new ResetContentUseCase(stateRepo);
-    const resetContentController = new ResetContentController(resetContentUseCase);
+  const stateRepo = new StateRepo();
+  const resetContentUseCase = new ResetContentUseCase(stateRepo);
+  const resetContentController = new ResetContentController(resetContentUseCase);
 
-    const response = await resetContentController.execute();
+  const response = await resetContentController.execute(req, res, next);
 
-    return res.status(200).send(response);
-  } catch (err) {
-    return next(err);
-  }
+  return response;
 });
 
 export { StateRoute };

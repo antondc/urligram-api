@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from 'express';
+
 import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
 import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { URL_SERVER } from '@shared/constants/env';
@@ -9,27 +11,33 @@ export class CreateUserController {
     this.createUserUseCase = createUserUseCase;
   }
 
-  async execute(createUserDTO: ICreateUserRequestDTO) {
-    const response = await this.createUserUseCase.execute(createUserDTO);
+  async execute(req: Request, res: Response, next: NextFunction) {
+    try {
+      const createUserDTO: ICreateUserRequestDTO = req.body;
 
-    const formattedResponse = {
-      links: {
-        self: URL_SERVER + '/users/me',
-      },
-      data: [
-        {
-          type: 'user',
-          id: response.id,
-          session: {
-            self: URL_SERVER + '/users/me',
-          },
-          attributes: response,
-          relationships: {},
+      const response = await this.createUserUseCase.execute(createUserDTO);
+
+      const formattedResponse = {
+        links: {
+          self: URL_SERVER + '/users/me',
         },
-      ],
-      included: [],
-    };
+        data: [
+          {
+            type: 'user',
+            id: response.id,
+            session: {
+              self: URL_SERVER + '/users/me',
+            },
+            attributes: response,
+            relationships: {},
+          },
+        ],
+        included: [],
+      };
 
-    return formattedResponse;
+      return res.status(200).send(formattedResponse);
+    } catch (err) {
+      return next(err);
+    }
   }
 }

@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from 'express';
+
 import { IHealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 
 export class HealthCheckController {
@@ -7,9 +9,13 @@ export class HealthCheckController {
     this.healthCheckUseCase = healthCheckUseCase;
   }
 
-  async execute() {
-    const response = await this.healthCheckUseCase.execute();
+  async execute(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await this.healthCheckUseCase.execute();
 
-    return response;
+      return res.status(200).send(response);
+    } catch (err) {
+      next(err);
+    }
   }
 }

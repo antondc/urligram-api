@@ -1,3 +1,5 @@
+import { NextFunction, Request, Response } from 'express';
+
 import { IResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
 
 export class ResetContentController {
@@ -7,9 +9,13 @@ export class ResetContentController {
     this.resetContentUseCase = resetContentUseCase;
   }
 
-  async execute() {
-    const response = await this.resetContentUseCase.execute();
+  async execute(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await this.resetContentUseCase.execute();
 
-    return response;
+      return res.status(200).send(response);
+    } catch (err) {
+      next(err);
+    }
   }
 }
