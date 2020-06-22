@@ -1,10 +1,12 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
+import { GetUserByIdUseCase } from '@domain/user/useCases/GetUserByIdUseCase';
 import { GetUsersUseCase } from '@domain/user/useCases/GetUsersUseCase';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { GetUsersController } from '@infrastructure/http/controllers/GetUsersController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
+import { GetUserByIdController } from '../controllers/GetUserByIdController';
 
 const UsersRoute = express.Router();
 
@@ -14,6 +16,16 @@ UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const getUserController = new GetUsersController(getUserUseCase);
 
   const response = await getUserController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const getUserByIdUseCase = new GetUserByIdUseCase(userRepo);
+  const getUserByIdController = new GetUserByIdController(getUserByIdUseCase);
+
+  const response = await getUserByIdController.execute(req, res, next);
 
   return response;
 });

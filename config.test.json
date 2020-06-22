@@ -6,10 +6,10 @@
       "password": "o0IApFBrADXajxwd",
       "host": "127.0.0.1"
     },
-    "PROTOCOL_SERVER": "https://",
+    "PROTOCOL_SERVER": "http://",
     "HOST_SERVER": "0.0.0.0",
     "PORT_SERVER": "3000",
-    "VERSION_SERVER": "v1",
+    "VERSION_SERVER": "api/v1",
     "ENDPOINT_CLIENT": "http://0.0.0.0:4000",
     "SECRET": "superSecret",
     "LOGGING": true
