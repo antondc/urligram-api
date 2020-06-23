@@ -34,6 +34,7 @@ export class StateRepo {
   private usersGetOneProcedure: string;
   private usersFollowingGetProcedure: string;
   private usersFollowersGetProcedure: string;
+  private usersFollowProcedure: string;
   private usersGetAllProcedure: string;
   private languagesGetAllProcedure: string;
   private languagesGetOneProcedure: string;
@@ -86,6 +87,7 @@ export class StateRepo {
     this.usersGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetOne.sql')).toString();
     this.usersFollowingGetProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowingGet.sql')).toString();
     this.usersFollowersGetProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowersGet.sql')).toString();
+    this.usersFollowProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollow.sql')).toString();
     this.usersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetAll.sql')).toString();
     this.languagesGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languagesGetAll.sql')).toString();
     this.languagesGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languagesGetOne.sql')).toString();
@@ -146,6 +148,7 @@ export class StateRepo {
       const createUsersGetAllProcedure = await mySQL.query(this.usersGetAllProcedure);
       const createUsersFollowingGetProcedure = await mySQL.query(this.usersFollowingGetProcedure);
       const createUsersFollowersGetProcedure = await mySQL.query(this.usersFollowersGetProcedure);
+      const createUsersFollowProcedureProcedure = await mySQL.query(this.usersFollowProcedure);
       const createLanguagesGetAllProcedure = await mySQL.query(this.languagesGetAllProcedure);
       const createLanguagesGetOneProcedure = await mySQL.query(this.languagesGetOneProcedure);
       const createUsersLogSessionProcedure = await mySQL.query(this.usersLogSessionProcedure);
@@ -202,6 +205,7 @@ export class StateRepo {
         ...createUsersGetOneProcedure,
         ...createUsersFollowingGetProcedure,
         ...createUsersFollowersGetProcedure,
+        ...createUsersFollowProcedureProcedure,
         ...createUsersGetAllProcedure,
         ...createLanguagesGetAllProcedure,
         ...createLanguagesGetOneProcedure,
