@@ -50,8 +50,8 @@ export class UserRepo implements IUserRepo {
   public async getFollowing(findUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const getOneUserQuery = `CALL users_get_following('${JSON.stringify(findUserDTO)}')`;
-      const [[results]] = await mySQL.query(getOneUserQuery);
+      const getFollowingQuery = `CALL users_get_following('${JSON.stringify(findUserDTO)}')`;
+      const [[results]] = await mySQL.query(getFollowingQuery);
 
       return results;
     } catch (err) {
@@ -60,6 +60,21 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async getFollowers(findUserDTO): Promise<User> {
+    const mySQL = new MySQL();
+    try {
+      const getFollowersQuery = `CALL users_get_followers('${JSON.stringify(findUserDTO)}')`;
+      const [[results]] = await mySQL.query(getFollowersQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async authenticate(loginUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {

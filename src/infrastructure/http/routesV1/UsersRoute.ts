@@ -2,10 +2,12 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { GetUserByIdUseCase } from '@domain/user/useCases/GetUserByIdUseCase';
+import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
 import { GetUserFollowingUseCase } from '@domain/user/useCases/GetUserFollowingUseCase';
 import { GetUsersUseCase } from '@domain/user/useCases/GetUsersUseCase';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { GetUserByIdController } from '@infrastructure/http/controllers/GetUserByIdController';
+import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
 import { GetUserFollowingController } from '@infrastructure/http/controllers/GetUserFollowingController';
 import { GetUsersController } from '@infrastructure/http/controllers/GetUsersController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
@@ -38,6 +40,16 @@ UsersRoute.get('/:id/following', async (req: Request, res: Response, next: NextF
   const getUserFollowingController = new GetUserFollowingController(getUserFollowingUserCase);
 
   const response = await getUserFollowingController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/:id/followers', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const getUserFollowersUserCase = new GetUserFollowersUseCase(userRepo);
+  const getUserFollowersController = new GetUserFollowersController(getUserFollowersUserCase);
+
+  const response = await getUserFollowersController.execute(req, res, next);
 
   return response;
 });
