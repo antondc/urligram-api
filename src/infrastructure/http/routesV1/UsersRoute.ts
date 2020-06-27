@@ -8,10 +8,10 @@ import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingG
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
-import { UserFollowingGetAllController } from '@infrastructure/http/controllers/GetUserFollowingController';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
 import { UserFollowingDeleteController } from '@infrastructure/http/controllers/UserFollowDeleteController';
 import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
+import { UserFollowingGetAllController } from '@infrastructure/http/controllers/UserFollowingGetAllController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
