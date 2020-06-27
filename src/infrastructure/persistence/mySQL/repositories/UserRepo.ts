@@ -47,7 +47,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async followingGetAll(findUserDTO): Promise<User> {
+  public async userFollowingGetAll(findUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
       const followingGetAllQuery = `CALL users_get_following('${JSON.stringify(findUserDTO)}')`;
@@ -61,11 +61,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async getFollowers(findUserDTO): Promise<User> {
+  public async userFollowersGetAll(userFollowersGetAllDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const getFollowersQuery = `CALL users_get_followers('${JSON.stringify(findUserDTO)}')`;
-      const [[results]] = await mySQL.query(getFollowersQuery);
+      const userFollowersGetAllQuery = `CALL users_get_followers('${JSON.stringify(userFollowersGetAllDTO)}')`;
+      const [[results]] = await mySQL.query(userFollowersGetAllQuery);
 
       return results;
     } catch (err) {

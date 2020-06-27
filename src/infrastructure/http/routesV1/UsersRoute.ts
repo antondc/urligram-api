@@ -1,14 +1,14 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
 import { UserCreateUseCase } from '@domain/user/useCases/UserCreateUseCase';
+import { UserFollowersGetAllUseCase } from '@domain/user/useCases/UserFollowersGetAllUseCase';
 import { UserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
 import { UserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingDeleteUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
-import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
+import { UserFollowersGetAllController } from '@infrastructure/http/controllers/UserFollowersGetAllController';
 import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
 import { UserFollowingDeleteController } from '@infrastructure/http/controllers/UserFollowingDeleteController';
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/UserFollowingGetAllController';
@@ -80,10 +80,10 @@ UsersRoute.delete('/:userId/following/:followedId', async (req: Request, res: Re
 
 UsersRoute.get('/:id/followers', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const getUserFollowersUserCase = new GetUserFollowersUseCase(userRepo);
-  const getUserFollowersController = new GetUserFollowersController(getUserFollowersUserCase);
+  const userFollowersGetAllUseCase = new UserFollowersGetAllUseCase(userRepo);
+  const userFollowersGetAllController = new UserFollowersGetAllController(userFollowersGetAllUseCase);
 
-  const response = await getUserFollowersController.execute(req, res, next);
+  const response = await userFollowersGetAllController.execute(req, res, next);
 
   return response;
 });

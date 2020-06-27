@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 
-import { IGetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
+import { IUserFollowersGetAllUseCase } from '@domain/user/useCases/UserFollowersGetAllUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class GetUserFollowersController extends BaseController {
-  useCase: IGetUserFollowersUseCase;
+export class UserFollowersGetAllController extends BaseController {
+  useCase: IUserFollowersGetAllUseCase;
 
-  constructor(useCase: IGetUserFollowersUseCase) {
+  constructor(useCase: IUserFollowersGetAllUseCase) {
     super();
 
     this.useCase = useCase;
