@@ -33,11 +33,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async getAll(): Promise<User[]> {
+  public async userGetAll(): Promise<User[]> {
     const mySQL = new MySQL();
     try {
-      const getAllUsersQuery = `CALL users_get_all()`;
-      const [results] = await mySQL.query(getAllUsersQuery);
+      const userGetAllQuery = `CALL users_get_all()`;
+      const [results] = await mySQL.query(userGetAllQuery);
 
       return results;
     } catch (err) {

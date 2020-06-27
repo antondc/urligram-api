@@ -3,16 +3,16 @@ import express, { NextFunction, Request, Response } from 'express';
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { GetUserByIdUseCase } from '@domain/user/useCases/GetUserByIdUseCase';
 import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
-import { GetUsersUseCase } from '@domain/user/useCases/GetUsersUseCase';
 import { UserFollowDeleteUseCase } from '@domain/user/useCases/UserFollowDeleteUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserFollowUseCase } from '@domain/user/useCases/UserFollowUseCase';
+import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { GetUserByIdController } from '@infrastructure/http/controllers/GetUserByIdController';
 import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/GetUserFollowingController';
-import { GetUsersController } from '@infrastructure/http/controllers/GetUsersController';
 import { UserFollowController } from '@infrastructure/http/controllers/UserFollowController';
+import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserFollowDeleteController } from '@infrastructure/http/controllers/UsersFollowDeleteController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
@@ -20,10 +20,10 @@ const UsersRoute = express.Router();
 
 UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const getUserUseCase = new GetUsersUseCase(userRepo);
-  const getUserController = new GetUsersController(getUserUseCase);
+  const userGetAllUseCase = new UserGetAllUseCase(userRepo);
+  const userGetAllController = new UserGetAllController(userGetAllUseCase);
 
-  const response = await getUserController.execute(req, res, next);
+  const response = await userGetAllController.execute(req, res, next);
 
   return response;
 });
