@@ -1,9 +1,9 @@
-import { IGetUserFollowingRequestDTO } from '@domain/user/dto/IGetUserFollowingRequestDTO';
-import { IGetUserFollowingResponseDTO } from '@domain/user/dto/IGetUserFollowingResponseDTO';
+import { IUserFollowingGetAllRequestDTO } from '@domain/user/dto/IUserFollowingGetAllRequestDTO';
+import { IUserFollowingGetAllResponseDTO } from '@domain/user/dto/IUserFollowingGetAllResponseDTO';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 
 export interface IGetUserFollowingUseCase {
-  execute: (getFollowingDTO: IGetUserFollowingRequestDTO) => Promise<IGetUserFollowingResponseDTO>;
+  execute: (getFollowingDTO: IUserFollowingGetAllRequestDTO) => Promise<IUserFollowingGetAllResponseDTO>;
 }
 
 export class GetUserFollowingUseCase implements IGetUserFollowingUseCase {
@@ -13,8 +13,8 @@ export class GetUserFollowingUseCase implements IGetUserFollowingUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(getFollowingDTO: IGetUserFollowingRequestDTO): Promise<IGetUserFollowingResponseDTO> {
-    const response = await this.userRepo.getFollowing(getFollowingDTO);
+  public async execute(getFollowingDTO: IUserFollowingGetAllRequestDTO): Promise<IUserFollowingGetAllResponseDTO> {
+    const response = await this.userRepo.followingGetAll(getFollowingDTO);
 
     return response;
   }

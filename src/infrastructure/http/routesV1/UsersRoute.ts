@@ -3,14 +3,14 @@ import express, { NextFunction, Request, Response } from 'express';
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
 import { UserFollowDeleteUseCase } from '@domain/user/useCases/UserFollowDeleteUseCase';
+import { UserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
-import { UserFollowUseCase } from '@domain/user/useCases/UserFollowUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/GetUserFollowingController';
-import { UserFollowController } from '@infrastructure/http/controllers/UserFollowController';
+import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserFollowDeleteController } from '@infrastructure/http/controllers/UsersFollowDeleteController';
@@ -50,10 +50,10 @@ UsersRoute.get('/:id/following', async (req: Request, res: Response, next: NextF
 
 UsersRoute.post('/:userId/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userFollowUseCase = new UserFollowUseCase(userRepo);
-  const userFollowController = new UserFollowController(userFollowUseCase);
+  const userFollowingCreateUseCase = new UserFollowingCreateUseCase(userRepo);
+  const userFollowingCreateController = new UserFollowingCreateController(userFollowingCreateUseCase);
 
-  const response = await userFollowController.execute(req, res, next);
+  const response = await userFollowingCreateController.execute(req, res, next);
 
   return response;
 });

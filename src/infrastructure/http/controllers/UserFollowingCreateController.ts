@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 
-import { IUserFollowUseCase } from '@domain/user/useCases/UserFollowUseCase';
+import { IUserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class UserFollowController extends BaseController {
-  useCase: IUserFollowUseCase;
+export class UserFollowingCreateController extends BaseController {
+  useCase: IUserFollowingCreateUseCase;
 
-  constructor(useCase: IUserFollowUseCase) {
+  constructor(useCase: IUserFollowingCreateUseCase) {
     super();
 
     this.useCase = useCase;

@@ -75,11 +75,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async followUser(followUserDTO): Promise<User> {
+  public async userFollowingCreate(userFollowingCreateDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const followUserQuery = `CALL users_follow('${JSON.stringify(followUserDTO)}')`;
-      const [[results]] = await mySQL.query(followUserQuery);
+      const userFollowingQuery = `CALL users_follow('${JSON.stringify(userFollowingCreateDTO)}')`;
+      const [[results]] = await mySQL.query(userFollowingQuery);
 
       return results;
     } catch (err) {
