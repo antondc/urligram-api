@@ -5,6 +5,7 @@ import { GetUserByIdUseCase } from '@domain/user/useCases/GetUserByIdUseCase';
 import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
 import { GetUserFollowingUseCase } from '@domain/user/useCases/GetUserFollowingUseCase';
 import { GetUsersUseCase } from '@domain/user/useCases/GetUsersUseCase';
+import { UserFollowDeleteUseCase } from '@domain/user/useCases/UserFollowDeleteUseCase';
 import { UserFollowUseCase } from '@domain/user/useCases/UserFollowUseCase';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { GetUserByIdController } from '@infrastructure/http/controllers/GetUserByIdController';
@@ -13,6 +14,7 @@ import { GetUserFollowingController } from '@infrastructure/http/controllers/Get
 import { GetUsersController } from '@infrastructure/http/controllers/GetUsersController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserFollowController } from '../controllers/UserFollowController';
+import { UserFollowDeleteController } from '../controllers/UsersFollowDeleteController';
 
 const UsersRoute = express.Router();
 
@@ -52,6 +54,16 @@ UsersRoute.post('/:userId/following/:followedId', async (req: Request, res: Resp
   const userFollowController = new UserFollowController(userFollowUseCase);
 
   const response = await userFollowController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.delete('/:userId/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userFollowDeleteUseCase = new UserFollowDeleteUseCase(userRepo);
+  const userFollowDeleteController = new UserFollowDeleteController(userFollowDeleteUseCase);
+
+  const response = await userFollowDeleteController.execute(req, res, next);
 
   return response;
 });

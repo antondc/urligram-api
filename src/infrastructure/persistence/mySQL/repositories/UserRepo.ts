@@ -89,6 +89,20 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async followDeleteUser(followDeleteUserDTO): Promise<User> {
+    const mySQL = new MySQL();
+    try {
+      const followDeleteUserQuery = `CALL users_follow_delete('${JSON.stringify(followDeleteUserDTO)}')`;
+      const [[results]] = await mySQL.query(followDeleteUserQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async authenticate(loginUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
