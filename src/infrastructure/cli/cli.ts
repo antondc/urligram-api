@@ -1,10 +1,9 @@
 import 'module-alias/register';
-
 import prompts from 'prompts';
 
 import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
 import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
-import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
+import { UserCreateUseCase } from '@domain/user/useCases/UserCreateUseCase';
 import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
 import { HealthCheckController } from '@infrastructure/cli/controllers/HealthCheckController';
 import { ResetContentController } from '@infrastructure/cli/controllers/ResetContentController';
@@ -81,7 +80,7 @@ const main = async () => {
     try {
       const userRepo = new UserRepo();
 
-      const createUserUseCase = new CreateUserUseCase(userRepo);
+      const createUserUseCase = new UserCreateUseCase(userRepo);
       const createUserController = new CreateUserController(createUserUseCase, user);
 
       const response = await createUserController.execute();

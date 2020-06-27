@@ -1,3 +1,3 @@
 import { User } from '@domain/user/entities/User';
 
-export type ICreateUserResponseDTO = User;
+export type IUserCreateResponseDTO = User;

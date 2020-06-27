@@ -1,11 +1,11 @@
-import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
-import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
+import { IUserCreateRequestDTO } from '@domain/user/dto/IUserCreateRequestDTO';
+import { IUserCreateUseCase } from '@domain/user/useCases/UserCreateUseCase';
 
 export class CreateUserController {
-  createUserUseCase: ICreateUserUseCase;
-  createUserDTO: ICreateUserRequestDTO;
+  createUserUseCase: IUserCreateUseCase;
+  createUserDTO: IUserCreateRequestDTO;
 
-  constructor(createUserUseCase: ICreateUserUseCase, createUserDTO: ICreateUserRequestDTO) {
+  constructor(createUserUseCase: IUserCreateUseCase, createUserDTO: IUserCreateRequestDTO) {
     this.createUserDTO = createUserDTO;
     this.createUserUseCase = createUserUseCase;
   }

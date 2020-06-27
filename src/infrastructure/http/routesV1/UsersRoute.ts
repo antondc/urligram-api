@@ -1,15 +1,15 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
+import { UserCreateUseCase } from '@domain/user/useCases/UserCreateUseCase';
 import { UserFollowDeleteUseCase } from '@domain/user/useCases/UserFollowDeleteUseCase';
 import { UserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
-import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/GetUserFollowingController';
+import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
 import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
@@ -24,6 +24,16 @@ UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const userGetAllController = new UserGetAllController(userGetAllUseCase);
 
   const response = await userGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userCreateUseCase = new UserCreateUseCase(userRepo);
+  const userCreateController = new UserCreateController(userCreateUseCase);
+
+  const response = await userCreateController.execute(req, res, next);
 
   return response;
 });
@@ -74,16 +84,6 @@ UsersRoute.get('/:id/followers', async (req: Request, res: Response, next: NextF
   const getUserFollowersController = new GetUserFollowersController(getUserFollowersUserCase);
 
   const response = await getUserFollowersController.execute(req, res, next);
-
-  return response;
-});
-
-UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new UserRepo();
-  const createUserUseCase = new CreateUserUseCase(userRepo);
-  const createUserController = new CreateUserController(createUserUseCase);
-
-  const response = await createUserController.execute(req, res, next);
 
   return response;
 });

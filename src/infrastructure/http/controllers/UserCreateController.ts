@@ -1,21 +1,21 @@
 import { Request, Response } from 'express';
 
-import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
-import { ICreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
+import { IUserCreateRequestDTO } from '@domain/user/dto/IUserCreateRequestDTO';
+import { IUserCreateUseCase } from '@domain/user/useCases/UserCreateUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class CreateUserController extends BaseController {
-  useCase: ICreateUserUseCase;
+export class UserCreateController extends BaseController {
+  useCase: IUserCreateUseCase;
 
-  constructor(useCase: ICreateUserUseCase) {
+  constructor(useCase: IUserCreateUseCase) {
     super();
 
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const createUserDTO: ICreateUserRequestDTO = req.body;
+    const createUserDTO: IUserCreateRequestDTO = req.body;
 
     const response = await this.useCase.execute(createUserDTO);
 

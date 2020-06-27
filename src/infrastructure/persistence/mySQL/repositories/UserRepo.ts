@@ -5,11 +5,11 @@ import { BaseError } from '@shared/errors/BaseError';
 import { RequestError } from '@shared/errors/RequestError';
 
 export class UserRepo implements IUserRepo {
-  public async create(createUserDTO): Promise<User> {
+  public async userCreate(userCreateDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const createUserQuery = `CALL users_create('${JSON.stringify(createUserDTO)}')`;
-      const [[results]] = await mySQL.query(createUserQuery);
+      const userCreateQuery = `CALL users_create('${JSON.stringify(userCreateDTO)}')`;
+      const [[results]] = await mySQL.query(userCreateQuery);
 
       return results;
     } catch (err) {

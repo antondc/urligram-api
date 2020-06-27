@@ -1,21 +1,21 @@
-import { ICreateUserRequestDTO } from '@domain/user/dto/ICreateUserRequestDTO';
-import { ICreateUserResponseDTO } from '@domain/user/dto/ICreateUserResponseDTO';
+import { IUserCreateRequestDTO } from '@domain/user/dto/IUserCreateRequestDTO';
+import { IUserCreateResponseDTO } from '@domain/user/dto/IUserCreateResponseDTO';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { UserError } from '@shared/errors/UserError';
 import { StringValidator } from '@shared/services/StringValidator';
 
-export interface ICreateUserUseCase {
-  execute: (createUserDTO: ICreateUserRequestDTO) => Promise<ICreateUserResponseDTO>;
+export interface IUserCreateUseCase {
+  execute: (createUserDTO: IUserCreateRequestDTO) => Promise<IUserCreateResponseDTO>;
 }
 
-export class CreateUserUseCase implements ICreateUserUseCase {
+export class UserCreateUseCase implements IUserCreateUseCase {
   private userRepo: IUserRepo;
 
   constructor(userRepo: IUserRepo) {
     this.userRepo = userRepo;
   }
 
-  public async execute(createUserDTO: ICreateUserRequestDTO): Promise<ICreateUserResponseDTO> {
+  public async execute(createUserDTO: IUserCreateRequestDTO): Promise<IUserCreateResponseDTO> {
     const { email, password, password_repeated } = createUserDTO;
 
     if (password !== password_repeated) throw new UserError('Passwords are not equal', 409);
@@ -26,7 +26,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
     const userAlreadyExists = await this.userRepo.userGetOne(createUserDTO);
     if (!!userAlreadyExists) throw new UserError('User already exist', 409);
 
-    const response = await this.userRepo.create(createUserDTO);
+    const response = await this.userRepo.userCreate(createUserDTO);
 
     return response;
   }
