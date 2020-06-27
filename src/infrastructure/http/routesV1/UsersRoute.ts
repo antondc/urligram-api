@@ -3,18 +3,18 @@ import express, { NextFunction, Request, Response } from 'express';
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
 import { GetUserByIdUseCase } from '@domain/user/useCases/GetUserByIdUseCase';
 import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
-import { GetUserFollowingUseCase } from '@domain/user/useCases/GetUserFollowingUseCase';
 import { GetUsersUseCase } from '@domain/user/useCases/GetUsersUseCase';
 import { UserFollowDeleteUseCase } from '@domain/user/useCases/UserFollowDeleteUseCase';
+import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserFollowUseCase } from '@domain/user/useCases/UserFollowUseCase';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
 import { GetUserByIdController } from '@infrastructure/http/controllers/GetUserByIdController';
 import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
-import { GetUserFollowingController } from '@infrastructure/http/controllers/GetUserFollowingController';
+import { UserFollowingGetAllController } from '@infrastructure/http/controllers/GetUserFollowingController';
 import { GetUsersController } from '@infrastructure/http/controllers/GetUsersController';
+import { UserFollowController } from '@infrastructure/http/controllers/UserFollowController';
+import { UserFollowDeleteController } from '@infrastructure/http/controllers/UsersFollowDeleteController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { UserFollowController } from '../controllers/UserFollowController';
-import { UserFollowDeleteController } from '../controllers/UsersFollowDeleteController';
 
 const UsersRoute = express.Router();
 
@@ -40,10 +40,10 @@ UsersRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) =
 
 UsersRoute.get('/:id/following', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const getUserFollowingUserCase = new GetUserFollowingUseCase(userRepo);
-  const getUserFollowingController = new GetUserFollowingController(getUserFollowingUserCase);
+  const userFollowingGetAllUserCase = new UserFollowingGetAllUseCase(userRepo);
+  const userFollowingGetAllController = new UserFollowingGetAllController(userFollowingGetAllUserCase);
 
-  const response = await getUserFollowingController.execute(req, res, next);
+  const response = await userFollowingGetAllController.execute(req, res, next);
 
   return response;
 });

@@ -1,11 +1,10 @@
 import { User } from '@domain/user/entities/User';
-import { IUserFollowDeleteResponseDTO } from '../dto/IUserFollowDeleteResponseDTO';
 
 export interface IUserRepo {
   create: (createUserDTO) => Promise<User>;
   getOne: (findUserDTO) => Promise<User>;
   getAll: () => Promise<User[]>;
-  getFollowing: (userDTO) => Promise<User>;
+  followingGetAll: (userDTO) => Promise<User>;
   getFollowers: (userDTO) => Promise<User>;
   followUser: (followUserDTO) => Promise<User>;
   followDeleteUser: (followDeleteUserDTO) => Promise<User>;

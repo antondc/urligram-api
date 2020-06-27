@@ -47,11 +47,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async getFollowing(findUserDTO): Promise<User> {
+  public async followingGetAll(findUserDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const getFollowingQuery = `CALL users_get_following('${JSON.stringify(findUserDTO)}')`;
-      const [[results]] = await mySQL.query(getFollowingQuery);
+      const followingGetAllQuery = `CALL users_get_following('${JSON.stringify(findUserDTO)}')`;
+      const [[results]] = await mySQL.query(followingGetAllQuery);
 
       return results;
     } catch (err) {

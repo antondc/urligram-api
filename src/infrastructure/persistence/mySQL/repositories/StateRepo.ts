@@ -32,7 +32,7 @@ export class StateRepo {
   private usersDeauthenticateProcedure: string;
   private usersCreateProcedure: string;
   private usersGetOneProcedure: string;
-  private usersFollowingGetProcedure: string;
+  private usersFollowingGetAllProcedure: string;
   private usersFollowersGetProcedure: string;
   private usersFollowProcedure: string;
   private usersFollowDeleteProcedure: string;
@@ -86,7 +86,7 @@ export class StateRepo {
     this.usersDeauthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersDeauthenticate.sql')).toString();
     this.usersCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersCreate.sql')).toString();
     this.usersGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetOne.sql')).toString();
-    this.usersFollowingGetProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowingGet.sql')).toString();
+    this.usersFollowingGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowingGetAll.sql')).toString();
     this.usersFollowersGetProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowersGet.sql')).toString();
     this.usersFollowProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollow.sql')).toString();
     this.usersFollowDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowDelete.sql')).toString();
@@ -148,7 +148,7 @@ export class StateRepo {
       const createUsersCreateProcedure = await mySQL.query(this.usersCreateProcedure);
       const createUsersGetOneProcedure = await mySQL.query(this.usersGetOneProcedure);
       const createUsersGetAllProcedure = await mySQL.query(this.usersGetAllProcedure);
-      const createUsersFollowingGetProcedure = await mySQL.query(this.usersFollowingGetProcedure);
+      const createUsersFollowingGetAllProcedure = await mySQL.query(this.usersFollowingGetAllProcedure);
       const createUsersFollowersGetProcedure = await mySQL.query(this.usersFollowersGetProcedure);
       const createUsersFollowProcedure = await mySQL.query(this.usersFollowProcedure);
       const createUsersFollowDeleteProcedure = await mySQL.query(this.usersFollowDeleteProcedure);
@@ -206,7 +206,7 @@ export class StateRepo {
         ...createUsersDeauthenticateProcedure,
         ...createUsersCreateProcedure,
         ...createUsersGetOneProcedure,
-        ...createUsersFollowingGetProcedure,
+        ...createUsersFollowingGetAllProcedure,
         ...createUsersFollowersGetProcedure,
         ...createUsersFollowProcedure,
         ...createUsersFollowDeleteProcedure,
