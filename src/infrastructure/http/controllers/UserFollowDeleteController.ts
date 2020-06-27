@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 
-import { IUserFollowDeleteUseCase } from '@domain/user/useCases/UserFollowDeleteUseCase';
+import { IUserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingDeleteUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class UserFollowDeleteController extends BaseController {
-  useCase: IUserFollowDeleteUseCase;
+export class UserFollowingDeleteController extends BaseController {
+  useCase: IUserFollowingDeleteUseCase;
 
-  constructor(useCase: IUserFollowDeleteUseCase) {
+  constructor(useCase: IUserFollowingDeleteUseCase) {
     super();
 
     this.useCase = useCase;

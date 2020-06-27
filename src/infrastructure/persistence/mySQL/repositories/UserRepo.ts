@@ -89,11 +89,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async followDeleteUser(followDeleteUserDTO): Promise<User> {
+  public async userFollowingDelete(userFollowingDeleteDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const followDeleteUserQuery = `CALL users_follow_delete('${JSON.stringify(followDeleteUserDTO)}')`;
-      const [[results]] = await mySQL.query(followDeleteUserQuery);
+      const userFollowingDeleteQuery = `CALL users_follow_delete('${JSON.stringify(userFollowingDeleteDTO)}')`;
+      const [[results]] = await mySQL.query(userFollowingDeleteQuery);
 
       return results;
     } catch (err) {

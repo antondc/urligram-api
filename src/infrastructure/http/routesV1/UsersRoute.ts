@@ -2,18 +2,18 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
 import { UserCreateUseCase } from '@domain/user/useCases/UserCreateUseCase';
-import { UserFollowDeleteUseCase } from '@domain/user/useCases/UserFollowDeleteUseCase';
 import { UserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
+import { UserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingDeleteUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/GetUserFollowingController';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
+import { UserFollowingDeleteController } from '@infrastructure/http/controllers/UserFollowDeleteController';
 import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
-import { UserFollowDeleteController } from '@infrastructure/http/controllers/UsersFollowDeleteController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const UsersRoute = express.Router();
@@ -70,10 +70,10 @@ UsersRoute.post('/:userId/following/:followedId', async (req: Request, res: Resp
 
 UsersRoute.delete('/:userId/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userFollowDeleteUseCase = new UserFollowDeleteUseCase(userRepo);
-  const userFollowDeleteController = new UserFollowDeleteController(userFollowDeleteUseCase);
+  const userFollowingDeleteUseCase = new UserFollowingDeleteUseCase(userRepo);
+  const userFollowingDeleteController = new UserFollowingDeleteController(userFollowingDeleteUseCase);
 
-  const response = await userFollowDeleteController.execute(req, res, next);
+  const response = await userFollowingDeleteController.execute(req, res, next);
 
   return response;
 });
