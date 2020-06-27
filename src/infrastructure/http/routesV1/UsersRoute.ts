@@ -1,18 +1,18 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { CreateUserUseCase } from '@domain/user/useCases/CreateUserUseCase';
-import { GetUserByIdUseCase } from '@domain/user/useCases/GetUserByIdUseCase';
 import { GetUserFollowersUseCase } from '@domain/user/useCases/GetUserFollowersUseCase';
 import { UserFollowDeleteUseCase } from '@domain/user/useCases/UserFollowDeleteUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserFollowUseCase } from '@domain/user/useCases/UserFollowUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
+import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { CreateUserController } from '@infrastructure/http/controllers/CreateUserController';
-import { GetUserByIdController } from '@infrastructure/http/controllers/GetUserByIdController';
 import { GetUserFollowersController } from '@infrastructure/http/controllers/GetUserFollowersController';
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/GetUserFollowingController';
 import { UserFollowController } from '@infrastructure/http/controllers/UserFollowController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
+import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserFollowDeleteController } from '@infrastructure/http/controllers/UsersFollowDeleteController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
@@ -30,10 +30,10 @@ UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
 UsersRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const getUserByIdUseCase = new GetUserByIdUseCase(userRepo);
-  const getUserByIdController = new GetUserByIdController(getUserByIdUseCase);
+  const userGetOneUseCase = new UserGetOneUseCase(userRepo);
+  const userGetOneController = new UserGetOneController(userGetOneUseCase);
 
-  const response = await getUserByIdController.execute(req, res, next);
+  const response = await userGetOneController.execute(req, res, next);
 
   return response;
 });

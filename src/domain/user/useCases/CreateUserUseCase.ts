@@ -23,7 +23,7 @@ export class CreateUserUseCase implements ICreateUserUseCase {
     const isEmail = StringValidator.validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409);
 
-    const userAlreadyExists = await this.userRepo.getOne(createUserDTO);
+    const userAlreadyExists = await this.userRepo.userGetOne(createUserDTO);
     if (!!userAlreadyExists) throw new UserError('User already exist', 409);
 
     const response = await this.userRepo.create(createUserDTO);

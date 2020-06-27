@@ -19,11 +19,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async getOne(findUserDTO): Promise<User> {
+  public async userGetOne(userGetOneDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const getOneUserQuery = `CALL users_get_one('${JSON.stringify(findUserDTO)}')`;
-      const [[results]] = await mySQL.query(getOneUserQuery);
+      const userGetOneQuery = `CALL users_get_one('${JSON.stringify(userGetOneDTO)}')`;
+      const [[results]] = await mySQL.query(userGetOneQuery);
 
       return results;
     } catch (err) {

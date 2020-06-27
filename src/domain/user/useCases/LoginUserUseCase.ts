@@ -17,7 +17,7 @@ export class LoginUserUseCase implements ILoginUserUseCase {
 
   public async execute(loginUserDTO: ILoginUserRequestDTO): Promise<ILoginUserResponseDTO> {
     const userAuthenticated = await this.userRepo.authenticate(loginUserDTO);
-    const userFound = await this.userRepo.getOne(loginUserDTO);
+    const userFound = await this.userRepo.userGetOne(loginUserDTO);
 
     if (userAuthenticated) {
       const sessionLogData = {

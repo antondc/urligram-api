@@ -2,8 +2,8 @@ import { User } from '@domain/user/entities/User';
 
 export interface IUserRepo {
   create: (createUserDTO) => Promise<User>;
-  getOne: (findUserDTO) => Promise<User>;
   userGetAll: () => Promise<User[]>;
+  userGetOne: (findUserDTO) => Promise<User>;
   followingGetAll: (userDTO) => Promise<User>;
   getFollowers: (userDTO) => Promise<User>;
   followUser: (followUserDTO) => Promise<User>;
