@@ -40,6 +40,7 @@ export class StateRepo {
   private languageGetAllProcedure: string;
   private languageGetOneProcedure: string;
   private userLogSessionProcedure: string;
+  private linkGetOneProcedure: string;
 
   // Data
   private domainData: string;
@@ -94,6 +95,7 @@ export class StateRepo {
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
     this.languageGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetOne.sql')).toString();
     this.userLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogSession.sql')).toString();
+    this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -155,6 +157,7 @@ export class StateRepo {
       const createLanguageGetAllProcedure = await mySQL.query(this.languageGetAllProcedure);
       const createLanguageGetOneProcedure = await mySQL.query(this.languageGetOneProcedure);
       const createUsersLogSessionProcedure = await mySQL.query(this.userLogSessionProcedure);
+      const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -214,6 +217,7 @@ export class StateRepo {
         ...createLanguageGetAllProcedure,
         ...createLanguageGetOneProcedure,
         ...createUsersLogSessionProcedure,
+        ...createLinkGetOneProcedure,
 
         // Insert data
         ...insertDomainData,
