@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `link_user` (
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   `link_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE `unique_index`(`user_id`, `link_id`),
   INDEX `fk_link_user_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_link_user_link1_idx` (`link_id` ASC) VISIBLE,
   CONSTRAINT `fk_link_user_user1`

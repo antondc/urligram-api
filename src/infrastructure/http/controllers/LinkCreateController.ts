@@ -1,24 +1,31 @@
 import { Request, Response } from 'express';
 
-import { ILinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
+import { ILinkCreateRequestDTO } from '@domain/link/dto/ILinkCreateRequestDTO';
+import { ILinkCreateUseCase } from '@domain/link/useCases/LinkCreateUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class LinkGetOneController extends BaseController {
-  useCase: ILinkGetOneUseCase;
+export class LinkCreateController extends BaseController {
+  useCase: ILinkCreateUseCase;
 
-  constructor(useCase: ILinkGetOneUseCase) {
+  constructor(useCase: ILinkCreateUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { id } = req.params;
-    const linkGetOneRequestDTO = {
-      id: Number(id),
+    const { userId, vote, saved, isPublic, url, tags } = req.body;
+
+    const linkCreateRequestDTO: ILinkCreateRequestDTO = {
+      userId,
+      vote,
+      saved,
+      isPublic,
+      url,
+      tags,
     };
-    
-    const response = await this.useCase.execute(linkGetOneRequestDTO);
+
+    const response = await this.useCase.execute(linkCreateRequestDTO);
 
     const formattedResponse = {
       links: {

@@ -1,0 +1,17 @@
+type Tag = {
+  tag: string;
+};
+
+type List = {
+  id: number;
+};
+
+export interface ILinkCreateRequestDTO {
+  userId: string;
+  saved: boolean;
+  vote: boolean;
+  isPublic: boolean;
+  url: string;
+  tags: Tag[];
+  lists?: List[];
+}
