@@ -1,19 +1,19 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { LoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
 import { LogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
-import { LoginUserController } from '@infrastructure/http/controllers/LoginUserController';
+import { UserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
 import { LogOutUserController } from '@infrastructure/http/controllers/LogOutUserController';
+import { UserLoginController } from '@infrastructure/http/controllers/UserLoginController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const LoginRoute = express.Router();
 
 LoginRoute.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const loginUserUseCase = new LoginUserUseCase(userRepo);
-  const loginUserController = new LoginUserController(loginUserUseCase);
+  const userLoginUseCase = new UserLoginUseCase(userRepo);
+  const userLoginController = new UserLoginController(userLoginUseCase);
 
-  const response = await loginUserController.execute(req, res, next);
+  const response = await userLoginController.execute(req, res, next);
 
   return response;
 });

@@ -8,6 +8,6 @@ export interface IUserRepo {
   userFollowingCreate: (userFollowingCreateDTO) => Promise<User>;
   userFollowingDelete: (userFollowingDeleteDTO) => Promise<User>;
   userFollowersGetAll: (userFollowersGetAllDTO) => Promise<User>;
-  authenticate: (loginUserDTO) => Promise<User>;
+  authenticate: (userLoginDTO) => Promise<User>;
   logSession: (sessionLogData: { result: string; type: string; id: string }) => Promise<void>;
 }

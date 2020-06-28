@@ -103,10 +103,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async authenticate(loginUserDTO): Promise<User> {
+  public async authenticate(userLoginDTO): Promise<User> {
     const mySQL = new MySQL();
     try {
-      const authenticateUserQuery = `CALL users_authenticate('${JSON.stringify(loginUserDTO)}')`;
+      const authenticateUserQuery = `CALL users_authenticate('${JSON.stringify(userLoginDTO)}')`;
 
       const [[user]] = await mySQL.query(authenticateUserQuery);
 

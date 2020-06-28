@@ -1,3 +1,3 @@
 import { User } from '@domain/user/entities/User';
 
-export type ILoginUserResponseDTO = User;
+export type IUserLoginResponseDTO = User;

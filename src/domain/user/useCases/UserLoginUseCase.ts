@@ -1,23 +1,23 @@
-import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
-import { ILoginUserResponseDTO } from '@domain/user/dto/ILoginUserResponseDTO';
+import { IUserLoginRequestDTO } from '@domain/user/dto/IUserLoginRequestDTO';
+import { IUserLoginResponseDTO } from '@domain/user/dto/IUserLoginResponseDTO';
 import { User } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 
-export interface ILoginUserUseCase {
-  execute: (loginUserDTO: ILoginUserRequestDTO) => Promise<User>;
+export interface IUserLoginUseCase {
+  execute: (userLoginDTO: IUserLoginRequestDTO) => Promise<User>;
 }
 
-export class LoginUserUseCase implements ILoginUserUseCase {
+export class UserLoginUseCase implements IUserLoginUseCase {
   userRepo: IUserRepo;
 
   constructor(userRepo: IUserRepo) {
     this.userRepo = userRepo;
   }
 
-  public async execute(loginUserDTO: ILoginUserRequestDTO): Promise<ILoginUserResponseDTO> {
-    const userAuthenticated = await this.userRepo.authenticate(loginUserDTO);
-    const userFound = await this.userRepo.userGetOne(loginUserDTO);
+  public async execute(userLoginDTO: IUserLoginRequestDTO): Promise<IUserLoginResponseDTO> {
+    const userAuthenticated = await this.userRepo.authenticate(userLoginDTO);
+    const userFound = await this.userRepo.userGetOne(userLoginDTO);
 
     if (userAuthenticated) {
       const sessionLogData = {

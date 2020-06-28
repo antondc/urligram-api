@@ -1,23 +1,23 @@
 import { Request, Response } from 'express';
 
-import { ILoginUserRequestDTO } from '@domain/user/dto/ILoginUserRequestDTO';
-import { ILoginUserUseCase } from '@domain/user/useCases/LoginUserUseCase';
+import { IUserLoginRequestDTO } from '@domain/user/dto/IUserLoginRequestDTO';
+import { IUserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class LoginUserController extends BaseController {
-  useCase: ILoginUserUseCase;
+export class UserLoginController extends BaseController {
+  useCase: IUserLoginUseCase;
 
-  constructor(useCase: ILoginUserUseCase) {
+  constructor(useCase: IUserLoginUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const loginUserDTO: ILoginUserRequestDTO = req.body;
+    const userLoginDTO: IUserLoginRequestDTO = req.body;
 
-    const response = await this.useCase.execute(loginUserDTO);
+    const response = await this.useCase.execute(userLoginDTO);
 
     const tokenService = new TokenService();
     const token = tokenService.createToken(response);
