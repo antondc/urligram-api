@@ -13,7 +13,7 @@ export class LinkRepo implements ILinkRepo {
     try {
       const linkGetOneQuery = `CALL link_get_one('${JSON.stringify(linkGetoneRequestDTO)}')`;
 
-      const [[link]] = await this.mySQL.query(linkGetOneQuery);
+      const [link] = await this.mySQL.query(linkGetOneQuery);
 
       return link;
     } catch (err) {

@@ -5,7 +5,17 @@ CREATE PROCEDURE link_get_all()
 
 BEGIN
 
-  SELECT *
-  FROM `link_user`;
+  SELECT
+    link_user.id,
+    link_user.order,
+    CONCAT(domain.domain, link.path) AS url,
+    link_user.isPublic,
+    link_user.saved,
+    link_user.vote,
+    link_user.createdAt,
+    link_user.updatedAt
+  FROM link_user
+  INNER JOIN link ON link_user.id = link.id
+  INNER JOIN domain ON link.id = domain.id;
 
 END
