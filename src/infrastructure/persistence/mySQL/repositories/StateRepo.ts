@@ -113,7 +113,7 @@ export class StateRepo {
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
   }
 
-  public async reset() {
+  public async resetContent() {
     const mySQL = new MySQL({ multipleStatements: true });
 
     try {
@@ -240,7 +240,7 @@ export class StateRepo {
     }
   }
 
-  public async test() {
+  public async healthCheck() {
     const mySQL = new MySQL();
 
     const response = await mySQL.query('SELECT version()');

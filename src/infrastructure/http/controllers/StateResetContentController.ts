@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
-import { IResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
+import { IStateResetContentUseCase } from '@domain/state/useCases/StateResetContentUseCase';
 import { BaseController } from './BaseController';
 
-export class ResetContentController extends BaseController {
-  resetContentUseCase: IResetContentUseCase;
+export class StateResetContentController extends BaseController {
+  resetContentUseCase: IStateResetContentUseCase;
 
-  constructor(resetContentUseCase: IResetContentUseCase) {
+  constructor(resetContentUseCase: IStateResetContentUseCase) {
     super();
     this.resetContentUseCase = resetContentUseCase;
   }

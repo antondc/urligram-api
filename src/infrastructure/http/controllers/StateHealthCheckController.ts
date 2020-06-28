@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
-import { IHealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
+import { IStateHealthCheckUseCase } from '@domain/state/useCases/StateHealthCheckUseCase';
 import { BaseController } from './BaseController';
 
-export class HealthCheckController extends BaseController {
-  useCase: IHealthCheckUseCase;
+export class StateHealthCheckController extends BaseController {
+  useCase: IStateHealthCheckUseCase;
 
-  constructor(useCase: IHealthCheckUseCase) {
+  constructor(useCase: IStateHealthCheckUseCase) {
     super();
     this.useCase = useCase;
   }

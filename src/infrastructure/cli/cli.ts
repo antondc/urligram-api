@@ -1,12 +1,12 @@
 import 'module-alias/register';
 import prompts from 'prompts';
 
-import { HealthCheckUseCase } from '@domain/persistence/useCases/HealthCheckUseCase';
-import { ResetContentUseCase } from '@domain/persistence/useCases/ResetContentUseCase';
+import { StateHealthCheckUseCase } from '@domain/state/useCases/StateHealthCheckUseCase';
+import { StateResetContentUseCase } from '@domain/state/useCases/StateResetContentUseCase';
 import { UserCreateUseCase } from '@domain/user/useCases/UserCreateUseCase';
 import { CreateUserController } from '@infrastructure/cli/controllers/CreateUserController';
-import { HealthCheckController } from '@infrastructure/cli/controllers/HealthCheckController';
-import { ResetContentController } from '@infrastructure/cli/controllers/ResetContentController';
+import { StateHealthCheckController } from '@infrastructure/cli/controllers/StateHealthCheckController';
+import { StateResetContentController } from '@infrastructure/cli/controllers/StateResetContentController';
 import { StateRepo } from '@infrastructure/persistence/mySQL/repositories/StateRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
@@ -18,7 +18,7 @@ const main = async () => {
       message: 'Which action should I take',
       choices: [
         { title: 'Health check', value: 'healthCheck' },
-        { title: 'Reset database', value: 'reset' },
+        { title: 'Reset database', value: 'resetContent' },
         { title: 'Create user', value: 'createUser' },
       ],
     },
@@ -27,8 +27,8 @@ const main = async () => {
   if (actions.includes('healthCheck')) {
     try {
       const stateRepo = new StateRepo();
-      const healthCheckUseCase = new HealthCheckUseCase(stateRepo);
-      const healthCheckController = new HealthCheckController(healthCheckUseCase);
+      const healthCheckUseCase = new StateHealthCheckUseCase(stateRepo);
+      const healthCheckController = new StateHealthCheckController(healthCheckUseCase);
 
       const response = await healthCheckController.execute();
 
@@ -39,11 +39,11 @@ const main = async () => {
     }
   }
 
-  if (actions.includes('reset')) {
+  if (actions.includes('resetContent')) {
     try {
       const stateRepo = new StateRepo();
-      const resetContentUseCase = new ResetContentUseCase(stateRepo);
-      const resetContentController = new ResetContentController(resetContentUseCase);
+      const resetContentUseCase = new StateResetContentUseCase(stateRepo);
+      const resetContentController = new StateResetContentController(resetContentUseCase);
 
       await resetContentController.execute();
 

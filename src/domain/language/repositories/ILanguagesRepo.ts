@@ -1,6 +1,6 @@
 import { ILanguageGetAllResponseDTO } from '@domain/language/dto/ILanguageGetAllResponseDTO';
 import { ILanguageGetOneRequestDTO } from '@domain/language/dto/ILanguageGetOneRequestDTO';
-import { ILanguageGetOneResponseDTO } from '../dto/ILanguageGetOneResponseDTO';
+import { ILanguageGetOneResponseDTO } from '@domain/language/dto/ILanguageGetOneResponseDTO';
 
 export interface ILanguagesRepo {
   languageGetAll: () => Promise<ILanguageGetAllResponseDTO>;
