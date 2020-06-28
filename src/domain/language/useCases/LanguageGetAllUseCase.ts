@@ -1,19 +1,19 @@
 import { ILanguageGetAllResponseDTO } from '@domain/language/dto/ILanguageGetAllResponseDTO';
-import { ILanguagesRepo } from '@domain/language/repositories/ILanguagesRepo';
+import { ILanguageRepo } from '@domain/language/repositories/ILanguageRepo';
 
 export interface ILanguageGetAllUseCase {
   execute: () => Promise<ILanguageGetAllResponseDTO>;
 }
 
 export class LanguageGetAllUseCase implements ILanguageGetAllUseCase {
-  private languagesRepo: ILanguagesRepo;
+  private languageRepo: ILanguageRepo;
 
-  constructor(languagesRepo: ILanguagesRepo) {
-    this.languagesRepo = languagesRepo;
+  constructor(languageRepo: ILanguageRepo) {
+    this.languageRepo = languageRepo;
   }
 
   public async execute(): Promise<ILanguageGetAllResponseDTO> {
-    const response = await this.languagesRepo.languageGetAll();
+    const response = await this.languageRepo.languageGetAll();
 
     return response;
   }

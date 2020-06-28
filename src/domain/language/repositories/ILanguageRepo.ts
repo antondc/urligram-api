@@ -2,7 +2,7 @@ import { ILanguageGetAllResponseDTO } from '@domain/language/dto/ILanguageGetAll
 import { ILanguageGetOneRequestDTO } from '@domain/language/dto/ILanguageGetOneRequestDTO';
 import { ILanguageGetOneResponseDTO } from '@domain/language/dto/ILanguageGetOneResponseDTO';
 
-export interface ILanguagesRepo {
+export interface ILanguageRepo {
   languageGetAll: () => Promise<ILanguageGetAllResponseDTO>;
   languageGetOne: (languageGetOneRequestDTO: ILanguageGetOneRequestDTO) => Promise<ILanguageGetOneResponseDTO>;
 }

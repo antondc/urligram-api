@@ -1,8 +1,8 @@
-import { ILanguagesRepo } from '@domain/language/repositories/ILanguagesRepo';
+import { ILanguageRepo } from '@domain/language/repositories/ILanguageRepo';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
-export class getLanguagesRepo implements ILanguagesRepo {
+export class LanguageRepo implements ILanguageRepo {
   private mySQL: MySQL;
 
   constructor() {
