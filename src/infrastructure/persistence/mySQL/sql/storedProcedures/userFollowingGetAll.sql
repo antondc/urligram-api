@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS users_get_followers;
+DROP PROCEDURE IF EXISTS user_following_get_all;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE users_get_followers(
+CREATE PROCEDURE user_following_get_all(
   IN user_data JSON
 )
 BEGIN
@@ -37,10 +37,10 @@ BEGIN
           'updatedAt', user2.updatedAt
         )
       )
-    ) followers
+    ) following
   FROM user u
-  LEFT JOIN `user_user` uu ON u.id = uu.user_id1
-  LEFT JOIN user user2 ON user2.id = uu.user_id
+  LEFT JOIN `user_user` uu ON u.id = uu.user_id
+  LEFT JOIN user user2 ON user2.id = uu.user_id1
   WHERE u.id = JSON_UNQUOTE(@id);
 
 END

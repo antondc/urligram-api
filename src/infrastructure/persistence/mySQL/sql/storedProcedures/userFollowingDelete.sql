@@ -1,8 +1,8 @@
 
-DROP PROCEDURE IF EXISTS users_follow_delete;
+DROP PROCEDURE IF EXISTS user_following_delete;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE users_follow_delete(
+CREATE PROCEDURE user_following_delete(
   IN user_data JSON
 )
 

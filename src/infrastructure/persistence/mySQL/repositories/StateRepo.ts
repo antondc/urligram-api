@@ -28,18 +28,18 @@ export class StateRepo {
 
   // Procedures
   private debuggerProcedure: string;
-  private usersAuthenticateProcedure: string;
-  private usersDeauthenticateProcedure: string;
-  private usersCreateProcedure: string;
-  private usersGetOneProcedure: string;
-  private usersFollowingGetAllProcedure: string;
-  private usersFollowersGetProcedure: string;
-  private usersFollowProcedure: string;
-  private usersFollowDeleteProcedure: string;
-  private usersGetAllProcedure: string;
+  private userAuthenticateProcedure: string;
+  private userDeauthenticateProcedure: string;
+  private userCreateProcedure: string;
+  private userGetOneProcedure: string;
+  private userFollowersGetAllProcedure: string;
+  private userFollowingGetAllProcedure: string;
+  private userFollowingCreateProcedure: string;
+  private userFollowingDeleteProcedure: string;
+  private userGetAllProcedure: string;
   private languageGetAllProcedure: string;
   private languageGetOneProcedure: string;
-  private usersLogSessionProcedure: string;
+  private userLogSessionProcedure: string;
 
   // Data
   private domainData: string;
@@ -82,18 +82,18 @@ export class StateRepo {
 
     // Stored procedures
     this.debuggerProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql')).toString();
-    this.usersAuthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersAuthenticate.sql')).toString();
-    this.usersDeauthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersDeauthenticate.sql')).toString();
-    this.usersCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersCreate.sql')).toString();
-    this.usersGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetOne.sql')).toString();
-    this.usersFollowingGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowingGetAll.sql')).toString();
-    this.usersFollowersGetProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowersGet.sql')).toString();
-    this.usersFollowProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollow.sql')).toString();
-    this.usersFollowDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowDelete.sql')).toString();
-    this.usersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetAll.sql')).toString();
+    this.userAuthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userAuthenticate.sql')).toString();
+    this.userDeauthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userDeauthenticate.sql')).toString();
+    this.userCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreate.sql')).toString();
+    this.userGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetOne.sql')).toString();
+    this.userFollowersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowersGetAll.sql')).toString();
+    this.userFollowingGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingGetAll.sql')).toString();
+    this.userFollowingCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingCreate.sql')).toString();
+    this.userFollowingDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingDelete.sql')).toString();
+    this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
     this.languageGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetOne.sql')).toString();
-    this.usersLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersLogSession.sql')).toString();
+    this.userLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogSession.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -143,18 +143,18 @@ export class StateRepo {
 
       // Create procedures
       const createDebuggerProcedure = await mySQL.query(this.debuggerProcedure);
-      const createUsersAuthenticateProcedure = await mySQL.query(this.usersAuthenticateProcedure);
-      const createUsersDeauthenticateProcedure = await mySQL.query(this.usersDeauthenticateProcedure);
-      const createUsersCreateProcedure = await mySQL.query(this.usersCreateProcedure);
-      const createUsersGetOneProcedure = await mySQL.query(this.usersGetOneProcedure);
-      const createUsersGetAllProcedure = await mySQL.query(this.usersGetAllProcedure);
-      const createUsersFollowingGetAllProcedure = await mySQL.query(this.usersFollowingGetAllProcedure);
-      const createUsersFollowersGetProcedure = await mySQL.query(this.usersFollowersGetProcedure);
-      const createUsersFollowProcedure = await mySQL.query(this.usersFollowProcedure);
-      const createUsersFollowDeleteProcedure = await mySQL.query(this.usersFollowDeleteProcedure);
+      const createUsersAuthenticateProcedure = await mySQL.query(this.userAuthenticateProcedure);
+      const createUsersDeauthenticateProcedure = await mySQL.query(this.userDeauthenticateProcedure);
+      const createUsersCreateProcedure = await mySQL.query(this.userCreateProcedure);
+      const createUsersGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
+      const createUsersGetAllProcedure = await mySQL.query(this.userGetAllProcedure);
+      const createUsersFollowersGetAllProcedure = await mySQL.query(this.userFollowersGetAllProcedure);
+      const createUsersFollowingGetAllProcedure = await mySQL.query(this.userFollowingGetAllProcedure);
+      const createUsersFollowingCreateProcedure = await mySQL.query(this.userFollowingCreateProcedure);
+      const createUsersFollowingDeleteProcedure = await mySQL.query(this.userFollowingDeleteProcedure);
       const createLanguageGetAllProcedure = await mySQL.query(this.languageGetAllProcedure);
       const createLanguageGetOneProcedure = await mySQL.query(this.languageGetOneProcedure);
-      const createUsersLogSessionProcedure = await mySQL.query(this.usersLogSessionProcedure);
+      const createUsersLogSessionProcedure = await mySQL.query(this.userLogSessionProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -207,9 +207,9 @@ export class StateRepo {
         ...createUsersCreateProcedure,
         ...createUsersGetOneProcedure,
         ...createUsersFollowingGetAllProcedure,
-        ...createUsersFollowersGetProcedure,
-        ...createUsersFollowProcedure,
-        ...createUsersFollowDeleteProcedure,
+        ...createUsersFollowersGetAllProcedure,
+        ...createUsersFollowingCreateProcedure,
+        ...createUsersFollowingDeleteProcedure,
         ...createUsersGetAllProcedure,
         ...createLanguageGetAllProcedure,
         ...createLanguageGetOneProcedure,

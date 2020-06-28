@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS users_create;
+DROP PROCEDURE IF EXISTS user_create;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE users_create(
+CREATE PROCEDURE user_create(
   IN user JSON
 )
 BEGIN
