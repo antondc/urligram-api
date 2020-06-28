@@ -8,7 +8,6 @@ BEGIN
   -- Retrieve values from JSON
   SET @id = JSON_EXTRACT(link_data, '$.id');
 
-  -- Select user
   SELECT *
   FROM `link_user`
   WHERE `id` = JSON_UNQUOTE(@id);

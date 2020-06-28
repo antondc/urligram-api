@@ -22,4 +22,18 @@ export class LinkRepo implements ILinkRepo {
       await this.mySQL.close();
     }
   }
+
+  public async linkGetAll() {
+    try {
+      const linkGetOneQuery = `CALL link_get_all()`;
+
+      const [links] = await this.mySQL.query(linkGetOneQuery);
+
+      return links;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await this.mySQL.close();
+    }
+  }
 }
