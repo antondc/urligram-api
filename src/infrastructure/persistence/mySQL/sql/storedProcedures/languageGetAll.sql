@@ -1,6 +1,6 @@
-DROP PROCEDURE IF EXISTS languages_get_all;
+DROP PROCEDURE IF EXISTS language_get_all;
 
-CREATE PROCEDURE languages_get_all()
+CREATE PROCEDURE language_get_all()
 BEGIN
  SELECT
     l.id,

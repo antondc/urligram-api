@@ -1,4 +1,4 @@
-export interface IGetLanguagesResponseDTO {
+export interface ILanguageGetAllResponseDTO {
   id: number;
   slug: string;
   name: string;

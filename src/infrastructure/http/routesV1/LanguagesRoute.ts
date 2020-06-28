@@ -1,19 +1,19 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { GetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
-import { GetLanguagesUseCase } from '@domain/language/useCases/GetLanguagesUseCase';
+import { LanguageGetAllUseCase } from '@domain/language/useCases/LanguageGetAllUseCase';
 import { GetLanguageBySlugController } from '@infrastructure/http/controllers/GetLanguageBySlugController';
-import { GetLanguagesController } from '@infrastructure/http/controllers/GetLanguagesController';
+import { LanguageGetAllController } from '@infrastructure/http/controllers/LanguageGetAllController';
 import { getLanguagesRepo } from '@infrastructure/persistence/mySQL/repositories/LanguagesRepo';
 
 const LanguagesRoute = express.Router();
 
 LanguagesRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const languagesRepo = new getLanguagesRepo();
-  const getLanguagesUseCase = new GetLanguagesUseCase(languagesRepo);
-  const getLanguagesController = new GetLanguagesController(getLanguagesUseCase);
+  const languageGetAllUseCase = new LanguageGetAllUseCase(languagesRepo);
+  const languageGetAllController = new LanguageGetAllController(languageGetAllUseCase);
 
-  const response = await getLanguagesController.execute(req, res, next);
+  const response = await languageGetAllController.execute(req, res, next);
 
   return response;
 });

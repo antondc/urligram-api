@@ -1,9 +1,9 @@
-import { IGetLanguageRequestDTO } from '@domain/language/dto/IGetLanguageRequestDTO';
-import { IGetLanguagesResponseDTO } from '@domain/language/dto/IGetLanguagesResponseDTO';
+import { ILanguageGetAllRequestDTO } from '@domain/language/dto/ILanguageGetAllRequestDTO';
+import { ILanguageGetAllResponseDTO } from '@domain/language/dto/ILanguageGetAllResponseDTO';
 import { ILanguagesRepo } from '@domain/language/repositories/ILanguagesRepo';
 
 export interface IGetLanguageBySlugUseCase {
-  execute: (getLanguagesRequestDTO: IGetLanguageRequestDTO) => Promise<IGetLanguagesResponseDTO>;
+  execute: (getLanguagesRequestDTO: ILanguageGetAllRequestDTO) => Promise<ILanguageGetAllResponseDTO>;
 }
 
 export class GetLanguageBySlugUseCase implements IGetLanguageBySlugUseCase {
@@ -13,8 +13,8 @@ export class GetLanguageBySlugUseCase implements IGetLanguageBySlugUseCase {
     this.languagesRepo = languagesRepo;
   }
 
-  public async execute(getLanguagesRequestDTO: IGetLanguageRequestDTO): Promise<IGetLanguagesResponseDTO> {
-    const response = await this.languagesRepo.getOne(getLanguagesRequestDTO);
+  public async execute(getLanguagesRequestDTO: ILanguageGetAllRequestDTO): Promise<ILanguageGetAllResponseDTO> {
+    const response = await this.languagesRepo.languageGetOne(getLanguagesRequestDTO);
 
     return response;
   }

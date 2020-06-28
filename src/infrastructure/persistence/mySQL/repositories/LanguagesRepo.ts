@@ -1,5 +1,5 @@
-import { IGetLanguageRequestDTO } from '@domain/language/dto/IGetLanguageRequestDTO';
-import { IGetLanguagesResponseDTO } from '@domain/language/dto/IGetLanguagesResponseDTO';
+import { ILanguageGetAllRequestDTO } from '@domain/language/dto/ILanguageGetAllRequestDTO';
+import { ILanguageGetAllResponseDTO } from '@domain/language/dto/ILanguageGetAllResponseDTO';
 import { ILanguagesRepo } from '@domain/language/repositories/ILanguagesRepo';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
@@ -10,11 +10,11 @@ export class getLanguagesRepo implements ILanguagesRepo {
   constructor() {
     this.mySQL = new MySQL();
   }
-  get: () => Promise<IGetLanguagesResponseDTO>;
+  get: () => Promise<ILanguageGetAllResponseDTO>;
 
-  public async getAll(): Promise<IGetLanguagesResponseDTO> {
+  public async languageGetAll(): Promise<ILanguageGetAllResponseDTO> {
     try {
-      const [languages] = await this.mySQL.query(`CALL languages_get_all()`);
+      const [languages] = await this.mySQL.query(`CALL language_get_all()`);
 
       return languages;
     } catch (err) {
@@ -24,9 +24,9 @@ export class getLanguagesRepo implements ILanguagesRepo {
     }
   }
 
-  public async getOne(getLanguageRequestDTO: IGetLanguageRequestDTO) {
+  public async languageGetOne(languageGetAllRequestDTO: ILanguageGetAllRequestDTO) {
     try {
-      const getLanguageQuery = `CALL languages_get_one_by_slug('${JSON.stringify(getLanguageRequestDTO)}')`;
+      const getLanguageQuery = `CALL languages_get_one_by_slug('${JSON.stringify(languageGetAllRequestDTO)}')`;
 
       const [[language]] = await this.mySQL.query(getLanguageQuery);
 

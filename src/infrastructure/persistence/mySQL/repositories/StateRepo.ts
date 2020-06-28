@@ -37,8 +37,8 @@ export class StateRepo {
   private usersFollowProcedure: string;
   private usersFollowDeleteProcedure: string;
   private usersGetAllProcedure: string;
-  private languagesGetAllProcedure: string;
-  private languagesGetOneProcedure: string;
+  private languageGetAllProcedure: string;
+  private languageGetOneProcedure: string;
   private usersLogSessionProcedure: string;
 
   // Data
@@ -91,8 +91,8 @@ export class StateRepo {
     this.usersFollowProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollow.sql')).toString();
     this.usersFollowDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersFollowDelete.sql')).toString();
     this.usersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersGetAll.sql')).toString();
-    this.languagesGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languagesGetAll.sql')).toString();
-    this.languagesGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languagesGetOne.sql')).toString();
+    this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
+    this.languageGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
     this.usersLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/usersLogSession.sql')).toString();
 
     //  Data
@@ -152,8 +152,8 @@ export class StateRepo {
       const createUsersFollowersGetProcedure = await mySQL.query(this.usersFollowersGetProcedure);
       const createUsersFollowProcedure = await mySQL.query(this.usersFollowProcedure);
       const createUsersFollowDeleteProcedure = await mySQL.query(this.usersFollowDeleteProcedure);
-      const createLanguagesGetAllProcedure = await mySQL.query(this.languagesGetAllProcedure);
-      const createLanguagesGetOneProcedure = await mySQL.query(this.languagesGetOneProcedure);
+      const createLanguageGetAllProcedure = await mySQL.query(this.languageGetAllProcedure);
+      const languageGetOneProcedure = await mySQL.query(this.languageGetAllProcedure);
       const createUsersLogSessionProcedure = await mySQL.query(this.usersLogSessionProcedure);
 
       // Insert data
@@ -211,8 +211,8 @@ export class StateRepo {
         ...createUsersFollowProcedure,
         ...createUsersFollowDeleteProcedure,
         ...createUsersGetAllProcedure,
-        ...createLanguagesGetAllProcedure,
-        ...createLanguagesGetOneProcedure,
+        ...createLanguageGetAllProcedure,
+        ...languageGetOneProcedure,
         ...createUsersLogSessionProcedure,
 
         // Insert data
