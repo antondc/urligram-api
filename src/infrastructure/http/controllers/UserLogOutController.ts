@@ -1,23 +1,23 @@
 import { Request, Response } from 'express';
 
-import { ILogOutUserRequestDTO } from '@domain/user/dto/ILogOutUserRequestDTO';
+import { IUserLogoutRequestDTO } from '@domain/user/dto/IUserLogoutRequestDTO';
 import { User } from '@domain/user/entities/User';
-import { ILogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
+import { IUserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class LogOutUserController extends BaseController {
-  useCase: ILogOutUserUseCase;
+export class UserLogOutController extends BaseController {
+  useCase: IUserLogOutUseCase;
 
-  constructor(useCase: ILogOutUserUseCase) {
+  constructor(useCase: IUserLogOutUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
     const tokenService = new TokenService();
-    const logOutUserRequestDTO: ILogOutUserRequestDTO = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const logOutUserRequestDTO: IUserLogoutRequestDTO = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const response = await this.useCase.execute(logOutUserRequestDTO);
 

@@ -1,9 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { LogOutUserUseCase } from '@domain/user/useCases/LogOutUserUseCase';
 import { UserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
-import { LogOutUserController } from '@infrastructure/http/controllers/LogOutUserController';
+import { UserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
 import { UserLoginController } from '@infrastructure/http/controllers/UserLoginController';
+import { UserLogOutController } from '@infrastructure/http/controllers/UserLogOutController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const LoginRoute = express.Router();
@@ -20,10 +20,10 @@ LoginRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
 
 LoginRoute.delete('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const logOutUserUseCase = new LogOutUserUseCase(userRepo);
-  const logOutUserController = new LogOutUserController(logOutUserUseCase);
+  const userLogOutUseCase = new UserLogOutUseCase(userRepo);
+  const userLogOutController = new UserLogOutController(userLogOutUseCase);
 
-  const response = await logOutUserController.execute(req, res, next);
+  const response = await userLogOutController.execute(req, res, next);
 
   return response;
 });
