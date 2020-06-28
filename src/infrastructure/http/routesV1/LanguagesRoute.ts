@@ -1,9 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { GetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
 import { LanguageGetAllUseCase } from '@domain/language/useCases/LanguageGetAllUseCase';
-import { GetLanguageBySlugController } from '@infrastructure/http/controllers/GetLanguageBySlugController';
+import { LanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
 import { LanguageGetAllController } from '@infrastructure/http/controllers/LanguageGetAllController';
+import { LanguageGetOneController } from '@infrastructure/http/controllers/LanguageGetOneController';
 import { getLanguagesRepo } from '@infrastructure/persistence/mySQL/repositories/LanguagesRepo';
 
 const LanguagesRoute = express.Router();
@@ -20,10 +20,10 @@ LanguagesRoute.get('/', async (req: Request, res: Response, next: NextFunction) 
 
 LanguagesRoute.get('/:slug', async (req: Request, res: Response, next: NextFunction) => {
   const languagesRepo = new getLanguagesRepo();
-  const getLanguageBySlug = new GetLanguageBySlugUseCase(languagesRepo);
-  const getLanguageBySlugController = new GetLanguageBySlugController(getLanguageBySlug);
+  const languageGetOneUseCase = new LanguageGetOneUseCase(languagesRepo);
+  const languageGetOneController = new LanguageGetOneController(languageGetOneUseCase);
 
-  const response = await getLanguageBySlugController.execute(req, res, next);
+  const response = await languageGetOneController.execute(req, res, next);
 
   return response;
 });

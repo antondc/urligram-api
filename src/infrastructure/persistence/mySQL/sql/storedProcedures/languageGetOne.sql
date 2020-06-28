@@ -1,6 +1,6 @@
-DROP PROCEDURE IF EXISTS languages_get_one_by_slug;
+DROP PROCEDURE IF EXISTS language_get_one;
 
-CREATE PROCEDURE languages_get_one_by_slug(
+CREATE PROCEDURE language_get_one(
     IN language_data JSON
 )
 BEGIN

@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 
-import { IGetLanguageBySlugUseCase } from '@domain/language/useCases/GetLanguageBySlugUseCase';
+import { ILanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class GetLanguageBySlugController extends BaseController {
-  useCase: IGetLanguageBySlugUseCase;
+export class LanguageGetOneController extends BaseController {
+  useCase: ILanguageGetOneUseCase;
 
-  constructor(useCase: IGetLanguageBySlugUseCase) {
+  constructor(useCase: ILanguageGetOneUseCase) {
     super();
     this.useCase = useCase;
   }
