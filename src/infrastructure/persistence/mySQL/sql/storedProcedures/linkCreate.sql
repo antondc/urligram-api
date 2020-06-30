@@ -46,7 +46,7 @@ BEGIN
     domain_id = @domain_id,
     updatedAt = CURRENT_TIMESTAMP;
 
-  -- Retrieve the upserter id
+  -- Retrieve the upserted link_id
   SET @link_id = (
     SELECT link.id
     FROM link
@@ -67,12 +67,12 @@ BEGIN
     @user_id,
     @link_id
   ) ON DUPLICATE KEY UPDATE
-    isPublic  = @is_public,
+    isPublic   = @is_public,
     saved      = @saved,
     vote       = @vote,
     user_id    = @user_id,
     link_id    = @link_id,
-    updatedAt = CURRENT_TIMESTAMP;
+    updatedAt  = CURRENT_TIMESTAMP;
 
   -- Retrieve the last upserted id
   SET @link_user_id = (
@@ -89,9 +89,9 @@ BEGIN
   WHERE
   link_user_id = @link_user_id;
 
-
   -- Execute loop over tags length
   WHILE i < @tags_length DO
+
     -- Retrieve current tag from tags array
     SET @tag = JSON_EXTRACT(link, CONCAT('$.tags[',i,'].tag'));
 
@@ -101,8 +101,8 @@ BEGIN
     ) VALUES (
       JSON_UNQUOTE(@tag)
     ) ON DUPLICATE KEY UPDATE
-      name = JSON_UNQUOTE(@tag),
-      updatedAt = CURRENT_TIMESTAMP;
+      name        = JSON_UNQUOTE(@tag),
+      updatedAt   = CURRENT_TIMESTAMP;
 
     -- Retrieve tag id
     SELECT id INTO @last_tag
@@ -117,9 +117,9 @@ BEGIN
       @link_user_id,
       @last_tag
     ) ON DUPLICATE KEY UPDATE
-      link_user_id = @link_user_id,
-      tag_id = @last_tag,
-      updatedAt = CURRENT_TIMESTAMP;
+      link_user_id  = @link_user_id,
+      tag_id        = @last_tag,
+      updatedAt     = CURRENT_TIMESTAMP;
 
     -- Add step to iterator
     SELECT i + 1 INTO i;
