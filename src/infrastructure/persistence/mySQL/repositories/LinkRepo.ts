@@ -1,6 +1,7 @@
 import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
+import { RequestError } from '@shared/errors/RequestError';
 
 export class LinkRepo implements ILinkRepo {
   public async linkGetOne(linkGetoneRequestDTO) {
@@ -45,6 +46,32 @@ export class LinkRepo implements ILinkRepo {
 
       return results;
     } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async linkDelete(linkDeleteRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const linkDeleteQuery = `CALL link_delete('${JSON.stringify(linkDeleteRequestDTO)}')`;
+
+      const results = await mySQL.query(linkDeleteQuery);
+
+      if (!results.affectedRows) throw new RequestError('Not found', 404);
+
+      const result = {
+        success: true,
+        message: 'Link removed',
+        affectedRows: linkDeleteRequestDTO.id,
+      };
+
+      return result;
+    } catch (err) {
+      if (err instanceof RequestError) throw err;
+
       throw new BaseError('Something went wrong', 500, err);
     } finally {
       await mySQL.close();

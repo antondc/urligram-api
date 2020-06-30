@@ -8,9 +8,15 @@ CREATE PROCEDURE link_delete(
 
 BEGIN
   -- Retrieve values from JSON
-  SET @link_user_id     = JSON_EXTRACT(link_data, '$.linkUserId');
+  SET @id   = JSON_EXTRACT(link_data, '$.id');
+
+  DELETE FROM link_user_tag
+  WHERE link_user_id  = JSON_UNQUOTE(@id);
+
+  DELETE FROM link_user_list
+  WHERE link_user_id  = JSON_UNQUOTE(@id);
 
   DELETE FROM link_user
-  WHERE link_user = JSON_UNQUOTE(@link_user_id);
+  WHERE id            = JSON_UNQUOTE(@id);
 
 END
