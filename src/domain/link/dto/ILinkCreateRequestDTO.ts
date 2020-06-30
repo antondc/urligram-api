@@ -7,6 +7,7 @@ type List = {
 };
 
 export interface ILinkCreateRequestDTO {
+  id?: string;
   userId: string;
   saved: boolean;
   vote: boolean;

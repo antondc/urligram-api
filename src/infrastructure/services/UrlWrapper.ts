@@ -1,3 +1,5 @@
+import { addDefaultHttps } from '@tools/helpers/url/addDefaultHttps';
+
 export class URLWrapper {
   private readonly url: URL;
   private readonly host: string;
@@ -7,14 +9,16 @@ export class URLWrapper {
 
   constructor(rawURL: string) {
     try {
-      const url = new URL(rawURL);
+      const editedURL = addDefaultHttps(rawURL);
+
+      const url = new URL(editedURL);
       this.url = url;
       this.host = url.hostname;
       this.path = url.pathname;
       this.search = url.search;
       this.params = new URLSearchParams(this.url.search);
-    } catch (e) {
-      console.error('Un-parsable URL', e);
+    } catch (err) {
+      console.error('Un-parsable URL', err);
     }
   }
 

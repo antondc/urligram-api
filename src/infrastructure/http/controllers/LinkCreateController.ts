@@ -14,9 +14,10 @@ export class LinkCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { userId, vote, saved, isPublic, url, tags } = req.body;
+    const { userId, vote, saved, isPublic, url, tags, id } = req.body;
 
     const linkCreateRequestDTO: ILinkCreateRequestDTO = {
+      id,
       userId,
       vote,
       saved,
@@ -34,7 +35,7 @@ export class LinkCreateController extends BaseController {
       data: [
         {
           type: 'link',
-          id: response.id,
+          id: response?.id,
           session: {
             self: URL_SERVER + '/link',
           },
