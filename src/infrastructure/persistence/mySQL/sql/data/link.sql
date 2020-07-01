@@ -1,7 +1,7 @@
 INSERT INTO `link` (
   `id`, `path`, `createdAt`, `updatedAt`, `domain_id`
 ) VALUES (
-  1, '/', DEFAULT, DEFAULT, 1
+  1, '/test', DEFAULT, DEFAULT, 1
 );
 
 INSERT INTO `link` (

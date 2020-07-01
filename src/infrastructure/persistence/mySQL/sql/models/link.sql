@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `link` (
   `path` VARCHAR(255) NOT NULL,
   `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `domain_id` INT(11) NOT NULL,
+  `domain_id` INT(11),
   PRIMARY KEY (`id`),
   INDEX `fk_link_domain1_idx` (`domain_id` ASC) VISIBLE,
   UNIQUE INDEX `mul_path_domain_id_idx` (`path` ASC, `domain_id` ASC) VISIBLE,

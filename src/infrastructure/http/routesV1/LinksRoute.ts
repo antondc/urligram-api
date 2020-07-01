@@ -4,10 +4,12 @@ import { LinkCreateUseCase } from '@domain/link/useCases/LinkCreateUseCase';
 import { LinkDeleteUseCase } from '@domain/link/useCases/LinkDeleteUseCase';
 import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
+import { LinkUpdateUseCase } from '@domain/link/useCases/LinkUpdateUseCase';
 import { LinkCreateController } from '@infrastructure/http/controllers/LinkCreateController';
 import { LinkDeleteController } from '@infrastructure/http/controllers/LinkDeleteController';
 import { LinkGetAllController } from '@infrastructure/http/controllers/LinkGetAllController';
 import { LinkGetOneController } from '@infrastructure/http/controllers/LinkGetOneController';
+import { LinkUpdateController } from '@infrastructure/http/controllers/LinkUpdateController';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 
 const LinksRoute = express.Router();
@@ -38,6 +40,16 @@ LinksRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
   const linkCreateController = new LinkCreateController(linkCreateUseCase);
 
   const response = await linkCreateController.execute(req, res, next);
+
+  return response;
+});
+
+LinksRoute.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new LinkRepo();
+  const linkUpdateUseCase = new LinkUpdateUseCase(userRepo);
+  const linkUpdateController = new LinkUpdateController(linkUpdateUseCase);
+
+  const response = await linkUpdateController.execute(req, res, next);
 
   return response;
 });

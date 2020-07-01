@@ -43,6 +43,7 @@ export class StateRepo {
   private linkGetOneProcedure: string;
   private linkGetAllProcedure: string;
   private linkCreateProcedure: string;
+  private linkUpdateProcedure: string;
   private linkDeleteProcedure: string;
 
   // Data
@@ -101,6 +102,7 @@ export class StateRepo {
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAll.sql')).toString();
     this.linkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkCreate.sql')).toString();
+    this.linkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkUpdate.sql')).toString();
     this.linkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkDelete.sql')).toString();
 
     //  Data
@@ -166,6 +168,7 @@ export class StateRepo {
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllProcedure = await mySQL.query(this.linkGetAllProcedure);
       const createLinkCreateProcedure = await mySQL.query(this.linkCreateProcedure);
+      const createLinkUpdateProcedure = await mySQL.query(this.linkUpdateProcedure);
       const createLinkDeleteProcedure = await mySQL.query(this.linkDeleteProcedure);
 
       // Insert data
@@ -229,6 +232,7 @@ export class StateRepo {
         ...createLinkGetOneProcedure,
         ...createLinkGetAllProcedure,
         ...createLinkCreateProcedure,
+        ...createLinkUpdateProcedure,
         ...createLinkDeleteProcedure,
 
         // Insert data
