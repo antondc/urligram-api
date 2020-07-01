@@ -10,13 +10,39 @@ BEGIN
   -- Retrieve values from JSON
   SET @id   = JSON_EXTRACT(link_data, '$.id');
 
+  SET @link_id = (
+      SELECT link_id FROM link_user
+      WHERE id = @id
+  );
+
+  SET @domain_id = (
+      SELECT domain_id FROM link
+      WHERE id = @link_id
+  );
+
   DELETE FROM link_user_tag
-  WHERE link_user_id  = JSON_UNQUOTE(@id);
+  WHERE link_user_id  = @id;
 
   DELETE FROM link_user_list
-  WHERE link_user_id  = JSON_UNQUOTE(@id);
+  WHERE link_user_id  = @id;
 
+  -- Update link_user FK to be able to select links with no relations
+  UPDATE link_user
+  SET link_user.link_id = NULL
+  WHERE link_user.id = @id;
+
+  DELETE link FROM link
+  LEFT JOIN link_user ON link_user.link_id = link.id
+  WHERE link_user.id IS NULL AND link.id = @link_id;
+
+    -- Delete domain in case is not used by other link entries
+  DELETE domain FROM domain
+  LEFT JOIN link ON link.domain_id = domain.id
+  WHERE link.id IS NULL AND domain.id = @domain_id;
+
+  -- Finally remove link_user entry
   DELETE FROM link_user
-  WHERE id            = JSON_UNQUOTE(@id);
+  WHERE id            = @id;
+
 
 END
