@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS link_update;
 CREATE PROCEDURE link_update(
   IN link JSON
 )
+
 BEGIN
 
   -- Declare iterator variable to use it later on in the loop
@@ -20,98 +21,54 @@ BEGIN
   SET @path       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.path'));
   SET @tags       = JSON_EXTRACT(link, '$.tags');
 
-  -- Select path
-  SET @link_id = (
+
+  --  Select old variables
+  SET @original_link_id = (
       SELECT link_id FROM link_user
       WHERE id = @id
   );
-  SET @current_path = (
-      SELECT path FROM link
-      WHERE id = @link_id
-  );
-  SET @path_updated = @path NOT LIKE @current_path;
-  -- Select domain
-  SET @domain_id = (
+  SET @original_domain_id = (
       SELECT domain_id FROM link
-      WHERE id = @link_id
+      WHERE id = @original_link_id
   );
-  SET @current_domain = (
-      SELECT domain FROM domain
-      WHERE id = @domain_id
+
+
+  -- Upsert new domain
+  INSERT INTO domain (
+    `domain`
+  ) VALUES (
+    @domain
+  ) ON DUPLICATE KEY UPDATE
+    domain    = @domain,
+    updatedAt = CURRENT_TIMESTAMP;
+
+  -- Retrieve the upserted id
+  SET @new_domain_id = (
+    SELECT domain.id
+    FROM domain
+    WHERE domain.domain = @domain
   );
-  SET @domain_updated = @domain NOT LIKE @current_domain;
 
-  -- Update link_user FK to be able to select links with no relations
-  UPDATE link_user
-  SET link_user.link_id = NULL
-  WHERE link_user.id = JSON_UNQUOTE(@id);
 
-  -- Delete domain in case it was updated and is not used by any other link
-  IF @domain_updated THEN
-  -- Update link_user FK to be able to select links with no relations
-    UPDATE link
-    SET link.domain_id = NULL
-    WHERE link.id = @link_id;
+  -- Upsert new link
+  INSERT INTO link (
+    `path`,
+    `domain_id`
+  ) VALUES (
+    @path,
+    @new_domain_id
+  ) ON DUPLICATE KEY UPDATE
+    path      = @path,
+    domain_id = @new_domain_id,
+    updatedAt = CURRENT_TIMESTAMP;
 
-    DELETE domain FROM domain
-    LEFT JOIN link ON link.domain_id = domain.id
-    WHERE link.id IS NULL AND domain.id = @domain_id;
+  -- Retrieve the upserted link_id
+  SET @new_link_id = (
+    SELECT link.id
+    FROM link
+    WHERE link.path = @path AND link.domain_id = @new_domain_id
+  );
 
-    -- Upsert new domain
-    INSERT INTO domain (
-      `domain`
-    ) VALUES (
-      @domain
-    ) ON DUPLICATE KEY UPDATE
-      domain    = @domain,
-      updatedAt = CURRENT_TIMESTAMP;
-
-    -- Retrieve the upserted id
-    SET @domain_id = (
-      SELECT domain.id
-      FROM domain
-      WHERE domain.domain = @domain
-    );
-
-    -- Upsert new link
-    UPDATE link
-    SET domain_id = @domain_id
-    WHERE id = @link_id;
-
-  END IF;
-
-  -- Delete link in case it was updated and is not used by any other link_user
-  IF @path_updated THEN
-
-    -- Update link_user FK to be able to select links with no relations
-    UPDATE link_user
-    SET link_user.link_id = NULL
-    WHERE link_user.id = JSON_UNQUOTE(@id);
-
-    DELETE link FROM link
-    LEFT JOIN link_user ON link_user.link_id = link.id
-    WHERE link_user.id IS NULL AND link.id = @link_id;
-
-    -- Upsert new link
-    INSERT INTO link (
-      `path`,
-      `domain_id`
-    ) VALUES (
-      @path,
-      @domain_id
-    ) ON DUPLICATE KEY UPDATE
-      path      = @path,
-      domain_id = @domain_id,
-      updatedAt = CURRENT_TIMESTAMP;
-
-    -- Retrieve the upserted link_id
-    SET @link_id = (
-      SELECT link.id
-      FROM link
-      WHERE link.path = @path AND link.domain_id = @domain_id
-    );
-
-  END IF;
 
   -- Upsert into link_user
   UPDATE link_user
@@ -121,16 +78,20 @@ BEGIN
     `link_user`.`order`     = @order,
     `link_user`.`vote`      = @vote,
     `link_user`.`user_id`   = @user_id,
-    `link_user`.`link_id`   = @link_id
+    `link_user`.`link_id`   = @new_link_id
   WHERE `link_user`.id      = @id;
 
 
-  -- Retrieve the last upserted id
-  SET @id = (
-    SELECT link_user.id
-    FROM link_user
-    WHERE link_user.user_id = @user_id AND link_user.link_id = @link_id
-  );
+  -- Clean link
+  DELETE link FROM link
+  LEFT JOIN link_user ON link_user.link_id = link.id
+  WHERE link_user.id IS NULL AND link.id = @original_link_id;
+
+  -- Clean domain
+  DELETE domain FROM domain
+  LEFT JOIN link ON link.domain_id = domain.id
+  WHERE link.id IS NULL AND domain.id = @original_domain_id;
+
 
   -- Get tags length for the loop
   SET @tags_length = JSON_LENGTH(@tags);
@@ -176,5 +137,5 @@ BEGIN
     SELECT i + 1 INTO i;
   END WHILE;
 
-  SELECT @id AS id;
+  SELECT @id;
 END
