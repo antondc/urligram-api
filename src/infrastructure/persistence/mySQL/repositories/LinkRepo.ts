@@ -74,14 +74,12 @@ export class LinkRepo implements ILinkRepo {
     try {
       const linkDeleteQuery = `CALL link_delete('${JSON.stringify(linkDeleteRequestDTO)}')`;
 
-      const results = await mySQL.query(linkDeleteQuery);
-
-      if (!results.affectedRows) throw new RequestError('Not found', 404);
+      const [[results]] = await mySQL.query(linkDeleteQuery);
 
       const result = {
         success: true,
         message: 'Link removed',
-        affectedRows: linkDeleteRequestDTO.id,
+        affectedRows: results.id,
       };
 
       return result;

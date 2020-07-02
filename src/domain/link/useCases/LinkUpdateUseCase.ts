@@ -2,7 +2,6 @@ import { ILinkUpdateRequestDTO } from '@domain/link/dto/ILinkUpdateRequestDTO';
 import { ILinkUpdateResponseDTO } from '@domain/link/dto/ILinkUpdateResponseDTO';
 import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
 import { URLWrapper } from '@infrastructure/services/UrlWrapper';
-import { RequestError } from '@shared/errors/RequestError';
 
 export interface ILinkUpdateUseCase {
   execute: (linkUpdateRequestDTO: ILinkUpdateRequestDTO) => Promise<ILinkUpdateResponseDTO>;

@@ -7,13 +7,13 @@ INSERT INTO `link_user` (
 INSERT INTO `link_user` (
   `id`, `order`, `isPublic`, `saved`, `vote`, `createdAt`, `updatedAt`, `user_id`, `link_id`
 ) VALUES (
-  2, 1, 1, 1, false, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 2
+  2, 1, 1, 1, false, DEFAULT, DEFAULT, '75442486-0878-440c-9db1-a7006c25a39f', 2
 );
 
 INSERT INTO `link_user` (
   `id`, `order`, `isPublic`, `saved`, `vote`, `createdAt`, `updatedAt`, `user_id`, `link_id`
 ) VALUES (
-  3, 2, 0, 1, NULL, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 3
+  3, 2, 0, 1, NULL, DEFAULT, DEFAULT, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 3
 );
 
 INSERT INTO `link_user` (

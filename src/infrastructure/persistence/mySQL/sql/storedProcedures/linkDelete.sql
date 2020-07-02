@@ -26,10 +26,9 @@ BEGIN
   DELETE FROM link_user_list
   WHERE link_user_id  = JSON_UNQUOTE(@id);
 
-  -- Update link_user FK to be able to select links with no relations
-  UPDATE link_user
-  SET link_user.link_id = NULL
-  WHERE link_user.id = JSON_UNQUOTE(@id);
+  -- Finally remove link_user entry
+  DELETE FROM link_user
+  WHERE id            = JSON_UNQUOTE(@id);
 
   DELETE link FROM link
   LEFT JOIN link_user ON link_user.link_id = link.id
@@ -40,9 +39,6 @@ BEGIN
   LEFT JOIN link ON link.domain_id = domain.id
   WHERE link.id IS NULL AND domain.id = @domain_id;
 
-  -- Finally remove link_user entry
-  DELETE FROM link_user
-  WHERE id            = JSON_UNQUOTE(@id);
-
+  SELECT JSON_UNQUOTE(@id) AS removedId;
 
 END
