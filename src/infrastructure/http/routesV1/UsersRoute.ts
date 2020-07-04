@@ -7,6 +7,7 @@ import { UserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingD
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
+import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
 import { UserFollowersGetAllController } from '@infrastructure/http/controllers/UserFollowersGetAllController';
 import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
@@ -14,6 +15,7 @@ import { UserFollowingDeleteController } from '@infrastructure/http/controllers/
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/UserFollowingGetAllController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
+import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const UsersRoute = express.Router();
@@ -84,6 +86,16 @@ UsersRoute.get('/:id/followers', async (req: Request, res: Response, next: NextF
   const userFollowersGetAllController = new UserFollowersGetAllController(userFollowersGetAllUseCase);
 
   const response = await userFollowersGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/:id/links', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userLinkGetAllUseCase = new UserLinkGetAllUseCase(userRepo);
+  const userLinkGetAllController = new UserLinkGetAllController(userLinkGetAllUseCase);
+
+  const response = await userLinkGetAllController.execute(req, res, next);
 
   return response;
 });

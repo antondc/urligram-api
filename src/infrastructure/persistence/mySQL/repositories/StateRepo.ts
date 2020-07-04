@@ -37,6 +37,7 @@ export class StateRepo {
   private userFollowingCreateProcedure: string;
   private userFollowingDeleteProcedure: string;
   private userGetAllProcedure: string;
+  private userLinkGetAllProcedure: string;
   private languageGetAllProcedure: string;
   private languageGetOneProcedure: string;
   private userLogSessionProcedure: string;
@@ -96,6 +97,7 @@ export class StateRepo {
     this.userFollowingCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingCreate.sql')).toString();
     this.userFollowingDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingDelete.sql')).toString();
     this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
+    this.userLinkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkGetAll.sql')).toString();
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
     this.languageGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetOne.sql')).toString();
     this.userLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogSession.sql')).toString();
@@ -158,6 +160,7 @@ export class StateRepo {
       const createUsersCreateProcedure = await mySQL.query(this.userCreateProcedure);
       const createUsersGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
       const createUsersGetAllProcedure = await mySQL.query(this.userGetAllProcedure);
+      const createUserLinkGetAllProcedure = await mySQL.query(this.userLinkGetAllProcedure);
       const createUsersFollowersGetAllProcedure = await mySQL.query(this.userFollowersGetAllProcedure);
       const createUsersFollowingGetAllProcedure = await mySQL.query(this.userFollowingGetAllProcedure);
       const createUsersFollowingCreateProcedure = await mySQL.query(this.userFollowingCreateProcedure);
@@ -226,6 +229,7 @@ export class StateRepo {
         ...createUsersFollowingCreateProcedure,
         ...createUsersFollowingDeleteProcedure,
         ...createUsersGetAllProcedure,
+        ...createUserLinkGetAllProcedure,
         ...createLanguageGetAllProcedure,
         ...createLanguageGetOneProcedure,
         ...createUsersLogSessionProcedure,

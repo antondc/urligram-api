@@ -1,11 +1,10 @@
-import { User } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 import { RequestError } from '@shared/errors/RequestError';
 
 export class UserRepo implements IUserRepo {
-  public async userCreate(userCreateDTO): Promise<User> {
+  public async userCreate(userCreateDTO) {
     const mySQL = new MySQL();
     try {
       const userCreateQuery = `CALL user_create('${JSON.stringify(userCreateDTO)}')`;
@@ -19,7 +18,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userGetOne(userGetOneDTO): Promise<User> {
+  public async userGetOne(userGetOneDTO) {
     const mySQL = new MySQL();
     try {
       const userGetOneQuery = `CALL user_get_one('${JSON.stringify(userGetOneDTO)}')`;
@@ -33,7 +32,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userGetAll(): Promise<User[]> {
+  public async userGetAll() {
     const mySQL = new MySQL();
     try {
       const userGetAllQuery = `CALL user_get_all()`;
@@ -47,7 +46,21 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingGetAll(findUserDTO): Promise<User> {
+  public async userLinkGetAll(userLinkGetAllDTO) {
+    const mySQL = new MySQL();
+    try {
+      const userLinkGetAllQuery = `CALL user_link_get_all('${JSON.stringify(userLinkGetAllDTO)}')`;
+      const [results] = await mySQL.query(userLinkGetAllQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userFollowingGetAll(findUserDTO) {
     const mySQL = new MySQL();
     try {
       const followingGetAllQuery = `CALL user_following_get_all('${JSON.stringify(findUserDTO)}')`;
@@ -61,7 +74,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowersGetAll(userFollowersGetAllDTO): Promise<User> {
+  public async userFollowersGetAll(userFollowersGetAllDTO) {
     const mySQL = new MySQL();
     try {
       const userFollowersGetAllQuery = `CALL user_followers_get_all('${JSON.stringify(userFollowersGetAllDTO)}')`;
@@ -75,7 +88,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingCreate(userFollowingCreateDTO): Promise<User> {
+  public async userFollowingCreate(userFollowingCreateDTO) {
     const mySQL = new MySQL();
     try {
       const userFollowingQuery = `CALL user_following_create('${JSON.stringify(userFollowingCreateDTO)}')`;
@@ -89,7 +102,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingDelete(userFollowingDeleteDTO): Promise<User> {
+  public async userFollowingDelete(userFollowingDeleteDTO) {
     const mySQL = new MySQL();
     try {
       const userFollowingDeleteQuery = `CALL user_following_delete('${JSON.stringify(userFollowingDeleteDTO)}')`;
@@ -103,7 +116,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async authenticate(userLoginDTO): Promise<User> {
+  public async authenticate(userLoginDTO) {
     const mySQL = new MySQL();
     try {
       const authenticateUserQuery = `CALL user_authenticate('${JSON.stringify(userLoginDTO)}')`;
@@ -118,7 +131,7 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async logSession(sessionLogData): Promise<void> {
+  public async logSession(sessionLogData) {
     const mySQL = new MySQL();
     try {
       const logSessionQuery = `CALL user_log_session('${JSON.stringify(sessionLogData)}')`;
