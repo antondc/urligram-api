@@ -1,7 +1,7 @@
 INSERT INTO `list_type` (
   `id`, `type`, `description`, `updatedAt`, `createdAt`
 ) VALUES (
-  1, 'company', 'This is a list for a company', DEFAULT, DEFAULT
+  1, 'corporate', 'This is a list for a company', DEFAULT, DEFAULT
 );
 
 INSERT INTO `list_type` (

@@ -5,9 +5,8 @@ CREATE TABLE IF NOT EXISTS `list` (
   `isPublic` TINYINT(1) NULL DEFAULT '0',
   `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `list_type_id` INT(11) NOT NULL,
+  `list_type_id` INT(11) NOT NULL DEFAULT '2',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name` (`name` ASC) VISIBLE,
   INDEX `fk_list_list_type1_idx` (`list_type_id` ASC) VISIBLE,
   CONSTRAINT `fk_list_list_type1`
     FOREIGN KEY (`list_type_id`)
