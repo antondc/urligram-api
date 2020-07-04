@@ -49,6 +49,6 @@ BEGIN
     user_list_role_id  = 1,
     updatedAt = CURRENT_TIMESTAMP;
 
-  SELECT @list_id;
+  SELECT @list_id as id;
 
 END

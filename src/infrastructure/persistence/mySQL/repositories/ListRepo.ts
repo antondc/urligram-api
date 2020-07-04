@@ -19,11 +19,11 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listGetOne(listGetoneRequestDTO) {
+  public async listGetOne(listGetOneRequestDTO) {
     const mySQL = new MySQL();
 
     try {
-      const listGetOneQuery = `CALL list_get_one('${JSON.stringify(listGetoneRequestDTO)}')`;
+      const listGetOneQuery = `CALL list_get_one('${JSON.stringify(listGetOneRequestDTO)}')`;
 
       const [[list]] = await mySQL.query(listGetOneQuery);
 

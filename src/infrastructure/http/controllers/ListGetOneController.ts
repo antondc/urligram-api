@@ -13,10 +13,17 @@ export class ListGetOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { listId } = req.params;
+    const { listId, name, listType } = req.params;
+
+    const listTypeMap = {
+      corporate: 1,
+      private: 2,
+    };
 
     const listGetOneRequestDTO = {
       listId: Number(listId),
+      listType: listTypeMap[listType],
+      name,
     };
 
     const response = await this.useCase.execute(listGetOneRequestDTO);
@@ -30,7 +37,7 @@ export class ListGetOneController extends BaseController {
           type: 'list',
           id: response.id,
           session: {
-            self: URL_SERVER + '/lists',
+            self: URL_SERVER + '/lists/' + response.id,
           },
           attributes: response,
           relationships: {},

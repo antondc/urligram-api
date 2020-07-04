@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `list` (
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `list_type_id` INT(11) NOT NULL DEFAULT '2',
   PRIMARY KEY (`id`),
+  UNIQUE `unique_index`(`name`, `list_type_id`),
   INDEX `fk_list_list_type1_idx` (`list_type_id` ASC) VISIBLE,
   CONSTRAINT `fk_list_list_type1`
     FOREIGN KEY (`list_type_id`)
