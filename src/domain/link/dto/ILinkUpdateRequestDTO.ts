@@ -7,7 +7,7 @@ type List = {
 };
 
 export interface ILinkUpdateRequestDTO {
-  id?: string;
+  id?: number;
   userId: string;
   order: number;
   saved: boolean;

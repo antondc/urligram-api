@@ -3,11 +3,14 @@ import express, { NextFunction, Request, Response } from 'express';
 import { ListCreateUseCase } from '@domain/list/useCases/ListCreateUseCase';
 import { ListDeleteUseCase } from '@domain/list/useCases/ListDeleteUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
+import { ListLinkCreateUseCase } from '@domain/list/useCases/ListLinkCreateUseCase';
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
 import { ListCreateController } from '@infrastructure/http/controllers/ListCreateController';
 import { ListDeleteController } from '@infrastructure/http/controllers/ListDeleteController';
 import { ListGetOneController } from '@infrastructure/http/controllers/ListGetOneController';
+import { ListLinkCreateController } from '@infrastructure/http/controllers/ListLinkCreateController';
 import { ListUpdateController } from '@infrastructure/http/controllers/ListUpdateController';
+import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 
 const ListsRoute = express.Router();
@@ -48,6 +51,17 @@ ListsRoute.delete('/:id', async (req: Request, res: Response, next: NextFunction
   const listDeleteController = new ListDeleteController(listDeleteUseCase);
 
   const response = await listDeleteController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.post('/:id/links/:linkId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const linkRepo = new LinkRepo();
+  const listLinkCreateUseCase = new ListLinkCreateUseCase(listRepo, linkRepo);
+  const listLinkCreateController = new ListLinkCreateController(listLinkCreateUseCase);
+
+  const response = await listLinkCreateController.execute(req, res, next);
 
   return response;
 });

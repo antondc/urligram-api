@@ -18,7 +18,7 @@ export class LinkUpdateController extends BaseController {
     const { id } = req.params;
 
     const linkUpdateRequestDTO: ILinkUpdateRequestDTO = {
-      id,
+      id: Number(id),
       userId,
       order,
       vote,

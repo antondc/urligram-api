@@ -50,6 +50,7 @@ export class StateRepo {
   private listCreateProcedure: string;
   private listUpdateProcedure: string;
   private listDeleteProcedure: string;
+  private listLinkCreateProcedure: string;
 
   // Data
   private domainData: string;
@@ -114,6 +115,7 @@ export class StateRepo {
     this.listCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreate.sql')).toString();
     this.listUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUpdate.sql')).toString();
     this.listDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listDelete.sql')).toString();
+    this.listLinkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkCreate.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -185,6 +187,7 @@ export class StateRepo {
       const createListCreateProcedure = await mySQL.query(this.listCreateProcedure);
       const createListUpdateProcedure = await mySQL.query(this.listUpdateProcedure);
       const createListDeleteProcedure = await mySQL.query(this.listDeleteProcedure);
+      const createListLinkCreateProcedure = await mySQL.query(this.listLinkCreateProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -254,6 +257,7 @@ export class StateRepo {
         ...createListCreateProcedure,
         ...createListUpdateProcedure,
         ...createListDeleteProcedure,
+        ...createListLinkCreateProcedure,
 
         // Insert data
         ...insertDomainData,
