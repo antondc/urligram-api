@@ -1,5 +1,5 @@
 type byId = {
-  listId: number;
+  id: number;
 };
 
 interface byUserNameAndType {

@@ -7,7 +7,7 @@ CREATE PROCEDURE list_get_one(
 
 BEGIN
   -- Retrieve values from JSON
-  SET @list_id   = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.listId'));
+  SET @list_id   = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.id'));
   SET @user_id   = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.userId'));
   SET @name      = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.name'));
   SET @list_type = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.listType'));

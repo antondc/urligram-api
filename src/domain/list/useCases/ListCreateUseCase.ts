@@ -22,7 +22,7 @@ export class ListCreateUseCase implements IListCreateUseCase {
     const result = await this.listRepo.listCreate(listCreateRequestDTO);
 
     const listGetOneRequestDTO = {
-      listId: Number(result?.id),
+      id: Number(result?.id),
     };
 
     const response = await this.listRepo.listGetOne(listGetOneRequestDTO);
