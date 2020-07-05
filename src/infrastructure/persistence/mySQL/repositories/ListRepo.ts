@@ -82,4 +82,20 @@ export class ListRepo implements IListRepo {
       await mySQL.close();
     }
   }
+
+  public async listLinkDelete(listLinkDeleteRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const listLinkDeleteQuery = `CALL list_link_delete('${JSON.stringify(listLinkDeleteRequestDTO)}')`;
+
+      const [[results]] = await mySQL.query(listLinkDeleteQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
