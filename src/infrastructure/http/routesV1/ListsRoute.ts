@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { ListCreateUseCase } from '@domain/list/useCases/ListCreateUseCase';
 import { ListDeleteUseCase } from '@domain/list/useCases/ListDeleteUseCase';
+import { ListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListLinkCreateUseCase } from '@domain/list/useCases/ListLinkCreateUseCase';
 import { ListLinkDeleteUseCase } from '@domain/list/useCases/ListLinkDeleteUseCase';
@@ -9,6 +10,7 @@ import { ListLinkGetOneUseCase } from '@domain/list/useCases/ListLinkGetOneUseCa
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
 import { ListCreateController } from '@infrastructure/http/controllers/ListCreateController';
 import { ListDeleteController } from '@infrastructure/http/controllers/ListDeleteController';
+import { ListGetAllController } from '@infrastructure/http/controllers/ListGetAllController';
 import { ListGetOneController } from '@infrastructure/http/controllers/ListGetOneController';
 import { ListLinkCreateController } from '@infrastructure/http/controllers/ListLinkCreateController';
 import { ListLinkDeleteController } from '@infrastructure/http/controllers/ListLinkDeleteController';
@@ -25,6 +27,16 @@ ListsRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) =
   const listGetOneController = new ListGetOneController(listGetOneUseCase);
 
   const response = await listGetOneController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listGetAllUseCase = new ListGetAllUseCase(listRepo);
+  const listGetAllController = new ListGetAllController(listGetAllUseCase);
+
+  const response = await listGetAllController.execute(req, res, next);
 
   return response;
 });

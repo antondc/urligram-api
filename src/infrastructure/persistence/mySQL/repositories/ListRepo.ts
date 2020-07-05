@@ -19,6 +19,22 @@ export class ListRepo implements IListRepo {
     }
   }
 
+  public async listGetAll() {
+    const mySQL = new MySQL();
+
+    try {
+      const listGetAllQuery = `CALL list_get_all()`;
+
+      const [list] = await mySQL.query(listGetAllQuery);
+
+      return list;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async listCreate(listCreateRequestDTO) {
     const mySQL = new MySQL();
 
