@@ -115,6 +115,22 @@ export class ListRepo implements IListRepo {
     }
   }
 
+  public async listUserGetAll(listUserGetAllRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const listUserGetAllQuery = `CALL list_user_get_all('${JSON.stringify(listUserGetAllRequestDTO)}')`;
+
+      const [results] = await mySQL.query(listUserGetAllQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async listLinkCreate(listLinkCreateRequestDTO) {
     const mySQL = new MySQL();
 

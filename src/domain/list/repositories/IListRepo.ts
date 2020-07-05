@@ -15,6 +15,8 @@ import { IListLinkGetOneRequestDTO } from '@domain/list/dto/IListLinkGetOneReque
 import { IListLinkGetOneResponseDTO } from '@domain/list/dto/IListLinkGetOneResponseDTO';
 import { IListUpdateRequestDTO } from '@domain/list/dto/IListUpdateRequestDTO';
 import { IListUpdateResponseDTO } from '@domain/list/dto/IListUpdateResponseDTO';
+import { IListUserGetAllRequestDTO } from '@domain/list/dto/IListUserGetAllRequestDTO';
+import { IListUserGetAllResponseDTO } from '@domain/list/dto/IListUserGetAllResponseDTO';
 
 export interface IListRepo {
   listGetOne: (listGetOneRequestDTO: IListGetOneRequestDTO) => Promise<IListGetOneResponseDTO>;
@@ -26,4 +28,5 @@ export interface IListRepo {
   listLinkGetAll: (listLinkGetAllRequestDTO: IListLinkGetAllRequestDTO) => Promise<IListLinkGetAllResponseDTO>;
   listLinkCreate: (listLinkCreateRequestDTO: IListLinkCreateRequestDTO) => Promise<IListLinkCreateResponseDTO>;
   listLinkDelete: (listLinkDeleteRequestDTO: IListLinkDeleteRequestDTO) => Promise<IListLinkDeleteResponseDTO>;
+  listUserGetAll: (listUserGetAllRequestDTO: IListUserGetAllRequestDTO) => Promise<IListUserGetAllResponseDTO>;
 }

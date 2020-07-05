@@ -9,6 +9,7 @@ import { ListLinkDeleteUseCase } from '@domain/list/useCases/ListLinkDeleteUseCa
 import { ListLinkGetAllUseCase } from '@domain/list/useCases/ListLinkGetAllUseCase';
 import { ListLinkGetOneUseCase } from '@domain/list/useCases/ListLinkGetOneUseCase';
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
+import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListCreateController } from '@infrastructure/http/controllers/ListCreateController';
 import { ListDeleteController } from '@infrastructure/http/controllers/ListDeleteController';
 import { ListGetAllController } from '@infrastructure/http/controllers/ListGetAllController';
@@ -18,6 +19,7 @@ import { ListLinkDeleteController } from '@infrastructure/http/controllers/ListL
 import { ListLinkGetAllController } from '@infrastructure/http/controllers/ListLinkGetAllController';
 import { ListLinkGetOneController } from '@infrastructure/http/controllers/ListLinkGetOneController';
 import { ListUpdateController } from '@infrastructure/http/controllers/ListUpdateController';
+import { ListUserGetAllController } from '@infrastructure/http/controllers/ListUserGetAllController';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 
@@ -110,6 +112,16 @@ ListsRoute.delete('/:id/links/:linkId', async (req: Request, res: Response, next
   const listLinkDeleteController = new ListLinkDeleteController(listLinkDeleteUseCase);
 
   const response = await listLinkDeleteController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.get('/:id/users/', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listUsersGetAllUseCase = new ListUserGetAllUseCase(listRepo);
+  const listUsersGetAllController = new ListUserGetAllController(listUsersGetAllUseCase);
+
+  const response = await listUsersGetAllController.execute(req, res, next);
 
   return response;
 });
