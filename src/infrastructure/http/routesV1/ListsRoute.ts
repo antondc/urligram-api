@@ -6,6 +6,7 @@ import { ListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListLinkCreateUseCase } from '@domain/list/useCases/ListLinkCreateUseCase';
 import { ListLinkDeleteUseCase } from '@domain/list/useCases/ListLinkDeleteUseCase';
+import { ListLinkGetAllUseCase } from '@domain/list/useCases/ListLinkGetAllUseCase';
 import { ListLinkGetOneUseCase } from '@domain/list/useCases/ListLinkGetOneUseCase';
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
 import { ListCreateController } from '@infrastructure/http/controllers/ListCreateController';
@@ -14,6 +15,7 @@ import { ListGetAllController } from '@infrastructure/http/controllers/ListGetAl
 import { ListGetOneController } from '@infrastructure/http/controllers/ListGetOneController';
 import { ListLinkCreateController } from '@infrastructure/http/controllers/ListLinkCreateController';
 import { ListLinkDeleteController } from '@infrastructure/http/controllers/ListLinkDeleteController';
+import { ListLinkGetAllController } from '@infrastructure/http/controllers/ListLinkGetAllController';
 import { ListLinkGetOneController } from '@infrastructure/http/controllers/ListLinkGetOneController';
 import { ListUpdateController } from '@infrastructure/http/controllers/ListUpdateController';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
@@ -77,6 +79,16 @@ ListsRoute.get('/:id/links/:linkId', async (req: Request, res: Response, next: N
   const listLinkGetOneController = new ListLinkGetOneController(listLinkGetOneUseCase);
 
   const response = await listLinkGetOneController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.get('/:id/links/', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listLinkGetAllUseCase = new ListLinkGetAllUseCase(listRepo);
+  const listLinkGetAllController = new ListLinkGetAllController(listLinkGetAllUseCase);
+
+  const response = await listLinkGetAllController.execute(req, res, next);
 
   return response;
 });

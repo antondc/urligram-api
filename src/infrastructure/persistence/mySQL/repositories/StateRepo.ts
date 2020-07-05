@@ -52,6 +52,7 @@ export class StateRepo {
   private listUpdateProcedure: string;
   private listDeleteProcedure: string;
   private listLinkGetOneProcedure: string;
+  private listLinkGetAllProcedure: string;
   private listLinkCreateProcedure: string;
   private listLinkDeleteProcedure: string;
 
@@ -120,6 +121,7 @@ export class StateRepo {
     this.listUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUpdate.sql')).toString();
     this.listDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listDelete.sql')).toString();
     this.listLinkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkGetOne.sql')).toString();
+    this.listLinkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkGetAll.sql')).toString();
     this.listLinkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkCreate.sql')).toString();
     this.listLinkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkDelete.sql')).toString();
 
@@ -195,6 +197,7 @@ export class StateRepo {
       const createListUpdateProcedure = await mySQL.query(this.listUpdateProcedure);
       const createListDeleteProcedure = await mySQL.query(this.listDeleteProcedure);
       const createListLinkGetOneProcedure = await mySQL.query(this.listLinkGetOneProcedure);
+      const createListLinkGetAllProcedure = await mySQL.query(this.listLinkGetAllProcedure);
       const createListLinkCreateProcedure = await mySQL.query(this.listLinkCreateProcedure);
       const createListLinkDeleteProcedure = await mySQL.query(this.listLinkDeleteProcedure);
 
@@ -268,6 +271,7 @@ export class StateRepo {
         ...createListUpdateProcedure,
         ...createListDeleteProcedure,
         ...createListLinkGetOneProcedure,
+        ...createListLinkGetAllProcedure,
         ...createListLinkCreateProcedure,
         ...createListLinkDeleteProcedure,
 
