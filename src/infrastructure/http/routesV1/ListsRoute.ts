@@ -5,12 +5,14 @@ import { ListDeleteUseCase } from '@domain/list/useCases/ListDeleteUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListLinkCreateUseCase } from '@domain/list/useCases/ListLinkCreateUseCase';
 import { ListLinkDeleteUseCase } from '@domain/list/useCases/ListLinkDeleteUseCase';
+import { ListLinkGetOneUseCase } from '@domain/list/useCases/ListLinkGetOneUseCase';
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
 import { ListCreateController } from '@infrastructure/http/controllers/ListCreateController';
 import { ListDeleteController } from '@infrastructure/http/controllers/ListDeleteController';
 import { ListGetOneController } from '@infrastructure/http/controllers/ListGetOneController';
 import { ListLinkCreateController } from '@infrastructure/http/controllers/ListLinkCreateController';
 import { ListLinkDeleteController } from '@infrastructure/http/controllers/ListLinkDeleteController';
+import { ListLinkGetOneController } from '@infrastructure/http/controllers/ListLinkGetOneController';
 import { ListUpdateController } from '@infrastructure/http/controllers/ListUpdateController';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
@@ -57,6 +59,16 @@ ListsRoute.delete('/:id', async (req: Request, res: Response, next: NextFunction
   return response;
 });
 
+ListsRoute.get('/:id/links/:linkId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listLinkGetOneUseCase = new ListLinkGetOneUseCase(listRepo);
+  const listLinkGetOneController = new ListLinkGetOneController(listLinkGetOneUseCase);
+
+  const response = await listLinkGetOneController.execute(req, res, next);
+
+  return response;
+});
+
 ListsRoute.post('/:id/links/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
   const linkRepo = new LinkRepo();
@@ -70,8 +82,7 @@ ListsRoute.post('/:id/links/:linkId', async (req: Request, res: Response, next: 
 
 ListsRoute.delete('/:id/links/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
-  const linkRepo = new LinkRepo();
-  const listLinkDeleteUseCase = new ListLinkDeleteUseCase(listRepo, linkRepo);
+  const listLinkDeleteUseCase = new ListLinkDeleteUseCase(listRepo);
   const listLinkDeleteController = new ListLinkDeleteController(listLinkDeleteUseCase);
 
   const response = await listLinkDeleteController.execute(req, res, next);
