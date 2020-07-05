@@ -47,6 +47,7 @@ export class StateRepo {
   private linkCreateProcedure: string;
   private linkUpdateProcedure: string;
   private linkDeleteProcedure: string;
+  private linkListGetAllProcedure: string;
   private listGetOneProcedure: string;
   private listCreateProcedure: string;
   private listUpdateProcedure: string;
@@ -117,6 +118,7 @@ export class StateRepo {
     this.linkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkCreate.sql')).toString();
     this.linkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkUpdate.sql')).toString();
     this.linkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkDelete.sql')).toString();
+    this.linkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAll.sql')).toString();
     this.listGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOne.sql')).toString();
     this.listCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreate.sql')).toString();
     this.listUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUpdate.sql')).toString();
@@ -194,6 +196,7 @@ export class StateRepo {
       const createLinkCreateProcedure = await mySQL.query(this.linkCreateProcedure);
       const createLinkUpdateProcedure = await mySQL.query(this.linkUpdateProcedure);
       const createLinkDeleteProcedure = await mySQL.query(this.linkDeleteProcedure);
+      const createLinkListGetAllProcedure = await mySQL.query(this.linkListGetAllProcedure);
       const createListGetOneProcedure = await mySQL.query(this.listGetOneProcedure);
       const createListCreateProcedure = await mySQL.query(this.listCreateProcedure);
       const createListUpdateProcedure = await mySQL.query(this.listUpdateProcedure);
@@ -269,6 +272,7 @@ export class StateRepo {
         ...createLinkCreateProcedure,
         ...createLinkUpdateProcedure,
         ...createLinkDeleteProcedure,
+        ...createLinkListGetAllProcedure,
         ...createListGetOneProcedure,
         ...createListCreateProcedure,
         ...createListUpdateProcedure,
