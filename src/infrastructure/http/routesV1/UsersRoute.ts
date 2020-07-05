@@ -8,6 +8,7 @@ import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingG
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
+import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
 import { UserFollowersGetAllController } from '@infrastructure/http/controllers/UserFollowersGetAllController';
 import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
@@ -16,6 +17,7 @@ import { UserFollowingGetAllController } from '@infrastructure/http/controllers/
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
+import { UserListGetAllController } from '@infrastructure/http/controllers/UserListGetAllController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const UsersRoute = express.Router();
@@ -96,6 +98,16 @@ UsersRoute.get('/:id/links', async (req: Request, res: Response, next: NextFunct
   const userLinkGetAllController = new UserLinkGetAllController(userLinkGetAllUseCase);
 
   const response = await userLinkGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/:id/lists', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userListGetAllUseCase = new UserListGetAllUseCase(userRepo);
+  const userListGetAllController = new UserListGetAllController(userListGetAllUseCase);
+
+  const response = await userListGetAllController.execute(req, res, next);
 
   return response;
 });
