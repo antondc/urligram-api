@@ -58,6 +58,7 @@ export class StateRepo {
   private listLinkCreateProcedure: string;
   private listLinkDeleteProcedure: string;
   private listUserGetAllProcedure: string;
+  private listTagGetAllProcedure: string;
   private tagGetOneProcedure: string;
   private tagGetAllProcedure: string;
   private tagLinkGetAllProcedure: string;
@@ -133,6 +134,7 @@ export class StateRepo {
     this.listLinkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkGetAll.sql')).toString();
     this.listLinkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkCreate.sql')).toString();
     this.listLinkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkDelete.sql')).toString();
+    this.listTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listTagGetAll.sql')).toString();
     this.listUserGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetAll.sql')).toString();
     this.tagGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetOne.sql')).toString();
     this.tagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAll.sql')).toString();
@@ -216,6 +218,7 @@ export class StateRepo {
       const createListLinkGetAllProcedure = await mySQL.query(this.listLinkGetAllProcedure);
       const createListLinkCreateProcedure = await mySQL.query(this.listLinkCreateProcedure);
       const createListLinkDeleteProcedure = await mySQL.query(this.listLinkDeleteProcedure);
+      const createListTagGetAllProcedure = await mySQL.query(this.listTagGetAllProcedure);
       const createListUserGetAllProcedure = await mySQL.query(this.listUserGetAllProcedure);
       const createTagGetOneProcedure = await mySQL.query(this.tagGetOneProcedure);
       const createTagGetAllProcedure = await mySQL.query(this.tagGetAllProcedure);
@@ -297,6 +300,7 @@ export class StateRepo {
         ...createListLinkGetAllProcedure,
         ...createListLinkCreateProcedure,
         ...createListLinkDeleteProcedure,
+        ...createListTagGetAllProcedure,
         ...createListUserGetAllProcedure,
         ...createTagGetOneProcedure,
         ...createTagGetAllProcedure,

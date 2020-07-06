@@ -8,6 +8,7 @@ import { ListLinkCreateUseCase } from '@domain/list/useCases/ListLinkCreateUseCa
 import { ListLinkDeleteUseCase } from '@domain/list/useCases/ListLinkDeleteUseCase';
 import { ListLinkGetAllUseCase } from '@domain/list/useCases/ListLinkGetAllUseCase';
 import { ListLinkGetOneUseCase } from '@domain/list/useCases/ListLinkGetOneUseCase';
+import { ListTagGetAllUseCase } from '@domain/list/useCases/ListTagGetAllUseCase';
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListCreateController } from '@infrastructure/http/controllers/ListCreateController';
@@ -18,6 +19,7 @@ import { ListLinkCreateController } from '@infrastructure/http/controllers/ListL
 import { ListLinkDeleteController } from '@infrastructure/http/controllers/ListLinkDeleteController';
 import { ListLinkGetAllController } from '@infrastructure/http/controllers/ListLinkGetAllController';
 import { ListLinkGetOneController } from '@infrastructure/http/controllers/ListLinkGetOneController';
+import { ListTagGetAllController } from '@infrastructure/http/controllers/ListTagGetAllController';
 import { ListUpdateController } from '@infrastructure/http/controllers/ListUpdateController';
 import { ListUserGetAllController } from '@infrastructure/http/controllers/ListUserGetAllController';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
@@ -122,6 +124,16 @@ ListsRoute.get('/:id/users/', async (req: Request, res: Response, next: NextFunc
   const listUsersGetAllController = new ListUserGetAllController(listUsersGetAllUseCase);
 
   const response = await listUsersGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.get('/:id/tags/', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listTagGetAllUseCase = new ListTagGetAllUseCase(listRepo);
+  const listTagGetAllController = new ListTagGetAllController(listTagGetAllUseCase);
+
+  const response = await listTagGetAllController.execute(req, res, next);
 
   return response;
 });
