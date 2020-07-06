@@ -1,3 +1,3 @@
-import { Tag } from '@domain/tag/entities/Tag';
+import { Link } from '@domain/link/entities/Link';
 
-export type ITagLinkGetAllResponseDTO = Tag[];
+export type ITagLinkGetAllResponseDTO = Link[];
