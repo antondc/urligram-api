@@ -18,4 +18,20 @@ export class TagRepo implements ITagRepo {
       await mySQL.close();
     }
   }
+
+  public async tagGetOne(tagGetOneRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const tagGetOneQuery = `CALL tag_get_one('${JSON.stringify(tagGetOneRequestDTO)}')`;
+
+      const [[tags]] = await mySQL.query(tagGetOneQuery);
+
+      return tags;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
