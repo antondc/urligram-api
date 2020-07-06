@@ -84,6 +84,22 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
+  public async linkTagGetAll(linkTagGetAllRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const linkTagGetAllQuery = `CALL link_tag_get_all('${JSON.stringify(linkTagGetAllRequestDTO)}')`;
+
+      const [results] = await mySQL.query(linkTagGetAllQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async linkDelete(linkDeleteRequestDTO) {
     const mySQL = new MySQL();
 

@@ -7,6 +7,8 @@ import { ILinkGetOneRequestDTO } from '@domain/link/dto/ILinkGetOneRequestDTO';
 import { ILinkGetOneResponseDTO } from '@domain/link/dto/ILinkGetOneResponseDTO';
 import { ILinkListGetAllRequestDTO } from '@domain/link/dto/ILinkListGetAllRequestDTO';
 import { ILinkListGetAllResponseDTO } from '@domain/link/dto/ILinkListGetAllResponseDTO';
+import { ILinkTagGetAllRequestDTO } from '@domain/link/dto/ILinkTagGetAllRequestDTO';
+import { ILinkTagGetAllResponseDTO } from '@domain/link/dto/ILinkTagGetAllResponseDTO';
 import { ILinkUpdateRequestDTO } from '@domain/link/dto/ILinkUpdateRequestDTO';
 import { ILinkUpdateResponseDTO } from '@domain/link/dto/ILinkUpdateResponseDTO';
 
@@ -17,4 +19,5 @@ export interface ILinkRepo {
   linkUpdate: (linkUpdateRequestDTO: ILinkUpdateRequestDTO) => Promise<ILinkUpdateResponseDTO>;
   linkDelete: (linkDeleteRequestDTO: ILinkDeleteRequestDTO) => Promise<ILinkDeleteResponseDTO>;
   linkListGetAll: (linkListGetAllRequestDTO: ILinkListGetAllRequestDTO) => Promise<ILinkListGetAllResponseDTO>;
+  linkTagGetAll: (linkTagGetAllRequestDTO: ILinkTagGetAllRequestDTO) => Promise<ILinkTagGetAllResponseDTO>;
 }
