@@ -58,11 +58,13 @@ export class StateRepo {
   private listLinkCreateProcedure: string;
   private listLinkDeleteProcedure: string;
   private listUserGetAllProcedure: string;
+  private listUserUpdateProcedure: string;
   private listTagGetAllProcedure: string;
   private tagGetOneProcedure: string;
   private tagGetAllProcedure: string;
   private tagLinkGetAllProcedure: string;
   private tagListGetAllProcedure: string;
+  private tagUserGetAllProcedure: string;
 
   // Data
   private domainData: string;
@@ -136,10 +138,12 @@ export class StateRepo {
     this.listLinkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkDelete.sql')).toString();
     this.listTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listTagGetAll.sql')).toString();
     this.listUserGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetAll.sql')).toString();
+    this.listUserUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserUpdate.sql')).toString();
     this.tagGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetOne.sql')).toString();
     this.tagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAll.sql')).toString();
     this.tagLinkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagLinkGetAll.sql')).toString();
     this.tagListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagListGetAll.sql')).toString();
+    this.tagUserGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagUserGetAll.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -220,10 +224,12 @@ export class StateRepo {
       const createListLinkDeleteProcedure = await mySQL.query(this.listLinkDeleteProcedure);
       const createListTagGetAllProcedure = await mySQL.query(this.listTagGetAllProcedure);
       const createListUserGetAllProcedure = await mySQL.query(this.listUserGetAllProcedure);
+      const createListUserUpdateProcedure = await mySQL.query(this.listUserUpdateProcedure);
       const createTagGetOneProcedure = await mySQL.query(this.tagGetOneProcedure);
       const createTagGetAllProcedure = await mySQL.query(this.tagGetAllProcedure);
       const createTagLinkGetAllProcedure = await mySQL.query(this.tagLinkGetAllProcedure);
       const createTagListGetAllProcedure = await mySQL.query(this.tagListGetAllProcedure);
+      const createTagUserGetAllProcedure = await mySQL.query(this.tagUserGetAllProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -302,10 +308,12 @@ export class StateRepo {
         ...createListLinkDeleteProcedure,
         ...createListTagGetAllProcedure,
         ...createListUserGetAllProcedure,
+        ...createListUserUpdateProcedure,
         ...createTagGetOneProcedure,
         ...createTagGetAllProcedure,
         ...createTagLinkGetAllProcedure,
         ...createTagListGetAllProcedure,
+        ...createTagUserGetAllProcedure,
 
         // Insert data
         ...insertDomainData,

@@ -11,8 +11,20 @@ BEGIN
   SET @email = JSON_EXTRACT(user_data, '$.email');
 
   -- Select user
-  SELECT `id`, `name`, `level`, `email`, `status`, `statement`, `location`, `order`, `createdAt`,
-`updatedAt` FROM `user`
-  WHERE `id` = JSON_UNQUOTE(@id) OR `name` = JSON_UNQUOTE(@name) OR `email` = JSON_UNQUOTE(@email);
+  SELECT
+    `id`,
+    `name`,
+    `level`,
+    `email`,
+    `status`,
+    `statement`,
+    `location`,
+    `order`,
+    `createdAt`,
+    `updatedAt`
+  FROM `user`
+  WHERE `id` = JSON_UNQUOTE(@id)
+    OR `name` = JSON_UNQUOTE(@name)
+    OR `email` = JSON_UNQUOTE(@email);
 
 END
