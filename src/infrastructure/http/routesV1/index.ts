@@ -5,6 +5,7 @@ import { LinksRoute } from '@infrastructure/http/routesV1/LinksRoute';
 import { ListsRoute } from '@infrastructure/http/routesV1/ListsRoute';
 import { LoginRoute } from '@infrastructure/http/routesV1/LoginRoute';
 import { StateRoute } from '@infrastructure/http/routesV1/StateRoute';
+import { TagsRoute } from '@infrastructure/http/routesV1/TagsRoute';
 import { UsersRoute } from '@infrastructure/http/routesV1/UsersRoute';
 
 const RouterV1 = express.Router();
@@ -15,5 +16,6 @@ RouterV1.use('/users', UsersRoute);
 RouterV1.use('/languages', LanguagesRoute);
 RouterV1.use('/links', LinksRoute);
 RouterV1.use('/lists', ListsRoute);
+RouterV1.use('/tags', TagsRoute);
 
 export { RouterV1 };
