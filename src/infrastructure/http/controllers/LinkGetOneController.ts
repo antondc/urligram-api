@@ -17,19 +17,19 @@ export class LinkGetOneController extends BaseController {
     const linkGetOneRequestDTO = {
       id: Number(id),
     };
-    
+
     const response = await this.useCase.execute(linkGetOneRequestDTO);
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/link',
+        self: URL_SERVER + '/links',
       },
       data: [
         {
           type: 'link',
           id: response.id,
           session: {
-            self: URL_SERVER + '/link',
+            self: URL_SERVER + '/links/' + response.id,
           },
           attributes: response,
           relationships: {},
