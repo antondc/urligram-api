@@ -10,6 +10,7 @@ import { ListLinkGetAllUseCase } from '@domain/list/useCases/ListLinkGetAllUseCa
 import { ListLinkGetOneUseCase } from '@domain/list/useCases/ListLinkGetOneUseCase';
 import { ListTagGetAllUseCase } from '@domain/list/useCases/ListTagGetAllUseCase';
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
+import { ListUserDeleteUseCase } from '@domain/list/useCases/ListUserDeleteUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
 import { ListUserUpdateUseCase } from '@domain/list/useCases/ListUserUpdateUseCase';
@@ -23,6 +24,7 @@ import { ListLinkGetAllController } from '@infrastructure/http/controllers/ListL
 import { ListLinkGetOneController } from '@infrastructure/http/controllers/ListLinkGetOneController';
 import { ListTagGetAllController } from '@infrastructure/http/controllers/ListTagGetAllController';
 import { ListUpdateController } from '@infrastructure/http/controllers/ListUpdateController';
+import { ListUserDeleteController } from '@infrastructure/http/controllers/ListUserDeleteController';
 import { ListUserGetAllController } from '@infrastructure/http/controllers/ListUserGetAllController';
 import { ListUserGetOneController } from '@infrastructure/http/controllers/ListUserGetOneController';
 import { ListUserUpdateController } from '@infrastructure/http/controllers/ListUserUpdateController';
@@ -148,6 +150,16 @@ ListsRoute.put('/:id/users/:userId', async (req: Request, res: Response, next: N
   const listUsersUpdateController = new ListUserUpdateController(listUsersUpdateUseCase);
 
   const response = await listUsersUpdateController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.delete('/:id/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listUsersDeleteUseCase = new ListUserDeleteUseCase(listRepo);
+  const listUsersDeleteController = new ListUserDeleteController(listUsersDeleteUseCase);
+
+  const response = await listUsersDeleteController.execute(req, res, next);
 
   return response;
 });

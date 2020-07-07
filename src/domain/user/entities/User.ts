@@ -1,7 +1,7 @@
 export class User {
   id: string;
   name: string;
-  level: string;
+  level: number;
   email: string;
   status: number;
   password: number;

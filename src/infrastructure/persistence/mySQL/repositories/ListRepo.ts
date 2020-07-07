@@ -163,6 +163,22 @@ export class ListRepo implements IListRepo {
     }
   }
 
+  public async listUserDelete(listUserDeleteRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const listUserDeleteQuery = `CALL list_user_delete('${JSON.stringify(listUserDeleteRequestDTO)}')`;
+
+      const results = await mySQL.query(listUserDeleteQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async listTagGetAll(listTagGetAllRequestDTO) {
     const mySQL = new MySQL();
 
