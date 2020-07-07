@@ -13,11 +13,10 @@ BEGIN
     user.id,
     user.order,
     user.name,
-    user_list_role.role
+    user_list.userRole as userListRole
   FROM user
   INNER JOIN user_list ON user.id = user_list.user_id
   INNER JOIN list ON user_list.list_id = list.id
-  INNER JOIN user_list_role ON user_list.user_list_role_id = user_list_role.id
   WHERE `list`.`id` = JSON_UNQUOTE(@list_id);
 
 END

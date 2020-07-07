@@ -30,7 +30,9 @@ export class ListLinkCreateUseCase implements IListLinkCreateUseCase {
     const linkExist = await this.linkRepo.linkGetOne(searchLinkData);
     if (!linkExist) throw new RequestError('Link does not exist', 404, { message: '404 Not Found' });
 
-    const result = await this.listRepo.listLinkCreate(listLinkCreateRequestDTO);
+    const createdLink = await this.listRepo.listLinkCreate(listLinkCreateRequestDTO);
+
+    const result = await this.listRepo.listLinkGetOne({ listId: createdLink.listId, linkId: createdLink.linkId });
 
     return result;
   }

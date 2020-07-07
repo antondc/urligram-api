@@ -32,7 +32,7 @@ export class ListLinkCreateController extends BaseController {
         {
           type: 'user',
           session: {
-            self: URL_SERVER + '/lists/' + id + '/links/' + linkId,
+            self: URL_SERVER + '/lists/' + id + '/links/' + response.id,
           },
           attributes: response,
           relationships: {},

@@ -13,4 +13,6 @@ BEGIN
   DELETE FROM user_list
   WHERE user_list.list_id = @list_id AND user_id = @user_id;
 
+  SELECT @list_id AS listId, @user_id AS userId;
+
 END

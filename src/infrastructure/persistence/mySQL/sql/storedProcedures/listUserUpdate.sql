@@ -12,11 +12,9 @@ BEGIN
   SET @role_id = JSON_UNQUOTE(JSON_EXTRACT(list, '$.newRole'));
 
   UPDATE user_list
-  SET user_list_role_id = 1
+  SET userRole = @role_id
   WHERE user_list.list_id = @list_id AND user_id = @user_id;
 
-  SELECT *
-  FROM user_list
-  WHERE user_list.list_id = @list_id AND user_id = @user_id;
-  
+  SELECT  @user_id;
+
 END

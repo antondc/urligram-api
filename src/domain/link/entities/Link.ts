@@ -1,5 +1,5 @@
 export class Link {
-  id: string;
+  id: number;
   title: string;
   order: number;
   createdAt: Date;

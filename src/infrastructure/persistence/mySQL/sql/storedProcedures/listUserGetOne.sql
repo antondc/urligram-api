@@ -21,7 +21,8 @@ BEGIN
    `user`.`location`,
    `user`.`order`,
    `user`.`createdAt`,
-   `user`.`updatedAt`
+   `user`.`updatedAt`,
+   `user_list`.`userRole` AS userListRole
   FROM user_list
   INNER JOIN `user` ON `user_list`.`user_id` = `user`.`id`
   WHERE `user_list`.`list_id` = @list_id AND `user_list`.`user_id` = @user_id;

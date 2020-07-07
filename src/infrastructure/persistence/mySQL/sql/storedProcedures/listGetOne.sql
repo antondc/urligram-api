@@ -19,7 +19,10 @@ BEGIN
           `list`.`id`
         FROM `list`
         INNER JOIN user_list ON list.id = user_list.list_id
-        WHERE list.name = @name AND user_list.user_list_role_id = 1 AND user_list.user_id = @user_id
+        WHERE
+          list.name = @name
+          AND user_list.userRole = "admin"
+          AND user_list.user_id = @user_id
     );
   END IF;
 
@@ -59,7 +62,7 @@ BEGIN
           JSON_OBJECT(
             'id', user.id,
             "name", user.name,
-            "role", user_list_role.role
+            "userListRole", user_list.userRole
           )
         )
       ) users
@@ -67,7 +70,6 @@ BEGIN
     INNER JOIN list_type ON list.list_type_id = list_type.id
     INNER JOIN user_list ON list.id = user_list.list_id
     INNER JOIN `user` ON user.id = user_list.user_id
-    INNER JOIN user_list_role ON user_list.user_list_role_id = user_list_role.id
     WHERE list.id = @list_id;
 
 END

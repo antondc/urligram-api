@@ -21,7 +21,6 @@ export class StateRepo {
   private linkUserList: string;
   private tag: string;
   private linkUserTag: string;
-  private userListRole: string;
   private userList: string;
   private userLogins: string;
   private userUser: string;
@@ -50,6 +49,7 @@ export class StateRepo {
   private linkListGetAllProcedure: string;
   private linkTagGetAllProcedure: string;
   private listGetOneProcedure: string;
+  private listGetAllProcedure: string;
   private listCreateProcedure: string;
   private listUpdateProcedure: string;
   private listDeleteProcedure: string;
@@ -57,6 +57,7 @@ export class StateRepo {
   private listLinkGetAllProcedure: string;
   private listLinkCreateProcedure: string;
   private listLinkDeleteProcedure: string;
+  private listUserGetOneProcedure: string;
   private listUserGetAllProcedure: string;
   private listUserUpdateProcedure: string;
   private listUserDeleteProcedure: string;
@@ -79,7 +80,6 @@ export class StateRepo {
   private linkUserListData: string;
   private tagData: string;
   private linkUserTagData: string;
-  private userListRoleData: string;
   private userListData: string;
   private userLoginData: string;
   private userUserData: string;
@@ -101,7 +101,6 @@ export class StateRepo {
     this.linkUserList = fs.readFileSync(path.resolve(__dirname, '../sql/models/linkUserList.sql')).toString();
     this.tag = fs.readFileSync(path.resolve(__dirname, '../sql/models/tag.sql')).toString();
     this.linkUserTag = fs.readFileSync(path.resolve(__dirname, '../sql/models/linkUserTag.sql')).toString();
-    this.userListRole = fs.readFileSync(path.resolve(__dirname, '../sql/models/userListRole.sql')).toString();
     this.userList = fs.readFileSync(path.resolve(__dirname, '../sql/models/userList.sql')).toString();
     this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLog.sql')).toString();
     this.userUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/userUser.sql')).toString();
@@ -130,6 +129,7 @@ export class StateRepo {
     this.linkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAll.sql')).toString();
     this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
     this.listGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOne.sql')).toString();
+    this.listGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetAll.sql')).toString();
     this.listCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreate.sql')).toString();
     this.listUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUpdate.sql')).toString();
     this.listDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listDelete.sql')).toString();
@@ -138,6 +138,7 @@ export class StateRepo {
     this.listLinkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkCreate.sql')).toString();
     this.listLinkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkDelete.sql')).toString();
     this.listTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listTagGetAll.sql')).toString();
+    this.listUserGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetOne.sql')).toString();
     this.listUserGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetAll.sql')).toString();
     this.listUserUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserUpdate.sql')).toString();
     this.listUserDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserDelete.sql')).toString();
@@ -160,7 +161,6 @@ export class StateRepo {
     this.tagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/tag.sql')).toString();
     this.linkUserTagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUserTag.sql')).toString();
     this.userUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userUser.sql')).toString();
-    this.userListRoleData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userListRole.sql')).toString();
     this.userListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userList.sql')).toString();
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
   }
@@ -188,7 +188,6 @@ export class StateRepo {
       const createLinkUserListTable = await mySQL.query(this.linkUserList);
       const createTagTable = await mySQL.query(this.tag);
       const createLinkUserTagTable = await mySQL.query(this.linkUserTag);
-      const createUserListRoleTable = await mySQL.query(this.userListRole);
       const createUserListTable = await mySQL.query(this.userList);
       const createUserLoginsTable = await mySQL.query(this.userLogins);
       const createUsersUsersTable = await mySQL.query(this.userUser);
@@ -217,6 +216,7 @@ export class StateRepo {
       const createLinkListGetAllProcedure = await mySQL.query(this.linkListGetAllProcedure);
       const createLinkTagGetAllProcedure = await mySQL.query(this.linkTagGetAllProcedure);
       const createListGetOneProcedure = await mySQL.query(this.listGetOneProcedure);
+      const createListGetAllProcedure = await mySQL.query(this.listGetAllProcedure);
       const createListCreateProcedure = await mySQL.query(this.listCreateProcedure);
       const createListUpdateProcedure = await mySQL.query(this.listUpdateProcedure);
       const createListDeleteProcedure = await mySQL.query(this.listDeleteProcedure);
@@ -225,6 +225,7 @@ export class StateRepo {
       const createListLinkCreateProcedure = await mySQL.query(this.listLinkCreateProcedure);
       const createListLinkDeleteProcedure = await mySQL.query(this.listLinkDeleteProcedure);
       const createListTagGetAllProcedure = await mySQL.query(this.listTagGetAllProcedure);
+      const createListUserGetOneProcedure = await mySQL.query(this.listUserGetOneProcedure);
       const createListUserGetAllProcedure = await mySQL.query(this.listUserGetAllProcedure);
       const createListUserUpdateProcedure = await mySQL.query(this.listUserUpdateProcedure);
       const createListUserDeleteProcedure = await mySQL.query(this.listUserDeleteProcedure);
@@ -246,7 +247,6 @@ export class StateRepo {
       const insertLinkUserListData = await mySQL.query(this.linkUserListData);
       const insertTagData = await mySQL.query(this.tagData);
       const insertLinkUserTagData = await mySQL.query(this.linkUserTagData);
-      const insertUserListRoleData = await mySQL.query(this.userListRoleData);
       const insertUserListData = await mySQL.query(this.userListData);
       const insertUserLoginData = await mySQL.query(this.userLoginData);
       const insertUserUserData = await mySQL.query(this.userUserData);
@@ -273,7 +273,6 @@ export class StateRepo {
         ...createLinkUserListTable,
         ...createTagTable,
         ...createLinkUserTagTable,
-        ...createUserListRoleTable,
         ...createUserListTable,
         ...createUserLoginsTable,
         ...createUsersUsersTable,
@@ -302,6 +301,7 @@ export class StateRepo {
         ...createLinkListGetAllProcedure,
         ...createLinkTagGetAllProcedure,
         ...createListGetOneProcedure,
+        ...createListGetAllProcedure,
         ...createListCreateProcedure,
         ...createListUpdateProcedure,
         ...createListDeleteProcedure,
@@ -310,6 +310,7 @@ export class StateRepo {
         ...createListLinkCreateProcedure,
         ...createListLinkDeleteProcedure,
         ...createListTagGetAllProcedure,
+        ...createListUserGetOneProcedure,
         ...createListUserGetAllProcedure,
         ...createListUserUpdateProcedure,
         ...createListUserDeleteProcedure,
@@ -331,7 +332,6 @@ export class StateRepo {
         ...insertLinkUserListData,
         ...insertTagData,
         ...insertLinkUserTagData,
-        ...insertUserListRoleData,
         ...insertUserListData,
         ...insertUserLoginData,
         ...insertUserUserData,

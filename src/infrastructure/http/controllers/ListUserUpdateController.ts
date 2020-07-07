@@ -21,29 +21,24 @@ export class ListUserUpdateController extends BaseController {
     const tokenService = new TokenService();
     const { id: currentUserId } = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const newRoleMap = {
-      admin: 1,
-      user: 2,
-    };
-
-    const linkUserUpdateRequestDTO = {
+    const listUserUpdateRequestDTO = {
       listId: Number(id),
       userId,
       currentUserId,
-      newRole: newRoleMap[newRole],
+      newRole,
     };
 
-    const response = await this.useCase.execute(linkUserUpdateRequestDTO);
+    const response = await this.useCase.execute(listUserUpdateRequestDTO);
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/lists/' + response.listId,
+        self: URL_SERVER + '/lists/' + id + '/users/' + response.id,
       },
       data: [
         {
-          type: 'list',
+          type: 'user',
           session: {
-            self: URL_SERVER + '/lists/' + response.listId,
+            self: URL_SERVER + '/users/' + response.id,
           },
           attributes: response,
           relationships: {},

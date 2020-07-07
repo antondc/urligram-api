@@ -1,3 +1,3 @@
-import { List } from '@domain/list/entities/List';
+import { Link } from '@domain/link/entities/Link';
 
-export type IListLinkCreateResponseDTO = List;
+export type IListLinkCreateResponseDTO = Link;

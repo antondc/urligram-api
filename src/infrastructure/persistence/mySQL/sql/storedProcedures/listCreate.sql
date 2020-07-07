@@ -38,7 +38,7 @@ BEGIN
   INSERT INTO user_list (
     `list_id`,
     `user_id`,
-    `user_list_role_id`
+    `userRole`
   ) VALUES (
     @list_id,
     @user_id,
@@ -46,7 +46,7 @@ BEGIN
   ) ON DUPLICATE KEY UPDATE
     list_id            = @list_id,
     user_id            = @user_id,
-    user_list_role_id  = 1,
+    userRole  = "admin",
     updatedAt = CURRENT_TIMESTAMP;
 
   SELECT @list_id as id;

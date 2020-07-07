@@ -23,6 +23,6 @@ BEGIN
     updatedAt    = CURRENT_TIMESTAMP;
 
 
-  SELECT @list_id AS id, @link_id AS linkId;
+  SELECT @list_id AS listId, @link_id AS linkId;
 
 END

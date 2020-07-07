@@ -1,4 +1,5 @@
-export interface IListUserUpdateResponseDTO {
-  listId: number;
-  userId: string;
-}
+import { User } from '@domain/user/entities/User';
+
+export type IListUserUpdateResponseDTO = User & {
+  userListRole?: string;
+};

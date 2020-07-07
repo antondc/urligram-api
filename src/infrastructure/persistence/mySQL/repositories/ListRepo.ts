@@ -169,7 +169,7 @@ export class ListRepo implements IListRepo {
     try {
       const listUserDeleteQuery = `CALL list_user_delete('${JSON.stringify(listUserDeleteRequestDTO)}')`;
 
-      const results = await mySQL.query(listUserDeleteQuery);
+      const [[results]] = await mySQL.query(listUserDeleteQuery);
 
       return results;
     } catch (err) {

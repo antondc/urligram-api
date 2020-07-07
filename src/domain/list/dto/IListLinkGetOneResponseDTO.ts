@@ -1,4 +1,3 @@
-export type IListLinkGetOneResponseDTO = {
-  listId: number;
-  linkId: number;
-};
+import { Link } from '@domain/link/entities/Link';
+
+export type IListLinkGetOneResponseDTO = Link;
