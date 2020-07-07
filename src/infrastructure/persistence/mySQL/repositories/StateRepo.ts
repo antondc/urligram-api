@@ -57,6 +57,7 @@ export class StateRepo {
   private listLinkGetAllProcedure: string;
   private listLinkCreateProcedure: string;
   private listLinkDeleteProcedure: string;
+  private listUserGetOneProcedure: string;
   private listUserGetAllProcedure: string;
   private listUserUpdateProcedure: string;
   private listTagGetAllProcedure: string;
@@ -137,6 +138,7 @@ export class StateRepo {
     this.listLinkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkCreate.sql')).toString();
     this.listLinkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listLinkDelete.sql')).toString();
     this.listTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listTagGetAll.sql')).toString();
+    this.listUserGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetOne.sql')).toString();
     this.listUserGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetAll.sql')).toString();
     this.listUserUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserUpdate.sql')).toString();
     this.tagGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetOne.sql')).toString();
@@ -223,6 +225,7 @@ export class StateRepo {
       const createListLinkCreateProcedure = await mySQL.query(this.listLinkCreateProcedure);
       const createListLinkDeleteProcedure = await mySQL.query(this.listLinkDeleteProcedure);
       const createListTagGetAllProcedure = await mySQL.query(this.listTagGetAllProcedure);
+      const createListUserGetOneProcedure = await mySQL.query(this.listUserGetOneProcedure);
       const createListUserGetAllProcedure = await mySQL.query(this.listUserGetAllProcedure);
       const createListUserUpdateProcedure = await mySQL.query(this.listUserUpdateProcedure);
       const createTagGetOneProcedure = await mySQL.query(this.tagGetOneProcedure);
@@ -307,6 +310,7 @@ export class StateRepo {
         ...createListLinkCreateProcedure,
         ...createListLinkDeleteProcedure,
         ...createListTagGetAllProcedure,
+        ...createListUserGetOneProcedure,
         ...createListUserGetAllProcedure,
         ...createListUserUpdateProcedure,
         ...createTagGetOneProcedure,

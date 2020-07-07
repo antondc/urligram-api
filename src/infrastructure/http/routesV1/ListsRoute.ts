@@ -11,6 +11,7 @@ import { ListLinkGetOneUseCase } from '@domain/list/useCases/ListLinkGetOneUseCa
 import { ListTagGetAllUseCase } from '@domain/list/useCases/ListTagGetAllUseCase';
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
+import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
 import { ListUserUpdateUseCase } from '@domain/list/useCases/ListUserUpdateUseCase';
 import { ListCreateController } from '@infrastructure/http/controllers/ListCreateController';
 import { ListDeleteController } from '@infrastructure/http/controllers/ListDeleteController';
@@ -23,6 +24,7 @@ import { ListLinkGetOneController } from '@infrastructure/http/controllers/ListL
 import { ListTagGetAllController } from '@infrastructure/http/controllers/ListTagGetAllController';
 import { ListUpdateController } from '@infrastructure/http/controllers/ListUpdateController';
 import { ListUserGetAllController } from '@infrastructure/http/controllers/ListUserGetAllController';
+import { ListUserGetOneController } from '@infrastructure/http/controllers/ListUserGetOneController';
 import { ListUserUpdateController } from '@infrastructure/http/controllers/ListUserUpdateController';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
@@ -126,6 +128,16 @@ ListsRoute.get('/:id/users/', async (req: Request, res: Response, next: NextFunc
   const listUsersGetAllController = new ListUserGetAllController(listUsersGetAllUseCase);
 
   const response = await listUsersGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.get('/:id/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listUsersGetOneUseCase = new ListUserGetOneUseCase(listRepo);
+  const listUsersGetOneController = new ListUserGetOneController(listUsersGetOneUseCase);
+
+  const response = await listUsersGetOneController.execute(req, res, next);
 
   return response;
 });
