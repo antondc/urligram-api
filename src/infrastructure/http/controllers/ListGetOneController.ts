@@ -15,14 +15,9 @@ export class ListGetOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id, name, listType } = req.params;
 
-    const listTypeMap = {
-      corporate: 1,
-      private: 2,
-    };
-
     const listGetOneRequestDTO = {
       id: Number(id),
-      listType: listTypeMap[listType],
+      listType: listType,
       name,
     };
 

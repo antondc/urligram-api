@@ -3,5 +3,5 @@ export interface IListCreateRequestDTO {
   name: string;
   description: string;
   isPublic: boolean;
-  listType: 'private' | 'corporate';
+  listType: string
 }

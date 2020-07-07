@@ -4,5 +4,5 @@ export interface IListUpdateRequestDTO {
   name: string;
   description: string;
   isPublic: boolean;
-  listType: 'private' | 'corporate';
+  listType: string;
 }

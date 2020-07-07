@@ -16,17 +16,12 @@ export class ListCreateController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { userId, name, description, isPublic, listType } = req.body;
 
-    const listTypeMap = {
-      corporate: 1,
-      private: 2,
-    };
-
     const listCreateRequestDTO: IListCreateRequestDTO = {
       userId,
       name,
       description,
       isPublic,
-      listType: listTypeMap[listType],
+      listType,
     };
 
     const response = await this.useCase.execute(listCreateRequestDTO);

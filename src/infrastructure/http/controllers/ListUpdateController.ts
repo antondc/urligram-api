@@ -17,18 +17,13 @@ export class ListUpdateController extends BaseController {
     const { id } = req.params;
     const { userId, name, description, isPublic, listType } = req.body;
 
-    const listTypeMap = {
-      corporate: 1,
-      private: 2,
-    };
-
     const listUpdateRequestDTO: IListUpdateRequestDTO = {
       id: Number(id),
       userId,
       name,
       description,
       isPublic,
-      listType: listTypeMap[listType],
+      listType: listType,
     };
 
     const response = await this.useCase.execute(listUpdateRequestDTO);

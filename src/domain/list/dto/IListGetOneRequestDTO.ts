@@ -5,7 +5,7 @@ type byId = {
 interface byUserNameAndType {
   userId: string;
   name: string;
-  listType: 'private' | 'corporate';
+  listType: string;
 }
 
 export type IListGetOneRequestDTO = byId | byUserNameAndType;

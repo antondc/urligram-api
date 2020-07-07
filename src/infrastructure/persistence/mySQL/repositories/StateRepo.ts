@@ -16,7 +16,6 @@ export class StateRepo {
   private link: string;
   private user: string;
   private linkUser: string;
-  private listType: string;
   private list: string;
   private linkUserList: string;
   private tag: string;
@@ -75,7 +74,6 @@ export class StateRepo {
   private linkData: string;
   private userData: string;
   private linkUserData: string;
-  private listTypeData: string;
   private listData: string;
   private linkUserListData: string;
   private tagData: string;
@@ -96,7 +94,6 @@ export class StateRepo {
     this.link = fs.readFileSync(path.resolve(__dirname, '../sql/models/link.sql')).toString();
     this.user = fs.readFileSync(path.resolve(__dirname, '../sql/models/user.sql')).toString();
     this.linkUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/linkUser.sql')).toString();
-    this.listType = fs.readFileSync(path.resolve(__dirname, '../sql/models/listType.sql')).toString();
     this.list = fs.readFileSync(path.resolve(__dirname, '../sql/models/list.sql')).toString();
     this.linkUserList = fs.readFileSync(path.resolve(__dirname, '../sql/models/linkUserList.sql')).toString();
     this.tag = fs.readFileSync(path.resolve(__dirname, '../sql/models/tag.sql')).toString();
@@ -155,7 +152,6 @@ export class StateRepo {
     this.linkData = fs.readFileSync(path.resolve(__dirname, '../sql/data/link.sql')).toString();
     this.userData = fs.readFileSync(path.resolve(__dirname, '../sql/data/user.sql')).toString();
     this.linkUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUser.sql')).toString();
-    this.listTypeData = fs.readFileSync(path.resolve(__dirname, '../sql/data/listType.sql')).toString();
     this.listData = fs.readFileSync(path.resolve(__dirname, '../sql/data/list.sql')).toString();
     this.linkUserListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/linkUserList.sql')).toString();
     this.tagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/tag.sql')).toString();
@@ -183,7 +179,6 @@ export class StateRepo {
       const createLinkTable = await mySQL.query(this.link);
       const createUserTable = await mySQL.query(this.user);
       const createLinkUserTable = await mySQL.query(this.linkUser);
-      const createListTypeTable = await mySQL.query(this.listType);
       const createListTable = await mySQL.query(this.list);
       const createLinkUserListTable = await mySQL.query(this.linkUserList);
       const createTagTable = await mySQL.query(this.tag);
@@ -242,7 +237,6 @@ export class StateRepo {
       const insertLinkData = await mySQL.query(this.linkData);
       const insertUserData = await mySQL.query(this.userData);
       const insertLinkUserData = await mySQL.query(this.linkUserData);
-      const insertListTypeData = await mySQL.query(this.listTypeData);
       const insertListData = await mySQL.query(this.listData);
       const insertLinkUserListData = await mySQL.query(this.linkUserListData);
       const insertTagData = await mySQL.query(this.tagData);
@@ -268,7 +262,6 @@ export class StateRepo {
         ...createLinkTable,
         ...createUserTable,
         ...createLinkUserTable,
-        ...createListTypeTable,
         ...createListTable,
         ...createLinkUserListTable,
         ...createTagTable,
@@ -327,7 +320,6 @@ export class StateRepo {
         ...insertLinkData,
         ...insertUserData,
         ...insertLinkUserData,
-        ...insertListTypeData,
         ...insertListData,
         ...insertLinkUserListData,
         ...insertTagData,
