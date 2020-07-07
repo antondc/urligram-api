@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
 import { IListUserUpdateUseCase } from '@domain/list/useCases/ListUserUpdateUseCase';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -16,15 +18,18 @@ export class ListUserUpdateController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id, userId } = req.params;
     const { newRole } = req.body;
+    const tokenService = new TokenService();
+    const { id: currentUserId } = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const newRoleMap = {
       admin: 1,
       user: 2,
     };
-    
+
     const linkUserUpdateRequestDTO = {
       listId: Number(id),
       userId,
+      currentUserId,
       newRole: newRoleMap[newRole],
     };
 

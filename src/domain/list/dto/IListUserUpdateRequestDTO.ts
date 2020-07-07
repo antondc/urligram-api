@@ -1,5 +1,6 @@
 export interface IListUserUpdateRequestDTO {
   listId: number;
   userId: string;
-  newRole: 'admin' | 'user';
+  currentUserId: string;
+  newRole: 'admin' | 'user' | number;
 }
