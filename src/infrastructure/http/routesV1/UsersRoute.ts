@@ -56,7 +56,7 @@ UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
   return response;
 });
 
-UsersRoute.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
+UsersRoute.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const userUpdateUseCase = new UserUpdateUseCase(userRepo);
   const userUpdateController = new UserUpdateController(userUpdateUseCase);
@@ -66,7 +66,7 @@ UsersRoute.patch('/:id', async (req: Request, res: Response, next: NextFunction)
   return response;
 });
 
-UsersRoute.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
+UsersRoute.put('/:id/password', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const userUpdatePasswordUseCase = new UserUpdatePasswordUseCase(userRepo);
   const userUpdatePasswordController = new UserUpdatePasswordController(userUpdatePasswordUseCase);

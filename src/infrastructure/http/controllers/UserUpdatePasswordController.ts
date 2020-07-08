@@ -14,12 +14,11 @@ export class UserUpdatePasswordController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { password, name, newPassword, newPasswordRepeated } = req.body;
+    const { password, newPassword, newPasswordRepeated } = req.body;
     const { id } = req.params;
 
     const userUpdatePasswordRequestDTO: IUserUpdatePasswordRequestDTO = {
       id,
-      name,
       password,
       newPassword,
       newPasswordRepeated,
