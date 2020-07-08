@@ -3,9 +3,10 @@ import { List } from '@domain/list/entities/List';
 import { User } from '@domain/user/entities/User';
 
 export interface IUserRepo {
-  userCreate: (userCreateDTO) => Promise<User>;
   userGetAll: () => Promise<User[]>;
   userGetOne: (findUserDTO) => Promise<User>;
+  userCreate: (userCreateDTO) => Promise<User>;
+  userUpdate: (userUpdateDTO) => Promise<User>;
   userFollowingCreate: (userFollowingCreateDTO) => Promise<User>;
   userFollowingGetAll: (userFollowingGetAllDTO) => Promise<User[]>;
   userFollowingDelete: (userFollowingDeleteDTO) => Promise<User>;

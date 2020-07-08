@@ -28,13 +28,14 @@ export class StateRepo {
   private debuggerProcedure: string;
   private userAuthenticateProcedure: string;
   private userDeauthenticateProcedure: string;
-  private userCreateProcedure: string;
+  private userGetAllProcedure: string;
   private userGetOneProcedure: string;
+  private userCreateProcedure: string;
+  private userUpdateProcedure: string;
   private userFollowersGetAllProcedure: string;
   private userFollowingGetAllProcedure: string;
   private userFollowingCreateProcedure: string;
   private userFollowingDeleteProcedure: string;
-  private userGetAllProcedure: string;
   private userLinkGetAllProcedure: string;
   private userListGetAllProcedure: string;
   private languageGetAllProcedure: string;
@@ -106,13 +107,14 @@ export class StateRepo {
     this.debuggerProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql')).toString();
     this.userAuthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userAuthenticate.sql')).toString();
     this.userDeauthenticateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userDeauthenticate.sql')).toString();
-    this.userCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreate.sql')).toString();
     this.userGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetOne.sql')).toString();
+    this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
+    this.userCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreate.sql')).toString();
+    this.userUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userUpdate.sql')).toString();
     this.userFollowersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowersGetAll.sql')).toString();
     this.userFollowingGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingGetAll.sql')).toString();
     this.userFollowingCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingCreate.sql')).toString();
     this.userFollowingDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingDelete.sql')).toString();
-    this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
     this.userLinkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkGetAll.sql')).toString();
     this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
@@ -185,24 +187,25 @@ export class StateRepo {
       const createLinkUserTagTable = await mySQL.query(this.linkUserTag);
       const createUserListTable = await mySQL.query(this.userList);
       const createUserLoginsTable = await mySQL.query(this.userLogins);
-      const createUsersUsersTable = await mySQL.query(this.userUser);
+      const createUserUserTable = await mySQL.query(this.userUser);
 
       // Create procedures
       const createDebuggerProcedure = await mySQL.query(this.debuggerProcedure);
-      const createUsersAuthenticateProcedure = await mySQL.query(this.userAuthenticateProcedure);
-      const createUsersDeauthenticateProcedure = await mySQL.query(this.userDeauthenticateProcedure);
-      const createUsersCreateProcedure = await mySQL.query(this.userCreateProcedure);
-      const createUsersGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
-      const createUsersGetAllProcedure = await mySQL.query(this.userGetAllProcedure);
+      const createUserAuthenticateProcedure = await mySQL.query(this.userAuthenticateProcedure);
+      const createUserDeauthenticateProcedure = await mySQL.query(this.userDeauthenticateProcedure);
+      const createUserGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
+      const createUserGetAllProcedure = await mySQL.query(this.userGetAllProcedure);
+      const createUserCreateProcedure = await mySQL.query(this.userCreateProcedure);
+      const createUserUpdateProcedure = await mySQL.query(this.userUpdateProcedure);
       const createUserLinkGetAllProcedure = await mySQL.query(this.userLinkGetAllProcedure);
       const createUserListGetAllProcedure = await mySQL.query(this.userListGetAllProcedure);
-      const createUsersFollowersGetAllProcedure = await mySQL.query(this.userFollowersGetAllProcedure);
-      const createUsersFollowingGetAllProcedure = await mySQL.query(this.userFollowingGetAllProcedure);
-      const createUsersFollowingCreateProcedure = await mySQL.query(this.userFollowingCreateProcedure);
-      const createUsersFollowingDeleteProcedure = await mySQL.query(this.userFollowingDeleteProcedure);
+      const createUserFollowersGetAllProcedure = await mySQL.query(this.userFollowersGetAllProcedure);
+      const createUserFollowingGetAllProcedure = await mySQL.query(this.userFollowingGetAllProcedure);
+      const createUserFollowingCreateProcedure = await mySQL.query(this.userFollowingCreateProcedure);
+      const createUserFollowingDeleteProcedure = await mySQL.query(this.userFollowingDeleteProcedure);
       const createLanguageGetAllProcedure = await mySQL.query(this.languageGetAllProcedure);
       const createLanguageGetOneProcedure = await mySQL.query(this.languageGetOneProcedure);
-      const createUsersLogSessionProcedure = await mySQL.query(this.userLogSessionProcedure);
+      const createUserLogSessionProcedure = await mySQL.query(this.userLogSessionProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllProcedure = await mySQL.query(this.linkGetAllProcedure);
       const createLinkCreateProcedure = await mySQL.query(this.linkCreateProcedure);
@@ -268,24 +271,25 @@ export class StateRepo {
         ...createLinkUserTagTable,
         ...createUserListTable,
         ...createUserLoginsTable,
-        ...createUsersUsersTable,
+        ...createUserUserTable,
 
         // Create procedures
         ...createDebuggerProcedure,
-        ...createUsersAuthenticateProcedure,
-        ...createUsersDeauthenticateProcedure,
-        ...createUsersCreateProcedure,
-        ...createUsersGetOneProcedure,
-        ...createUsersFollowingGetAllProcedure,
-        ...createUsersFollowersGetAllProcedure,
-        ...createUsersFollowingCreateProcedure,
-        ...createUsersFollowingDeleteProcedure,
-        ...createUsersGetAllProcedure,
+        ...createUserAuthenticateProcedure,
+        ...createUserDeauthenticateProcedure,
+        ...createUserGetOneProcedure,
+        ...createUserGetAllProcedure,
+        ...createUserCreateProcedure,
+        ...createUserUpdateProcedure,
+        ...createUserFollowingGetAllProcedure,
+        ...createUserFollowersGetAllProcedure,
+        ...createUserFollowingCreateProcedure,
+        ...createUserFollowingDeleteProcedure,
         ...createUserLinkGetAllProcedure,
         ...createUserListGetAllProcedure,
         ...createLanguageGetAllProcedure,
         ...createLanguageGetOneProcedure,
-        ...createUsersLogSessionProcedure,
+        ...createUserLogSessionProcedure,
         ...createLinkGetOneProcedure,
         ...createLinkGetAllProcedure,
         ...createLinkCreateProcedure,

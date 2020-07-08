@@ -9,6 +9,7 @@ import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
 import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
+import { UserUpdateUseCase } from '@domain/user/useCases/UserUpdateUseCase';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
 import { UserFollowersGetAllController } from '@infrastructure/http/controllers/UserFollowersGetAllController';
 import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
@@ -18,6 +19,7 @@ import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAl
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
 import { UserListGetAllController } from '@infrastructure/http/controllers/UserListGetAllController';
+import { UserUpdateController } from '@infrastructure/http/controllers/UserUpdateController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const UsersRoute = express.Router();
@@ -32,6 +34,16 @@ UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   return response;
 });
 
+UsersRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userGetOneUseCase = new UserGetOneUseCase(userRepo);
+  const userGetOneController = new UserGetOneController(userGetOneUseCase);
+
+  const response = await userGetOneController.execute(req, res, next);
+
+  return response;
+});
+
 UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const userCreateUseCase = new UserCreateUseCase(userRepo);
@@ -42,12 +54,12 @@ UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
   return response;
 });
 
-UsersRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+UsersRoute.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userGetOneUseCase = new UserGetOneUseCase(userRepo);
-  const userGetOneController = new UserGetOneController(userGetOneUseCase);
+  const userUpdateUseCase = new UserUpdateUseCase(userRepo);
+  const userUpdateController = new UserUpdateController(userUpdateUseCase);
 
-  const response = await userGetOneController.execute(req, res, next);
+  const response = await userUpdateController.execute(req, res, next);
 
   return response;
 });
