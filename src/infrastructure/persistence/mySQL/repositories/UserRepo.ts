@@ -60,6 +60,20 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userDelete(userDeleteDTO) {
+    const mySQL = new MySQL();
+    try {
+      const userDeleteQuery = `CALL user_delete('${JSON.stringify(userDeleteDTO)}')`;
+      const [[results]] = await mySQL.query(userDeleteQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('User update failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async userUpdatePassword(userUpdatePasswordDTO) {
     const mySQL = new MySQL();
     try {

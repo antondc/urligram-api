@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS user (
   `level` ENUM('admin', 'user') NOT NULL DEFAULT 'user',
   `email` VARCHAR(255) UNIQUE NULL DEFAULT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `status` TINYINT(1) NULL DEFAULT '0',
+  `status` ENUM('inactive', 'active', 'disabled', 'removed') NOT NULL DEFAULT 'inactive',
   `statement` VARCHAR(255) NULL DEFAULT NULL,
   `location` VARCHAR(255) NULL DEFAULT NULL,
   `order` INT(11) NULL DEFAULT '10000',

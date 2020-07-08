@@ -3,7 +3,7 @@ export class User {
   name: string;
   level: string;
   email: string;
-  status: number;
+  status: string;
   password: number;
   statement: string;
   location: string;
