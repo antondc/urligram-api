@@ -7,6 +7,7 @@ export interface IUserRepo {
   userGetOne: (findUserDTO) => Promise<User>;
   userCreate: (userCreateDTO) => Promise<User>;
   userUpdate: (userUpdateDTO) => Promise<User>;
+  userUpdatePassword: (userUpdatePasswordDTO) => Promise<User>;
   userFollowingCreate: (userFollowingCreateDTO) => Promise<User>;
   userFollowingGetAll: (userFollowingGetAllDTO) => Promise<User[]>;
   userFollowingDelete: (userFollowingDeleteDTO) => Promise<User>;

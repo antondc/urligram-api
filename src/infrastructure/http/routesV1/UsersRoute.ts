@@ -9,6 +9,7 @@ import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
 import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
+import { UserUpdatePasswordUseCase } from '@domain/user/useCases/UserUpdatePasswordUseCase';
 import { UserUpdateUseCase } from '@domain/user/useCases/UserUpdateUseCase';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
 import { UserFollowersGetAllController } from '@infrastructure/http/controllers/UserFollowersGetAllController';
@@ -20,6 +21,7 @@ import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOn
 import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
 import { UserListGetAllController } from '@infrastructure/http/controllers/UserListGetAllController';
 import { UserUpdateController } from '@infrastructure/http/controllers/UserUpdateController';
+import { UserUpdatePasswordController } from '@infrastructure/http/controllers/UserUpdatePasswordController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const UsersRoute = express.Router();
@@ -60,6 +62,16 @@ UsersRoute.patch('/:id', async (req: Request, res: Response, next: NextFunction)
   const userUpdateController = new UserUpdateController(userUpdateUseCase);
 
   const response = await userUpdateController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userUpdatePasswordUseCase = new UserUpdatePasswordUseCase(userRepo);
+  const userUpdatePasswordController = new UserUpdatePasswordController(userUpdatePasswordUseCase);
+
+  const response = await userUpdatePasswordController.execute(req, res, next);
 
   return response;
 });

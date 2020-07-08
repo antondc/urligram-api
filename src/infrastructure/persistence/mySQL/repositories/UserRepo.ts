@@ -60,6 +60,20 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userUpdatePassword(userUpdatePasswordDTO) {
+    const mySQL = new MySQL();
+    try {
+      const userUpdatePasswordQuery = `CALL user_update_password('${JSON.stringify(userUpdatePasswordDTO)}')`;
+      const [[results]] = await mySQL.query(userUpdatePasswordQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('User update failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async userLinkGetAll(userLinkGetAllDTO) {
     const mySQL = new MySQL();
     try {

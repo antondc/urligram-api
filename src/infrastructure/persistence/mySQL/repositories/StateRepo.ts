@@ -32,6 +32,7 @@ export class StateRepo {
   private userGetOneProcedure: string;
   private userCreateProcedure: string;
   private userUpdateProcedure: string;
+  private userUpdatePasswordProcedure: string;
   private userFollowersGetAllProcedure: string;
   private userFollowingGetAllProcedure: string;
   private userFollowingCreateProcedure: string;
@@ -111,6 +112,7 @@ export class StateRepo {
     this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
     this.userCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreate.sql')).toString();
     this.userUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userUpdate.sql')).toString();
+    this.userUpdatePasswordProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userUpdatePassword.sql')).toString();
     this.userFollowersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowersGetAll.sql')).toString();
     this.userFollowingGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingGetAll.sql')).toString();
     this.userFollowingCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingCreate.sql')).toString();
@@ -197,6 +199,7 @@ export class StateRepo {
       const createUserGetAllProcedure = await mySQL.query(this.userGetAllProcedure);
       const createUserCreateProcedure = await mySQL.query(this.userCreateProcedure);
       const createUserUpdateProcedure = await mySQL.query(this.userUpdateProcedure);
+      const createUserUpdatePasswordProcedure = await mySQL.query(this.userUpdatePasswordProcedure);
       const createUserLinkGetAllProcedure = await mySQL.query(this.userLinkGetAllProcedure);
       const createUserListGetAllProcedure = await mySQL.query(this.userListGetAllProcedure);
       const createUserFollowersGetAllProcedure = await mySQL.query(this.userFollowersGetAllProcedure);
@@ -281,6 +284,7 @@ export class StateRepo {
         ...createUserGetAllProcedure,
         ...createUserCreateProcedure,
         ...createUserUpdateProcedure,
+        ...createUserUpdatePasswordProcedure,
         ...createUserFollowingGetAllProcedure,
         ...createUserFollowersGetAllProcedure,
         ...createUserFollowingCreateProcedure,

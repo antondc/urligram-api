@@ -8,6 +8,7 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
     req.method === 'GET' || // All get are free
     (req.method === 'POST' && req.baseUrl === '/api/v1/login') || // Allow login
     (req.method === 'POST' && req.baseUrl === '/api/v1/users') || // Allow user creation
+    (req.method === 'PUT' && req.baseUrl === '/api/v1/users') || // Allow user password change
     (req.method === 'DELETE' && req.baseUrl === '/api/v1/state') // Allow reset
   ) {
     return next();
