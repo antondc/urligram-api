@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS user_list_get_all;
+DROP PROCEDURE IF EXISTS user_list_me_get_all;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE user_list_get_all(
+CREATE PROCEDURE user_list_me_get_all(
     IN user_data JSON
 )
 

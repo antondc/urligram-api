@@ -15,6 +15,7 @@ export interface IUserRepo {
   userFollowersGetAll: (userFollowersGetAllDTO) => Promise<User[]>;
   userLinkGetAll: (userLinkGetAllRequestDTO) => Promise<Link[]>;
   userListGetAll: (userListGetAllRequestDTO) => Promise<List[]>;
+  userListMeGetAll: (userListMeGetAllRequestDTO) => Promise<List[]>;
   authenticate: (userLoginDTO) => Promise<User>;
   logSession: (sessionLogData: { result: string; type: string; id: string }) => Promise<void>;
 }
