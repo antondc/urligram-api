@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { UserCreateUseCase } from '@domain/user/useCases/UserCreateUseCase';
-import { UserDeleteUseCase } from '@domain/user/useCases/UserDeleteUseCase';
+import { UserDeleteMeUseCase } from '@domain/user/useCases/UserDeleteMeUseCase';
 import { UserFollowersGetAllUseCase } from '@domain/user/useCases/UserFollowersGetAllUseCase';
 import { UserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
 import { UserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingDeleteUseCase';
@@ -13,7 +13,7 @@ import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCa
 import { UserUpdatePasswordUseCase } from '@domain/user/useCases/UserUpdatePasswordUseCase';
 import { UserUpdateUseCase } from '@domain/user/useCases/UserUpdateUseCase';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
-import { UserDeleteController } from '@infrastructure/http/controllers/UserDeleteController';
+import { UserDeleteMeController } from '@infrastructure/http/controllers/UserDeleteMeController';
 import { UserFollowersGetAllController } from '@infrastructure/http/controllers/UserFollowersGetAllController';
 import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
 import { UserFollowingDeleteController } from '@infrastructure/http/controllers/UserFollowingDeleteController';
@@ -68,12 +68,12 @@ UsersRoute.put('/:id', async (req: Request, res: Response, next: NextFunction) =
   return response;
 });
 
-UsersRoute.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
+UsersRoute.delete('/me', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userDeleteUseCase = new UserDeleteUseCase(userRepo);
-  const userDeleteController = new UserDeleteController(userDeleteUseCase);
+  const userDeleteMeUseCase = new UserDeleteMeUseCase(userRepo);
+  const userDeleteMeController = new UserDeleteMeController(userDeleteMeUseCase);
 
-  const response = await userDeleteController.execute(req, res, next);
+  const response = await userDeleteMeController.execute(req, res, next);
 
   return response;
 });
