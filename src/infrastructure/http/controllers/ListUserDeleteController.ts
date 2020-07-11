@@ -18,12 +18,12 @@ export class ListUserDeleteController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id, userId } = req.params;
     const tokenService = new TokenService();
-    const { id: sessionId } = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const linkUserDeleteRequestDTO = {
       listId: Number(id),
       userId,
-      sessionId,
+      sessionId: token?.id,
     };
 
     const response = await this.useCase.execute(linkUserDeleteRequestDTO);

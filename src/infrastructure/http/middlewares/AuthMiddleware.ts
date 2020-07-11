@@ -16,12 +16,10 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
     return next();
   }
 
-  try {
-    const tokenService = new TokenService();
-    tokenService.verifyToken(req.cookies.sessionToken);
+  const tokenService = new TokenService();
+  const token = tokenService.verifyToken(req.cookies.sessionToken);
+  
+  if (!token) throw new AuthenticationError('401 Unauthorized', 401);
 
-    return next();
-  } catch (err) {
-    throw new AuthenticationError('401 Unauthorized', 401, err);
-  }
+  return next();
 };

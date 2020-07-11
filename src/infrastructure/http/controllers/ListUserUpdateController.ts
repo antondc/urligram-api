@@ -19,12 +19,12 @@ export class ListUserUpdateController extends BaseController {
     const { id, userId } = req.params;
     const { newRole } = req.body;
     const tokenService = new TokenService();
-    const { id: sessionId } = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const listUserUpdateRequestDTO = {
       listId: Number(id),
       userId,
-      sessionId,
+      sessionId: token?.id,
       newRole,
     };
 

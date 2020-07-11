@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 
-import { IUserLogoutRequestDTO } from '@domain/user/dto/IUserLogoutRequestDTO';
 import { User } from '@domain/user/entities/User';
 import { IUserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
@@ -17,9 +16,13 @@ export class UserLogOutController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const tokenService = new TokenService();
-    const logOutUserRequestDTO: IUserLogoutRequestDTO = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const response = await this.useCase.execute(logOutUserRequestDTO);
+    const listUserUpdateRequestDTO = {
+      id: token?.id,
+    };
+
+    const response = await this.useCase.execute(listUserUpdateRequestDTO);
 
     const formattedResponse = {
       links: {

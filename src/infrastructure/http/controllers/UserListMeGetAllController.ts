@@ -16,9 +16,9 @@ export class UserListMeGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const tokenService = new TokenService();
-    const { id } = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const response = await this.useCase.execute({ userId: id });
+    const response = await this.useCase.execute({ userId: token?.id });
 
     const formattedLinks = response.map((item) => {
       return {

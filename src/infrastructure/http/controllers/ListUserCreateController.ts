@@ -18,11 +18,11 @@ export class ListUserCreateController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id } = req.params;
     const tokenService = new TokenService();
-    const { id: sessionId } = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const linkUserCreateRequestDTO = {
       listId: Number(id),
-      sessionId,
+      sessionId: token?.id,
     };
 
     const response = await this.useCase.execute(linkUserCreateRequestDTO);
