@@ -19,11 +19,12 @@ export class ListUserGetOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id, userId } = req.params;
     const tokenService = new TokenService();
-    const { id: sessionId } = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+
     const listUserGetOneUseCase: IListUserGetOneRequestDTO = {
       listId: Number(id),
       userId: userId,
-      sessionId,
+      sessionId: token?.id,
     };
 
     const response = await this.useCase.execute(listUserGetOneUseCase);

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `user_list` (
   `userRole` ENUM('admin', 'editor', 'reader') NOT NULL,
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE `unique_index`(`list_id`, `user_id`),
   INDEX `fk_user_list_list1_idx` (`list_id` ASC) VISIBLE,
   INDEX `fk_user_list_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_list_list1`
