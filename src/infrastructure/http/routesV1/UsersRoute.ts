@@ -10,7 +10,6 @@ import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
 import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
-import { UserListMeGetAllUseCase } from '@domain/user/useCases/UserListMeGetAllUseCase';
 import { UserUpdatePasswordUseCase } from '@domain/user/useCases/UserUpdatePasswordUseCase';
 import { UserUpdateUseCase } from '@domain/user/useCases/UserUpdateUseCase';
 import { UserCreateController } from '@infrastructure/http/controllers/UserCreateController';
@@ -23,7 +22,6 @@ import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAl
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
 import { UserListGetAllController } from '@infrastructure/http/controllers/UserListGetAllController';
-import { UserListMeGetAllController } from '@infrastructure/http/controllers/UserListMeGetAllController';
 import { UserUpdateController } from '@infrastructure/http/controllers/UserUpdateController';
 import { UserUpdatePasswordController } from '@infrastructure/http/controllers/UserUpdatePasswordController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
@@ -136,16 +134,6 @@ UsersRoute.get('/:id/links', async (req: Request, res: Response, next: NextFunct
   const userLinkGetAllController = new UserLinkGetAllController(userLinkGetAllUseCase);
 
   const response = await userLinkGetAllController.execute(req, res, next);
-
-  return response;
-});
-
-UsersRoute.get('/me/lists', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new UserRepo();
-  const userListMeGetAllUseCase = new UserListMeGetAllUseCase(userRepo);
-  const userListMeGetAllController = new UserListMeGetAllController(userListMeGetAllUseCase);
-
-  const response = await userListMeGetAllController.execute(req, res, next);
 
   return response;
 });
