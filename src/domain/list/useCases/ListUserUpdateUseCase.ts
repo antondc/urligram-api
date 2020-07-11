@@ -15,18 +15,18 @@ export class ListUserUpdateUseCase implements IListUserUpdateUseCase {
   }
 
   public async execute(listUserUpdateRequestDTO: IListUserUpdateRequestDTO): Promise<IListUserUpdateResponseDTO> {
-    const { listId, userId, currentUserId, newRole } = listUserUpdateRequestDTO;
+    const { listId, userId, sessionId, newRole } = listUserUpdateRequestDTO;
 
-    const currentUser = await this.listRepo.listUserGetOne({ listId, userId: currentUserId });
+    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: sessionId });
 
-    if (!currentUser) throw new RequestError('You are not in that list', 404, { message: '409' });
-    if (currentUser.userListRole !== 'admin') throw new RequestError('You are not the admin of that list', 404, { message: '409' });
+    if (!sessionUserList) throw new RequestError('You are not in that list', 404, { message: '404 not found' });
+    if (sessionUserList.userListRole !== 'admin') throw new RequestError('You are not the admin of that list', 409, { message: '409' });
 
-    if (userId == currentUserId && newRole !== 'admin')
+    if (userId == sessionId && newRole !== 'admin')
       throw new RequestError('You can not stop being an admin of a list you created', 409, { message: '409 Conflict' });
 
     const targetUser = await this.listRepo.listUserGetOne({ listId, userId });
-    if (!targetUser) throw new RequestError('This user is not in that list', 404, { message: '409' });
+    if (!targetUser) throw new RequestError('This user is not in that list', 404, { message: '404 not found' });
 
     await this.listRepo.listUserUpdate(listUserUpdateRequestDTO);
 

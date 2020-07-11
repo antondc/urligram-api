@@ -1,6 +1,6 @@
 export interface IListUserUpdateRequestDTO {
   listId: number;
   userId: string;
-  currentUserId: string;
+  sessionId: string;
   newRole: string;
 }
