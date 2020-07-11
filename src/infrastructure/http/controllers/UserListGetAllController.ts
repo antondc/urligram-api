@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
+import { User } from '@domain/user/entities/User';
 import { IUserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -15,7 +17,15 @@ export class UserListGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id } = req.params;
 
-    const response = await this.useCase.execute({ userId: id });
+    const tokenService = new TokenService();
+    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+
+    const userListGetAllRequestDTO = {
+      userId: id,
+      sessionId: token?.id,
+    };
+
+    const response = await this.useCase.execute(userListGetAllRequestDTO);
 
     const formattedLinks = response.map((item) => {
       return {
