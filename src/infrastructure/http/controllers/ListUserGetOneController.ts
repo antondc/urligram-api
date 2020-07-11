@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 
 import { IListUserGetOneRequestDTO } from '@domain/list/dto/IListUserGetOneRequestDTO';
 import { IListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -16,10 +18,12 @@ export class ListUserGetOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { id, userId } = req.params;
-
+    const tokenService = new TokenService();
+    const { id: sessionId } = tokenService.verifyToken(req.cookies.sessionToken) as User;
     const listUserGetOneUseCase: IListUserGetOneRequestDTO = {
       listId: Number(id),
       userId: userId,
+      sessionId,
     };
 
     const response = await this.useCase.execute(listUserGetOneUseCase);

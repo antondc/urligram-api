@@ -9,9 +9,11 @@ BEGIN
   -- Retrieve values from JSON
   SET @list_id      = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.listId'));
   SET @user_id      = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.userId'));
+  SET @session_id      = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.sessionId'));
 
   -- Upsert into list
-  SELECT
+  -- Returns only a list if list matches with user, and user is me (sessionId), or if there is a match and list is public
+ SELECT
    `user`.`id`,
    `user`.`name`,
    `user`.`level`,
@@ -25,7 +27,16 @@ BEGIN
    `user_list`.`userRole` AS userListRole
   FROM user_list
   INNER JOIN `user` ON `user_list`.`user_id` = `user`.`id`
-  WHERE `user_list`.`list_id` = @list_id AND `user_list`.`user_id` = @user_id;
+  INNER JOIN LIST ON user_list.list_id = list.id
+  WHERE (
+   `user_list`.`list_id` = @list_id
+   AND `user_list`.`user_id` = @user_id
+   AND @user_id = @session_id
+  )
+  OR (
+      `user_list`.`list_id` = @list_id
+      AND `user_list`.`user_id` = @user_id AND list.listType = "public"
+  );
 
   SELECT @list_id, @user_id;
 

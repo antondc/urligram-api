@@ -17,7 +17,7 @@ export class ListUserGetOneUseCase implements IListUserGetOneUseCase {
   public async execute(listUserGetOneRequestDTO: IListUserGetOneRequestDTO): Promise<IListUserGetOneResponseDTO> {
     const result = await this.listRepo.listUserGetOne(listUserGetOneRequestDTO);
 
-    if (!result) throw new RequestError('List link does not exist', 404, { message: '404 Not Found' });
+    if (!result) throw new RequestError('There is no user in a public list with this id', 404, { message: '404 Not Found' });
 
     return result;
   }
