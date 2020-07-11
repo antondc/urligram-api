@@ -7,8 +7,8 @@ CREATE PROCEDURE list_user_get_one(
 BEGIN
 
   -- Retrieve values from JSON
-  SET @list_id      = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.listId'));
-  SET @user_id      = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.userId'));
+  SET @list_id         = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.listId'));
+  SET @user_id         = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.userId'));
   SET @session_id      = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.sessionId'));
 
   -- Upsert into list
@@ -29,15 +29,13 @@ BEGIN
   INNER JOIN `user` ON `user_list`.`user_id` = `user`.`id`
   INNER JOIN LIST ON user_list.list_id = list.id
   WHERE (
-   `user_list`.`list_id` = @list_id
-   AND `user_list`.`user_id` = @user_id
-   AND @user_id = @session_id
+   `user_list`.`list_id`      = JSON_UNQUOTE(@list_id)
+   AND `user_list`.`user_id`  = JSON_UNQUOTE(@user_id)
+   AND JSON_UNQUOTE(@user_id) = JSON_UNQUOTE(@session_id)
   )
   OR (
-      `user_list`.`list_id` = @list_id
-      AND `user_list`.`user_id` = @user_id AND list.listType = "public"
+      `user_list`.`list_id`     = JSON_UNQUOTE(@list_id)
+      AND `user_list`.`user_id` = JSON_UNQUOTE(@user_id) AND list.listType = "public"
   );
-
-  SELECT @list_id, @user_id;
 
 END

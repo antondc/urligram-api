@@ -13,7 +13,7 @@ INSERT INTO `list` (
 INSERT INTO `list` (
   `id`, `name`, `description`, `isPublic`, `createdAt`, `updatedAt`, `listType`
 ) VALUES (
-  3, 'Third list', 'More links', true, DEFAULT, DEFAULT, "private"
+  3, 'Third list', 'More links', true, DEFAULT, DEFAULT, "public"
 );
 
 INSERT INTO `list` (

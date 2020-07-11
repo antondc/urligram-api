@@ -10,6 +10,8 @@ export class TokenService {
   }
 
   verifyToken(string: string) {
+    if (!string) return null;
+
     const token = jwt.verify(string, SECRET);
 
     return token;

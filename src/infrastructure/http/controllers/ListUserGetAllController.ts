@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 
 import { IListUserGetAllRequestDTO } from '@domain/list/dto/IListUserGetAllRequestDTO';
 import { IListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -15,12 +17,16 @@ export class ListUserGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { id } = req.params;
+    const tokenService = new TokenService();
 
-    const listDeleteRequestDTO: IListUserGetAllRequestDTO = {
+    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+
+    const listGetAllRequestDTO: IListUserGetAllRequestDTO = {
       listId: Number(id),
+      sessionId: token?.id,
     };
 
-    const response = await this.useCase.execute(listDeleteRequestDTO);
+    const response = await this.useCase.execute(listGetAllRequestDTO);
 
     const formattedUsers = response.map((item) => {
       return {
