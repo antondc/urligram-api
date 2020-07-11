@@ -10,6 +10,7 @@ import { ListLinkGetAllUseCase } from '@domain/list/useCases/ListLinkGetAllUseCa
 import { ListLinkGetOneUseCase } from '@domain/list/useCases/ListLinkGetOneUseCase';
 import { ListTagGetAllUseCase } from '@domain/list/useCases/ListTagGetAllUseCase';
 import { ListUpdateUseCase } from '@domain/list/useCases/ListUpdateUseCase';
+import { ListUserCreateUseCase } from '@domain/list/useCases/ListUserCreateUseCase';
 import { ListUserDeleteUseCase } from '@domain/list/useCases/ListUserDeleteUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
@@ -24,6 +25,7 @@ import { ListLinkGetAllController } from '@infrastructure/http/controllers/ListL
 import { ListLinkGetOneController } from '@infrastructure/http/controllers/ListLinkGetOneController';
 import { ListTagGetAllController } from '@infrastructure/http/controllers/ListTagGetAllController';
 import { ListUpdateController } from '@infrastructure/http/controllers/ListUpdateController';
+import { ListUserCreateController } from '@infrastructure/http/controllers/ListUserCreateController';
 import { ListUserDeleteController } from '@infrastructure/http/controllers/ListUserDeleteController';
 import { ListUserGetAllController } from '@infrastructure/http/controllers/ListUserGetAllController';
 import { ListUserGetOneController } from '@infrastructure/http/controllers/ListUserGetOneController';
@@ -150,6 +152,16 @@ ListsRoute.put('/:id/users/:userId', async (req: Request, res: Response, next: N
   const listUsersUpdateController = new ListUserUpdateController(listUsersUpdateUseCase);
 
   const response = await listUsersUpdateController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.post('/:id/users/me', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listUsersCreateUseCase = new ListUserCreateUseCase(listRepo);
+  const listUsersCreateController = new ListUserCreateController(listUsersCreateUseCase);
+
+  const response = await listUsersCreateController.execute(req, res, next);
 
   return response;
 });

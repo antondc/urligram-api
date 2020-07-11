@@ -1,7 +1,7 @@
 INSERT INTO `list` (
   `id`, `name`, `description`, `isPublic`, `createdAt`, `updatedAt`, `listType`
 ) VALUES (
-  1, 'My fantastic list', 'This is our list', true, DEFAULT, DEFAULT, "corporate"
+  1, 'My fantastic list', 'This is our list', true, DEFAULT, DEFAULT, "public"
 );
 
 INSERT INTO `list` (

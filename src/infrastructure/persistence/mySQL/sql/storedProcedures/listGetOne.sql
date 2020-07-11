@@ -53,7 +53,7 @@ BEGIN
       list.id,
       list.name,
       list.description,
-      list_type.type AS listType,
+      listType,
       CAST(@links AS JSON) AS links, -- Make use of the @users and cast them as JSON
       IF(
         COUNT(user.id) = 0,
@@ -67,7 +67,6 @@ BEGIN
         )
       ) users
     FROM LIST
-    INNER JOIN list_type ON list.list_type_id = list_type.id
     INNER JOIN user_list ON list.id = user_list.list_id
     INNER JOIN `user` ON user.id = user_list.user_id
     WHERE list.id = @list_id;

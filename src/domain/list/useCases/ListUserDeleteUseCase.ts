@@ -21,11 +21,11 @@ export class ListUserDeleteUseCase implements IListUserDeleteUseCase {
 
     if (userId == currentUserId && currentUser.userListRole === 'admin')
       throw new RequestError('You can not remove yourself from a list you admin', 409, { message: '409 Conflict' });
-    if (!currentUser) throw new RequestError('You are not in that list', 404, { message: '404 Conflict' });
-    if (currentUser.userListRole !== 'admin') throw new RequestError('You are not the admin of that list', 404, { message: '404 Conflict' });
+    if (!currentUser) throw new RequestError('You are not in that list', 404, { message: '409' });
+    if (currentUser.userListRole !== 'admin') throw new RequestError('You are not the admin of that list', 404, { message: '409' });
 
     const targetUser = await this.listRepo.listUserGetOne({ listId, userId });
-    if (!targetUser) throw new RequestError('This user is not in that list', 404, { message: '404 Conflict' });
+    if (!targetUser) throw new RequestError('This user is not in that list', 404, { message: '409' });
 
     const result = await this.listRepo.listUserDelete(listUserDeleteRequestDTO);
 

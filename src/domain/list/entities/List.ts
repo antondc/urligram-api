@@ -5,6 +5,7 @@ export class List {
   isPublic: boolean;
   createdAt: Date;
   updatedAt: Date;
+  listType: string;
 
   constructor(userDTO?) {
     this.id = userDTO?.id;
@@ -12,6 +13,6 @@ export class List {
     this.description = userDTO?.description;
     this.isPublic = userDTO?.isPublic;
     this.createdAt = userDTO?.createdAt;
-    this.updatedAt = userDTO?.updatedAt;
+    this.listType = userDTO?.listType;
   }
 }

@@ -19,14 +19,14 @@ export class ListUserUpdateUseCase implements IListUserUpdateUseCase {
 
     const currentUser = await this.listRepo.listUserGetOne({ listId, userId: currentUserId });
 
-    if (!currentUser) throw new RequestError('You are not in that list', 404, { message: '404 Conflict' });
-    if (currentUser.userListRole !== 'admin') throw new RequestError('You are not the admin of that list', 404, { message: '404 Conflict' });
+    if (!currentUser) throw new RequestError('You are not in that list', 404, { message: '409' });
+    if (currentUser.userListRole !== 'admin') throw new RequestError('You are not the admin of that list', 404, { message: '409' });
 
     if (userId == currentUserId && newRole !== 'admin')
       throw new RequestError('You can not stop being an admin of a list you created', 409, { message: '409 Conflict' });
 
     const targetUser = await this.listRepo.listUserGetOne({ listId, userId });
-    if (!targetUser) throw new RequestError('This user is not in that list', 404, { message: '404 Conflict' });
+    if (!targetUser) throw new RequestError('This user is not in that list', 404, { message: '409' });
 
     await this.listRepo.listUserUpdate(listUserUpdateRequestDTO);
 

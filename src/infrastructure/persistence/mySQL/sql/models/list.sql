@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `list` (
   `order` INT(11) NULL DEFAULT '10000',
   `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `listType` ENUM('corporate', 'private', 'public') NOT NULL,
+  `listType` ENUM('private', 'public') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE `unique_index`(`name`, `listType`)
 );
