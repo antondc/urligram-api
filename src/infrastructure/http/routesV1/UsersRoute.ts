@@ -108,7 +108,7 @@ UsersRoute.post('/me/following/:followedId', async (req: Request, res: Response,
   return response;
 });
 
-UsersRoute.delete('/:userId/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
+UsersRoute.delete('/me/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const userFollowingDeleteUseCase = new UserFollowingDeleteUseCase(userRepo);
   const userFollowingDeleteController = new UserFollowingDeleteController(userFollowingDeleteUseCase);

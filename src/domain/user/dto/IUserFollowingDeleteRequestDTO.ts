@@ -1,4 +1,6 @@
+import { User } from '@domain/user/entities/User';
+
 export interface IUserFollowingDeleteRequestDTO {
-  userId: string;
+  session: User;
   followedId: string;
 }

@@ -14,7 +14,8 @@ export class UserFollowingDeleteUseCase implements IUserFollowingDeleteUseCase {
   }
 
   public async execute(userFollowingDeleteRequestDTO: IUserFollowingDeleteRequestDTO): Promise<IUserFollowingDeleteResponseDTO> {
-    const response = await this.userRepo.userFollowingDelete(userFollowingDeleteRequestDTO);
+    const { session } = userFollowingDeleteRequestDTO;
+    const response = await this.userRepo.userFollowingDelete({ ...userFollowingDeleteRequestDTO, userId: session?.id });
 
     return response;
   }
