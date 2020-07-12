@@ -1,3 +1,4 @@
+import { Link } from '@domain/link/entities/Link';
 import { IListCreateRequestDTO } from '@domain/list/dto/IListCreateRequestDTO';
 import { IListCreateResponseDTO } from '@domain/list/dto/IListCreateResponseDTO';
 import { IListDeleteRequestDTO } from '@domain/list/dto/IListDeleteRequestDTO';
@@ -9,7 +10,6 @@ import { IListLinkCreateRequestDTO } from '@domain/list/dto/IListLinkCreateReque
 import { IListLinkDeleteRequestDTO } from '@domain/list/dto/IListLinkDeleteRequestDTO';
 import { IListLinkDeleteResponseDTO } from '@domain/list/dto/IListLinkDeleteResponseDTO';
 import { IListLinkGetAllRequestDTO } from '@domain/list/dto/IListLinkGetAllRequestDTO';
-import { IListLinkGetAllResponseDTO } from '@domain/list/dto/IListLinkGetAllResponseDTO';
 import { IListLinkGetOneRequestDTO } from '@domain/list/dto/IListLinkGetOneRequestDTO';
 import { IListLinkGetOneResponseDTO } from '@domain/list/dto/IListLinkGetOneResponseDTO';
 import { IListUpdateRequestDTO } from '@domain/list/dto/IListUpdateRequestDTO';
@@ -33,7 +33,7 @@ export interface IListRepo {
   listUpdate: (listUpdateRequestDTO: IListUpdateRequestDTO) => Promise<IListUpdateResponseDTO>;
   listDelete: (listDeleteRequestDTO: IListDeleteRequestDTO) => Promise<IListDeleteResponseDTO>;
   listLinkGetOne: (listLinkGetOneRequestDTO: IListLinkGetOneRequestDTO) => Promise<IListLinkGetOneResponseDTO>;
-  listLinkGetAll: (listLinkGetAllRequestDTO: IListLinkGetAllRequestDTO) => Promise<IListLinkGetAllResponseDTO>;
+  listLinkGetAll: (listLinkGetAllRequestDTO: IListLinkGetAllRequestDTO) => Promise<Link[]>;
   listLinkCreate: (listLinkCreateRequestDTO: IListLinkCreateRequestDTO) => Promise<{ listId: number; linkId: number }>;
   listLinkDelete: (listLinkDeleteRequestDTO: IListLinkDeleteRequestDTO) => Promise<IListLinkDeleteResponseDTO>;
   listTagGetAll: (listTagGetAllRequestDTO) => Promise<Tag[]>;

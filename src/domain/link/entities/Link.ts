@@ -1,15 +1,21 @@
 export class Link {
   id: number;
+  userId: string;
   title: string;
   order: number;
+  url: string;
+  isPublic: boolean;
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(userDTO?) {
-    this.id = userDTO?.id;
-    this.title = userDTO?.title;
-    this.order = userDTO?.order;
-    this.createdAt = userDTO?.createdAt;
-    this.updatedAt = userDTO?.updatedAt;
+  constructor(linkDTO?) {
+    this.id = linkDTO?.id;
+    this.userId = linkDTO?.userId;
+    this.title = linkDTO?.title;
+    this.order = linkDTO?.order;
+    this.url = linkDTO?.url;
+    this.isPublic = linkDTO?.isPublict;
+    this.createdAt = linkDTO?.createdAt;
+    this.updatedAt = linkDTO?.updatedAt;
   }
 }

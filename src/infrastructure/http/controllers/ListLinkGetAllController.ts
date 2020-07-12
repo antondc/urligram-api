@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 
 import { IListLinkGetAllRequestDTO } from '@domain/list/dto/IListLinkGetAllRequestDTO';
 import { IListLinkGetAllUseCase } from '@domain/list/useCases/ListLinkGetAllUseCase';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -15,14 +17,17 @@ export class ListLinkGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { id } = req.params;
+    const tokenService = new TokenService();
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const listDeleteRequestDTO: IListLinkGetAllRequestDTO = {
       listId: Number(id),
+      session,
     };
 
     const response = await this.useCase.execute(listDeleteRequestDTO);
 
-    const formattedLinks = response.map((item) => {
+    const formattedLinks = response.links.map((item) => {
       return {
         type: 'link',
         id: item.id,
@@ -39,8 +44,8 @@ export class ListLinkGetAllController extends BaseController {
       links: {
         self: URL_SERVER + '/lists/' + id + '/links',
       },
-      data: formattedLinks,
-      included: [],
+      data: response.list,
+      included: { links: formattedLinks },
     };
 
     return res.status(200).send(formattedResponse);
