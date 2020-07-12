@@ -17,7 +17,8 @@ BEGIN
     `list`.`name`,
     `user_list`.`userRole`,
     `user`.`id` AS userId,
-    `list`.`createdAt`
+    `list`.`createdAt`,
+    `list`.`isPrivate`
   FROM `list`
   INNER JOIN `user_list` ON `user_list`.`list_id` = `list`.`id`
   INNER JOIN `user` ON `user_list`.`user_id` = `user`.`id`

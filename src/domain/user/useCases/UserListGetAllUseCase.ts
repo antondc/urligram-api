@@ -14,12 +14,13 @@ export class UserListGetAllUseCase implements IUserListGetAllUseCase {
   }
 
   public async execute(userListGetAllRequestDTO: IUserListGetAllRequestDTO): Promise<IUserListGetAllResponseDTO> {
+    // (1) If userId is sessionId, then return all; otherwise return only public lists
     const { userId, session } = userListGetAllRequestDTO;
 
     const response = await this.userRepo.userListGetAll(userListGetAllRequestDTO);
 
-    if (userId !== session?.id) return response.filter((item) => userId !== session?.id && !item.isPrivate);
+    const filteredResponse = response.filter((item) => userId === session?.id || !item.isPrivate); // (1)
 
-    return response;
+    return filteredResponse;
   }
 }
