@@ -1,5 +1,5 @@
 import { User } from '../entities/User';
 
-export interface IUserDeleteMeRequestDTO {
+export interface IUserDeleteRequestDTO {
   session: User;
 }

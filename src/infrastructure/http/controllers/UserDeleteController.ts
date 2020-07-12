@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 
-import { IUserDeleteMeRequestDTO } from '@domain/user/dto/IUserDeleteMeRequestDTO';
+import { IUserDeleteRequestDTO } from '@domain/user/dto/IUserDeleteRequestDTO';
 import { User } from '@domain/user/entities/User';
-import { IUserDeleteMeUseCase } from '@domain/user/useCases/UserDeleteMeUseCase';
+import { IUserDeleteUseCase } from '@domain/user/useCases/UserDeleteUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class UserDeleteMeController extends BaseController {
-  useCase: IUserDeleteMeUseCase;
+export class UserDeleteController extends BaseController {
+  useCase: IUserDeleteUseCase;
 
-  constructor(useCase: IUserDeleteMeUseCase) {
+  constructor(useCase: IUserDeleteUseCase) {
     super();
     this.useCase = useCase;
   }
@@ -19,11 +19,11 @@ export class UserDeleteMeController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userDeleteMeRequestDTO: IUserDeleteMeRequestDTO = {
+    const userDeleteRequestDTO: IUserDeleteRequestDTO = {
       session,
     };
 
-    const response = await this.useCase.execute(userDeleteMeRequestDTO);
+    const response = await this.useCase.execute(userDeleteRequestDTO);
 
     const formattedResponse = {
       links: {

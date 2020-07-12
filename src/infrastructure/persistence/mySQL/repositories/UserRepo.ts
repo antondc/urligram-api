@@ -60,11 +60,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userDeleteMe(userDeleteMeDTO) {
+  public async userDelete(userDeleteDTO) {
     const mySQL = new MySQL();
     try {
-      const userDeleteMeQuery = `CALL user_delete_me('${JSON.stringify(userDeleteMeDTO)}')`;
-      const [[results]] = await mySQL.query(userDeleteMeQuery);
+      const userDeleteQuery = `CALL user_delete_me('${JSON.stringify(userDeleteDTO)}')`;
+      const [[results]] = await mySQL.query(userDeleteQuery);
 
       return results;
     } catch (err) {
