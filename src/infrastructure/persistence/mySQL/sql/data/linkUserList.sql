@@ -7,13 +7,13 @@ INSERT INTO `link_user_list` (
 INSERT INTO `link_user_list` (
   `order`, `createdAt`, `updatedAt`, `list_id`, `link_user_id`
 ) VALUES (
-  2, DEFAULT, DEFAULT, 2, 2
+  2, DEFAULT, DEFAULT, 1, 2
 );
 
 INSERT INTO `link_user_list` (
   `order`, `createdAt`, `updatedAt`, `list_id`, `link_user_id`
 ) VALUES (
-  3, DEFAULT, DEFAULT, 3, 3
+  3, DEFAULT, DEFAULT, 1, 3
 );
 
 INSERT INTO `link_user_list` (
