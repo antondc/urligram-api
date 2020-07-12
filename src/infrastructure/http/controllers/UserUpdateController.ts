@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 
 import { IUserUpdateRequestDTO } from '@domain/user/dto/IUserUpdateRequestDTO';
+import { User } from '@domain/user/entities/User';
 import { IUserUpdateUseCase } from '@domain/user/useCases/UserUpdateUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -15,10 +17,12 @@ export class UserUpdateController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { name, email, statement, location } = req.body;
-    const { id } = req.params;
+
+    const tokenService = new TokenService();
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const userUpdateRequestDTO: IUserUpdateRequestDTO = {
-      id,
+      session,
       name,
       email,
       statement,

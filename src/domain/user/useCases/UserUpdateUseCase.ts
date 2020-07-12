@@ -17,7 +17,7 @@ export class UserUpdateUseCase implements IUserUpdateUseCase {
   }
 
   public async execute(userUpdateRequestDTO: IUserUpdateRequestDTO): Promise<IUserUpdateResponseDTO> {
-    const { email } = userUpdateRequestDTO;
+    const { email, session } = userUpdateRequestDTO;
 
     const isEmail = StringValidator.validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409);
@@ -25,7 +25,7 @@ export class UserUpdateUseCase implements IUserUpdateUseCase {
     const userExists = await this.userRepo.userGetOne(userUpdateRequestDTO);
     if (!userExists) throw new RequestError('User does not exist', 404);
 
-    await this.userRepo.userUpdate(userUpdateRequestDTO);
+    await this.userRepo.userUpdate({ ...userUpdateRequestDTO, id: session?.id });
 
     const response = await this.userRepo.userGetOne(userUpdateRequestDTO);
 

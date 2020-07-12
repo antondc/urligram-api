@@ -58,7 +58,7 @@ UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
   return response;
 });
 
-UsersRoute.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
+UsersRoute.put('/me', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const userUpdateUseCase = new UserUpdateUseCase(userRepo);
   const userUpdateController = new UserUpdateController(userUpdateUseCase);

@@ -1,5 +1,7 @@
+import { User } from '../entities/User';
+
 export interface IUserUpdateRequestDTO {
-  id: string;
+  session: User;
   name: string;
   email: string;
   statement: string;
