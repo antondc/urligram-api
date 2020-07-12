@@ -14,13 +14,13 @@ export class ListCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { userId, name, description, isPublic, listType } = req.body;
+    const { userId, name, description, isPrivate, listType } = req.body;
 
     const listCreateRequestDTO: IListCreateRequestDTO = {
       userId,
       name,
       description,
-      isPublic,
+      isPrivate,
       listType,
     };
 

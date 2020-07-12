@@ -15,14 +15,14 @@ export class ListUpdateController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { id } = req.params;
-    const { userId, name, description, isPublic, listType } = req.body;
+    const { userId, name, description, isPrivate, listType } = req.body;
 
     const listUpdateRequestDTO: IListUpdateRequestDTO = {
       id: Number(id),
       userId,
       name,
       description,
-      isPublic,
+      isPrivate,
       listType: listType,
     };
 

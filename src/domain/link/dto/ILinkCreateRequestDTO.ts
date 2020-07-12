@@ -11,7 +11,7 @@ export interface ILinkCreateRequestDTO {
   userId: string;
   saved: boolean;
   vote: boolean;
-  isPublic: boolean;
+  isPrivate: boolean;
   url: string;
   tags: Tag[];
   lists?: List[];

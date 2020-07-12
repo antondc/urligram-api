@@ -3,6 +3,6 @@ export interface IListUpdateRequestDTO {
   userId: string;
   name: string;
   description: string;
-  isPublic: boolean;
+  isPrivate: boolean;
   listType: string;
 }

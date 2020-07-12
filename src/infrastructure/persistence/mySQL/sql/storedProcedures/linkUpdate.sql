@@ -16,7 +16,7 @@ BEGIN
   SET @order      = JSON_UNQUOTE(JSON_EXTRACT(link, '$.order'));
   SET @vote       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.vote'));
   SET @saved      = JSON_UNQUOTE(JSON_EXTRACT(link, '$.saved'));
-  SET @is_public  = JSON_UNQUOTE(JSON_EXTRACT(link, '$.isPublic'));
+  SET @is_private  = JSON_UNQUOTE(JSON_EXTRACT(link, '$.isPrivate'));
   SET @domain     = JSON_UNQUOTE(JSON_EXTRACT(link, '$.domain'));
   SET @path       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.path'));
   SET @tags       = JSON_EXTRACT(link, '$.tags');
@@ -73,7 +73,7 @@ BEGIN
   -- Upsert into link_user
   UPDATE link_user
   SET
-    `link_user`.`isPublic`  = @is_public,
+    `link_user`.`isPrivate`  = @is_private,
     `link_user`.`saved`     = @saved,
     `link_user`.`order`     = @order,
     `link_user`.`vote`      = @vote,

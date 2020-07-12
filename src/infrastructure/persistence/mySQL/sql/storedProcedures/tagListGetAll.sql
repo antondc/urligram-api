@@ -13,7 +13,7 @@ SET @tag_id = JSON_EXTRACT(tag_data, '$.tagId');
     `list`.`id`,
     `list`.`name`,
     `list`.`description`,
-    `list`.`isPublic`,
+    `list`.`isPrivate`,
     `list`.`createdAt`
   FROM LIST
   INNER JOIN link_user_list ON list.id = link_user_list.list_id

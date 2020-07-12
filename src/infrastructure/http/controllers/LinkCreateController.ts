@@ -14,14 +14,14 @@ export class LinkCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { userId, vote, saved, isPublic, url, tags, id } = req.body;
+    const { userId, vote, saved, isPrivate, url, tags, id } = req.body;
 
     const linkCreateRequestDTO: ILinkCreateRequestDTO = {
       id,
       userId,
       vote,
       saved,
-      isPublic,
+      isPrivate,
       url,
       tags,
     };

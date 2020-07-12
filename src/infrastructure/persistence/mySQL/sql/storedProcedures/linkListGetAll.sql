@@ -14,7 +14,7 @@ BEGIN
     `list`.`id`,
     `list`.`name`,
     `list`.`description`,
-    `list`.`isPublic`,
+    `list`.`isPrivate`,
     `list`.`createdAt`
   FROM `list`
   INNER JOIN link_user_list ON list.id = link_user_list.list_id

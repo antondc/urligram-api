@@ -13,7 +13,7 @@ BEGIN
   SET @user_id    = JSON_UNQUOTE(JSON_EXTRACT(link, '$.userId'));
   SET @vote       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.vote'));
   SET @saved      = JSON_UNQUOTE(JSON_EXTRACT(link, '$.saved'));
-  SET @is_public  = JSON_UNQUOTE(JSON_EXTRACT(link, '$.isPublic'));
+  SET @is_private  = JSON_UNQUOTE(JSON_EXTRACT(link, '$.isPrivate'));
   SET @domain     = JSON_UNQUOTE(JSON_EXTRACT(link, '$.domain'));
   SET @path       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.path'));
   SET @tags       = JSON_EXTRACT(link, '$.tags');
@@ -55,19 +55,19 @@ BEGIN
 
   -- Upsert into link_user
   INSERT INTO link_user (
-    `link_user`.`isPublic`,
+    `link_user`.`isPrivate`,
     `link_user`.`saved`,
     `link_user`.`vote`,
     `link_user`.`user_id`,
     `link_user`.`link_id`
   ) VALUES (
-    @is_public,
+    @is_private,
     @saved,
     @vote,
     @user_id,
     @link_id
   ) ON DUPLICATE KEY UPDATE
-    isPublic   = @is_public,
+    isPrivate   = @is_private,
     saved      = @saved,
     vote       = @vote,
     user_id    = @user_id,

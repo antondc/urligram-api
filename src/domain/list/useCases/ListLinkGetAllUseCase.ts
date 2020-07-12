@@ -35,7 +35,7 @@ export class ListLinkGetAllUseCase implements IListLinkGetAllUseCase {
     // if (!result) throw new RequestError('List link does not exist', 404, { message: '404 Not Found' });
 
     if (sessionUserList?.userListRole !== 'admin') {
-      const filteredData = result.filter((item) => session?.id === item.userId || !!item.isPublic); // (2)
+      const filteredData = result.filter((item) => session?.id === item.userId || !item.isPrivate); // (2)
 
       return {
         list,
@@ -43,7 +43,7 @@ export class ListLinkGetAllUseCase implements IListLinkGetAllUseCase {
       };
     }
 
-    if (sessionUserList?.userListRole !== 'admin') return { links: result.filter((item) => session?.id === item.userId || !!item.isPublic), list }; // (2)
+    if (sessionUserList?.userListRole !== 'admin') return { links: result.filter((item) => session?.id === item.userId || !!item.isPrivate), list }; // (2)
 
     return {
       list,

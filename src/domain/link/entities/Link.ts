@@ -4,7 +4,7 @@ export class Link {
   title: string;
   order: number;
   url: string;
-  isPublic: boolean;
+  isPrivate: boolean;
   createdAt: Date;
   updatedAt: Date;
 
@@ -14,7 +14,7 @@ export class Link {
     this.title = linkDTO?.title;
     this.order = linkDTO?.order;
     this.url = linkDTO?.url;
-    this.isPublic = linkDTO?.isPublict;
+    this.isPrivate = linkDTO?.isPublict;
     this.createdAt = linkDTO?.createdAt;
     this.updatedAt = linkDTO?.updatedAt;
   }

@@ -14,7 +14,7 @@ export class LinkUpdateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { userId, vote, order, saved, isPublic, url, tags } = req.body;
+    const { userId, vote, order, saved, isPrivate, url, tags } = req.body;
     const { id } = req.params;
 
     const linkUpdateRequestDTO: ILinkUpdateRequestDTO = {
@@ -23,7 +23,7 @@ export class LinkUpdateController extends BaseController {
       order,
       vote,
       saved,
-      isPublic,
+      isPrivate,
       url,
       tags,
     };

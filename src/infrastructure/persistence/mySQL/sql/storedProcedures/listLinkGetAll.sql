@@ -15,7 +15,7 @@ SET @list_id = JSON_EXTRACT(list_data, '$.listId');
     link_user.id,
     link_user.order,
     CONCAT(domain.domain, link.path) AS url,
-    link_user.isPublic,
+    link_user.isPrivate,
     link_user.saved,
     link_user.vote,
     link_user.createdAt,
