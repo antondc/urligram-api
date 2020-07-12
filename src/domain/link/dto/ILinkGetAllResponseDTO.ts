@@ -1,3 +1,14 @@
 import { Link } from '@domain/link/entities/Link';
 
-export type ILinkGetAllResponseDTO = Link[];
+type ExtendedTypes = {
+  users: {
+    id: string;
+    name: string;
+  }[];
+  tags: {
+    id: number;
+    name: string;
+  }[];
+};
+
+export type ILinkGetAllResponseDTO = Array<Link & ExtendedTypes>;
