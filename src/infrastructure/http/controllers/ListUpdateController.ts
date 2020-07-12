@@ -15,7 +15,7 @@ export class ListUpdateController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { id } = req.params;
-    const { userId, name, description, isPrivate, listType } = req.body;
+    const { userId, name, description, isPrivate } = req.body;
 
     const listUpdateRequestDTO: IListUpdateRequestDTO = {
       id: Number(id),
@@ -23,7 +23,6 @@ export class ListUpdateController extends BaseController {
       name,
       description,
       isPrivate,
-      listType: listType,
     };
 
     const response = await this.useCase.execute(listUpdateRequestDTO);

@@ -18,7 +18,7 @@ export class ListUserCreateUseCase implements IListUserCreateUseCase {
     const { listId, session } = listUserCreateRequestDTO;
 
     const list = await this.listRepo.listGetOne({ id: listId });
-    if (!list.id || list.listType === 'private') throw new RequestError('There is not public list with this id', 404, { message: '404 Not found' });
+    if (!list.id || !!list.isPrivate) throw new RequestError('There is not public list with this id', 404, { message: '404 Not found' });
 
     const listSession = await this.listRepo.listUserGetOne({ listId, userId: session?.id });
     if (!!listSession) throw new RequestError('You are already in that list', 409, { message: '409 Conflict' });

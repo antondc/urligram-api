@@ -11,24 +11,20 @@ BEGIN
   SET @name         = JSON_UNQUOTE(JSON_EXTRACT(list, '$.name'));
   SET @description  = JSON_UNQUOTE(JSON_EXTRACT(list, '$.description'));
   SET @is_private    = JSON_UNQUOTE(JSON_EXTRACT(list, '$.isPrivate'));
-  SET @list_type    = JSON_UNQUOTE(JSON_EXTRACT(list, '$.listType'));
 
   -- Upsert into list
   INSERT INTO list (
     `name`,
     `description`,
-    `isPrivate`,
-    `list_type_id`
+    `isPrivate`
   ) VALUES (
     @name,
     @description,
-    @is_private,
-    @list_type
+    @is_private
   ) ON DUPLICATE KEY UPDATE
     name        = @name,
     description = @description,
     isPrivate   = @is_private,
-    list_type_id   = @list_type,
     updatedAt   = CURRENT_TIMESTAMP;
 
   -- Retrieve the upserted id

@@ -25,7 +25,7 @@ export class ListLinkGetAllUseCase implements IListLinkGetAllUseCase {
     const list = await this.listRepo.listGetOne({ id: listId });
 
     if (!list.id) throw new RequestError('There is not list with this id', 404, { message: '404 Not found' }); // (1)
-    if (list.listType === 'private' && !sessionUserList) throw new RequestError('There is not public list with this id', 404, { message: '404 Not found' }); // (1)
+    if (!!list.isPrivate && !sessionUserList) throw new RequestError('There is not public list with this id', 404, { message: '404 Not found' }); // (1)
 
     const result = await this.listRepo.listLinkGetAll(listLinkGetAllRequestDTO);
     // if (!result) throw new RequestError('List link does not exist', 404, { message: '404 Not Found' });

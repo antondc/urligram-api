@@ -8,9 +8,7 @@ BEGIN
   SELECT
       list.id,
       list.name,
-      list.description,
-      list_type.type AS listType
-    FROM LIST
-    INNER JOIN list_type ON list.list_type_id = list_type.id;
+      list.description
+    FROM `list`;
 
 END

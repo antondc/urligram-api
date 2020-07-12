@@ -20,7 +20,7 @@ export class ListUserGetOneUseCase implements IListUserGetOneUseCase {
     const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: session?.id });
     const list = await this.listRepo.listGetOne({ id: listId });
 
-    if (list.listType === 'private' && !sessionUserList) throw new RequestError('There is not public list with this id', 404, { message: '404 Not found' });
+    if (!!list.isPrivate && !sessionUserList) throw new RequestError('There is not public list with this id', 404, { message: '404 Not found' });
 
     const result = await this.listRepo.listUserGetOne(listUserGetOneRequestDTO);
 

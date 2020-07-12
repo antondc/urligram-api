@@ -12,14 +12,12 @@ BEGIN
   SET @name         = JSON_UNQUOTE(JSON_EXTRACT(list, '$.name'));
   SET @description  = JSON_UNQUOTE(JSON_EXTRACT(list, '$.description'));
   SET @is_private    = JSON_UNQUOTE(JSON_EXTRACT(list, '$.isPrivate'));
-  SET @list_type    = JSON_UNQUOTE(JSON_EXTRACT(list, '$.listType'));
 
   UPDATE `list`
   SET
     `name`          = @name,
     `description`   = @description,
     `isPrivate`      = @is_private,
-    `list_type_id`  = @list_type,
     `updatedAt`     = CURRENT_TIMESTAMP
   WHERE `list`.`id` = @id;
 

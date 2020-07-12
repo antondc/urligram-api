@@ -10,7 +10,6 @@ BEGIN
   SET @list_id   = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.id'));
   SET @user_id   = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.userId'));
   SET @name      = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.name'));
-  SET @list_type = JSON_UNQUOTE(JSON_EXTRACT(list_data, '$.listType'));
 
   -- In case we don't have a list_id, find the list for given list name, given user as admin of the list, and list type
   IF @list_id IS NULL THEN
@@ -30,8 +29,7 @@ BEGIN
   SELECT
       list.id,
       list.name,
-      list.description,
-      listType
+      list.description
     FROM LIST
     INNER JOIN user_list ON list.id = user_list.list_id
     INNER JOIN `user` ON user.id = user_list.user_id

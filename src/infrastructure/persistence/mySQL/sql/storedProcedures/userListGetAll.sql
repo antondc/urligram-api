@@ -15,7 +15,6 @@ BEGIN
     `list`.`name`,
     `list`.`description`,
     `list`.`name`,
-    `list`.`listType`,
     `user_list`.`userRole`,
     `user`.`id` AS userId,
     `list`.`createdAt`

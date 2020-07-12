@@ -1,12 +1,10 @@
 CREATE TABLE IF NOT EXISTS `list` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `order` INT(11) NULL DEFAULT '10000',
   `name` VARCHAR(255) NOT NULL,
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `isPrivate` TINYINT(1) NULL DEFAULT '0',
-  `order` INT(11) NULL DEFAULT '10000',
   `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `listType` ENUM('private', 'public') NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE `unique_index`(`name`, `listType`)
+  PRIMARY KEY (`id`)
 );

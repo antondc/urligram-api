@@ -15,17 +15,14 @@ export class ListCreateUseCase implements IListCreateUseCase {
   }
 
   public async execute(listCreateRequestDTO: IListCreateRequestDTO): Promise<IListCreateResponseDTO> {
-    const listExists = await this.listRepo.listGetOne(listCreateRequestDTO);
+    const { session } = listCreateRequestDTO;
+    const listExists = await this.listRepo.listGetOne({ ...listCreateRequestDTO, userId: session?.id });
 
-    if (!!listExists.id) throw new RequestError('List already exists', 409, { message: '409 Conflict' });
+    if (!!listExists) throw new RequestError('List already exists', 409, { message: '409 Conflict' });
 
-    const result = await this.listRepo.listCreate(listCreateRequestDTO);
+    const result = await this.listRepo.listCreate({ ...listCreateRequestDTO, userId: session?.id });
 
-    const listGetOneRequestDTO = {
-      id: Number(result?.id),
-    };
-
-    const response = await this.listRepo.listGetOne(listGetOneRequestDTO);
+    const response = await this.listRepo.listGetOne({ id: Number(result?.id) });
 
     return response;
   }

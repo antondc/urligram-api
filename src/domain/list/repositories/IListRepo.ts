@@ -1,5 +1,4 @@
 import { Link } from '@domain/link/entities/Link';
-import { IListCreateRequestDTO } from '@domain/list/dto/IListCreateRequestDTO';
 import { IListCreateResponseDTO } from '@domain/list/dto/IListCreateResponseDTO';
 import { IListDeleteRequestDTO } from '@domain/list/dto/IListDeleteRequestDTO';
 import { IListDeleteResponseDTO } from '@domain/list/dto/IListDeleteResponseDTO';
@@ -26,7 +25,7 @@ import { Tag } from '@domain/Tag/entities/Tag';
 export interface IListRepo {
   listGetOne: (listGetOneRequestDTO: IListGetOneRequestDTO) => Promise<IListGetOneResponseDTO>;
   listGetAll: () => Promise<IListGetAllResponseDTO>;
-  listCreate: (listCreateRequestDTO: IListCreateRequestDTO) => Promise<IListCreateResponseDTO>;
+  listCreate: (listCreateRequestDTO: { name: string; description: string; isPrivate: boolean; userId: string }) => Promise<IListCreateResponseDTO>;
   listUpdate: (listUpdateRequestDTO: IListUpdateRequestDTO) => Promise<IListUpdateResponseDTO>;
   listDelete: (listDeleteRequestDTO: IListDeleteRequestDTO) => Promise<IListDeleteResponseDTO>;
   listLinkGetOne: (listLinkGetOneRequestDTO: IListLinkGetOneRequestDTO) => Promise<IListLinkGetOneResponseDTO>;

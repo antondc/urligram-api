@@ -4,13 +4,13 @@ export class List {
   description: string;
   createdAt: Date;
   updatedAt: Date;
-  listType: string;
+  isPrivate: boolean;
 
   constructor(userDTO?) {
     this.id = userDTO?.id;
     this.name = userDTO?.name;
     this.description = userDTO?.description;
     this.createdAt = userDTO?.createdAt;
-    this.listType = userDTO?.listType;
+    this.isPrivate = userDTO?.isPrivate;
   }
 }

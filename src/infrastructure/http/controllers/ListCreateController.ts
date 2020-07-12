@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 
 import { IListCreateRequestDTO } from '@domain/list/dto/IListCreateRequestDTO';
 import { IListCreateUseCase } from '@domain/list/useCases/ListCreateUseCase';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -14,14 +16,16 @@ export class ListCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { userId, name, description, isPrivate, listType } = req.body;
+    const { name, description, isPrivate } = req.body;
+
+    const tokenService = new TokenService();
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const listCreateRequestDTO: IListCreateRequestDTO = {
-      userId,
+      session,
       name,
       description,
       isPrivate,
-      listType,
     };
 
     const response = await this.useCase.execute(listCreateRequestDTO);

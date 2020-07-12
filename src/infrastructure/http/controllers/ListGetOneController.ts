@@ -13,11 +13,10 @@ export class ListGetOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { id, name, listType } = req.params;
+    const { id, name } = req.params;
 
     const listGetOneRequestDTO = {
       id: Number(id),
-      listType: listType,
       name,
     };
 

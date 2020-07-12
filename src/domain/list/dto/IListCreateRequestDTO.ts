@@ -1,7 +1,8 @@
+import { User } from '@domain/user/entities/User';
+
 export interface IListCreateRequestDTO {
-  userId: string;
+  session: User;
   name: string;
   description: string;
   isPrivate: boolean;
-  listType: string;
 }
