@@ -14,13 +14,10 @@ import { IListLinkGetOneRequestDTO } from '@domain/list/dto/IListLinkGetOneReque
 import { IListLinkGetOneResponseDTO } from '@domain/list/dto/IListLinkGetOneResponseDTO';
 import { IListUpdateRequestDTO } from '@domain/list/dto/IListUpdateRequestDTO';
 import { IListUpdateResponseDTO } from '@domain/list/dto/IListUpdateResponseDTO';
-import { IListUserCreateRequestDTO } from '@domain/list/dto/IListUserCreateRequestDTO';
-import { IListUserCreateResponseDTO } from '@domain/list/dto/IListUserCreateResponseDTO';
 import { IListUserDeleteRequestDTO } from '@domain/list/dto/IListUserDeleteRequestDTO';
 import { IListUserDeleteResponseDTO } from '@domain/list/dto/IListUserDeleteResponseDTO';
 import { IListUserGetAllRequestDTO } from '@domain/list/dto/IListUserGetAllRequestDTO';
 import { IListUserGetAllResponseDTO } from '@domain/list/dto/IListUserGetAllResponseDTO';
-import { IListUserGetOneRequestDTO } from '@domain/list/dto/IListUserGetOneRequestDTO';
 import { IListUserGetOneResponseDTO } from '@domain/list/dto/IListUserGetOneResponseDTO';
 import { IListUserUpdateRequestDTO } from '@domain/list/dto/IListUserUpdateRequestDTO';
 import { IListUserUpdateResponseDTO } from '@domain/list/dto/IListUserUpdateResponseDTO';
@@ -37,9 +34,9 @@ export interface IListRepo {
   listLinkCreate: (listLinkCreateRequestDTO: IListLinkCreateRequestDTO) => Promise<{ listId: number; linkId: number }>;
   listLinkDelete: (listLinkDeleteRequestDTO: IListLinkDeleteRequestDTO) => Promise<IListLinkDeleteResponseDTO>;
   listTagGetAll: (listTagGetAllRequestDTO) => Promise<Tag[]>;
-  listUserGetOne: (listUserGetOneRequestDTO: IListUserGetOneRequestDTO) => Promise<IListUserGetOneResponseDTO>;
+  listUserGetOne: (listUserGetOneRequestDTO: { listId: number; userId: string }) => Promise<IListUserGetOneResponseDTO>;
   listUserGetAll: (listUserGetAllRequestDTO: IListUserGetAllRequestDTO) => Promise<IListUserGetAllResponseDTO>;
   listUserUpdate: (listUserUpdateRequestDTO: IListUserUpdateRequestDTO) => Promise<IListUserUpdateResponseDTO>;
-  listUserCreate: (listUserCreateRequestDTO: IListUserCreateRequestDTO) => Promise<IListUserCreateResponseDTO>;
+  listUserCreate: (listUserCreateRequestDTO: { listId: number; userId: string }) => Promise<{ listId: number; userId: string }>;
   listUserDelete: (listUserDeleteRequestDTO: IListUserDeleteRequestDTO) => Promise<IListUserDeleteResponseDTO>;
 }

@@ -15,19 +15,20 @@ export class UserLogOutUseCase implements IUserLogOutUseCase {
   }
 
   public async execute(userLogoutDTO: IUserLogoutRequestDTO): Promise<IUserLogoutResponseDTO> {
-    const { id } = userLogoutDTO;
+    const { session } = userLogoutDTO;
 
-    if (!id) throw new AuthenticationError('User is not logged in', 500);
+    if (!session?.id) throw new AuthenticationError('User is not logged in', 500);
 
     const sessionLogData = {
       result: 'success',
       type: 'logout',
-      id: userLogoutDTO.id,
+      id: session?.id,
     };
 
     await this.userRepo.logSession(sessionLogData);
+
     const result = {
-      id: userLogoutDTO.id,
+      session,
     };
 
     return result;

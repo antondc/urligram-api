@@ -15,9 +15,9 @@ export class ListUserGetAllUseCase implements IListUserGetAllUseCase {
   }
 
   public async execute(listUserGetAllRequestDTO: IListUserGetAllRequestDTO): Promise<IListUserGetAllResponseDTO> {
-    const { listId, sessionId } = listUserGetAllRequestDTO;
+    const { listId, session } = listUserGetAllRequestDTO;
 
-    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: sessionId, sessionId });
+    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: session?.id });
     const list = await this.listRepo.listGetOne({ id: listId });
 
     if (!list.id) throw new RequestError('There is not list with this id', 404, { message: '404 Not found' });

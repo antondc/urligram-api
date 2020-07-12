@@ -16,9 +16,9 @@ export class ListTagGetAllUseCase implements IListTagGetAllUseCase {
 
   public async execute(listTagGetAllRequestDTO: IListTagGetAllRequestDTO): Promise<IListTagGetAllResponseDTO> {
     // Should return tags only if user is in list, or if list is not private
-    const { listId, sessionId } = listTagGetAllRequestDTO;
+    const { listId, session } = listTagGetAllRequestDTO;
 
-    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: sessionId, sessionId });
+    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: session?.id });
     const list = await this.listRepo.listGetOne({ id: listId });
 
     if (!list.id) throw new RequestError('There is not list with this id', 404, { message: '404 Not found' });

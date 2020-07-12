@@ -15,17 +15,18 @@ export class ListUserDeleteUseCase implements IListUserDeleteUseCase {
   }
 
   public async execute(listUserDeleteRequestDTO: IListUserDeleteRequestDTO): Promise<IListUserDeleteResponseDTO> {
-    const { listId, userId, sessionId } = listUserDeleteRequestDTO;
+    const { listId, userId, session } = listUserDeleteRequestDTO;
 
-    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: sessionId, sessionId });
+    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: session?.id });
 
-    if (userId == sessionId && sessionUserList.userListRole === 'admin')
+    if (userId == session?.id && sessionUserList?.userListRole === 'admin')
       throw new RequestError('You can not remove yourself from a list you admin', 409, { message: '409 Conflict' });
 
     if (!sessionUserList) throw new RequestError('You are not in that list', 404, { message: '404 not found' });
-    if (sessionUserList.userListRole !== 'admin' && userId !== sessionId) throw new RequestError('You are not the admin of that list', 409, { message: '409' });
+    if (sessionUserList?.userListRole !== 'admin' && userId !== session?.id)
+      throw new RequestError('You are not the admin of that list', 409, { message: '409' });
 
-    const targetUser = await this.listRepo.listUserGetOne({ listId, userId, sessionId });
+    const targetUser = await this.listRepo.listUserGetOne({ listId, userId });
     if (!targetUser) throw new RequestError('This user is not in that list', 404, { message: '404 not found' });
 
     const result = await this.listRepo.listUserDelete(listUserDeleteRequestDTO);

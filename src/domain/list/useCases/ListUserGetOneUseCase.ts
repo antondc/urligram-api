@@ -15,9 +15,9 @@ export class ListUserGetOneUseCase implements IListUserGetOneUseCase {
   }
 
   public async execute(listUserGetOneRequestDTO: IListUserGetOneRequestDTO): Promise<IListUserGetOneResponseDTO> {
-    const { listId, sessionId } = listUserGetOneRequestDTO;
+    const { listId, session } = listUserGetOneRequestDTO;
 
-    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: sessionId, sessionId });
+    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: session?.id });
     const list = await this.listRepo.listGetOne({ id: listId });
 
     if (list.listType === 'private' && !sessionUserList) throw new RequestError('There is not public list with this id', 404, { message: '404 Not found' });

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { IListUserUpdateRequestDTO } from '@domain/list/dto/IListUserUpdateRequestDTO';
 import { IListUserUpdateUseCase } from '@domain/list/useCases/ListUserUpdateUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
@@ -19,12 +20,12 @@ export class ListUserUpdateController extends BaseController {
     const { id, userId } = req.params;
     const { newRole } = req.body;
     const tokenService = new TokenService();
-    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listUserUpdateRequestDTO = {
+    const listUserUpdateRequestDTO: IListUserUpdateRequestDTO = {
       listId: Number(id),
       userId,
-      sessionId: token?.id,
+      session,
       newRole,
     };
 

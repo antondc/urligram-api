@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { IListTagGetAllRequestDTO } from '@domain/list/dto/IListTagGetAllRequestDTO';
 import { IListTagGetAllUseCase } from '@domain/list/useCases/ListTagGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
@@ -17,11 +18,11 @@ export class ListTagGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id } = req.params;
     const tokenService = new TokenService();
-    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listDeleteRequestDTO = {
+    const listDeleteRequestDTO: IListTagGetAllRequestDTO = {
       listId: Number(id),
-      sessionId: token?.id,
+      session,
     };
 
     const response = await this.useCase.execute(listDeleteRequestDTO);

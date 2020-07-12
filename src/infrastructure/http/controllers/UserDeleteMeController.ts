@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { IUserDeleteMeRequestDTO } from '@domain/user/dto/IUserDeleteMeRequestDTO';
 import { User } from '@domain/user/entities/User';
 import { IUserDeleteMeUseCase } from '@domain/user/useCases/UserDeleteMeUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
@@ -16,10 +17,10 @@ export class UserDeleteMeController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const tokenService = new TokenService();
-    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userDeleteMeRequestDTO = {
-      id: token?.id,
+    const userDeleteMeRequestDTO: IUserDeleteMeRequestDTO = {
+      session,
     };
 
     const response = await this.useCase.execute(userDeleteMeRequestDTO);
@@ -33,7 +34,7 @@ export class UserDeleteMeController extends BaseController {
           type: 'user',
           id: response?.id,
           session: {
-            self: URL_SERVER + '/users' + token.id,
+            self: URL_SERVER + '/users' + session?.id,
           },
           attributes: response,
           relationships: {},

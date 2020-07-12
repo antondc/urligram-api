@@ -1,3 +1,5 @@
+import { User } from '../entities/User';
+
 export interface IUserLogoutRequestDTO {
-  id: string;
+  session: User;
 }

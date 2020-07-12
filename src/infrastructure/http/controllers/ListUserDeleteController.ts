@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { IListUserDeleteRequestDTO } from '@domain/list/dto/IListUserDeleteRequestDTO';
 import { IListUserDeleteUseCase } from '@domain/list/useCases/ListUserDeleteUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
@@ -18,15 +19,15 @@ export class ListUserDeleteController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id, userId } = req.params;
     const tokenService = new TokenService();
-    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const linkUserDeleteRequestDTO = {
+    const listUserDeleteRequestDTO: IListUserDeleteRequestDTO = {
       listId: Number(id),
       userId,
-      sessionId: token?.id,
+      session,
     };
 
-    const response = await this.useCase.execute(linkUserDeleteRequestDTO);
+    const response = await this.useCase.execute(listUserDeleteRequestDTO);
 
     const formattedResponse = {
       links: {

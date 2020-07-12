@@ -19,14 +19,14 @@ export class ListUserGetAllController extends BaseController {
     const { id } = req.params;
     const tokenService = new TokenService();
 
-    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listGetAllRequestDTO: IListUserGetAllRequestDTO = {
+    const listUserGetAllRequestDTO: IListUserGetAllRequestDTO = {
       listId: Number(id),
-      sessionId: token?.id,
+      session,
     };
 
-    const response = await this.useCase.execute(listGetAllRequestDTO);
+    const response = await this.useCase.execute(listUserGetAllRequestDTO);
 
     const formattedUsers = response.map((item) => {
       return {

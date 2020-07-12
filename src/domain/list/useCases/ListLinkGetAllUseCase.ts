@@ -20,11 +20,7 @@ export class ListLinkGetAllUseCase implements IListLinkGetAllUseCase {
 
     const { listId, session } = listLinkGetAllRequestDTO;
 
-    const sessionUserList = await this.listRepo.listUserGetOne({
-      listId,
-      userId: session?.id,
-      sessionId: session?.id,
-    });
+    const sessionUserList = await this.listRepo.listUserGetOne({ listId, userId: session?.id });
 
     const list = await this.listRepo.listGetOne({ id: listId });
 

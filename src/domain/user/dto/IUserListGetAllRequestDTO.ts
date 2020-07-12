@@ -1,4 +1,6 @@
+import { User } from '../entities/User';
+
 export interface IUserListGetAllRequestDTO {
   userId: string;
-  sessionId: string;
+  session: User;
 }

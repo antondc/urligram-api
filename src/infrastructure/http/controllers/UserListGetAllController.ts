@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { IUserListGetAllRequestDTO } from '@domain/user/dto/IUserListGetAllRequestDTO';
 import { User } from '@domain/user/entities/User';
 import { IUserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
@@ -18,11 +19,11 @@ export class UserListGetAllController extends BaseController {
     const { id } = req.params;
 
     const tokenService = new TokenService();
-    const token = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userListGetAllRequestDTO = {
+    const userListGetAllRequestDTO: IUserListGetAllRequestDTO = {
       userId: id,
-      sessionId: token?.id,
+      session,
     };
 
     const response = await this.useCase.execute(userListGetAllRequestDTO);

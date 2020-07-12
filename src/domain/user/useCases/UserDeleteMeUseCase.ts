@@ -15,11 +15,13 @@ export class UserDeleteMeUseCase implements IUserDeleteMeUseCase {
   }
 
   public async execute(userDeleteMeRequestDTO: IUserDeleteMeRequestDTO): Promise<IUserDeleteMeResponseDTO> {
-    const userExists = await this.userRepo.userGetOne(userDeleteMeRequestDTO);
+    const { session } = userDeleteMeRequestDTO;
+
+    const userExists = await this.userRepo.userGetOne({ id: session?.id });
     if (!userExists) throw new RequestError('User does not exist', 404);
     if (userExists.status === 'disabled') throw new RequestError('User was already removed', 409);
 
-    const response = await this.userRepo.userDeleteMe(userDeleteMeRequestDTO);
+    const response = await this.userRepo.userDeleteMe({ id: session?.id });
 
     return response;
   }
