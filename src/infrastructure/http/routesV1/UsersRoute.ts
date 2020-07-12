@@ -78,7 +78,7 @@ UsersRoute.delete('/me', async (req: Request, res: Response, next: NextFunction)
   return response;
 });
 
-UsersRoute.put('/:id/password', async (req: Request, res: Response, next: NextFunction) => {
+UsersRoute.put('/me/password', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const userUpdatePasswordUseCase = new UserUpdatePasswordUseCase(userRepo);
   const userUpdatePasswordController = new UserUpdatePasswordController(userUpdatePasswordUseCase);

@@ -16,20 +16,18 @@ export class UserUpdatePasswordUseCase implements IUserUpdatePasswordUseCase {
   }
 
   public async execute(userUpdatePasswordRequestDTO: IUserUpdatePasswordRequestDTO): Promise<IUserUpdatePasswordResponseDTO> {
-    const { newPassword, newPasswordRepeated } = userUpdatePasswordRequestDTO;
+    const { newPassword, newPasswordRepeated, session } = userUpdatePasswordRequestDTO;
 
-    const userAuthenticated = await this.userRepo.authenticate(userUpdatePasswordRequestDTO);
+    const userAuthenticated = await this.userRepo.authenticate({ ...userUpdatePasswordRequestDTO, id: session?.id });
     if (!userAuthenticated) throw new AuthenticationError('Username or password not correct', 403);
 
-    const userFound = await this.userRepo.userGetOne(userUpdatePasswordRequestDTO);
+    const userFound = await this.userRepo.userGetOne(userAuthenticated);
     if (!userFound) throw new AuthenticationError('User not found', 404);
 
     if (newPassword !== newPasswordRepeated) throw new UserError('Passwords are not equal', 409);
 
-    await this.userRepo.userUpdatePassword(userUpdatePasswordRequestDTO);
+    await this.userRepo.userUpdatePassword({ ...userUpdatePasswordRequestDTO, id: session?.id });
 
-    const response = await this.userRepo.userGetOne(userUpdatePasswordRequestDTO);
-
-    return response;
+    return userFound;
   }
 }

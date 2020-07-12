@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 
 import { IUserUpdatePasswordRequestDTO } from '@domain/user/dto/IUserUpdatePasswordRequestDTO';
+import { User } from '@domain/user/entities/User';
 import { IUserUpdatePasswordUseCase } from '@domain/user/useCases/UserUpdatePasswordUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -15,10 +17,12 @@ export class UserUpdatePasswordController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { password, newPassword, newPasswordRepeated } = req.body;
-    const { id } = req.params;
 
+    const tokenService = new TokenService();
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    
     const userUpdatePasswordRequestDTO: IUserUpdatePasswordRequestDTO = {
-      id,
+      session,
       password,
       newPassword,
       newPasswordRepeated,
