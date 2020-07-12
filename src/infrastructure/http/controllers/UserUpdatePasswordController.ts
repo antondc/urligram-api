@@ -20,7 +20,7 @@ export class UserUpdatePasswordController extends BaseController {
 
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
-    
+
     const userUpdatePasswordRequestDTO: IUserUpdatePasswordRequestDTO = {
       session,
       password,
@@ -36,7 +36,7 @@ export class UserUpdatePasswordController extends BaseController {
       },
       data: [
         {
-          type: 'link',
+          type: 'user',
           id: response?.id,
           session: {
             self: URL_SERVER + '/users' + response.id,
