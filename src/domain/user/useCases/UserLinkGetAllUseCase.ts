@@ -14,8 +14,13 @@ export class UserLinkGetAllUseCase implements IUserLinkGetAllUseCase {
   }
 
   public async execute(userLinkGetAllRequestDTO: IUserLinkGetAllRequestDTO): Promise<IUserLinkGetAllResponseDTO> {
+    // (1) If userId is sessionId, then return all; otherwise return only public links
+    const { userId, session } = userLinkGetAllRequestDTO;
+
     const response = await this.userRepo.userLinkGetAll(userLinkGetAllRequestDTO);
 
-    return response;
+    const filteredResponse = response.filter((item) => session?.id === userId || !item.isPrivate); // (1)
+
+    return filteredResponse;
   }
 }
