@@ -98,7 +98,7 @@ UsersRoute.get('/:id/following', async (req: Request, res: Response, next: NextF
   return response;
 });
 
-UsersRoute.post('/:userId/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
+UsersRoute.post('/me/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const userFollowingCreateUseCase = new UserFollowingCreateUseCase(userRepo);
   const userFollowingCreateController = new UserFollowingCreateController(userFollowingCreateUseCase);

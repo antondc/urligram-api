@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 
+import { IUserFollowingCreateRequestDTO } from '@domain/user/dto/IUserFollowingCreateRequestDTO';
+import { User } from '@domain/user/entities/User';
 import { IUserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -14,19 +17,26 @@ export class UserFollowingCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { userId, followedId } = req.params;
+    const { followedId } = req.params;
+    const tokenService = new TokenService();
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const response = await this.useCase.execute({ userId, followedId });
+    const userFollowingCreateDTO: IUserFollowingCreateRequestDTO = {
+      followedId,
+      session,
+    };
+
+    const response = await this.useCase.execute(userFollowingCreateDTO);
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/' + userId,
+        self: URL_SERVER + '/users/' + session?.id,
       },
       data: [
         {
           type: 'user',
           session: {
-            self: URL_SERVER + '/users/' + userId,
+            self: URL_SERVER + '/users/' + session?.id,
           },
           attributes: response,
           relationships: {},

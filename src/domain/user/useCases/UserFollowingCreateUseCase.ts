@@ -13,8 +13,10 @@ export class UserFollowingCreateUseCase implements IUserFollowingCreateUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userFollwingCreateRequestDTO: IUserFollowingCreateRequestDTO): Promise<IUserFollowingCreateResponseDTO> {
-    const response = await this.userRepo.userFollowingCreate(userFollwingCreateRequestDTO);
+  public async execute(userFollowingCreateRequestDTO: IUserFollowingCreateRequestDTO): Promise<IUserFollowingCreateResponseDTO> {
+    const { session } = userFollowingCreateRequestDTO;
+
+    const response = await this.userRepo.userFollowingCreate({ ...userFollowingCreateRequestDTO, userId: session?.id });
 
     return response;
   }
