@@ -1,11 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { LinkDeleteUseCase } from '@domain/link/useCases/LinkDeleteUseCase';
 import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
 import { LinkListGetAllUseCase } from '@domain/link/useCases/LinkListGetAllUseCase';
 import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllUseCase';
-import { LinkDeleteController } from '@infrastructure/http/controllers/LinkDeleteController';
 import { LinkGetAllController } from '@infrastructure/http/controllers/LinkGetAllController';
 import { LinkGetOneController } from '@infrastructure/http/controllers/LinkGetOneController';
 import { LinkListGetAllController } from '@infrastructure/http/controllers/LinkListGetAllController';
@@ -30,16 +28,6 @@ LinksRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) =
   const linkGetOneController = new LinkGetOneController(linkGetOneUseCase);
 
   const response = await linkGetOneController.execute(req, res, next);
-
-  return response;
-});
-
-LinksRoute.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new LinkRepo();
-  const linkDeleteUseCase = new LinkDeleteUseCase(userRepo);
-  const linkDeleteController = new LinkDeleteController(linkDeleteUseCase);
-
-  const response = await linkDeleteController.execute(req, res, next);
 
   return response;
 });

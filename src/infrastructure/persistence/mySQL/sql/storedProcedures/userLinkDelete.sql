@@ -1,18 +1,23 @@
 
-DROP PROCEDURE IF EXISTS link_delete;
+DROP PROCEDURE IF EXISTS user_link_delete;
 
 -- Stored procedure to delete link_user
-CREATE PROCEDURE link_delete(
-  IN link_data JSON
+CREATE PROCEDURE user_link_delete(
+  IN user_link_data JSON
 )
 
 BEGIN
   -- Retrieve values from JSON
-  SET @id   = JSON_EXTRACT(link_data, '$.id');
+  SET @link_id   = JSON_UNQUOTE(JSON_EXTRACT(user_link_data, '$.linkId'));
+  SET @user_id   = JSON_UNQUOTE(JSON_EXTRACT(user_link_data, '$.userId'));
 
-  SET @link_id = (
-      SELECT link_id FROM link_user
-      WHERE id = JSON_UNQUOTE(@id)
+  SET @user_link_id = (
+    SELECT
+      id
+    FROM link_user
+    WHERE
+      link_id = @link_id
+      AND user_id = @user_id
   );
 
   SET @domain_id = (
@@ -21,14 +26,14 @@ BEGIN
   );
 
   DELETE FROM link_user_tag
-  WHERE link_user_id  = JSON_UNQUOTE(@id);
+  WHERE link_user_id  = @user_link_id;
 
   DELETE FROM link_user_list
-  WHERE link_user_id  = JSON_UNQUOTE(@id);
+  WHERE link_user_id  = @user_link_id;
 
   -- Finally remove link_user entry
   DELETE FROM link_user
-  WHERE id            = JSON_UNQUOTE(@id);
+  WHERE id            = @user_link_id;
 
   DELETE link FROM link
   LEFT JOIN link_user ON link_user.link_id = link.id
@@ -39,6 +44,6 @@ BEGIN
   LEFT JOIN link ON link.domain_id = domain.id
   WHERE link.id IS NULL AND domain.id = @domain_id;
 
-  SELECT JSON_UNQUOTE(@id) AS removedId;
+  SELECT @user_link_id AS id;
 
 END

@@ -42,13 +42,13 @@ export class StateRepo {
   private userLinkGetAllProcedure: string;
   private userLinkCreateProcedure: string;
   private userLinkUpdateProcedure: string;
+  private userLinkDeleteProcedure: string;
   private userListGetAllProcedure: string;
   private languageGetAllProcedure: string;
   private languageGetOneProcedure: string;
   private userLogSessionProcedure: string;
   private linkGetOneProcedure: string;
   private linkGetAllProcedure: string;
-  private linkDeleteProcedure: string;
   private linkListGetAllProcedure: string;
   private linkTagGetAllProcedure: string;
   private listGetOneProcedure: string;
@@ -125,13 +125,13 @@ export class StateRepo {
     this.userLinkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkGetAll.sql')).toString();
     this.userLinkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkCreate.sql')).toString();
     this.userLinkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkUpdate.sql')).toString();
+    this.userLinkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkDelete.sql')).toString();
     this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
     this.languageGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetOne.sql')).toString();
     this.userLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogSession.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAll.sql')).toString();
-    this.linkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkDelete.sql')).toString();
     this.linkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAll.sql')).toString();
     this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
     this.listGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOne.sql')).toString();
@@ -211,6 +211,7 @@ export class StateRepo {
       const createUserLinkGetAllProcedure = await mySQL.query(this.userLinkGetAllProcedure);
       const createUserLinkCreateProcedure = await mySQL.query(this.userLinkCreateProcedure);
       const createUserLinkUpdateProcedure = await mySQL.query(this.userLinkUpdateProcedure);
+      const createUserLinkDeleteProcedure = await mySQL.query(this.userLinkDeleteProcedure);
       const createUserListGetAllProcedure = await mySQL.query(this.userListGetAllProcedure);
       const createUserFollowersGetAllProcedure = await mySQL.query(this.userFollowersGetAllProcedure);
       const createUserFollowingGetAllProcedure = await mySQL.query(this.userFollowingGetAllProcedure);
@@ -221,7 +222,6 @@ export class StateRepo {
       const createUserLogSessionProcedure = await mySQL.query(this.userLogSessionProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllProcedure = await mySQL.query(this.linkGetAllProcedure);
-      const createLinkDeleteProcedure = await mySQL.query(this.linkDeleteProcedure);
       const createLinkListGetAllProcedure = await mySQL.query(this.linkListGetAllProcedure);
       const createLinkTagGetAllProcedure = await mySQL.query(this.linkTagGetAllProcedure);
       const createListGetOneProcedure = await mySQL.query(this.listGetOneProcedure);
@@ -304,12 +304,12 @@ export class StateRepo {
         ...createUserListGetAllProcedure,
         ...createUserLinkCreateProcedure,
         ...createUserLinkUpdateProcedure,
+        ...createUserLinkDeleteProcedure,
         ...createLanguageGetAllProcedure,
         ...createLanguageGetOneProcedure,
         ...createUserLogSessionProcedure,
         ...createLinkGetOneProcedure,
         ...createLinkGetAllProcedure,
-        ...createLinkDeleteProcedure,
         ...createLinkListGetAllProcedure,
         ...createLinkTagGetAllProcedure,
         ...createListGetOneProcedure,

@@ -9,6 +9,7 @@ import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingG
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserLinkCreateUseCase } from '@domain/user/useCases/UserLinkCreateUseCase';
+import { UserLinkDeleteUseCase } from '@domain/user/useCases/UserLinkDeleteUseCase';
 import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
 import { UserLinkGetOneUseCase } from '@domain/user/useCases/UserLinkGetOneUseCase';
 import { UserLinkUpdateUseCase } from '@domain/user/useCases/UserLinkUpdateUseCase';
@@ -24,6 +25,7 @@ import { UserFollowingGetAllController } from '@infrastructure/http/controllers/
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserLinkCreateController } from '@infrastructure/http/controllers/UserLinkCreateController';
+import { UserLinkDeleteController } from '@infrastructure/http/controllers/UserLinkDeleteController';
 import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
 import { UserLinkGetOneController } from '@infrastructure/http/controllers/UserLinkGetOneController';
 import { UserLinkUpdateController } from '@infrastructure/http/controllers/UserLinkUpdateController';
@@ -183,6 +185,17 @@ UsersRoute.put('/me/links/:linkId', async (req: Request, res: Response, next: Ne
   const userLinkUpdateController = new UserLinkUpdateController(userLinkUpdateUseCase);
 
   const response = await userLinkUpdateController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.delete('/me/links/:linkId', async (req: Request, res: Response, next: NextFunction) => {
+  const linkRepo = new LinkRepo();
+  const userRepo = new UserRepo();
+  const userLinkDeleteUseCase = new UserLinkDeleteUseCase(linkRepo, userRepo);
+  const userLinkDeleteController = new UserLinkDeleteController(userLinkDeleteUseCase);
+
+  const response = await userLinkDeleteController.execute(req, res, next);
 
   return response;
 });

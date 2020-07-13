@@ -148,6 +148,30 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userLinkDelete(userLinkDeleteRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const userLinkDeleteQuery = `CALL user_link_delete('${JSON.stringify(userLinkDeleteRequestDTO)}')`;
+
+      const [[results]] = await mySQL.query(userLinkDeleteQuery);
+
+      const result = {
+        success: true,
+        message: 'Link removed',
+        affectedRows: results.id,
+      };
+
+      return result;
+    } catch (err) {
+      if (err instanceof RequestError) throw err;
+
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async userListGetAll(userListGetAllDTO) {
     const mySQL = new MySQL();
     try {
