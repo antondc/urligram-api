@@ -16,7 +16,7 @@ BEGIN
   SET @order      = JSON_UNQUOTE(JSON_EXTRACT(link, '$.order'));
   SET @vote       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.vote'));
   SET @saved      = JSON_UNQUOTE(JSON_EXTRACT(link, '$.saved'));
-  SET @is_private  = JSON_UNQUOTE(JSON_EXTRACT(link, '$.isPrivate'));
+  SET @is_private = JSON_UNQUOTE(JSON_EXTRACT(link, '$.isPrivate'));
   SET @domain     = JSON_UNQUOTE(JSON_EXTRACT(link, '$.domain'));
   SET @path       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.path'));
   SET @tags       = JSON_EXTRACT(link, '$.tags');
@@ -137,5 +137,5 @@ BEGIN
     SELECT i + 1 INTO i;
   END WHILE;
 
-  SELECT @id;
+  SELECT @id as id;
 END
