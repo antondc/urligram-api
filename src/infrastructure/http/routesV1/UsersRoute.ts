@@ -9,6 +9,7 @@ import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingG
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
+import { UserLinkGetOneUseCase } from '@domain/user/useCases/UserLinkGetOneUseCase';
 import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
 import { UserUpdatePasswordUseCase } from '@domain/user/useCases/UserUpdatePasswordUseCase';
 import { UserUpdateUseCase } from '@domain/user/useCases/UserUpdateUseCase';
@@ -21,6 +22,7 @@ import { UserFollowingGetAllController } from '@infrastructure/http/controllers/
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
+import { UserLinkGetOneController } from '@infrastructure/http/controllers/UserLinkGetOneController';
 import { UserListGetAllController } from '@infrastructure/http/controllers/UserListGetAllController';
 import { UserUpdateController } from '@infrastructure/http/controllers/UserUpdateController';
 import { UserUpdatePasswordController } from '@infrastructure/http/controllers/UserUpdatePasswordController';
@@ -134,6 +136,16 @@ UsersRoute.get('/:id/links', async (req: Request, res: Response, next: NextFunct
   const userLinkGetAllController = new UserLinkGetAllController(userLinkGetAllUseCase);
 
   const response = await userLinkGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/me/links/:linkId', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userLinkGetOneUseCase = new UserLinkGetOneUseCase(userRepo);
+  const userLinkGetOneController = new UserLinkGetOneController(userLinkGetOneUseCase);
+
+  const response = await userLinkGetOneController.execute(req, res, next);
 
   return response;
 });

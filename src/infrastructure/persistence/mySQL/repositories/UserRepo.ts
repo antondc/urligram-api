@@ -88,6 +88,20 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userLinkGetOne(userLinkGetOneDTO) {
+    const mySQL = new MySQL();
+    try {
+      const userLinkGetOneQuery = `CALL user_link_get_one('${JSON.stringify(userLinkGetOneDTO)}')`;
+      const [[results]] = await mySQL.query(userLinkGetOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async userLinkGetAll(userLinkGetAllDTO) {
     const mySQL = new MySQL();
     try {

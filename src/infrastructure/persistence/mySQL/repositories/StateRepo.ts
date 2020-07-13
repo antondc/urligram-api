@@ -38,6 +38,7 @@ export class StateRepo {
   private userFollowingGetAllProcedure: string;
   private userFollowingCreateProcedure: string;
   private userFollowingDeleteProcedure: string;
+  private userLinkGetOneProcedure: string;
   private userLinkGetAllProcedure: string;
   private userListGetAllProcedure: string;
   private languageGetAllProcedure: string;
@@ -120,6 +121,7 @@ export class StateRepo {
     this.userFollowingGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingGetAll.sql')).toString();
     this.userFollowingCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingCreate.sql')).toString();
     this.userFollowingDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingDelete.sql')).toString();
+    this.userLinkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkGetOne.sql')).toString();
     this.userLinkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkGetAll.sql')).toString();
     this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
@@ -205,6 +207,7 @@ export class StateRepo {
       const createUserUpdateProcedure = await mySQL.query(this.userUpdateProcedure);
       const createUserDeleteProcedure = await mySQL.query(this.userDeleteProcedure);
       const createUserUpdatePasswordProcedure = await mySQL.query(this.userUpdatePasswordProcedure);
+      const createUserLinkGetOneProcedure = await mySQL.query(this.userLinkGetOneProcedure);
       const createUserLinkGetAllProcedure = await mySQL.query(this.userLinkGetAllProcedure);
       const createUserListGetAllProcedure = await mySQL.query(this.userListGetAllProcedure);
       const createUserFollowersGetAllProcedure = await mySQL.query(this.userFollowersGetAllProcedure);
@@ -296,6 +299,7 @@ export class StateRepo {
         ...createUserFollowersGetAllProcedure,
         ...createUserFollowingCreateProcedure,
         ...createUserFollowingDeleteProcedure,
+        ...createUserLinkGetOneProcedure,
         ...createUserLinkGetAllProcedure,
         ...createUserListGetAllProcedure,
         ...createLanguageGetAllProcedure,

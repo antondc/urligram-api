@@ -14,7 +14,9 @@ export class UserLinkGetAllUseCase implements IUserLinkGetAllUseCase {
   }
 
   public async execute(userLinkGetAllRequestDTO: IUserLinkGetAllRequestDTO): Promise<IUserLinkGetAllResponseDTO> {
+    // Returns relation of user <=> link
     // (1) If userId is sessionId, then return all; otherwise return only public links
+
     const { userId, session } = userLinkGetAllRequestDTO;
 
     const response = await this.userRepo.userLinkGetAll(userLinkGetAllRequestDTO);

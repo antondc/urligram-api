@@ -1,6 +1,8 @@
 import { Link } from '@domain/link/entities/Link';
 import { List } from '@domain/list/entities/List';
 import { User } from '@domain/user/entities/User';
+import { IUserLinkGetOneRequest } from './types/IUserLinkGetOneRequest';
+import { IUserLinkGetOneResponse } from './types/IUserLinkGetOneResponse';
 
 export interface IUserRepo {
   userGetAll: () => Promise<User[]>;
@@ -13,6 +15,7 @@ export interface IUserRepo {
   userFollowingGetAll: (userFollowingGetAllDTO) => Promise<User[]>;
   userFollowingDelete: (userFollowingDeleteDTO) => Promise<User>;
   userFollowersGetAll: (userFollowersGetAllDTO) => Promise<User[]>;
+  userLinkGetOne: (userLinkGetOneRequestDTO: IUserLinkGetOneRequest) => Promise<IUserLinkGetOneResponse>;
   userLinkGetAll: (userLinkGetAllRequestDTO) => Promise<Link[]>;
   userListGetAll: (userListGetAllRequestDTO: { userId: string }) => Promise<List[]>;
   authenticate: (userLoginDTO) => Promise<User>;
