@@ -132,6 +132,22 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userLinkUpdate(userLinkUpdateRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const userLinkUpdateQuery = `CALL user_link_update('${JSON.stringify(userLinkUpdateRequestDTO)}')`;
+
+      const [[results]] = await mySQL.query(userLinkUpdateQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async userListGetAll(userListGetAllDTO) {
     const mySQL = new MySQL();
     try {

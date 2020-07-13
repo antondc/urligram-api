@@ -6,7 +6,7 @@ type List = {
   id: number;
 };
 
-export interface ILinkUpdateRequestDTO {
+export interface IUserLinkUpdateRequest {
   id?: number;
   userId: string;
   order: number;

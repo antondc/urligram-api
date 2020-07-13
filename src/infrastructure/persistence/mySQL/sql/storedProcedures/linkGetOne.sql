@@ -26,7 +26,7 @@ BEGIN
       FROM link_user_tag
       JOIN tag
       ON link_user_tag.tag_id = tag.id
-      WHERE link_user.link_id = link_user_tag.link_user_id
+      WHERE link_user.id = link_user_tag.link_user_id
     ) as tags,
     (
       SELECT

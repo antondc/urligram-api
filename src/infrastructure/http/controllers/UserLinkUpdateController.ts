@@ -1,31 +1,36 @@
 import { Request, Response } from 'express';
 
-import { ILinkUpdateRequestDTO } from '@domain/link/dto/ILinkUpdateRequestDTO';
-import { ILinkUpdateUseCase } from '@domain/link/useCases/LinkUpdateUseCase';
+import { IUserLinkUpdateRequestDTO } from '@domain/user/dto/IUserLinkUpdateRequestDTO';
+import { User } from '@domain/user/entities/User';
+import { IUserLinkUpdateUseCase } from '@domain/user/useCases/UserLinkUpdateUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class LinkUpdateController extends BaseController {
-  useCase: ILinkUpdateUseCase;
+export class UserLinkUpdateController extends BaseController {
+  useCase: IUserLinkUpdateUseCase;
 
-  constructor(useCase: ILinkUpdateUseCase) {
+  constructor(useCase: IUserLinkUpdateUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { userId, vote, order, saved, isPrivate, url, tags } = req.body;
-    const { id } = req.params;
+    const { vote, order, saved, isPrivate, url, tags } = req.body;
+    const { linkId } = req.params;
 
-    const linkUpdateRequestDTO: ILinkUpdateRequestDTO = {
-      id: Number(id),
-      userId,
+    const tokenService = new TokenService();
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+
+    const linkUpdateRequestDTO: IUserLinkUpdateRequestDTO = {
+      linkId: Number(linkId),
       order,
       vote,
       saved,
       isPrivate,
       url,
       tags,
+      session,
     };
 
     const response = await this.useCase.execute(linkUpdateRequestDTO);

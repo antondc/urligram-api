@@ -11,6 +11,7 @@ import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserLinkCreateUseCase } from '@domain/user/useCases/UserLinkCreateUseCase';
 import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
 import { UserLinkGetOneUseCase } from '@domain/user/useCases/UserLinkGetOneUseCase';
+import { UserLinkUpdateUseCase } from '@domain/user/useCases/UserLinkUpdateUseCase';
 import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
 import { UserUpdatePasswordUseCase } from '@domain/user/useCases/UserUpdatePasswordUseCase';
 import { UserUpdateUseCase } from '@domain/user/useCases/UserUpdateUseCase';
@@ -25,6 +26,7 @@ import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOn
 import { UserLinkCreateController } from '@infrastructure/http/controllers/UserLinkCreateController';
 import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
 import { UserLinkGetOneController } from '@infrastructure/http/controllers/UserLinkGetOneController';
+import { UserLinkUpdateController } from '@infrastructure/http/controllers/UserLinkUpdateController';
 import { UserListGetAllController } from '@infrastructure/http/controllers/UserListGetAllController';
 import { UserUpdateController } from '@infrastructure/http/controllers/UserUpdateController';
 import { UserUpdatePasswordController } from '@infrastructure/http/controllers/UserUpdatePasswordController';
@@ -170,6 +172,17 @@ UsersRoute.post('/me/links', async (req: Request, res: Response, next: NextFunct
   const userLinkCreateController = new UserLinkCreateController(userLinkCreateUseCase);
 
   const response = await userLinkCreateController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.put('/me/links/:linkId', async (req: Request, res: Response, next: NextFunction) => {
+  const linkRepo = new LinkRepo();
+  const userRepo = new UserRepo();
+  const userLinkUpdateUseCase = new UserLinkUpdateUseCase(linkRepo, userRepo);
+  const userLinkUpdateController = new UserLinkUpdateController(userLinkUpdateUseCase);
+
+  const response = await userLinkUpdateController.execute(req, res, next);
 
   return response;
 });

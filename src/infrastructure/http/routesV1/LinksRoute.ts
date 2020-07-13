@@ -5,13 +5,11 @@ import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
 import { LinkListGetAllUseCase } from '@domain/link/useCases/LinkListGetAllUseCase';
 import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllUseCase';
-import { LinkUpdateUseCase } from '@domain/link/useCases/LinkUpdateUseCase';
 import { LinkDeleteController } from '@infrastructure/http/controllers/LinkDeleteController';
 import { LinkGetAllController } from '@infrastructure/http/controllers/LinkGetAllController';
 import { LinkGetOneController } from '@infrastructure/http/controllers/LinkGetOneController';
 import { LinkListGetAllController } from '@infrastructure/http/controllers/LinkListGetAllController';
 import { LinkTagGetAllController } from '@infrastructure/http/controllers/LinkTagGetAllController';
-import { LinkUpdateController } from '@infrastructure/http/controllers/LinkUpdateController';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 
 const LinksRoute = express.Router();
@@ -32,16 +30,6 @@ LinksRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) =
   const linkGetOneController = new LinkGetOneController(linkGetOneUseCase);
 
   const response = await linkGetOneController.execute(req, res, next);
-
-  return response;
-});
-
-LinksRoute.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new LinkRepo();
-  const linkUpdateUseCase = new LinkUpdateUseCase(userRepo);
-  const linkUpdateController = new LinkUpdateController(linkUpdateUseCase);
-
-  const response = await linkUpdateController.execute(req, res, next);
 
   return response;
 });

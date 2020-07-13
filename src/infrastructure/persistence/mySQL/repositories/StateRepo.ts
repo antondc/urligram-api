@@ -40,14 +40,14 @@ export class StateRepo {
   private userFollowingDeleteProcedure: string;
   private userLinkGetOneProcedure: string;
   private userLinkGetAllProcedure: string;
-  private userListGetAllProcedure: string;
   private userLinkCreateProcedure: string;
+  private userLinkUpdateProcedure: string;
+  private userListGetAllProcedure: string;
   private languageGetAllProcedure: string;
   private languageGetOneProcedure: string;
   private userLogSessionProcedure: string;
   private linkGetOneProcedure: string;
   private linkGetAllProcedure: string;
-  private linkUpdateProcedure: string;
   private linkDeleteProcedure: string;
   private linkListGetAllProcedure: string;
   private linkTagGetAllProcedure: string;
@@ -123,14 +123,14 @@ export class StateRepo {
     this.userFollowingDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingDelete.sql')).toString();
     this.userLinkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkGetOne.sql')).toString();
     this.userLinkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkGetAll.sql')).toString();
-    this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.userLinkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkCreate.sql')).toString();
+    this.userLinkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLinkUpdate.sql')).toString();
+    this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
     this.languageGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetOne.sql')).toString();
     this.userLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogSession.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAll.sql')).toString();
-    this.linkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkUpdate.sql')).toString();
     this.linkDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkDelete.sql')).toString();
     this.linkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAll.sql')).toString();
     this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
@@ -209,18 +209,18 @@ export class StateRepo {
       const createUserUpdatePasswordProcedure = await mySQL.query(this.userUpdatePasswordProcedure);
       const createUserLinkGetOneProcedure = await mySQL.query(this.userLinkGetOneProcedure);
       const createUserLinkGetAllProcedure = await mySQL.query(this.userLinkGetAllProcedure);
+      const createUserLinkCreateProcedure = await mySQL.query(this.userLinkCreateProcedure);
+      const createUserLinkUpdateProcedure = await mySQL.query(this.userLinkUpdateProcedure);
       const createUserListGetAllProcedure = await mySQL.query(this.userListGetAllProcedure);
       const createUserFollowersGetAllProcedure = await mySQL.query(this.userFollowersGetAllProcedure);
       const createUserFollowingGetAllProcedure = await mySQL.query(this.userFollowingGetAllProcedure);
       const createUserFollowingCreateProcedure = await mySQL.query(this.userFollowingCreateProcedure);
       const createUserFollowingDeleteProcedure = await mySQL.query(this.userFollowingDeleteProcedure);
-      const createUserLinkCreateProcedure = await mySQL.query(this.userLinkCreateProcedure);
       const createLanguageGetAllProcedure = await mySQL.query(this.languageGetAllProcedure);
       const createLanguageGetOneProcedure = await mySQL.query(this.languageGetOneProcedure);
       const createUserLogSessionProcedure = await mySQL.query(this.userLogSessionProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllProcedure = await mySQL.query(this.linkGetAllProcedure);
-      const createLinkUpdateProcedure = await mySQL.query(this.linkUpdateProcedure);
       const createLinkDeleteProcedure = await mySQL.query(this.linkDeleteProcedure);
       const createLinkListGetAllProcedure = await mySQL.query(this.linkListGetAllProcedure);
       const createLinkTagGetAllProcedure = await mySQL.query(this.linkTagGetAllProcedure);
@@ -303,12 +303,12 @@ export class StateRepo {
         ...createUserLinkGetAllProcedure,
         ...createUserListGetAllProcedure,
         ...createUserLinkCreateProcedure,
+        ...createUserLinkUpdateProcedure,
         ...createLanguageGetAllProcedure,
         ...createLanguageGetOneProcedure,
         ...createUserLogSessionProcedure,
         ...createLinkGetOneProcedure,
         ...createLinkGetAllProcedure,
-        ...createLinkUpdateProcedure,
         ...createLinkDeleteProcedure,
         ...createLinkListGetAllProcedure,
         ...createLinkTagGetAllProcedure,
