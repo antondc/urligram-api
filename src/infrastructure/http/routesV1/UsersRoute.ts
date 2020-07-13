@@ -8,6 +8,7 @@ import { UserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingD
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
+import { UserLinkCreateUseCase } from '@domain/user/useCases/UserLinkCreateUseCase';
 import { UserLinkGetAllUseCase } from '@domain/user/useCases/UserLinkGetAllUseCase';
 import { UserLinkGetOneUseCase } from '@domain/user/useCases/UserLinkGetOneUseCase';
 import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
@@ -21,11 +22,13 @@ import { UserFollowingDeleteController } from '@infrastructure/http/controllers/
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/UserFollowingGetAllController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
+import { UserLinkCreateController } from '@infrastructure/http/controllers/UserLinkCreateController';
 import { UserLinkGetAllController } from '@infrastructure/http/controllers/UserLinkGetAllController';
 import { UserLinkGetOneController } from '@infrastructure/http/controllers/UserLinkGetOneController';
 import { UserListGetAllController } from '@infrastructure/http/controllers/UserListGetAllController';
 import { UserUpdateController } from '@infrastructure/http/controllers/UserUpdateController';
 import { UserUpdatePasswordController } from '@infrastructure/http/controllers/UserUpdatePasswordController';
+import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const UsersRoute = express.Router();
@@ -156,6 +159,17 @@ UsersRoute.get('/:id/lists', async (req: Request, res: Response, next: NextFunct
   const userListGetAllController = new UserListGetAllController(userListGetAllUseCase);
 
   const response = await userListGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.post('/me/links', async (req: Request, res: Response, next: NextFunction) => {
+  const linkRepo = new LinkRepo();
+  const userRepo = new UserRepo();
+  const userLinkCreateUseCase = new UserLinkCreateUseCase(linkRepo, userRepo);
+  const userLinkCreateController = new UserLinkCreateController(userLinkCreateUseCase);
+
+  const response = await userLinkCreateController.execute(req, res, next);
 
   return response;
 });

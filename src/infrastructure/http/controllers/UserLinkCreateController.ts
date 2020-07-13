@@ -1,29 +1,32 @@
 import { Request, Response } from 'express';
 
-import { ILinkCreateRequestDTO } from '@domain/link/dto/ILinkCreateRequestDTO';
-import { ILinkCreateUseCase } from '@domain/link/useCases/LinkCreateUseCase';
+import { IUserLinkCreateRequestDTO } from '@domain/user/dto/IUserLinkCreateRequestDTO';
+import { User } from '@domain/user/entities/User';
+import { IUserLinkCreateUseCase } from '@domain/user/useCases/UserLinkCreateUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class LinkCreateController extends BaseController {
-  useCase: ILinkCreateUseCase;
+export class UserLinkCreateController extends BaseController {
+  useCase: IUserLinkCreateUseCase;
 
-  constructor(useCase: ILinkCreateUseCase) {
+  constructor(useCase: IUserLinkCreateUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { userId, vote, saved, isPrivate, url, tags, id } = req.body;
+    const { vote, saved, isPrivate, url, tags } = req.body;
+    const tokenService = new TokenService();
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const linkCreateRequestDTO: ILinkCreateRequestDTO = {
-      id,
-      userId,
+    const linkCreateRequestDTO: IUserLinkCreateRequestDTO = {
       vote,
       saved,
       isPrivate,
       url,
       tags,
+      session,
     };
 
     const response = await this.useCase.execute(linkCreateRequestDTO);

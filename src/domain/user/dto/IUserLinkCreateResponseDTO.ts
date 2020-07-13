@@ -1,3 +1,3 @@
 import { Link } from '@domain/link/entities/Link';
 
-export type ILinkCreateResponseDTO = Link;
+export type IUserLinkCreateResponseDTO = Link;

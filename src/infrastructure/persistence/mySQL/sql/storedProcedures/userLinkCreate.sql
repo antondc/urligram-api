@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS link_create;
+DROP PROCEDURE IF EXISTS user_link_create;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE link_create(
+CREATE PROCEDURE user_link_create(
   IN link JSON
 )
 BEGIN
