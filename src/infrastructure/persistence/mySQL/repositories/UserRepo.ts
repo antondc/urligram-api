@@ -17,10 +17,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userGetOne(userGetOneDTO) {
+  public async userGetOne(userGetOne) {
     const mySQL = new MySQL();
     try {
-      const userGetOneQuery = `CALL user_get_one('${JSON.stringify(userGetOneDTO)}')`;
+      const userGetOneQuery = `CALL user_get_one('${JSON.stringify(userGetOne)}')`;
       const [[results]] = await mySQL.query(userGetOneQuery);
 
       return results;
@@ -31,10 +31,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userCreateOne(userCreateDTO) {
+  public async userCreateOne(userCreateOne) {
     const mySQL = new MySQL();
     try {
-      const userCreateQuery = `CALL user_create('${JSON.stringify(userCreateDTO)}')`;
+      const userCreateQuery = `CALL user_create('${JSON.stringify(userCreateOne)}')`;
       const [[results]] = await mySQL.query(userCreateQuery);
 
       return results;
@@ -45,11 +45,25 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userUpdateOne(userUpdateDTO) {
+  public async userUpdateOne(userUpdateOne) {
     const mySQL = new MySQL();
     try {
-      const userUpdateQuery = `CALL user_update('${JSON.stringify(userUpdateDTO)}')`;
+      const userUpdateQuery = `CALL user_update('${JSON.stringify(userUpdateOne)}')`;
       const [[results]] = await mySQL.query(userUpdateQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('User update failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userDeleteOne(userDeleteOne) {
+    const mySQL = new MySQL();
+    try {
+      const userDeleteQuery = `CALL user_delete_one('${JSON.stringify(userDeleteOne)}')`;
+      const [[results]] = await mySQL.query(userDeleteQuery);
 
       return results;
     } catch (err) {

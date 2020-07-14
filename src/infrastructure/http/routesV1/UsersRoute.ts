@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
+import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
@@ -8,6 +9,7 @@ import { UserCreateOneController } from '@infrastructure/http/controllers/UserCr
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
+import { UserDeleteOneController } from '../controllers/UserDeleteOneController';
 import { UserUpdateOneController } from '../controllers/UserUpdateOneController';
 
 const UsersRoute = express.Router();
@@ -48,6 +50,16 @@ UsersRoute.put('/me', async (req: Request, res: Response, next: NextFunction) =>
   const userUpdateOneController = new UserUpdateOneController(userUpdateOneUseCase);
 
   const response = await userUpdateOneController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.delete('/me', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userDeleteOneUseCase = new UserDeleteOneUseCase(userRepo);
+  const userDeleteOneController = new UserDeleteOneController(userDeleteOneUseCase);
+
+  const response = await userDeleteOneController.execute(req, res, next);
 
   return response;
 });

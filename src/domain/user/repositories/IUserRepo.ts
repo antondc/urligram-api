@@ -1,5 +1,7 @@
 import { IUserCreateOneRequest } from './interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from './interfaces/IUserCreateOneResponse';
+import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
+import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
 import { IUserGetAllResponse } from './interfaces/IUserGetAllResponse';
 import { IUserGetOneRequest } from './interfaces/IUserGetOneRequest';
 import { IUserGetOneResponse } from './interfaces/IUserGetOneResponse';
@@ -11,4 +13,5 @@ export interface IUserRepo {
   userGetAll: () => Promise<IUserGetAllResponse>;
   userCreateOne: (userCreateOneRequest: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;
   userUpdateOne: (userUpdateOneRequest: IUserUpdateOneRequest) => Promise<IUserUpdateOneResponse>;
+  userDeleteOne: (userDeleteOneRequest: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;
 }
