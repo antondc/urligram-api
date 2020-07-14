@@ -18,4 +18,18 @@ export class LanguageRepo implements ILanguageRepo {
       await mySQL.close();
     }
   }
+
+  public async languageGetAll() {
+    const mySQL = new MySQL();
+
+    try {
+      const [languages] = await mySQL.query(`CALL language_get_all()`);
+
+      return languages;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

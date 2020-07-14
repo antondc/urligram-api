@@ -1,9 +1,9 @@
 import { ILanguageRepo } from '@domain/language/repositories/ILanguageRepo';
-import { ILanguageGetOneUseCaseRequest } from '@domain/language/useCases/interfaces/ILanguageGetOneUseCaseRequest';
-import { ILanguageGetOneUseCaseResponse } from '@domain/language/useCases/interfaces/ILanguageGetOneUseCaseResponse';
+import { ILanguageGetOneRequest } from '@domain/language/useCases/interfaces/ILanguageGetOneRequest';
+import { ILanguageGetOneResponse } from '@domain/language/useCases/interfaces/ILanguageGetOneResponse';
 
 export interface ILanguageGetOneUseCase {
-  execute: (getLanguagesRequestDTO: ILanguageGetOneUseCaseRequest) => Promise<ILanguageGetOneUseCaseResponse>;
+  execute: (getLanguagesRequestDTO: ILanguageGetOneRequest) => Promise<ILanguageGetOneResponse>;
 }
 
 export class LanguageGetOneUseCase implements ILanguageGetOneUseCase {
@@ -13,7 +13,7 @@ export class LanguageGetOneUseCase implements ILanguageGetOneUseCase {
     this.languageRepo = languageRepo;
   }
 
-  public async execute(getLanguagesRequestDTO: ILanguageGetOneUseCaseRequest): Promise<ILanguageGetOneUseCaseResponse> {
+  public async execute(getLanguagesRequestDTO: ILanguageGetOneRequest): Promise<ILanguageGetOneResponse> {
     const response = await this.languageRepo.languageGetOne(getLanguagesRequestDTO);
 
     return response;
