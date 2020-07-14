@@ -1,55 +1,5 @@
-import express, { NextFunction, Request, Response } from 'express';
-
-import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
-import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
-import { LinkListGetAllUseCase } from '@domain/link/useCases/LinkListGetAllUseCase';
-import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllUseCase';
-import { LinkGetAllController } from '@infrastructure/http/controllers/LinkGetAllController';
-import { LinkGetOneController } from '@infrastructure/http/controllers/LinkGetOneController';
-import { LinkListGetAllController } from '@infrastructure/http/controllers/LinkListGetAllController';
-import { LinkTagGetAllController } from '@infrastructure/http/controllers/LinkTagGetAllController';
-import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
+import express, { NextFunction, Request, Response } from 'express'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
 const LinksRoute = express.Router();
-
-LinksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new LinkRepo();
-  const linkGetAllUseCase = new LinkGetAllUseCase(userRepo);
-  const linkGetAllController = new LinkGetAllController(linkGetAllUseCase);
-
-  const response = await linkGetAllController.execute(req, res, next);
-
-  return response;
-});
-
-LinksRoute.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new LinkRepo();
-  const linkGetOneUseCase = new LinkGetOneUseCase(userRepo);
-  const linkGetOneController = new LinkGetOneController(linkGetOneUseCase);
-
-  const response = await linkGetOneController.execute(req, res, next);
-
-  return response;
-});
-
-LinksRoute.get('/:id/lists', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new LinkRepo();
-  const linkListGetAllUseCase = new LinkListGetAllUseCase(userRepo);
-  const linkListGetAllController = new LinkListGetAllController(linkListGetAllUseCase);
-
-  const response = await linkListGetAllController.execute(req, res, next);
-
-  return response;
-});
-
-LinksRoute.get('/:id/tags', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new LinkRepo();
-  const linkTagGetAllUseCase = new LinkTagGetAllUseCase(userRepo);
-  const linkTagGetAllController = new LinkTagGetAllController(linkTagGetAllUseCase);
-
-  const response = await linkTagGetAllController.execute(req, res, next);
-
-  return response;
-});
 
 export { LinksRoute };
