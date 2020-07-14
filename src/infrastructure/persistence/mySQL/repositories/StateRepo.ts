@@ -31,6 +31,7 @@ export class StateRepo {
   private userGetAllProcedure: string;
   private userGetOneProcedure: string;
   private userCreateOneProcedure: string;
+  private userUpdateOneProcedure: string;
 
   // Data
   private domainData: string;
@@ -74,6 +75,7 @@ export class StateRepo {
     this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
     this.userGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetOne.sql')).toString();
     this.userCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateOne.sql')).toString();
+    this.userUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userUpdateOne.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -124,6 +126,7 @@ export class StateRepo {
       const createUserGetAllProcedure = await mySQL.query(this.userGetAllProcedure);
       const createUserGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
       const createUserCreateOneProcedure = await mySQL.query(this.userCreateOneProcedure);
+      const createUserUpdateOneProcedure = await mySQL.query(this.userUpdateOneProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -172,6 +175,7 @@ export class StateRepo {
         ...createUserGetAllProcedure,
         ...createUserGetOneProcedure,
         ...createUserCreateOneProcedure,
+        ...createUserUpdateOneProcedure,
 
         // Insert data
         ...insertDomainData,
