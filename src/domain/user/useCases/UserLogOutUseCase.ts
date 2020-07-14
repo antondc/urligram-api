@@ -1,0 +1,36 @@
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
+import { AuthenticationError } from '@shared/errors/AuthenticationError';
+import { IUserLogoutRequest } from './interfaces/UserLogOutRequest';
+import { IUserLogoutResponse } from './interfaces/UserLogOutResponse';
+
+export interface IUserLogOutUseCase {
+  execute: (userLogoutDTO: IUserLogoutRequest) => Promise<IUserLogoutResponse>;
+}
+
+export class UserLogOutUseCase implements IUserLogOutUseCase {
+  private userRepo: IUserRepo;
+
+  constructor(userRepo: IUserRepo) {
+    this.userRepo = userRepo;
+  }
+
+  public async execute(userLogoutDTO: IUserLogoutRequest): Promise<IUserLogoutResponse> {
+    const { session } = userLogoutDTO;
+
+    if (!session?.id) throw new AuthenticationError('User is not logged in', 500);
+
+    const sessionLogData = {
+      result: 'success',
+      type: 'logout',
+      userId: session?.id,
+    };
+
+    await this.userRepo.userLogSession(sessionLogData);
+
+    const result = {
+      session,
+    };
+
+    return result;
+  }
+}
