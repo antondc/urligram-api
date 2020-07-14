@@ -12,7 +12,7 @@ export class UserGetAllUseCase implements IUserGetAllUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(): Promise<IUserGetAllResponse> {
+  public async execute() {
     const response = await this.userRepo.userGetAll();
 
     return response;

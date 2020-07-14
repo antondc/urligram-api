@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import { ILanguageGetOneRequest } from '@domain/language/useCases/interfaces/ILanguageGetOneRequest';
 import { ILanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
@@ -14,8 +15,11 @@ export class LanguageGetOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { slug } = req.params;
-    const getLanguagesRequestDTO = { slug };
-    const response = await this.useCase.execute(getLanguagesRequestDTO);
+    const languageGetOneRequest: ILanguageGetOneRequest = {
+      slug,
+    };
+
+    const response = await this.useCase.execute(languageGetOneRequest);
 
     const formattedResponse = {
       links: {

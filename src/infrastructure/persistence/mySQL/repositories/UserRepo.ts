@@ -16,4 +16,18 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userGetOne(userGetOneDTO) {
+    const mySQL = new MySQL();
+    try {
+      const userGetOneQuery = `CALL user_get_one('${JSON.stringify(userGetOneDTO)}')`;
+      const [[results]] = await mySQL.query(userGetOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
