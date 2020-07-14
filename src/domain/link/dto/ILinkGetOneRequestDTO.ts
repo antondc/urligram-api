@@ -7,7 +7,6 @@ interface byId {
 
 interface byUserPathAndDomain {
   session: User;
-  userId?: string;
   path?: string;
   domain?: string;
 }

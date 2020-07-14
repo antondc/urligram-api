@@ -19,7 +19,7 @@ export class UserLinkCreateUseCase implements IUserLinkCreateUseCase {
   }
 
   public async execute(linkCreateRequestDTO: IUserLinkCreateRequestDTO): Promise<IUserLinkCreateResponseDTO> {
-    const { url, session } = linkCreateRequestDTO;
+    const { url, session, title } = linkCreateRequestDTO;
     const parsedUrl = new URLWrapper(url);
     const domain = parsedUrl.getDomain();
     const path = parsedUrl.getPath() + parsedUrl.getSearch();
@@ -28,9 +28,10 @@ export class UserLinkCreateUseCase implements IUserLinkCreateUseCase {
       ...linkCreateRequestDTO,
       domain,
       path,
+      title: title ? title : domain + path,
     };
 
-    const linkExist = await this.linkRepo.linkGetOne({ ...formattedUserLinkCreateRequest, userId: session?.id });
+    const linkExist = await this.userRepo.userLinkGetOne({ ...formattedUserLinkCreateRequest, userId: session?.id });
 
     if (!!linkExist) throw new RequestError('Link already exists', 409, { message: '409 Conflict' });
 

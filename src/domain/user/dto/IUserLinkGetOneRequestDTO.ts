@@ -1,6 +1,14 @@
 import { User } from '../entities/User';
 
-export interface IUserLinkGetOneRequestDTO {
+interface byUserIdAndLinkId {
   session: User;
   linkId: number;
 }
+
+interface byUserIdPathAndDomain {
+  session: User;
+  path: string;
+  domain: string;
+}
+
+export type IUserLinkGetOneRequestDTO = byUserIdAndLinkId | byUserIdPathAndDomain;

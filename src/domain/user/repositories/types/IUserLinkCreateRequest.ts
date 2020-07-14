@@ -9,6 +9,7 @@ type List = {
 export interface IUserLinkCreateRequest {
   id?: string;
   userId: string;
+  title: string;
   saved: boolean;
   vote: boolean;
   isPrivate: boolean;

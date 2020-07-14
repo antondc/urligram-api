@@ -15,7 +15,8 @@ export class ListLinkDeleteUseCase implements IListLinkDeleteUseCase {
   }
 
   public async execute(listLinkDeleteRequestDTO: IListLinkDeleteRequestDTO): Promise<IListLinkDeleteResponseDTO> {
-    const listLinkExist = await this.listRepo.listLinkGetOne(listLinkDeleteRequestDTO);
+    const { session } = listLinkDeleteRequestDTO;
+    const listLinkExist = await this.listRepo.listLinkGetOne({ ...listLinkDeleteRequestDTO, userId: session?.id });
     if (!listLinkExist) throw new RequestError('List link does not exist', 404, { message: '404 Not Found' });
 
     const result = await this.listRepo.listLinkDelete(listLinkDeleteRequestDTO);

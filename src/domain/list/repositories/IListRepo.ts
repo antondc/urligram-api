@@ -5,12 +5,9 @@ import { IListDeleteResponseDTO } from '@domain/list/dto/IListDeleteResponseDTO'
 import { IListGetAllResponseDTO } from '@domain/list/dto/IListGetAllResponseDTO';
 import { IListGetOneRequestDTO } from '@domain/list/dto/IListGetOneRequestDTO';
 import { IListGetOneResponseDTO } from '@domain/list/dto/IListGetOneResponseDTO';
-import { IListLinkCreateRequestDTO } from '@domain/list/dto/IListLinkCreateRequestDTO';
 import { IListLinkDeleteRequestDTO } from '@domain/list/dto/IListLinkDeleteRequestDTO';
 import { IListLinkDeleteResponseDTO } from '@domain/list/dto/IListLinkDeleteResponseDTO';
 import { IListLinkGetAllRequestDTO } from '@domain/list/dto/IListLinkGetAllRequestDTO';
-import { IListLinkGetOneRequestDTO } from '@domain/list/dto/IListLinkGetOneRequestDTO';
-import { IListLinkGetOneResponseDTO } from '@domain/list/dto/IListLinkGetOneResponseDTO';
 import { IListUpdateRequestDTO } from '@domain/list/dto/IListUpdateRequestDTO';
 import { IListUpdateResponseDTO } from '@domain/list/dto/IListUpdateResponseDTO';
 import { IListUserDeleteRequestDTO } from '@domain/list/dto/IListUserDeleteRequestDTO';
@@ -21,6 +18,10 @@ import { IListUserGetOneResponseDTO } from '@domain/list/dto/IListUserGetOneResp
 import { IListUserUpdateRequestDTO } from '@domain/list/dto/IListUserUpdateRequestDTO';
 import { IListUserUpdateResponseDTO } from '@domain/list/dto/IListUserUpdateResponseDTO';
 import { Tag } from '@domain/Tag/entities/Tag';
+import { IListLinkCreateRequest } from './types/IListLinkCreateRequest';
+import { IListLinkCreateResponse } from './types/IListLinkCreateResponse';
+import { IListLinkGetOneRequest } from './types/IListLinkGetOneRequest';
+import { IListLinkGetOneResponse } from './types/IListLinkGetOneResponse';
 
 export interface IListRepo {
   listGetOne: (listGetOneRequestDTO: IListGetOneRequestDTO) => Promise<IListGetOneResponseDTO>;
@@ -28,9 +29,9 @@ export interface IListRepo {
   listCreate: (listCreateRequestDTO: { name: string; description: string; isPrivate: boolean; userId: string }) => Promise<IListCreateResponseDTO>;
   listUpdate: (listUpdateRequestDTO: IListUpdateRequestDTO) => Promise<IListUpdateResponseDTO>;
   listDelete: (listDeleteRequestDTO: IListDeleteRequestDTO) => Promise<IListDeleteResponseDTO>;
-  listLinkGetOne: (listLinkGetOneRequestDTO: IListLinkGetOneRequestDTO) => Promise<IListLinkGetOneResponseDTO>;
+  listLinkGetOne: (listLinkGetOneRequestDTO: IListLinkGetOneRequest) => Promise<IListLinkGetOneResponse>;
   listLinkGetAll: (listLinkGetAllRequestDTO: IListLinkGetAllRequestDTO) => Promise<Link[]>;
-  listLinkCreate: (listLinkCreateRequestDTO: IListLinkCreateRequestDTO) => Promise<{ listId: number; linkId: number }>;
+  listLinkCreate: (listLinkCreateRequestDTO: IListLinkCreateRequest) => Promise<IListLinkCreateResponse>;
   listLinkDelete: (listLinkDeleteRequestDTO: IListLinkDeleteRequestDTO) => Promise<IListLinkDeleteResponseDTO>;
   listTagGetAll: (listTagGetAllRequestDTO) => Promise<Tag[]>;
   listUserGetOne: (listUserGetOneRequestDTO: { listId: number; userId: string }) => Promise<IListUserGetOneResponseDTO>;

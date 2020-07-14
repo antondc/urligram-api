@@ -8,6 +8,7 @@ interface tags {
 interface users {
   id: string;
   name: string;
+  isPrivate: boolean;
 }
 
 export type ILinkGetOneResponse = Link & {

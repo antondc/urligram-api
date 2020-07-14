@@ -11,6 +11,7 @@ BEGIN
 
   -- Retrieve values from JSON
   SET @user_id    = JSON_UNQUOTE(JSON_EXTRACT(link, '$.userId'));
+  SET @title       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.title'));
   SET @vote       = JSON_UNQUOTE(JSON_EXTRACT(link, '$.vote'));
   SET @saved      = JSON_UNQUOTE(JSON_EXTRACT(link, '$.saved'));
   SET @is_private  = JSON_UNQUOTE(JSON_EXTRACT(link, '$.isPrivate'));
@@ -55,12 +56,14 @@ BEGIN
 
   -- Upsert into link_user
   INSERT INTO link_user (
+    `link_user`.`title`,
     `link_user`.`isPrivate`,
     `link_user`.`saved`,
     `link_user`.`vote`,
     `link_user`.`user_id`,
     `link_user`.`link_id`
   ) VALUES (
+    @title,
     @is_private,
     @saved,
     @vote,
@@ -68,11 +71,11 @@ BEGIN
     @link_id
   ) ON DUPLICATE KEY UPDATE
     isPrivate   = @is_private,
-    saved      = @saved,
-    vote       = @vote,
-    user_id    = @user_id,
-    link_id    = @link_id,
-    updatedAt  = CURRENT_TIMESTAMP;
+    saved       = @saved,
+    vote        = @vote,
+    user_id     = @user_id,
+    link_id     = @link_id,
+    updatedAt   = CURRENT_TIMESTAMP;
 
   -- Retrieve the last upserted id
   SET @link_user_id = (

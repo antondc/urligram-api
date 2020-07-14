@@ -30,8 +30,8 @@ import { ListUserDeleteController } from '@infrastructure/http/controllers/ListU
 import { ListUserGetAllController } from '@infrastructure/http/controllers/ListUserGetAllController';
 import { ListUserGetOneController } from '@infrastructure/http/controllers/ListUserGetOneController';
 import { ListUserUpdateController } from '@infrastructure/http/controllers/ListUserUpdateController';
-import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
+import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const ListsRoute = express.Router();
 
@@ -107,8 +107,8 @@ ListsRoute.get('/:id/links/', async (req: Request, res: Response, next: NextFunc
 
 ListsRoute.post('/:id/links/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
-  const linkRepo = new LinkRepo();
-  const listLinkCreateUseCase = new ListLinkCreateUseCase(listRepo, linkRepo);
+  const userRepo = new UserRepo();
+  const listLinkCreateUseCase = new ListLinkCreateUseCase(listRepo, userRepo);
   const listLinkCreateController = new ListLinkCreateController(listLinkCreateUseCase);
 
   const response = await listLinkCreateController.execute(req, res, next);

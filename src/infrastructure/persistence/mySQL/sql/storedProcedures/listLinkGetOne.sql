@@ -9,10 +9,11 @@ BEGIN
   -- Retrieve values from JSON
   SET @list_id      = JSON_UNQUOTE(JSON_EXTRACT(list_link, '$.listId'));
   SET @link_id      = JSON_UNQUOTE(JSON_EXTRACT(list_link, '$.linkId'));
+  SET @user_id      = JSON_UNQUOTE(JSON_EXTRACT(list_link, '$.userId'));
 
   -- Upsert into list
   SELECT
-    link_user.id,
+    list.id,
     link_user.order,
     CONCAT(domain.domain, link.path) AS url,
     link_user.isPrivate,

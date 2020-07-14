@@ -16,11 +16,12 @@ export class UserLinkCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { vote, saved, isPrivate, url, tags } = req.body;
+    const { title, vote, saved, isPrivate, url, tags } = req.body;
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const linkCreateRequestDTO: IUserLinkCreateRequestDTO = {
+      title,
       vote,
       saved,
       isPrivate,

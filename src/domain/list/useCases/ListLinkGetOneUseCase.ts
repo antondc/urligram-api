@@ -15,7 +15,8 @@ export class ListLinkGetOneUseCase implements IListLinkGetOneUseCase {
   }
 
   public async execute(listLinkGetOneRequestDTO: IListLinkGetOneRequestDTO): Promise<IListLinkGetOneResponseDTO> {
-    const result = await this.listRepo.listLinkGetOne(listLinkGetOneRequestDTO);
+    const { session } = listLinkGetOneRequestDTO;
+    const result = await this.listRepo.listLinkGetOne({ ...listLinkGetOneRequestDTO, userId: session?.id });
 
     if (!result) throw new RequestError('List link does not exist', 404, { message: '404 Not Found' });
 

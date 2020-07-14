@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 
 import { IListLinkCreateRequestDTO } from '@domain/list/dto/IListLinkCreateRequestDTO';
 import { IListLinkCreateUseCase } from '@domain/list/useCases/ListLinkCreateUseCase';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -16,10 +18,13 @@ export class ListLinkCreateController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { id, linkId } = req.params;
+    const tokenService = new TokenService();
+    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
     const listLinkCreateUseCase: IListLinkCreateRequestDTO = {
       listId: Number(id),
       linkId: Number(linkId),
+      session,
     };
 
     const response = await this.useCase.execute(listLinkCreateUseCase);

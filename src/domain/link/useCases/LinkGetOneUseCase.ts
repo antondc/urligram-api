@@ -15,12 +15,13 @@ export class LinkGetOneUseCase implements ILinkGetOneUseCase {
   }
 
   public async execute(linkGetOneRequestDTO: ILinkGetOneRequestDTO): Promise<ILinkGetOneResponseDTO> {
-    // Return link owned by user or public (1)
+    // Return link owned by user (1) or public (2)
     const { session } = linkGetOneRequestDTO;
     const response = await this.linkRepo.linkGetOne(linkGetOneRequestDTO);
 
-    const linkedByUser = response.users.filter((user) => user?.id === session?.id).length > 0; // (1)
-    if (!linkedByUser && !!response.isPrivate) throw new RequestError('There is no public link', 404, { message: '404 Conflict' });
+    const linkedByUser = response.users.filter((userLink) => userLink?.id === session?.id).length > 0; // (1)
+    const isPrivate = response.users.filter((userLink) => userLink.isPrivate).length > 0; // (2)
+    if (!linkedByUser && !!isPrivate) throw new RequestError('Link not found', 404, { message: '404 Not found' });
 
     return response;
   }

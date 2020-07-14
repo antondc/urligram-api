@@ -19,7 +19,7 @@ export class UserLinkDeleteUseCase implements IUserLinkDeleteUseCase {
 
   public async execute(UserlinkDeleteRequestDTO: IUserLinkDeleteRequestDTO): Promise<IUserLinkDeleteResponseDTO> {
     const { linkId, session } = UserlinkDeleteRequestDTO;
-    const result = await this.linkRepo.linkGetOne({ ...UserlinkDeleteRequestDTO, id: linkId });
+    const result = await this.userRepo.userLinkGetOne({ linkId, userId: session?.id });
     if (!result) throw new RequestError('Not found', 404);
 
     const response = await this.userRepo.userLinkDelete({ ...UserlinkDeleteRequestDTO, userId: session?.id });

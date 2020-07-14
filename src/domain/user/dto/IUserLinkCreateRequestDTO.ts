@@ -10,6 +10,7 @@ type List = {
 
 export interface IUserLinkCreateRequestDTO {
   id?: string;
+  title: string;
   saved: boolean;
   vote: boolean;
   isPrivate: boolean;

@@ -14,42 +14,41 @@ BEGIN
   SELECT
     link.id,
     CONCAT(domain.domain, link.path) AS url,
-    link_user.isPrivate,
     (
       SELECT
-        JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'id', tag.id,
-            'name', tag.name
-          )
-        )
+        CAST(
+          CONCAT('[',
+            GROUP_CONCAT(
+              DISTINCT JSON_OBJECT(
+                'id', tag.id,
+                'name', tag.name
+              ) SEPARATOR ','
+          ), ']'
+          ) AS JSON
+        ) AS tags
       FROM link_user_tag
-      JOIN tag
-      ON link_user_tag.tag_id = tag.id
-      WHERE link_user.id = link_user_tag.link_user_id
-    ) as tags,
+      JOIN `tag` ON tag.id = link_user_tag.tag_id
+      JOIN `link_user` ON link_user.id = link_user_tag.link_user_id
+      WHERE link_user.link_id = link.id
+    ) AS tags,
     (
       SELECT
         JSON_ARRAYAGG(
           JSON_OBJECT(
-            'id', user.id,
-            'name', user.name
+            'id', `user`.`id`,
+            'name', `user`.`name`,
+            'isPrivate', `link_user`.`isPrivate`
           )
         )
-      FROM link_user
-      JOIN user ON link_user.user_id = user.id
+      FROM `link_user`
+      JOIN USER ON link_user.user_id = user.id
       WHERE link_user.link_id = link.id
-    ) as users,
-    link.createdAt,
-    link_user.updatedAt
-  FROM link_user
-  INNER JOIN link ON link.id = link_user.link_id
+    ) AS users
+  FROM link
   INNER JOIN domain ON link.domain_id = domain.id
   WHERE
-    link_user.id = JSON_UNQUOTE(@id)
+    link.id = JSON_UNQUOTE(@id)
     OR (
-      link_user.user_id = JSON_UNQUOTE(@user_id)
-      AND
       link.path = JSON_UNQUOTE(@path)
       AND
       domain.domain = JSON_UNQUOTE(@domain)
