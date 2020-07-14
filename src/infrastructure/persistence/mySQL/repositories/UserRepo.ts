@@ -1,5 +1,6 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
+import { BaseError } from '@shared/errors/BaseError';
 import { RequestError } from '@shared/errors/RequestError';
 
 export class UserRepo implements IUserRepo {
@@ -68,6 +69,36 @@ export class UserRepo implements IUserRepo {
       return results;
     } catch (err) {
       throw new RequestError('User update failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userLogin(userLogin) {
+    const mySQL = new MySQL();
+    try {
+      const userLoginQuery = `CALL user_login('${JSON.stringify(userLogin)}')`;
+
+      const [[user]] = await mySQL.query(userLoginQuery);
+
+      return user;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userLogSession(userLogSession) {
+    const mySQL = new MySQL();
+    try {
+      const logSessionQuery = `CALL user_log_session('${JSON.stringify(userLogSession)}')`;
+
+      await mySQL.query(logSessionQuery);
+
+      return null;
+    } catch (err) {
+      throw new BaseError('Error loging user session', 401, err);
     } finally {
       await mySQL.close();
     }

@@ -1,8 +1,10 @@
-interface byId {
-  email: string;
-  name: string;
-}
 interface byUserId {
   userId: string;
 }
-export type IUserGetOneRequest = byId | byUserId;
+
+interface byEmailAndName {
+  email: string;
+  name: string;
+}
+
+export type IUserGetOneRequest = byUserId | byEmailAndName;
