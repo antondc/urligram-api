@@ -1,1 +1,5 @@
-export interface IUserRepo {} // eslint-disable-line @typescript-eslint/no-empty-interface
+import { IUserGetAllResponse } from './interfaces/IUserGetAllResponse';
+
+export interface IUserRepo {
+  userGetAll: () => Promise<IUserGetAllResponse>;
+}
