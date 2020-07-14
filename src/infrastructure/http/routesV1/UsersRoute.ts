@@ -1,10 +1,12 @@
-import express, { NextFunction, Request, Response } from 'express'; // eslint-disable-line @typescript-eslint/no-unused-vars
+import express, { NextFunction, Request, Response } from 'express';
 
+import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
+import { UserCreateOneController } from '@infrastructure/http/controllers/UserCreateOneController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
+import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { UserGetOneController } from '../controllers/UserGetOneController';
 
 const UsersRoute = express.Router();
 
@@ -24,6 +26,16 @@ UsersRoute.get('/:userId', async (req: Request, res: Response, next: NextFunctio
   const userGetOneController = new UserGetOneController(userGetOneUseCase);
 
   const response = await userGetOneController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userCreateOneUseCase = new UserCreateOneUseCase(userRepo);
+  const userCreateOneController = new UserCreateOneController(userCreateOneUseCase);
+
+  const response = await userCreateOneController.execute(req, res, next);
 
   return response;
 });
