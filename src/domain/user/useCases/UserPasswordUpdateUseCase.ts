@@ -1,0 +1,39 @@
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
+import { AuthenticationError } from '@shared/errors/AuthenticationError';
+import { UserError } from '@shared/errors/UserError';
+import { IUserPasswordUpdateRequest } from './interfaces/IUserPasswordUpdateRequest';
+import { IUserPasswordUpdateResponse } from './interfaces/IUserPasswordUpdateResponse';
+
+export interface IUserPasswordUpdateUseCase {
+  execute: (userPasswordUpdateRequestDTO: IUserPasswordUpdateRequest) => Promise<IUserPasswordUpdateResponse>;
+}
+
+export class UserPasswordUpdateUseCase implements IUserPasswordUpdateUseCase {
+  private userRepo: IUserRepo;
+
+  constructor(userRepo: IUserRepo) {
+    this.userRepo = userRepo;
+  }
+
+  public async execute(userPasswordUpdateRequestDTO: IUserPasswordUpdateRequest): Promise<IUserPasswordUpdateResponse> {
+    // Use case to change password
+    // This is not to recover password
+    // User needs to be logged in
+    const { newPassword, newPasswordRepeated, session } = userPasswordUpdateRequestDTO;
+    const userAuthenticated = await this.userRepo.userLogin({
+      ...userPasswordUpdateRequestDTO,
+      name: session.name,
+    });
+    if (!userAuthenticated) throw new AuthenticationError('Username or password not correct', 403);
+
+    const userFound = await this.userRepo.userGetOne(userAuthenticated);
+    if (!userFound) throw new AuthenticationError('User not found', 404);
+
+    if (!newPassword || !newPasswordRepeated) throw new UserError('One of the passwords is missing', 409);
+    if (newPassword !== newPasswordRepeated) throw new UserError('Passwords are not equal', 409);
+
+    await this.userRepo.userPasswordUpdate({ ...userPasswordUpdateRequestDTO, userId: session?.id });
+
+    return userFound;
+  }
+}

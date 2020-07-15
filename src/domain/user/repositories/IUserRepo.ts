@@ -9,6 +9,8 @@ import { IUserLoginRequest } from './interfaces/IUserLoginRequest';
 import { IUserLoginResponse } from './interfaces/IUserLoginResponse';
 import { IUserLogSessionRequest } from './interfaces/IUserLogSessionRequest';
 import { IUserLogSessionResponse } from './interfaces/IUserLogSessionResponse';
+import { IUserPasswordUpdateRequest } from './interfaces/IUserPasswordUpdateRequest';
+import { IUserPasswordUpdateResponse } from './interfaces/IUserPasswordUpdateResponse';
 import { IUserUpdateOneRequest } from './interfaces/IUserUpdateOneRequest';
 import { IUserUpdateOneResponse } from './interfaces/IUserUpdateOneResponse';
 
@@ -20,4 +22,5 @@ export interface IUserRepo {
   userDeleteOne: (userDeleteOneRequest: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;
   userLogin: (userLoginRequest: IUserLoginRequest) => Promise<IUserLoginResponse>;
   userLogSession: (userLogSessionRequest: IUserLogSessionRequest) => Promise<IUserLogSessionResponse>;
+  userPasswordUpdate: (userPasswordUpdateRequest: IUserPasswordUpdateRequest) => Promise<IUserPasswordUpdateResponse>;
 }

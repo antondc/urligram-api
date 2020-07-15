@@ -4,12 +4,14 @@ import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase
 import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
+import { UserPasswordUpdateUseCase } from '@domain/user/useCases/UserPasswordUpdateUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
 import { UserCreateOneController } from '@infrastructure/http/controllers/UserCreateOneController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserDeleteOneController } from '../controllers/UserDeleteOneController';
+import { UserPasswordUpdateController } from '../controllers/UserPasswordUpdateController';
 import { UserUpdateOneController } from '../controllers/UserUpdateOneController';
 
 const UsersRoute = express.Router();
@@ -60,6 +62,16 @@ UsersRoute.delete('/me', async (req: Request, res: Response, next: NextFunction)
   const userDeleteOneController = new UserDeleteOneController(userDeleteOneUseCase);
 
   const response = await userDeleteOneController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.put('/me/password', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userPasswordUpdateUseCase = new UserPasswordUpdateUseCase(userRepo);
+  const userPasswordUpdateController = new UserPasswordUpdateController(userPasswordUpdateUseCase);
+
+  const response = await userPasswordUpdateController.execute(req, res, next);
 
   return response;
 });
