@@ -1,5 +1,7 @@
 import { IUserBookmarkGetAllRequest } from './interfaces/IUserBookmarkGetAllRequest';
 import { IUserBookmarkGetAllResponse } from './interfaces/IUserBookmarkGetAllResponse';
+import { IUserBookmarkGetOneRequest } from './interfaces/IUserBookmarkGetOneRequest';
+import { IUserBookmarkGetOneResponse } from './interfaces/IUserBookmarkGetOneResponse';
 import { IUserCreateOneRequest } from './interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from './interfaces/IUserCreateOneResponse';
 import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
@@ -41,4 +43,5 @@ export interface IUserRepo {
   userFollowingDelete: (userFollowingDeleteRequest: IUserFollowingDeleteRequest) => Promise<IUserFollowingDeleteResponse>;
   userFollowerGetAll: (userFollowerGetAll: IUserFollowerGetAllRequest) => Promise<IUserFollowerGetAllResponse>;
   userBookmarkGetAll: (userBookmarkGetAll: IUserBookmarkGetAllRequest) => Promise<IUserBookmarkGetAllResponse>;
+  userBookmarkGetOne: (userBookmarkGetOne: IUserBookmarkGetOneRequest) => Promise<IUserBookmarkGetOneResponse>;
 }

@@ -201,4 +201,18 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userBookmarkGetOne(userBookmarkGetOneDTO) {
+    const mySQL = new MySQL();
+    try {
+      const userBookmarkGetOneQuery = `CALL user_bookmark_get_one('${JSON.stringify(userBookmarkGetOneDTO)}')`;
+      const [[results]] = await mySQL.query(userBookmarkGetOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
