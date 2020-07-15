@@ -215,4 +215,20 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userBookmarkCreate(userBookmarkCreateRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const userBookmarkCreateQuery = `CALL user_bookmark_create('${JSON.stringify(userBookmarkCreateRequest)}')`;
+
+      const [[results]] = await mySQL.query(userBookmarkCreateQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
