@@ -4,6 +4,8 @@ import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
 import { IUserFollowingGetAllRequest } from './interfaces/IUserFollowingGetAllRequest';
 import { IUserFollowingGetAllResponse } from './interfaces/IUserFollowingGetAllResponse';
+import { IUserFollowingGetOneRequest } from './interfaces/IUserFollowingGetOneRequest';
+import { IUserFollowingGetOneResponse } from './interfaces/IUserFollowingGetOneResponse';
 import { IUserGetAllResponse } from './interfaces/IUserGetAllResponse';
 import { IUserGetOneRequest } from './interfaces/IUserGetOneRequest';
 import { IUserGetOneResponse } from './interfaces/IUserGetOneResponse';
@@ -26,4 +28,5 @@ export interface IUserRepo {
   userLogSession: (userLogSessionRequest: IUserLogSessionRequest) => Promise<IUserLogSessionResponse>;
   userPasswordUpdate: (userPasswordUpdateRequest: IUserPasswordUpdateRequest) => Promise<IUserPasswordUpdateResponse>;
   userFollowingGetAll: (userFollowingGetAllRequest: IUserFollowingGetAllRequest) => Promise<IUserFollowingGetAllResponse>;
+  userFollowingGetOne: (userFollowingGetOneRequest: IUserFollowingGetOneRequest) => Promise<IUserFollowingGetOneResponse>;
 }

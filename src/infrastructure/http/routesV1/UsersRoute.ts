@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
 import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
+import { UserFollowingGetOneUseCase } from '@domain/user/useCases/UserFollowingGetOneUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserPasswordUpdateUseCase } from '@domain/user/useCases/UserPasswordUpdateUseCase';
@@ -13,6 +14,7 @@ import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOn
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserDeleteOneController } from '../controllers/UserDeleteOneController';
 import { UserFollowingGetAllController } from '../controllers/UserFollowingGetAllController';
+import { UserFollowingGetOneController } from '../controllers/UserFollowingGetOneController';
 import { UserPasswordUpdateController } from '../controllers/UserPasswordUpdateController';
 import { UserUpdateOneController } from '../controllers/UserUpdateOneController';
 
@@ -84,6 +86,16 @@ UsersRoute.get('/:userId/following', async (req: Request, res: Response, next: N
   const userFollowingGetAllController = new UserFollowingGetAllController(userFollowingGetAllUserCase);
 
   const response = await userFollowingGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/me/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userFollowingGetOneUseCase = new UserFollowingGetOneUseCase(userRepo);
+  const userFollowingGetOneController = new UserFollowingGetOneController(userFollowingGetOneUseCase);
+
+  const response = await userFollowingGetOneController.execute(req, res, next);
 
   return response;
 });
