@@ -4,6 +4,8 @@ import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
 import { IUserFollowingCreateRequest } from './interfaces/IUserFollowingCreateRequest';
 import { IUserFollowingCreateResponse } from './interfaces/IUserFollowingCreateResponse';
+import { IUserFollowingDeleteRequest } from './interfaces/IUserFollowingDeleteRequest';
+import { IUserFollowingDeleteResponse } from './interfaces/IUserFollowingDeleteResponse';
 import { IUserFollowingGetAllRequest } from './interfaces/IUserFollowingGetAllRequest';
 import { IUserFollowingGetAllResponse } from './interfaces/IUserFollowingGetAllResponse';
 import { IUserFollowingGetOneRequest } from './interfaces/IUserFollowingGetOneRequest';
@@ -32,4 +34,5 @@ export interface IUserRepo {
   userFollowingGetAll: (userFollowingGetAllRequest: IUserFollowingGetAllRequest) => Promise<IUserFollowingGetAllResponse>;
   userFollowingGetOne: (userFollowingGetOneRequest: IUserFollowingGetOneRequest) => Promise<IUserFollowingGetOneResponse>;
   userFollowingCreate: (userFollowingCreateRequest: IUserFollowingCreateRequest) => Promise<IUserFollowingCreateResponse>;
+  userFollowingDelete: (userFollowingDeleteRequest: IUserFollowingDeleteRequest) => Promise<IUserFollowingDeleteResponse>;
 }
