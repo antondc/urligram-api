@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 
+import { UserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
 import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
 import { UserFollowerGetAllUseCase } from '@domain/user/useCases/UserFollowerGetAllUseCase';
@@ -11,18 +12,19 @@ import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserPasswordUpdateUseCase } from '@domain/user/useCases/UserPasswordUpdateUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
+import { UserBookmarkGetAllController } from '@infrastructure/http/controllers/UserBookmarkGetAllController';
 import { UserCreateOneController } from '@infrastructure/http/controllers/UserCreateOneController';
+import { UserDeleteOneController } from '@infrastructure/http/controllers/UserDeleteOneController';
+import { UserFollowerGetAllController } from '@infrastructure/http/controllers/UserFollowerGetAllController';
+import { UserFollowingCreateController } from '@infrastructure/http/controllers/UserFollowingCreateController';
+import { UserFollowingDeleteController } from '@infrastructure/http/controllers/UserFollowingDeleteController';
+import { UserFollowingGetAllController } from '@infrastructure/http/controllers/UserFollowingGetAllController';
+import { UserFollowingGetOneController } from '@infrastructure/http/controllers/UserFollowingGetOneController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
+import { UserPasswordUpdateController } from '@infrastructure/http/controllers/UserPasswordUpdateController';
+import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { UserDeleteOneController } from '../controllers/UserDeleteOneController';
-import { UserFollowerGetAllController } from '../controllers/UserFollowerGetAllController';
-import { UserFollowingCreateController } from '../controllers/UserFollowingCreateController';
-import { UserFollowingDeleteController } from '../controllers/UserFollowingDeleteController';
-import { UserFollowingGetAllController } from '../controllers/UserFollowingGetAllController';
-import { UserFollowingGetOneController } from '../controllers/UserFollowingGetOneController';
-import { UserPasswordUpdateController } from '../controllers/UserPasswordUpdateController';
-import { UserUpdateOneController } from '../controllers/UserUpdateOneController';
 
 const UsersRoute = express.Router();
 
@@ -132,6 +134,16 @@ UsersRoute.get('/:userId/followers', async (req: Request, res: Response, next: N
   const userFollowerGetAllController = new UserFollowerGetAllController(userFollowerGetAllUseCase);
 
   const response = await userFollowerGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/:userId/bookmarks', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userLinkGetAllUseCase = new UserBookmarkGetAllUseCase(userRepo);
+  const userLinkGetAllController = new UserBookmarkGetAllController(userLinkGetAllUseCase);
+
+  const response = await userLinkGetAllController.execute(req, res, next);
 
   return response;
 });

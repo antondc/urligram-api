@@ -41,6 +41,7 @@ export class StateRepo {
   private userFollowingCreateProcedure: string;
   private userFollowingDeleteProcedure: string;
   private userFollowerGetAllProcedure: string;
+  private userBookmarkGetAllProcedure: string;
 
   // Data
   private domainData: string;
@@ -94,6 +95,7 @@ export class StateRepo {
     this.userFollowingCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingCreate.sql')).toString();
     this.userFollowingDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingDelete.sql')).toString();
     this.userFollowerGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowerGetAll.sql')).toString();
+    this.userBookmarkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetAll.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -154,6 +156,7 @@ export class StateRepo {
       const createUserFollowingCreateProcedure = await mySQL.query(this.userFollowingCreateProcedure);
       const createUserFollowingDeleteProcedure = await mySQL.query(this.userFollowingDeleteProcedure);
       const createUserFollowerGetAllProcedure = await mySQL.query(this.userFollowerGetAllProcedure);
+      const createUserBookmarkGetAllProcedure = await mySQL.query(this.userBookmarkGetAllProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -212,6 +215,7 @@ export class StateRepo {
         ...createUserFollowingCreateProcedure,
         ...createUserFollowingDeleteProcedure,
         ...createUserFollowerGetAllProcedure,
+        ...createUserBookmarkGetAllProcedure,
 
         // Insert data
         ...insertDomainData,
