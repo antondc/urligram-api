@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
 import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
+import { UserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserFollowingGetOneUseCase } from '@domain/user/useCases/UserFollowingGetOneUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
@@ -13,6 +14,7 @@ import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAl
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserDeleteOneController } from '../controllers/UserDeleteOneController';
+import { UserFollowingCreateController } from '../controllers/UserFollowingCreateController';
 import { UserFollowingGetAllController } from '../controllers/UserFollowingGetAllController';
 import { UserFollowingGetOneController } from '../controllers/UserFollowingGetOneController';
 import { UserPasswordUpdateController } from '../controllers/UserPasswordUpdateController';
@@ -96,6 +98,16 @@ UsersRoute.get('/me/following/:followedId', async (req: Request, res: Response, 
   const userFollowingGetOneController = new UserFollowingGetOneController(userFollowingGetOneUseCase);
 
   const response = await userFollowingGetOneController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.post('/me/following/:followedId', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userFollowingCreateUseCase = new UserFollowingCreateUseCase(userRepo);
+  const userFollowingCreateController = new UserFollowingCreateController(userFollowingCreateUseCase);
+
+  const response = await userFollowingCreateController.execute(req, res, next);
 
   return response;
 });

@@ -145,4 +145,18 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userFollowingCreate(userFollowingCreateDTO) {
+    const mySQL = new MySQL();
+    try {
+      const userFollowingQuery = `CALL user_following_create('${JSON.stringify(userFollowingCreateDTO)}')`;
+      const [[results]] = await mySQL.query(userFollowingQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
