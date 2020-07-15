@@ -14,7 +14,9 @@ import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserPasswordUpdateUseCase } from '@domain/user/useCases/UserPasswordUpdateUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
+import { UserBookmarkCreateController } from '@infrastructure/http/controllers/UserBookmarkCreateController';
 import { UserBookmarkGetAllController } from '@infrastructure/http/controllers/UserBookmarkGetAllController';
+import { UserBookmarkGetOneController } from '@infrastructure/http/controllers/UserBookmarkGetOneController';
 import { UserCreateOneController } from '@infrastructure/http/controllers/UserCreateOneController';
 import { UserDeleteOneController } from '@infrastructure/http/controllers/UserDeleteOneController';
 import { UserFollowerGetAllController } from '@infrastructure/http/controllers/UserFollowerGetAllController';
@@ -27,8 +29,6 @@ import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOn
 import { UserPasswordUpdateController } from '@infrastructure/http/controllers/UserPasswordUpdateController';
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { UserBookmarkCreateController } from '../controllers/UserBookmarkCreateController';
-import { UserBookmarkGetOneController } from '../controllers/UserBookmarkGetOneController';
 
 const UsersRoute = express.Router();
 

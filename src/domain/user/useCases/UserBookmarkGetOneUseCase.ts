@@ -1,6 +1,6 @@
+import { IUserBookmarkGetOneResponse } from '@domain/user/repositories/interfaces/IUserBookmarkGetOneResponse';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { IUserBookmarkGetOneResponse } from '../repositories/interfaces/IUserBookmarkGetOneResponse';
 import { IUserBookmarkGetOneRequest } from './interfaces/IUserBookmarkGetOneRequest';
 
 export interface IUserBookmarkGetOneUseCase {

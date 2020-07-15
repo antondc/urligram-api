@@ -1,8 +1,8 @@
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserBookmarkCreateRequest } from '@domain/user/useCases/interfaces/IUserBookmarkCreateRequest';
 import { IUserBookmarkCreateResponse } from '@domain/user/useCases/interfaces/IUserBookmarkcreateResponse';
 import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { RequestError } from '@shared/errors/RequestError';
-import { IUserRepo } from '../repositories/IUserRepo';
 
 export interface IUserBookmarkCreateUseCase {
   execute: (bookmarkCreateRequestDTO: IUserBookmarkCreateRequest) => Promise<IUserBookmarkCreateResponse>;

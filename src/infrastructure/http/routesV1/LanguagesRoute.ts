@@ -2,9 +2,9 @@ import express, { NextFunction, Request, Response } from 'express'; // eslint-di
 
 import { LanguageGetAllUseCase } from '@domain/language/useCases/LanguageGetAllUseCase';
 import { LanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
+import { LanguageGetAllController } from '@infrastructure/http/controllers/LanguageGetAllController';
 import { LanguageGetOneController } from '@infrastructure/http/controllers/LanguageGetOneController';
 import { LanguageRepo } from '@infrastructure/persistence/mySQL/repositories/LanguageRepo';
-import { LanguageGetAllController } from '../controllers/LanguageGetAllController';
 
 const LanguagesRoute = express.Router();
 
