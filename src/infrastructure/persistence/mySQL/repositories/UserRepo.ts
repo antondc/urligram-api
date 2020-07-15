@@ -173,4 +173,18 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userFollowerGetAll(userFollowerGetAllDTO) {
+    const mySQL = new MySQL();
+    try {
+      const userFollowerGetAllQuery = `CALL user_follower_get_all('${JSON.stringify(userFollowerGetAllDTO)}')`;
+      const [[results]] = await mySQL.query(userFollowerGetAllQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

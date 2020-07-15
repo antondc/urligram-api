@@ -13,4 +13,4 @@ E. g.:
 - LinkGetOneUseCase
 - ILinkRepo
 - StateRepo
-- userFollowersGetAll
+- userFollowerGetAll

@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
 import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
+import { UserFollowerGetAllUseCase } from '@domain/user/useCases/UserFollowerGetAllUseCase';
 import { UserFollowingCreateUseCase } from '@domain/user/useCases/UserFollowingCreateUseCase';
 import { UserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingDeleteUseCase';
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
@@ -15,6 +16,7 @@ import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAl
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserDeleteOneController } from '../controllers/UserDeleteOneController';
+import { UserFollowerGetAllController } from '../controllers/UserFollowerGetAllController';
 import { UserFollowingCreateController } from '../controllers/UserFollowingCreateController';
 import { UserFollowingDeleteController } from '../controllers/UserFollowingDeleteController';
 import { UserFollowingGetAllController } from '../controllers/UserFollowingGetAllController';
@@ -120,6 +122,16 @@ UsersRoute.delete('/me/following/:followedId', async (req: Request, res: Respons
   const userFollowingDeleteController = new UserFollowingDeleteController(userFollowingDeleteUseCase);
 
   const response = await userFollowingDeleteController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/:userId/followers', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userFollowerGetAllUseCase = new UserFollowerGetAllUseCase(userRepo);
+  const userFollowerGetAllController = new UserFollowerGetAllController(userFollowerGetAllUseCase);
+
+  const response = await userFollowerGetAllController.execute(req, res, next);
 
   return response;
 });
