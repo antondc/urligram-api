@@ -1,7 +1,7 @@
 INSERT INTO `domain` (
   `id`, `domain`, `createdAt`, `updatedAt`
 ) VALUES (
-  9, 'google.es', DEFAULT, DEFAULT
+  47, 'google.es', DEFAULT, DEFAULT
 );
 INSERT INTO `domain` (
   `id`, `domain`, `createdAt`, `updatedAt`

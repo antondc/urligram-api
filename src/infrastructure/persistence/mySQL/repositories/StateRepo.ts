@@ -44,6 +44,7 @@ export class StateRepo {
   private userBookmarkGetAllProcedure: string;
   private userBookmarkGetOneProcedure: string;
   private userBookmarkCreateProcedure: string;
+  private userBookmarkUpdateProcedure: string;
 
   // Data
   private domainData: string;
@@ -100,6 +101,7 @@ export class StateRepo {
     this.userBookmarkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetAll.sql')).toString();
     this.userBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetOne.sql')).toString();
     this.userBookmarkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkCreate.sql')).toString();
+    this.userBookmarkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkUpdate.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -163,6 +165,7 @@ export class StateRepo {
       const createUserBookmarkGetAllProcedure = await mySQL.query(this.userBookmarkGetAllProcedure);
       const createUserBookmarkGetOneProcedure = await mySQL.query(this.userBookmarkGetOneProcedure);
       const createUserBookmarkCreateProcedure = await mySQL.query(this.userBookmarkCreateProcedure);
+      const createUserBookmarkUpdateProcedure = await mySQL.query(this.userBookmarkUpdateProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -224,6 +227,7 @@ export class StateRepo {
         ...createUserBookmarkGetAllProcedure,
         ...createUserBookmarkGetOneProcedure,
         ...createUserBookmarkCreateProcedure,
+        ...createUserBookmarkUpdateProcedure,
 
         // Insert data
         ...insertDomainData,

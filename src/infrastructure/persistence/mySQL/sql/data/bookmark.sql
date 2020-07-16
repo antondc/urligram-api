@@ -1,7 +1,7 @@
 INSERT INTO `bookmark` (
   `id`, `order`, `title`, `isPrivate`, `saved`, `vote`, `createdAt`, `updatedAt`, `user_id`, `link_id`
 ) VALUES (
-  1, 0, "My link 1", false, true, true, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', 5
+  1, 0, "My link 1", false, true, true, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', 12
 );
 
 INSERT INTO `bookmark` (

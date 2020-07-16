@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { UserBookmarkCreateUseCase } from '@domain/user/useCases/UserBookmarkCreateUseCase';
 import { UserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
 import { UserBookmarkGetOneUseCase } from '@domain/user/useCases/UserBookmarkGetOneUseCase';
+import { UserBookmarkUpdateUseCase } from '@domain/user/useCases/UserBookmarkUpdateUseCase';
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
 import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
 import { UserFollowerGetAllUseCase } from '@domain/user/useCases/UserFollowerGetAllUseCase';
@@ -29,6 +30,7 @@ import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOn
 import { UserPasswordUpdateController } from '@infrastructure/http/controllers/UserPasswordUpdateController';
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
+import { UserBookmarkUpdateController } from '../controllers/UserBookmarkUpdateController';
 
 const UsersRoute = express.Router();
 
@@ -168,6 +170,16 @@ UsersRoute.post('/me/bookmarks', async (req: Request, res: Response, next: NextF
   const userLinkCreateController = new UserBookmarkCreateController(userLinkCreateUseCase);
 
   const response = await userLinkCreateController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.put('/me/bookmarks/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userLinkUpdateUseCase = new UserBookmarkUpdateUseCase(userRepo);
+  const userLinkUpdateController = new UserBookmarkUpdateController(userLinkUpdateUseCase);
+
+  const response = await userLinkUpdateController.execute(req, res, next);
 
   return response;
 });

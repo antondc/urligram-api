@@ -231,4 +231,21 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userBookmarkUpdate(userBookmarkUpdateRequestDTO) {
+    const mySQL = new MySQL();
+
+    try {
+      const userBookmarkUpdateQuery = `CALL user_bookmark_update('${JSON.stringify(userBookmarkUpdateRequestDTO)}')`;
+
+      const [[results]] = await mySQL.query(userBookmarkUpdateQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
 }

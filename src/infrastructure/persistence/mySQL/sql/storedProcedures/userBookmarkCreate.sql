@@ -120,7 +120,7 @@ BEGIN
       @bookmark_id,
       @last_tag
     ) ON DUPLICATE KEY UPDATE
-      bookmark_id  = @bookmark_id,
+      bookmark_id   = @bookmark_id,
       tag_id        = @last_tag,
       updatedAt     = CURRENT_TIMESTAMP;
 
