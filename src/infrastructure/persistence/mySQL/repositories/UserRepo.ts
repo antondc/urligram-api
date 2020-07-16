@@ -104,10 +104,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userPasswordUpdate(userPasswordUpdateDTO) {
+  public async userPasswordUpdate(userPasswordUpdate) {
     const mySQL = new MySQL();
     try {
-      const userPasswordUpdateQuery = `CALL user_password_update('${JSON.stringify(userPasswordUpdateDTO)}')`;
+      const userPasswordUpdateQuery = `CALL user_password_update('${JSON.stringify(userPasswordUpdate)}')`;
       const [[results]] = await mySQL.query(userPasswordUpdateQuery);
 
       return results;
@@ -146,10 +146,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingCreate(userFollowingCreateDTO) {
+  public async userFollowingCreate(userFollowingCreate) {
     const mySQL = new MySQL();
     try {
-      const userFollowingQuery = `CALL user_following_create('${JSON.stringify(userFollowingCreateDTO)}')`;
+      const userFollowingQuery = `CALL user_following_create('${JSON.stringify(userFollowingCreate)}')`;
       const [[results]] = await mySQL.query(userFollowingQuery);
 
       return results;
@@ -160,10 +160,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingDelete(userFollowingDeleteDTO) {
+  public async userFollowingDelete(userFollowingDelete) {
     const mySQL = new MySQL();
     try {
-      const userFollowingDeleteQuery = `CALL user_following_delete('${JSON.stringify(userFollowingDeleteDTO)}')`;
+      const userFollowingDeleteQuery = `CALL user_following_delete('${JSON.stringify(userFollowingDelete)}')`;
       const [[results]] = await mySQL.query(userFollowingDeleteQuery);
 
       return results;
@@ -174,10 +174,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowerGetAll(userFollowerGetAllDTO) {
+  public async userFollowerGetAll(userFollowerGetAll) {
     const mySQL = new MySQL();
     try {
-      const userFollowerGetAllQuery = `CALL user_follower_get_all('${JSON.stringify(userFollowerGetAllDTO)}')`;
+      const userFollowerGetAllQuery = `CALL user_follower_get_all('${JSON.stringify(userFollowerGetAll)}')`;
       const [[results]] = await mySQL.query(userFollowerGetAllQuery);
 
       return results;
@@ -188,10 +188,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetAll(userBookmarkGetAllDTO) {
+  public async userBookmarkGetAll(userBookmarkGetAll) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetAllQuery = `CALL user_bookmark_get_all('${JSON.stringify(userBookmarkGetAllDTO)}')`;
+      const userBookmarkGetAllQuery = `CALL user_bookmark_get_all('${JSON.stringify(userBookmarkGetAll)}')`;
       const [results] = await mySQL.query(userBookmarkGetAllQuery);
 
       return results;
@@ -202,10 +202,10 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOne(userBookmarkGetOneDTO) {
+  public async userBookmarkGetOne(userBookmarkGetOne) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetOneQuery = `CALL user_bookmark_get_one('${JSON.stringify(userBookmarkGetOneDTO)}')`;
+      const userBookmarkGetOneQuery = `CALL user_bookmark_get_one('${JSON.stringify(userBookmarkGetOne)}')`;
       const [[results]] = await mySQL.query(userBookmarkGetOneQuery);
 
       return results;
@@ -232,11 +232,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkUpdate(userBookmarkUpdateRequestDTO) {
+  public async userBookmarkUpdate(userBookmarkUpdateRequest) {
     const mySQL = new MySQL();
 
     try {
-      const userBookmarkUpdateQuery = `CALL user_bookmark_update('${JSON.stringify(userBookmarkUpdateRequestDTO)}')`;
+      const userBookmarkUpdateQuery = `CALL user_bookmark_update('${JSON.stringify(userBookmarkUpdateRequest)}')`;
 
       const [[results]] = await mySQL.query(userBookmarkUpdateQuery);
 
@@ -248,4 +248,19 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userBookmarkDeleteOne(userBookmarkDeleteOneRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const userBookmarkDeleteOneQuery = `CALL user_bookmark_delete('${JSON.stringify(userBookmarkDeleteOneRequest)}')`;
+
+      const [[result]] = await mySQL.query(userBookmarkDeleteOneQuery);
+
+      return result;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

@@ -1,40 +1,41 @@
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
-import { IUserDeleteOneRequest } from '@domain/user/useCases/interfaces/IUserDeleteOneRequest';
-import { IUserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
+import { IUserBookmarkDeleteOneRequest } from '@domain/user/useCases/interfaces/IUserBookmarkDeleteOneRequest';
+import { IUserBookmarkDeleteOneUseCase } from '@domain/user/useCases/UserBookmarkDeleteOneUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class UserDeleteOneController extends BaseController {
-  useCase: IUserDeleteOneUseCase;
+export class UserBookmarkDeleteOneController extends BaseController {
+  useCase: IUserBookmarkDeleteOneUseCase;
 
-  constructor(useCase: IUserDeleteOneUseCase) {
+  constructor(useCase: IUserBookmarkDeleteOneUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
+    const { bookmarkId } = req.params;
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userDeleteOneRequest: IUserDeleteOneRequest = {
+    const userBookmarkDeleteOneReques: IUserBookmarkDeleteOneRequest = {
+      bookmarkId: Number(bookmarkId),
       session,
     };
-
-    const response = await this.useCase.execute(userDeleteOneRequest);
+    const response = await this.useCase.execute(userBookmarkDeleteOneReques);
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/' + response?.userId,
+        self: URL_SERVER + '/users/me/bookmarks/' + bookmarkId,
       },
       data: [
         {
-          type: 'user',
-          id: response?.userId,
+          type: 'bookmark',
+          id: response,
           session: {
-            self: URL_SERVER + '/users/' + response?.userId,
+            self: URL_SERVER + '/users/me/bookmarks/' + bookmarkId,
           },
           attributes: response,
           relationships: {},
