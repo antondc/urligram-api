@@ -1,7 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 
+import { ListBookmarkGetOneUseCase } from '@domain/list/useCases/ListBookmarkGetOneUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
+import { ListBookmarkGetOneController } from '../controllers/ListBookmarkGetOneController';
 import { ListGetOneController } from '../controllers/ListGetOneController';
 
 const ListsRoute = express.Router();
@@ -12,6 +14,16 @@ ListsRoute.get('/:listId', async (req: Request, res: Response, next: NextFunctio
   const listGetOneController = new ListGetOneController(listGetOneUseCase);
 
   const response = await listGetOneController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.get('/:listId/bookmarks/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listBookmarkGetOneUseCase = new ListBookmarkGetOneUseCase(listRepo);
+  const listBookmarkGetOneController = new ListBookmarkGetOneController(listBookmarkGetOneUseCase);
+
+  const response = await listBookmarkGetOneController.execute(req, res, next);
 
   return response;
 });

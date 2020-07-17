@@ -5,6 +5,7 @@ export class Bookmark {
   isPrivate: boolean;
   createdAt: Date;
   updatedAt: Date;
+  userId: string;
 
   constructor(options) {
     this.id = options.id;
@@ -13,5 +14,6 @@ export class Bookmark {
     this.isPrivate = options.isPrivate;
     this.createdAt = options.createdAt;
     this.updatedAt = options.updatedAt;
+    this.userId = options.userId;
   }
 }
