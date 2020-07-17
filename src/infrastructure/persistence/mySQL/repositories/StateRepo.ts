@@ -46,6 +46,7 @@ export class StateRepo {
   private userBookmarkCreateProcedure: string;
   private userBookmarkUpdateProcedure: string;
   private userBookmarkDeleteOneProcedure: string;
+  private userListGetAllProcedure: string;
   private linkGetOneProcedure: string;
   private listGetOneProcedure: string;
   private listBookmarkGetOneProcedure: string;
@@ -108,6 +109,7 @@ export class StateRepo {
     this.userBookmarkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkCreate.sql')).toString();
     this.userBookmarkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkUpdate.sql')).toString();
     this.userBookmarkDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkDeleteOne.sql')).toString();
+    this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.listGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOne.sql')).toString();
     this.listBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetOne.sql')).toString();
@@ -177,6 +179,7 @@ export class StateRepo {
       const createUserBookmarkCreateProcedure = await mySQL.query(this.userBookmarkCreateProcedure);
       const createUserBookmarkUpdateProcedure = await mySQL.query(this.userBookmarkUpdateProcedure);
       const createUserBookmarkDeleteOneProcedure = await mySQL.query(this.userBookmarkDeleteOneProcedure);
+      const createUserListGetAllProcedure = await mySQL.query(this.userListGetAllProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createListGetOneProcedure = await mySQL.query(this.listGetOneProcedure);
       const createListBookmarkGetOneProcedure = await mySQL.query(this.listBookmarkGetOneProcedure);
@@ -248,6 +251,7 @@ export class StateRepo {
         ...createListGetOneProcedure,
         ...createListBookmarkGetOneProcedure,
         ...createListUserGetOneProcedure,
+        ...createUserListGetAllProcedure,
 
         // Insert data
         ...insertDomainData,

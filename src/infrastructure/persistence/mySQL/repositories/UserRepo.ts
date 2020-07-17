@@ -263,4 +263,18 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userListGetAll(userListGetAllRequest) {
+    const mySQL = new MySQL();
+    try {
+      const userListGetAllQuery = `CALL user_list_get_all('${JSON.stringify(userListGetAllRequest)}')`;
+      const [results] = await mySQL.query(userListGetAllQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

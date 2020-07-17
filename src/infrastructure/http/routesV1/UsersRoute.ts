@@ -14,6 +14,7 @@ import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingG
 import { UserFollowingGetOneUseCase } from '@domain/user/useCases/UserFollowingGetOneUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
+import { UserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
 import { UserPasswordUpdateUseCase } from '@domain/user/useCases/UserPasswordUpdateUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
 import { UserBookmarkCreateController } from '@infrastructure/http/controllers/UserBookmarkCreateController';
@@ -33,6 +34,7 @@ import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUp
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserBookmarkDeleteOneController } from '../controllers/UserBookmarkDeleteOneController';
 import { UserBookmarkUpdateController } from '../controllers/UserBookmarkUpdateController';
+import { UserListGetAllController } from '../controllers/UserListGetAllController';
 
 const UsersRoute = express.Router();
 
@@ -192,6 +194,16 @@ UsersRoute.delete('/me/bookmarks/:bookmarkId', async (req: Request, res: Respons
   const userLinkDeleteController = new UserBookmarkDeleteOneController(userLinkDeleteUseCase);
 
   const response = await userLinkDeleteController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/:userId/lists', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userListGetAllUseCase = new UserListGetAllUseCase(userRepo);
+  const userListGetAllController = new UserListGetAllController(userListGetAllUseCase);
+
+  const response = await userListGetAllController.execute(req, res, next);
 
   return response;
 });
