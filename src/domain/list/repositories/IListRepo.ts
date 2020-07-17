@@ -1,1 +1,6 @@
-export interface IListRepo {} // eslint-disable-line @typescript-eslint/no-empty-interface
+import { IListGetOneRequest } from './interfaces/IListGetOneRequest';
+import { IListGetOneResponse } from './interfaces/IListGetOneResponse';
+
+export interface IListRepo {
+  listGetOne: (listGetOneRequest: IListGetOneRequest) => Promise<IListGetOneResponse>;
+}
