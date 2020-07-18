@@ -49,7 +49,7 @@ export class StateRepo {
   private userListGetAllProcedure: string;
   private linkGetOneProcedure: string;
   private listGetOneProcedure: string;
-  private listCreateProcedure: string;
+  private listCreateOneProcedure: string;
   private listBookmarkGetOneProcedure: string;
   private listUserAdminGetByIdProcedure: string;
 
@@ -113,7 +113,7 @@ export class StateRepo {
     this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.listGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOneById.sql')).toString();
-    this.listCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreate.sql')).toString();
+    this.listCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreateOne.sql')).toString();
     this.listBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetOne.sql')).toString();
     this.listUserAdminGetByIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserAdminGet.sql')).toString();
 
@@ -184,7 +184,7 @@ export class StateRepo {
       const createUserListGetAllProcedure = await mySQL.query(this.userListGetAllProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createListGetOneProcedure = await mySQL.query(this.listGetOneProcedure);
-      const createListCreateProcedure = await mySQL.query(this.listCreateProcedure);
+      const createListCreateOneProcedure = await mySQL.query(this.listCreateOneProcedure);
       const createListBookmarkGetOneProcedure = await mySQL.query(this.listBookmarkGetOneProcedure);
       const createListUserGetOneProcedure = await mySQL.query(this.listUserAdminGetByIdProcedure);
 
@@ -252,7 +252,7 @@ export class StateRepo {
         ...createUserBookmarkDeleteOneProcedure,
         ...createLinkGetOneProcedure,
         ...createListGetOneProcedure,
-        ...createListCreateProcedure,
+        ...createListCreateOneProcedure,
         ...createListBookmarkGetOneProcedure,
         ...createListUserGetOneProcedure,
         ...createUserListGetAllProcedure,

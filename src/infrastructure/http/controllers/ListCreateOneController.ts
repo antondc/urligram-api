@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 
-import { IListCreateRequest } from '@domain/list/useCases/interfaces/IListCreateRequest';
-import { IListCreateUseCase } from '@domain/list/useCases/ListCreateUseCase';
+import { IListCreateOneRequest } from '@domain/list/useCases/interfaces/IListCreateOneRequest';
+import { IListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class ListCreateController extends BaseController {
-  useCase: IListCreateUseCase;
+export class ListCreateOneController extends BaseController {
+  useCase: IListCreateOneUseCase;
 
-  constructor(useCase: IListCreateUseCase) {
+  constructor(useCase: IListCreateOneUseCase) {
     super();
     this.useCase = useCase;
   }
@@ -21,14 +21,14 @@ export class ListCreateController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listCreateRequestDTO: IListCreateRequest = {
+    const listCreateOneRequestDTO: IListCreateOneRequest = {
       session,
       listName,
       listDescription,
       listIsPrivate,
     };
 
-    const response = await this.useCase.execute(listCreateRequestDTO);
+    const response = await this.useCase.execute(listCreateOneRequestDTO);
 
     const formattedResponse = {
       lists: {

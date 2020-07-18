@@ -33,8 +33,6 @@ BEGIN
   -- Retrieve the upserted id
   SET @list_id = LAST_INSERT_ID();
 
-
-
   SELECT @list_id as listId;
 
 END

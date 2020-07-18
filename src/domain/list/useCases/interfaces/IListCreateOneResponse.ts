@@ -1,3 +1,3 @@
 import { List } from '@domain/list/entitites/List';
 
-export type IListCreateResponse = List;
+export type IListCreateOneResponse = List;

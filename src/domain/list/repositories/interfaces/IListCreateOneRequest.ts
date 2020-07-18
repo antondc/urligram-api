@@ -1,4 +1,4 @@
-export interface IListCreateRequest {
+export interface IListCreateOneRequest {
   userId: string;
   listName: string;
   listDescription: string;

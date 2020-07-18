@@ -1,26 +1,26 @@
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { IListCreateRequest } from './interfaces/IListCreateRequest';
-import { IListCreateResponse } from './interfaces/IListCreateResponse';
+import { IListCreateOneRequest } from './interfaces/IListCreateOneRequest';
+import { IListCreateOneResponse } from './interfaces/IListCreateOneResponse';
 
-export interface IListCreateUseCase {
-  execute: (listCreateRequestDTO: IListCreateRequest) => Promise<IListCreateResponse>;
+export interface IListCreateOneUseCase {
+  execute: (listCreateOneRequestDTO: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
 }
 
-export class ListCreateUseCase implements IListCreateUseCase {
+export class ListCreateOneUseCase implements IListCreateOneUseCase {
   private listRepo: IListRepo;
 
   constructor(listRepo: IListRepo) {
     this.listRepo = listRepo;
   }
 
-  public async execute(listCreateRequestDTO: IListCreateRequest): Promise<IListCreateResponse> {
-    const { session, listName } = listCreateRequestDTO;
+  public async execute(listCreateOneRequestDTO: IListCreateOneRequest): Promise<IListCreateOneResponse> {
+    const { session, listName } = listCreateOneRequestDTO;
 
     const listExists = await this.listRepo.listUserAdminGet({ listName, userId: session?.id });
     if (!!listExists) throw new RequestError('List already exists', 409, { message: '409 Conflict' });
 
-    const response = await this.listRepo.listCreate({ ...listCreateRequestDTO, userId: session?.id });
+    const response = await this.listRepo.listCreateOne({ ...listCreateOneRequestDTO, userId: session?.id });
 
     const createdList = await this.listRepo.listGetOneById({
       listId: Number(response?.listId),

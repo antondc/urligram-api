@@ -1,7 +1,7 @@
 import { IListBookmarkGetOneRequest } from './interfaces/IListBookmarkGetOneRequest';
 import { IListBookmarkGetOneResponse } from './interfaces/IListBookmarkGetOneResponse';
-import { IListCreateRequest } from './interfaces/IListCreateRequest';
-import { IListCreateResponse } from './interfaces/IListCreateResponse';
+import { IListCreateOneRequest } from './interfaces/IListCreateOneRequest';
+import { IListCreateOneResponse } from './interfaces/IListCreateOneResponse';
 import { IListGetOneByIdRequest } from './interfaces/IListGetOneByIdRequest';
 import { IListGetOneByIdResponse } from './interfaces/IListGetOneByIdResponse';
 import { IListUserAdminGetRequest } from './interfaces/IListUserAdminGetRequest';
@@ -11,5 +11,5 @@ export interface IListRepo {
   listGetOneById: (listGetOneByIdRequest: IListGetOneByIdRequest) => Promise<IListGetOneByIdResponse>;
   listBookmarkGetOne: (listBookmarkGetOneRequest: IListBookmarkGetOneRequest) => Promise<IListBookmarkGetOneResponse>;
   listUserAdminGet: (listUserAdminGetRequest: IListUserAdminGetRequest) => Promise<IListUserAdminGetResponse>;
-  listCreate: (listCreateRequest: IListCreateRequest) => Promise<IListCreateResponse>;
+  listCreateOne: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
 }

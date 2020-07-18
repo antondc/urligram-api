@@ -51,13 +51,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listCreate(listCreateRequestDTO) {
+  public async listCreateOne(listCreateOneRequestDTO) {
     const mySQL = new MySQL();
 
     try {
-      const listCreateQuery = `CALL list_create('${JSON.stringify(listCreateRequestDTO)}')`;
+      const listCreateOneQuery = `CALL list_create('${JSON.stringify(listCreateOneRequestDTO)}')`;
 
-      const [[results]] = await mySQL.query(listCreateQuery);
+      const [[results]] = await mySQL.query(listCreateOneQuery);
 
       return results;
     } catch (err) {
