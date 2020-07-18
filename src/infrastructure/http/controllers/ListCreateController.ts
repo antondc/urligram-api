@@ -1,43 +1,45 @@
 import { Request, Response } from 'express';
 
-import { IListGetOneRequest } from '@domain/list/useCases/interfaces/IListGetOneRequest.ts';
-import { IListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
+import { IListCreateRequest } from '@domain/list/useCases/interfaces/IListCreateRequest';
+import { IListCreateUseCase } from '@domain/list/useCases/ListCreateUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class ListGetOneController extends BaseController {
-  useCase: IListGetOneUseCase;
+export class ListCreateController extends BaseController {
+  useCase: IListCreateUseCase;
 
-  constructor(useCase: IListGetOneUseCase) {
+  constructor(useCase: IListCreateUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { listId } = req.params;
+    const { listName, listDescription, listIsPrivate } = req.body;
 
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listGetOneRequestDTO: IListGetOneRequest = {
-      listId: Number(listId),
+    const listCreateRequestDTO: IListCreateRequest = {
       session,
+      listName,
+      listDescription,
+      listIsPrivate,
     };
 
-    const response = await this.useCase.execute(listGetOneRequestDTO);
+    const response = await this.useCase.execute(listCreateRequestDTO);
 
     const formattedResponse = {
       lists: {
-        self: URL_SERVER + '/lists',
+        self: URL_SERVER + '/list',
       },
       data: [
         {
           type: 'list',
-          id: response.id,
+          id: response?.id,
           session: {
-            self: URL_SERVER + '/lists/' + response.id,
+            self: URL_SERVER + '/list',
           },
           attributes: response,
           relationships: {},

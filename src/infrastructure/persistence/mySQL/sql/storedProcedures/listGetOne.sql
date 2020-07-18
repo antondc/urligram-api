@@ -7,9 +7,9 @@ CREATE PROCEDURE list_get_one(
 
 BEGIN
   -- Retrieve values from JSON
-  SET @list_id   = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listId'));
-  SET @user_id   = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
-  SET @name      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.name'));
+  SET @list_id        = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listId'));
+  SET @user_id        = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
+  SET @list_name      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listName'));
 
   -- In case we don't have a list_id, find the list for given list name, given user as admin of the list, and list type
   IF @list_id IS NULL THEN
@@ -19,7 +19,7 @@ BEGIN
       FROM `list`
       INNER JOIN `user_list` ON `list`.`id` = `user_list`.`list_id`
       WHERE
-        `list`.`name`                       = @name
+        `list`.`name`                       = @list_name
         AND `user_list`.`user_id`           = @user_id
     );
   END IF;
