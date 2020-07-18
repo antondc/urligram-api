@@ -3,7 +3,7 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class ListRepo implements IListRepo {
-  public async listGetOne(listGetOneRequest) {
+  public async listGetOneById(listGetOneRequest) {
     const mySQL = new MySQL();
 
     try {
@@ -35,7 +35,7 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserGetOne(listUserGetOneRequestDTO) {
+  public async listUserAdminGet(listUserGetOneRequestDTO) {
     const mySQL = new MySQL();
 
     try {

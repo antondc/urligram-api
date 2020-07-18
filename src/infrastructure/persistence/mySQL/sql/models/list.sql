@@ -4,7 +4,14 @@ CREATE TABLE IF NOT EXISTS `list` (
   `name` VARCHAR(255) NOT NULL,
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `isPrivate` TINYINT(1) NULL DEFAULT '0',
+  `userId` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE `unique_index`(`name`, `userId`),
+  CONSTRAINT `fk_list_user1`
+    FOREIGN KEY (`userId`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
 );

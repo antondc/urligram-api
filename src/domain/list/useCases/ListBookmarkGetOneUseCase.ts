@@ -15,29 +15,26 @@ export class ListBookmarkGetOneUseCase implements IListBookmarkGetOneUseCase {
   }
 
   public async execute(listBookmarkGetOneRequest: IListBookmarkGetOneRequest): Promise<IListBookmarkGetOneResponse> {
-    const { listId } = listBookmarkGetOneRequest;
-    const { session, ...listBookmarkGetOneRequestWithoutSession } = listBookmarkGetOneRequest;
+    const { listId, bookmarkId } = listBookmarkGetOneRequest;
+    const { session } = listBookmarkGetOneRequest;
 
-    const bookmark = await this.listRepo.listBookmarkGetOne({
-      ...listBookmarkGetOneRequestWithoutSession,
+    const list = await this.listRepo.listGetOneById({ listId, userId: session?.id });
+    if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
+
+    const listBookmark = await this.listRepo.listBookmarkGetOne({
+      listId,
+      bookmarkId,
+      sessionId: session?.id,
     });
-    const list = await this.listRepo.listGetOne({ listId });
-    const isUserOwnerOfBookmark = bookmark.userId === session?.id;
-    const isUserInList = list.users.filter((user) => user?.id === session?.id).length > 0;
+    if (!listBookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
-    if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' }); // (1)
-    if (!bookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' }); // (2)
-    if (!!list.isPrivate && !isUserInList) throw new RequestError('List not found', 404, { message: '404 Not Found' }); // (3)
-    if (!!bookmark.isPrivate && !isUserOwnerOfBookmark) throw new RequestError('List not found', 404, { message: '404 Not Found' }); // (4)
-
-    return bookmark;
+    return listBookmark;
   }
 }
 
 /* --- DOC ---
-  Returns a bookmark within a list, except when
-  (1) There is no list
-  (2) There is no bookmark
-  (3) List is private and user is not within it
-  (4) Bookmark is private and user is not the owner
+  Returns a bookmark within a list, when (MySQL)
+  (1) The bookmark and the list are public
+  (2) The bookmark is private, but is in a list where the user is a member
+  (3) The bookmark is private, but is owned by the user, and the user is a member of the list
 */

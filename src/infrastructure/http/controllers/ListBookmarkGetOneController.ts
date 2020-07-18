@@ -35,7 +35,7 @@ export class ListBookmarkGetOneController extends BaseController {
       },
       data: [
         {
-          type: 'user',
+          type: 'bookmarks',
           session: {
             self: URL_SERVER + '/bookmarks/' + response?.id,
           },

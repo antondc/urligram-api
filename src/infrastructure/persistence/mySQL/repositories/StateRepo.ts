@@ -51,7 +51,7 @@ export class StateRepo {
   private listGetOneProcedure: string;
   private listCreateProcedure: string;
   private listBookmarkGetOneProcedure: string;
-  private listUserGetOneProcedure: string;
+  private listUserAdminGetByIdProcedure: string;
 
   // Data
   private domainData: string;
@@ -112,10 +112,10 @@ export class StateRepo {
     this.userBookmarkDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkDeleteOne.sql')).toString();
     this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
-    this.listGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOne.sql')).toString();
+    this.listGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOneById.sql')).toString();
     this.listCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreate.sql')).toString();
     this.listBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetOne.sql')).toString();
-    this.listUserGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetOne.sql')).toString();
+    this.listUserAdminGetByIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserAdminGet.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -186,7 +186,7 @@ export class StateRepo {
       const createListGetOneProcedure = await mySQL.query(this.listGetOneProcedure);
       const createListCreateProcedure = await mySQL.query(this.listCreateProcedure);
       const createListBookmarkGetOneProcedure = await mySQL.query(this.listBookmarkGetOneProcedure);
-      const createListUserGetOneProcedure = await mySQL.query(this.listUserGetOneProcedure);
+      const createListUserGetOneProcedure = await mySQL.query(this.listUserAdminGetByIdProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);

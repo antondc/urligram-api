@@ -7,8 +7,8 @@ CREATE PROCEDURE user_list_get_all(
 
 BEGIN
 
-  SET @user_id = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
-  SET @session_id = JSON_UNQUOTE(JSON_EXTRACT(data, '$.sessionId'));
+  SET @user_id = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.userId'));
+  SET @session_id = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.sessionId'));
 
   SELECT
     `list`.`id`,
@@ -25,26 +25,30 @@ BEGIN
   INNER JOIN `user_list` ON `user_list`.`list_id` = `list`.`id`
   INNER JOIN `user` ON `user_list`.`user_id` = `user`.`id`
   WHERE
-    list.isPrivate != 1
-    AND user.id IN (
-        SELECT
-          `user_list`.`user_id`
-        FROM `user_list`
-        JOIN `user` ON `user_list`.`user_id` = `user`.`id`
-        WHERE `user_list`.`list_id` = `LIST`.`id` AND user_list.user_id = @user_id
+    (
+      list.isPrivate != 1
+      AND (
+        user.id IN (
+          SELECT
+            `user_list`.`user_id`
+          FROM `user_list`
+          JOIN `user` ON `user_list`.`user_id` = `user`.`id`
+          WHERE `user_list`.`list_id` = `LIST`.`id` AND user_list.user_id = @user_id
+        )
+        OR `list`.`userId` = @session_id
+        OR `list`.`userId` = @user_id
+      )
     )
     OR (
       list.isPrivate = 1
-      AND
-      user_id IN (
+      AND `user_list`.`user_id` IN (
         SELECT
           `user_list`.`user_id`
         FROM `user_list`
-        JOIN `user` ON `user_list`.`user_id` = `user`.`id`
+        JOIN `USER` ON `user_list`.`user_id` = `USER`.`id`
         WHERE `user_list`.`list_id` = `LIST`.`id` AND user_list.user_id = @session_id
       )
     )
   ;
-
 
 END

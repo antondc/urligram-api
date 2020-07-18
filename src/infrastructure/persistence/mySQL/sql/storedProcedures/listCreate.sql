@@ -16,34 +16,24 @@ BEGIN
   INSERT INTO list (
     `name`,
     `description`,
-    `isPrivate`
+    `isPrivate`,
+    `userId`
   ) VALUES (
     @list_name,
     @list_description,
-    @list_is_private
+    @list_is_private,
+    @list_user_id
   ) ON DUPLICATE KEY UPDATE
     name        = @list_name,
     description = @list_description,
     isPrivate   = @list_is_private,
+    userId      = @list_user_id,
     updatedAt   = CURRENT_TIMESTAMP;
 
   -- Retrieve the upserted id
   SET @list_id = LAST_INSERT_ID();
 
-  -- Upsert into user_list
-  INSERT INTO user_list (
-    `list_id`,
-    `user_id`,
-    `userRole`
-  ) VALUES (
-    @list_id,
-    @list_user_id,
-    1
-  ) ON DUPLICATE KEY UPDATE
-    list_id            = @list_id,
-    user_id            = @list_user_id,
-    userRole  = "admin",
-    updatedAt = CURRENT_TIMESTAMP;
+
 
   SELECT @list_id as listId;
 

@@ -32,14 +32,14 @@ export class ListCreateController extends BaseController {
 
     const formattedResponse = {
       lists: {
-        self: URL_SERVER + '/list',
+        self: URL_SERVER + '/lists/',
       },
       data: [
         {
           type: 'list',
           id: response?.id,
           session: {
-            self: URL_SERVER + '/list',
+            self: URL_SERVER + '/lists/' + response?.id,
           },
           attributes: response,
           relationships: {},

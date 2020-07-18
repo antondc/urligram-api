@@ -1,4 +1,5 @@
 interface byListId {
+  userId: string;
   listId: number;
 }
 
@@ -7,4 +8,4 @@ interface byUserIdAndListName {
   listName: string;
 }
 
-export type IListGetOneRequest = byListId | byUserIdAndListName;
+export type IListGetOneByIdRequest = byListId | byUserIdAndListName;
