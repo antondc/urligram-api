@@ -2,15 +2,27 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { ListBookmarkGetOneUseCase } from '@domain/list/useCases/ListBookmarkGetOneUseCase';
 import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
+import { ListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { ListBookmarkGetOneController } from '../controllers/ListBookmarkGetOneController';
 import { ListCreateOneController } from '../controllers/ListCreateOneController';
+import { ListGetAllController } from '../controllers/ListGetAllController';
 import { ListGetOneController } from '../controllers/ListGetOneController';
 import { ListUserGetOneController } from '../controllers/ListUserGetOneController';
 
 const ListsRoute = express.Router();
+
+ListsRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listGetAllUseCase = new ListGetAllUseCase(listRepo);
+  const listGetAllController = new ListGetAllController(listGetAllUseCase);
+
+  const response = await listGetAllController.execute(req, res, next);
+
+  return response;
+});
 
 ListsRoute.get('/:listId', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
