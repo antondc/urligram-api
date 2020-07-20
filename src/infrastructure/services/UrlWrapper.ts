@@ -41,4 +41,8 @@ export class URLWrapper {
   getSearch(): string | undefined {
     return this.search;
   }
+
+  getUrl(): URL | undefined {
+    return this.url;
+  }
 }

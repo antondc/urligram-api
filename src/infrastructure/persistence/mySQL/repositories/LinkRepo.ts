@@ -18,4 +18,20 @@ export class LinkRepo implements ILinkRepo {
       await mySQL.close();
     }
   }
+
+  public async linkGetAll(linkGetAllRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const linkGetAllQuery = `CALL link_get_all('${JSON.stringify(linkGetAllRequest)}')`;
+
+      const [link] = await mySQL.query(linkGetAllQuery);
+
+      return link;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

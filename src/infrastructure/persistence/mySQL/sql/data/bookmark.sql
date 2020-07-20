@@ -21,3 +21,9 @@ INSERT INTO `bookmark` (
 ) VALUES (
   4, 3, "My link 4", false, true, true, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 8
 );
+
+INSERT INTO `bookmark` (
+  `id`, `order`, `title`, `isPrivate`, `saved`, `vote`, `createdAt`, `updatedAt`, `user_id`, `link_id`
+) VALUES (
+  5, 4, "My link 4", false, true, true, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 12
+);
