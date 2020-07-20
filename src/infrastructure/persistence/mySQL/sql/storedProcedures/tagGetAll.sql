@@ -5,14 +5,14 @@ BEGIN
 
 -- Return tags used by public bookmarks
 SELECT
-  t.id,
-  t.name
-FROM tag t
-JOIN bookmark_tag b_t ON b_t.tag_id = t.id
-JOIN bookmark b ON b.id = b_t.bookmark_id
-WHERE b.isPrivate IS NOT TRUE
-GROUP BY t.id
-ORDER BY t.id
+  tag.id,
+  tag.name
+FROM tag
+JOIN bookmark_tag ON bookmark_tag.tag_id = tag.id
+JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
+WHERE bookmark.isPrivate IS NOT TRUE
+GROUP BY tag.id
+ORDER BY tag.id
 ;
 
 

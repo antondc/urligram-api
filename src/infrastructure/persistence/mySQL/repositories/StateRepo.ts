@@ -50,6 +50,7 @@ export class StateRepo {
   private linkGetOneProcedure: string;
   private linkGetAllProcedure: string;
   private linkListGetAllProcedure: string;
+  private linkTagGetAllProcedure: string;
   private listGetOneByIdProcedure: string;
   private listGetAllProcedure: string;
   private listCreateOneProcedure: string;
@@ -118,6 +119,7 @@ export class StateRepo {
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAll.sql')).toString();
     this.linkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAll.sql')).toString();
+    this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
     this.listGetOneByIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOneById.sql')).toString();
     this.listGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetAll.sql')).toString();
     this.listCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreateOne.sql')).toString();
@@ -193,6 +195,7 @@ export class StateRepo {
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllProcedure = await mySQL.query(this.linkGetAllProcedure);
       const createLinkListGetAllProcedure = await mySQL.query(this.linkListGetAllProcedure);
+      const createLinkTagGetAllProcedure = await mySQL.query(this.linkTagGetAllProcedure);
       const createListGetOneByIdProcedure = await mySQL.query(this.listGetOneByIdProcedure);
       const createListGetAllProcedure = await mySQL.query(this.listGetAllProcedure);
       const createListCreateOneProcedure = await mySQL.query(this.listCreateOneProcedure);
@@ -265,6 +268,7 @@ export class StateRepo {
         ...createLinkGetOneProcedure,
         ...createLinkGetAllProcedure,
         ...createLinkListGetAllProcedure,
+        ...createLinkTagGetAllProcedure,
         ...createListGetOneByIdProcedure,
         ...createListGetAllProcedure,
         ...createListCreateOneProcedure,

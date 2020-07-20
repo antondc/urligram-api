@@ -3,10 +3,12 @@ import express, { NextFunction, Request, Response } from 'express'; // eslint-di
 import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
 import { LinkListGetAllUseCase } from '@domain/link/useCases/LinkListGetAllUseCase';
+import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllUseCase';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { LinkGetAllController } from '../controllers/LinkGetAllController';
 import { LinkGetOneController } from '../controllers/LinkGetOneController';
 import { LinkListGetAllController } from '../controllers/LinkListGetAllController';
+import { LinkTagGetAllController } from '../controllers/LinkTagGetAllController';
 
 const LinksRoute = express.Router();
 
@@ -36,6 +38,16 @@ LinksRoute.get('/:linkId/lists', async (req: Request, res: Response, next: NextF
   const linkListGetAllController = new LinkListGetAllController(linkListGetAllUseCase);
 
   const response = await linkListGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+LinksRoute.get('/:id/tags', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new LinkRepo();
+  const linkTagGetAllUseCase = new LinkTagGetAllUseCase(userRepo);
+  const linkTagGetAllController = new LinkTagGetAllController(linkTagGetAllUseCase);
+
+  const response = await linkTagGetAllController.execute(req, res, next);
 
   return response;
 });
