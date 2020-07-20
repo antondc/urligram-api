@@ -2,9 +2,11 @@ import express, { NextFunction, Request, Response } from 'express'; // eslint-di
 
 import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
+import { LinkListGetAllUseCase } from '@domain/link/useCases/LinkListGetAllUseCase';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { LinkGetAllController } from '../controllers/LinkGetAllController';
 import { LinkGetOneController } from '../controllers/LinkGetOneController';
+import { LinkListGetAllController } from '../controllers/LinkListGetAllController';
 
 const LinksRoute = express.Router();
 
@@ -24,6 +26,16 @@ LinksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const linkGetAllController = new LinkGetAllController(linkGetAllUseCase);
 
   const response = await linkGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+LinksRoute.get('/:linkId/lists', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new LinkRepo();
+  const linkListGetAllUseCase = new LinkListGetAllUseCase(userRepo);
+  const linkListGetAllController = new LinkListGetAllController(linkListGetAllUseCase);
+
+  const response = await linkListGetAllController.execute(req, res, next);
 
   return response;
 });

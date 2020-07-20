@@ -49,6 +49,7 @@ export class StateRepo {
   private userListGetAllProcedure: string;
   private linkGetOneProcedure: string;
   private linkGetAllProcedure: string;
+  private linkListGetAllProcedure: string;
   private listGetOneByIdProcedure: string;
   private listGetAllProcedure: string;
   private listCreateOneProcedure: string;
@@ -115,6 +116,7 @@ export class StateRepo {
     this.userListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAll.sql')).toString();
+    this.linkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAll.sql')).toString();
     this.listGetOneByIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOneById.sql')).toString();
     this.listGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetAll.sql')).toString();
     this.listCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreateOne.sql')).toString();
@@ -188,6 +190,7 @@ export class StateRepo {
       const createUserListGetAllProcedure = await mySQL.query(this.userListGetAllProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllProcedure = await mySQL.query(this.linkGetAllProcedure);
+      const createLinkListGetAllProcedure = await mySQL.query(this.linkListGetAllProcedure);
       const createListGetOneByIdProcedure = await mySQL.query(this.listGetOneByIdProcedure);
       const createListGetAllProcedure = await mySQL.query(this.listGetAllProcedure);
       const createListCreateOneProcedure = await mySQL.query(this.listCreateOneProcedure);
@@ -258,6 +261,7 @@ export class StateRepo {
         ...createUserBookmarkDeleteOneProcedure,
         ...createLinkGetOneProcedure,
         ...createLinkGetAllProcedure,
+        ...createLinkListGetAllProcedure,
         ...createListGetOneByIdProcedure,
         ...createListGetAllProcedure,
         ...createListCreateOneProcedure,
