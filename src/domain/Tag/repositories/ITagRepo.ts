@@ -1,1 +1,5 @@
-export interface ITagRepo {} // eslint-disable-line @typescript-eslint/no-empty-interface
+import { ITagGetAllResponse } from './interfaces/TagGetAllResponse';
+
+export interface ITagRepo {
+  tagGetAll: () => Promise<ITagGetAllResponse>;
+}
