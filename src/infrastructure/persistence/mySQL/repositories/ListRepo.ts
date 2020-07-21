@@ -98,4 +98,20 @@ export class ListRepo implements IListRepo {
       await mySQL.close();
     }
   }
+
+  public async listUpdateOne(listUpdateOneRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const listUpdateOneQuery = `CALL list_update_one('${JSON.stringify(listUpdateOneRequest)}')`;
+
+      const [[results]] = await mySQL.query(listUpdateOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
