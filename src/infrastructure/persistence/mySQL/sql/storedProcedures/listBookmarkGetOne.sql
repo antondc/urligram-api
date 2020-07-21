@@ -25,26 +25,8 @@ BEGIN
   JOIN `list` ON bookmark_list.list_id        = list.id
   LEFT JOIN user_list ON user_list.list_id    = list.id
   WHERE
-    (
-     `list`.`isPrivate` 					            != 1
-     AND `bookmark`.`isPrivate`               != 1
-     AND `bookmark_list`.`list_id`            = @list_id
-     AND `bookmark_list`.`bookmark_id`        = @bookmark_id
-    )
-    OR (
-      `bookmark_list`.`list_id`               = @list_id
-      AND `bookmark_list`.`bookmark_id`       = @bookmark_id
-      AND (
-        user_list.user_id IN (
-          SELECT
-            `user_list`.`user_id`
-          FROM `user_list`
-          WHERE
-            `user_list`.`list_id`             = @list_id
-        AND user_list.user_id                 = @user_id
-      ) OR bookmark.user_id                   = @user_id
-     )
-    )
+    `bookmark_list`.`list_id`                 = @list_id
+    AND `bookmark_list`.`bookmark_id`         = @bookmark_id
   ;
 
 END

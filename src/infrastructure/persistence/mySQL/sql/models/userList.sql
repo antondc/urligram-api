@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `user_list` (
   `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `list_id` INT(11) NOT NULL,
-  `userRole` ENUM('editor', 'reader') NOT NULL,
+  `userRole` ENUM('admin', 'editor', 'reader') NOT NULL,
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE `unique_index`(`list_id`, `user_id`),

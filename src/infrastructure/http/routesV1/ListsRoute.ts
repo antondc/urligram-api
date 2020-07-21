@@ -2,13 +2,13 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { ListBookmarkGetOneUseCase } from '@domain/list/useCases/ListBookmarkGetOneUseCase';
 import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
-import { ListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
+import { ListGetAllPublicUseCase } from '@domain/list/useCases/ListGetAllPublicUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { ListBookmarkGetOneController } from '../controllers/ListBookmarkGetOneController';
 import { ListCreateOneController } from '../controllers/ListCreateOneController';
-import { ListGetAllController } from '../controllers/ListGetAllController';
+import { ListGetAllPublicController } from '../controllers/ListGetAllPublicController';
 import { ListGetOneController } from '../controllers/ListGetOneController';
 import { ListUserGetOneController } from '../controllers/ListUserGetOneController';
 
@@ -16,10 +16,10 @@ const ListsRoute = express.Router();
 
 ListsRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
-  const listGetAllUseCase = new ListGetAllUseCase(listRepo);
-  const listGetAllController = new ListGetAllController(listGetAllUseCase);
+  const listGetAllPublicUseCase = new ListGetAllPublicUseCase(listRepo);
+  const listGetAllPublicController = new ListGetAllPublicController(listGetAllPublicUseCase);
 
-  const response = await listGetAllController.execute(req, res, next);
+  const response = await listGetAllPublicController.execute(req, res, next);
 
   return response;
 });

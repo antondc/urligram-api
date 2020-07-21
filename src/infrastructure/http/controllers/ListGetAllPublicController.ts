@@ -1,28 +1,19 @@
 import { Request, Response } from 'express';
 
-import { IListGetAllRequest } from '@domain/list/useCases/interfaces/IListGetAllRequest';
-import { IListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
-import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
+import { IListGetAllPublicUseCase } from '@domain/list/useCases/ListGetAllPublicUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class ListGetAllController extends BaseController {
-  useCase: IListGetAllUseCase;
+export class ListGetAllPublicController extends BaseController {
+  useCase: IListGetAllPublicUseCase;
 
-  constructor(useCase: IListGetAllUseCase) {
+  constructor(useCase: IListGetAllPublicUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
-
-    const listGetAllRequest: IListGetAllRequest = {
-      session,
-    };
-    const response = await this.useCase.execute(listGetAllRequest);
+    const response = await this.useCase.execute();
 
     const formattedLists = response.map((item) => {
       return {

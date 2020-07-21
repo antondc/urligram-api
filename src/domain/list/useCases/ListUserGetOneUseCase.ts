@@ -15,12 +15,15 @@ export class ListUserGetOneUseCase implements IListUserGetOneUseCase {
   }
 
   public async execute(listUserGetOneRequest: IListUserGetOneRequest): Promise<IListUserGetOneResponse> {
-    const { listId, session } = listUserGetOneRequest;
+    const { listId, userId } = listUserGetOneRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId, userId: session?.id });
+    const list = await this.listRepo.listGetOneById({ listId });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
-    const listUser = await this.listRepo.listUserAdminGet(listUserGetOneRequest);
+    const listUser = await this.listRepo.listUserGetOneByListId({
+      listId,
+      userId,
+    });
     if (!listUser) throw new RequestError('User not found', 404, { message: '404 Not Found' });
 
     return listUser;

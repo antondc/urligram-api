@@ -2,17 +2,19 @@ import { IListBookmarkGetOneRequest } from './interfaces/IListBookmarkGetOneRequ
 import { IListBookmarkGetOneResponse } from './interfaces/IListBookmarkGetOneResponse';
 import { IListCreateOneRequest } from './interfaces/IListCreateOneRequest';
 import { IListCreateOneResponse } from './interfaces/IListCreateOneResponse';
-import { IListGetAllRequest } from './interfaces/IListGetAllRequest';
-import { IListGetAllResponse } from './interfaces/IListGetAllResponse';
+import { IListGetAllPublicResponse } from './interfaces/IListGetAllPublicResponse';
 import { IListGetOneByIdRequest } from './interfaces/IListGetOneByIdRequest';
 import { IListGetOneByIdResponse } from './interfaces/IListGetOneByIdResponse';
-import { IListUserAdminGetRequest } from './interfaces/IListUserAdminGetRequest';
-import { IListUserAdminGetResponse } from './interfaces/IListUserAdminGetResponse';
+import { IListUserGetOneByListIdRequest } from './interfaces/IListUserGetOneByListIdRequest';
+import { IListUserGetOneByListIdResponse } from './interfaces/IListUserGetOneByListIdResponse';
+import { IListUserGetOneByListNameRequest } from './interfaces/IListUserGetOneByListNameRequest';
+import { IListUserGetOneByListNameResponse } from './interfaces/IListUserGetOneByListNameResponse';
 
 export interface IListRepo {
   listGetOneById: (listGetOneByIdRequest: IListGetOneByIdRequest) => Promise<IListGetOneByIdResponse>;
-  listGetAll: (listGetAllRequest: IListGetAllRequest) => Promise<IListGetAllResponse>;
+  listGetAllPublic: () => Promise<IListGetAllPublicResponse>;
   listBookmarkGetOne: (listBookmarkGetOneRequest: IListBookmarkGetOneRequest) => Promise<IListBookmarkGetOneResponse>;
-  listUserAdminGet: (listUserAdminGetRequest: IListUserAdminGetRequest) => Promise<IListUserAdminGetResponse>;
+  listUserGetOneByListId: (listUserGetOneRequest: IListUserGetOneByListIdRequest) => Promise<IListUserGetOneByListIdResponse>;
+  listUserGetOneByListName: (listUserGetOneRequest: IListUserGetOneByListNameRequest) => Promise<IListUserGetOneByListNameResponse>;
   listCreateOne: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
 }

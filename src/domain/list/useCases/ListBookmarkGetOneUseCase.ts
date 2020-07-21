@@ -1,3 +1,4 @@
+import { Bookmark } from '@domain/bookmarks/entities/Bookmark';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IListBookmarkGetOneRequest } from './interfaces/IListBookmarkGetOneRequest';
@@ -18,23 +19,24 @@ export class ListBookmarkGetOneUseCase implements IListBookmarkGetOneUseCase {
     const { listId, bookmarkId } = listBookmarkGetOneRequest;
     const { session } = listBookmarkGetOneRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId, userId: session?.id });
+    const list = await this.listRepo.listGetOneById({ listId });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
-    const listBookmark = await this.listRepo.listBookmarkGetOne({
+    const bookmark = await this.listRepo.listBookmarkGetOne({
       listId,
       bookmarkId,
       sessionId: session?.id,
     });
-    if (!listBookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
+    if (!bookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
-    return listBookmark;
+    const userInList = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
+    if (!userInList && (!!list.isPrivate || !!bookmark.isPrivate)) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
+
+    return bookmark;
   }
 }
 
 /* --- DOC ---
-  Returns a bookmark within a list, when (MySQL)
-  (1) The bookmark and the list are public
-  (2) The bookmark is private, but is in a list where the user is a member
-  (3) The bookmark is private, but is owned by the user, and the user is a member of the list
+  Returns a bookmark within a list, except when
+  (1) The bookmark or the list are private, and the user is not in the list
 */

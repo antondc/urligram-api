@@ -1,11 +1,3 @@
-interface byListId {
-  userId: string;
+export type IListGetOneByIdRequest = {
   listId: number;
-}
-
-interface byUserIdAndListName {
-  userId: string;
-  listName: string;
-}
-
-export type IListGetOneByIdRequest = byListId | byUserIdAndListName;
+};
