@@ -15,13 +15,22 @@ export class UserBookmarkDeleteOneUseCase implements IUserBookmarkDeleteOneUseCa
   }
 
   public async execute(userBookmarkDeleteOneRequest: IUserBookmarkDeleteOneRequest): Promise<IUserBookmarkDeleteOneResponse> {
-    const { bookmarkId } = userBookmarkDeleteOneRequest;
-    const { session, ...userBookmarkDeleteOneRequestWithoutSession } = userBookmarkDeleteOneRequest;
-    const result = await this.userRepo.userBookmarkGetOne({ bookmarkId, userId: session?.id });
-    if (!result) throw new RequestError('Not found', 404);
+    const { bookmarkId, session } = userBookmarkDeleteOneRequest;
 
-    const response = await this.userRepo.userBookmarkDeleteOne({ ...userBookmarkDeleteOneRequestWithoutSession, userId: session?.id });
+    const result = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      bookmarkId,
+      userId: session?.id,
+    });
+    if (!result) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' }); // (1) (2)
+
+    const response = await this.userRepo.userBookmarkDeleteOne({ bookmarkId, userId: session?.id });
 
     return response;
   }
 }
+
+/* --- DOC ---
+  Deletes a bookmark when:
+    (1) User is logged in
+    (2) Bookmark exist for this user
+*/

@@ -43,6 +43,9 @@ export class StateRepo {
   private userFollowerGetAllProcedure: string;
   private userBookmarkGetAllProcedure: string;
   private userBookmarkGetOneProcedure: string;
+  private userBookmarkGetOneByBookmarkIdUserIdProcedure: string;
+  private userBookmarkGetOneByLinkIdUserIdProcedure: string;
+  private userBookmarkGetOneByUserIdPathDomainProcedure: string;
   private userBookmarkCreateProcedure: string;
   private userBookmarkUpdateProcedure: string;
   private userBookmarkDeleteOneProcedure: string;
@@ -114,6 +117,15 @@ export class StateRepo {
     this.userFollowerGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowerGetAll.sql')).toString();
     this.userBookmarkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetAll.sql')).toString();
     this.userBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetOne.sql')).toString();
+    this.userBookmarkGetOneByBookmarkIdUserIdProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetOneByBookmarkIdUserId.sql'))
+      .toString();
+    this.userBookmarkGetOneByLinkIdUserIdProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetOneByLinkIdUserId.sql'))
+      .toString();
+    this.userBookmarkGetOneByUserIdPathDomainProcedure = fs
+      .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetOneByUserIdPathDomain.sql'))
+      .toString();
     this.userBookmarkCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkCreate.sql')).toString();
     this.userBookmarkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkUpdate.sql')).toString();
     this.userBookmarkDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkDeleteOne.sql')).toString();
@@ -192,6 +204,9 @@ export class StateRepo {
       const createUserFollowerGetAllProcedure = await mySQL.query(this.userFollowerGetAllProcedure);
       const createUserBookmarkGetAllProcedure = await mySQL.query(this.userBookmarkGetAllProcedure);
       const createUserBookmarkGetOneProcedure = await mySQL.query(this.userBookmarkGetOneProcedure);
+      const createUserBookmarkGetOneByBookmarkIdUserIdProcedure = await mySQL.query(this.userBookmarkGetOneByBookmarkIdUserIdProcedure);
+      const createUserBookmarkGetOneByLinkIdUserIdProcedure = await mySQL.query(this.userBookmarkGetOneByLinkIdUserIdProcedure);
+      const createUserBookmarkGetOneByUserIdPathDomainProcedure = await mySQL.query(this.userBookmarkGetOneByUserIdPathDomainProcedure);
       const createUserBookmarkCreateProcedure = await mySQL.query(this.userBookmarkCreateProcedure);
       const createUserBookmarkUpdateProcedure = await mySQL.query(this.userBookmarkUpdateProcedure);
       const createUserBookmarkDeleteOneProcedure = await mySQL.query(this.userBookmarkDeleteOneProcedure);
@@ -268,6 +283,9 @@ export class StateRepo {
         ...createUserFollowerGetAllProcedure,
         ...createUserBookmarkGetAllProcedure,
         ...createUserBookmarkGetOneProcedure,
+        ...createUserBookmarkGetOneByBookmarkIdUserIdProcedure,
+        ...createUserBookmarkGetOneByLinkIdUserIdProcedure,
+        ...createUserBookmarkGetOneByUserIdPathDomainProcedure,
         ...createUserBookmarkCreateProcedure,
         ...createUserBookmarkUpdateProcedure,
         ...createUserBookmarkDeleteOneProcedure,

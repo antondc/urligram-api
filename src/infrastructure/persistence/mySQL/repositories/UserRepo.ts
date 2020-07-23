@@ -202,11 +202,39 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOne(userBookmarkGetOne) {
+  public async userBookmarkGetOneByBookmarkIdUserId(userBookmarkGetOneByBookmarkIdUserId) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetOneQuery = `CALL user_bookmark_get_one('${JSON.stringify(userBookmarkGetOne)}')`;
-      const [[results]] = await mySQL.query(userBookmarkGetOneQuery);
+      const userBookmarkGetOneByBookmarkIdUserIdQuery = `CALL user_bookmark_get_one_by_id('${JSON.stringify(userBookmarkGetOneByBookmarkIdUserId)}')`;
+      const [[results]] = await mySQL.query(userBookmarkGetOneByBookmarkIdUserIdQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userBookmarkGetOneByLinkIdUserId(userBookmarkGetOneByLinkIdUserId) {
+    const mySQL = new MySQL();
+    try {
+      const userBookmarkGetOneByLinkIdUserIdQuery = `CALL user_bookmark_get_one_by_link_user('${JSON.stringify(userBookmarkGetOneByLinkIdUserId)}')`;
+      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userBookmarkGetOneByUserIdPathDomain(userBookmarkGetOneByLinkIdUserId) {
+    const mySQL = new MySQL();
+    try {
+      const userBookmarkGetOneByLinkIdUserIdQuery = `CALL user_bookmark_get_one_by_user_path_domain('${JSON.stringify(userBookmarkGetOneByLinkIdUserId)}')`;
+      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery);
 
       return results;
     } catch (err) {

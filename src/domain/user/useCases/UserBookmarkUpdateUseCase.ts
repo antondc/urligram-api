@@ -16,25 +16,29 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
   }
 
   public async execute(userBookmarkUpdateRequest: IUserBookmarkUpdateRequest): Promise<IUserBookmarkUpdateResponse> {
-    const { url, bookmarkId } = userBookmarkUpdateRequest;
-    const { session, ...userBookmarkUpdateRequestWithoutSession } = userBookmarkUpdateRequest;
+    const { session, url, bookmarkId } = userBookmarkUpdateRequest;
     const parsedUrl = new URLWrapper(url);
     const domain = parsedUrl.getDomain();
     const path = parsedUrl.getPath() + parsedUrl.getSearch();
 
-    const bookmarkExists = await this.userRepo.userBookmarkGetOne({ bookmarkId, userId: session?.id });
-    if (!bookmarkExists) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
-
-    const formattedUserBookmarkUpdateRequest = {
-      ...userBookmarkUpdateRequestWithoutSession,
-      domain,
-      path,
+    const bookmarkExists = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      bookmarkId,
       userId: session?.id,
-    };
-    const result = await this.userRepo.userBookmarkUpdate(formattedUserBookmarkUpdateRequest);
+    });
+    if (!bookmarkExists) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' }); // (1)(2)
 
-    const response = await this.userRepo.userBookmarkGetOne({ bookmarkId: Number(result.bookmarkId), userId: session?.id });
+    const result = await this.userRepo.userBookmarkUpdate({ ...userBookmarkUpdateRequest, domain, path, userId: session?.id });
+
+    const response = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      bookmarkId: result.bookmarkId,
+      userId: session?.id,
+    });
 
     return response;
   }
 }
+/* --- DOC ---
+  Deletes a bookmark when:
+    (1) User is logged in
+    (2) Bookmark is owned by user
+*/

@@ -4,8 +4,12 @@ import { IUserBookmarkDeleteOneRequest } from './interfaces/IUserBookmarkDeleteO
 import { IUserBookmarkDeleteOneResponse } from './interfaces/IUserBookmarkDeleteOneResponse';
 import { IUserBookmarkGetAllRequest } from './interfaces/IUserBookmarkGetAllRequest';
 import { IUserBookmarkGetAllResponse } from './interfaces/IUserBookmarkGetAllResponse';
-import { IUserBookmarkGetOneRequest } from './interfaces/IUserBookmarkGetOneRequest';
-import { IUserBookmarkGetOneResponse } from './interfaces/IUserBookmarkGetOneResponse';
+import { IUserBookmarkGetOneByBookmarkIdUserIdRequest } from './interfaces/IUserBookmarkGetOneByBookmarkIdUserIdRequest';
+import { IUserBookmarkGetOneByBookmarkIdUserIdResponse } from './interfaces/IUserBookmarkGetOneByBookmarkIdUserIdResponse';
+import { IUserBookmarkGetOneByLinkIdUserIdRequest } from './interfaces/IUserBookmarkGetOneByLinkIdUserIdRequest';
+import { IUserBookmarkGetOneByLinkIdUserIdResponse } from './interfaces/IUserBookmarkGetOneByLinkIdUserIdResponse';
+import { IUserBookmarkGetOneByUserIdPathDomainRequest } from './interfaces/IUserBookmarkGetOneByUserIdPathDomainRequest';
+import { IUserBookmarkGetOneByUserIdPathDomainResponse } from './interfaces/IUserBookmarkGetOneByUserIdPathDomainResponse';
 import { IUserBookmarkUpdateRequest } from './interfaces/IUserBookmarkUpdateRequest';
 import { IUserBookmarkUpdateResponse } from './interfaces/IUserBookmarkUpdateResponse';
 import { IUserCreateOneRequest } from './interfaces/IUserCreateOneRequest';
@@ -51,7 +55,15 @@ export interface IUserRepo {
   userFollowingDelete: (userFollowingDeleteRequest: IUserFollowingDeleteRequest) => Promise<IUserFollowingDeleteResponse>;
   userFollowerGetAll: (userFollowerGetAll: IUserFollowerGetAllRequest) => Promise<IUserFollowerGetAllResponse>;
   userBookmarkGetAll: (userBookmarkGetAll: IUserBookmarkGetAllRequest) => Promise<IUserBookmarkGetAllResponse>;
-  userBookmarkGetOne: (userBookmarkGetOne: IUserBookmarkGetOneRequest) => Promise<IUserBookmarkGetOneResponse>;
+  userBookmarkGetOneByBookmarkIdUserId: (
+    userBookmarkGetOneByBookmarkIdUserId: IUserBookmarkGetOneByBookmarkIdUserIdRequest
+  ) => Promise<IUserBookmarkGetOneByBookmarkIdUserIdResponse>;
+  userBookmarkGetOneByLinkIdUserId: (
+    userBookmarkGetOneByLinkIdUserId: IUserBookmarkGetOneByLinkIdUserIdRequest
+  ) => Promise<IUserBookmarkGetOneByLinkIdUserIdResponse>;
+  userBookmarkGetOneByUserIdPathDomain: (
+    userBookmarkGetOneByUserIdPathDomain: IUserBookmarkGetOneByUserIdPathDomainRequest
+  ) => Promise<IUserBookmarkGetOneByUserIdPathDomainResponse>;
   userBookmarkCreate: (userBookmarkCreate: IUserBookmarkCreateRequest) => Promise<IUserBookmarkCreateResponse>;
   userBookmarkUpdate: (userBookmarkUpdate: IUserBookmarkUpdateRequest) => Promise<IUserBookmarkUpdateResponse>;
   userBookmarkDeleteOne: (userBookmarkDeleteOne: IUserBookmarkDeleteOneRequest) => Promise<IUserBookmarkDeleteOneResponse>;
