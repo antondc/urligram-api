@@ -1,16 +1,14 @@
 import { Request, Response } from 'express';
 
-import { User } from '@domain/user/entities/User';
-import { IUserListGetAllRequest } from '@domain/user/useCases/interfaces/IUserListGetAllRequest';
-import { IUserListGetAllUseCase } from '@domain/user/useCases/UserListGetAllUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
+import { IUserListGetAllPublicRequest } from '@domain/user/useCases/interfaces/IUserListGetAllPublicRequest';
+import { IUserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class UserListGetAllController extends BaseController {
-  useCase: IUserListGetAllUseCase;
+export class UserListGetAllPublicController extends BaseController {
+  useCase: IUserListGetAllPublicUseCase;
 
-  constructor(useCase: IUserListGetAllUseCase) {
+  constructor(useCase: IUserListGetAllPublicUseCase) {
     super();
     this.useCase = useCase;
   }
@@ -18,15 +16,11 @@ export class UserListGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { userId } = req.params;
 
-    const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
-
-    const userListGetAllRequest: IUserListGetAllRequest = {
+    const userListGetAllPublicRequest: IUserListGetAllPublicRequest = {
       userId,
-      session,
     };
 
-    const response = await this.useCase.execute(userListGetAllRequest);
+    const response = await this.useCase.execute(userListGetAllPublicRequest);
 
     const formattedLinks = response.map((item) => {
       return {

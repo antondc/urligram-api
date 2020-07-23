@@ -1,0 +1,35 @@
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
+import { RequestError } from '@shared/errors/RequestError';
+import { IUserListGetAllPublicRequest } from './interfaces/IUserListGetAllPublicRequest';
+import { IUserListGetAllPublicResponse } from './interfaces/IUserListGetAllPublicResponse';
+
+export interface IUserListGetAllPublicUseCase {
+  execute: (userListGetAllPublicRequest: IUserListGetAllPublicRequest) => Promise<IUserListGetAllPublicResponse>;
+}
+
+export class UserListGetAllPublicUseCase implements IUserListGetAllPublicUseCase {
+  private userRepo: IUserRepo;
+
+  constructor(userRepo: IUserRepo) {
+    this.userRepo = userRepo;
+  }
+
+  public async execute(userListGetAllPublicRequest: IUserListGetAllPublicRequest): Promise<IUserListGetAllPublicResponse> {
+    const { userId } = userListGetAllPublicRequest;
+
+    const user = await this.userRepo.userGetOne({ userId });
+    if (!user) throw new RequestError('User not found', 404, { message: '404 Not Found' });
+
+    const lists = await this.userRepo.userListGetAllPublic({ userId });
+
+    return lists;
+  }
+}
+
+/* --- DOC ---
+  Returns a collection of lists, except when
+    (1) There is no user
+  A list qualify for the collection if (MySQL)
+    (2) Is public
+    (3) Is private but user is within it
+*/
