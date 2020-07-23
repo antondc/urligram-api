@@ -19,13 +19,13 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkGetAll(linkGetAllRequest) {
+  public async linkGetAllPublic(linkGetAllPublicRequest) {
     const mySQL = new MySQL();
 
     try {
-      const linkGetAllQuery = `CALL link_get_all('${JSON.stringify(linkGetAllRequest)}')`;
+      const linkGetAllPublicQuery = `CALL link_get_all_public('${JSON.stringify(linkGetAllPublicRequest)}')`;
 
-      const [link] = await mySQL.query(linkGetAllQuery);
+      const [link] = await mySQL.query(linkGetAllPublicQuery);
 
       return link;
     } catch (err) {
@@ -50,7 +50,6 @@ export class LinkRepo implements ILinkRepo {
       await mySQL.close();
     }
   }
-
 
   public async linkTagGetAll(linkTagGetAllRequest) {
     const mySQL = new MySQL();

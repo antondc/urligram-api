@@ -1,5 +1,5 @@
-import { ILinkGetAllRequest } from './interfaces/ILinkGetAllRequest';
-import { ILinkGetAllResponse } from './interfaces/ILinkGetAllResponse';
+import { ILinkGetAllPublicRequest } from './interfaces/ILinkGetAllPublicRequest';
+import { ILinkGetAllPublicResponse } from './interfaces/ILinkGetAllPublicResponse';
 import { ILinkGetOneRequest } from './interfaces/ILinkGetOneRequest';
 import { ILinkGetOneResponse } from './interfaces/ILinkGetOneResponse';
 import { ILinkListGetAllRequest } from './interfaces/ILinkListGetAllRequest';
@@ -9,7 +9,7 @@ import { ILinkTagGetAllResponse } from './interfaces/ILinkTagGetAllResponse';
 
 export interface ILinkRepo {
   linkGetOne: (linkGetOneRequest: ILinkGetOneRequest) => Promise<ILinkGetOneResponse>;
-  linkGetAll: (linkGetAllRequest: ILinkGetAllRequest) => Promise<ILinkGetAllResponse>;
+  linkGetAllPublic: (linkGetAllPublicRequest: ILinkGetAllPublicRequest) => Promise<ILinkGetAllPublicResponse>;
   linkListGetAll: (linkListGetAllRequest: ILinkListGetAllRequest) => Promise<ILinkListGetAllResponse>;
   linkTagGetAll: (linkTagGetAllRequest: ILinkTagGetAllRequest) => Promise<ILinkTagGetAllResponse>;
 }

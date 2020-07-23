@@ -11,4 +11,4 @@ type ExtendedTypes = {
   }[];
 };
 
-export type ILinkGetAllResponse = Array<Link & ExtendedTypes>;
+export type ILinkGetAllPublicResponse = Array<Link & ExtendedTypes>;

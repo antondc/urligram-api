@@ -1,11 +1,11 @@
 import express, { NextFunction, Request, Response } from 'express'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
-import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
+import { LinkGetAllPublicUseCase } from '@domain/link/useCases/LinkGetAllPublicUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
 import { LinkListGetAllUseCase } from '@domain/link/useCases/LinkListGetAllUseCase';
 import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllUseCase';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
-import { LinkGetAllController } from '../controllers/LinkGetAllController';
+import { LinkGetAllPublicController } from '../controllers/LinkGetAllPublicController';
 import { LinkGetOneController } from '../controllers/LinkGetOneController';
 import { LinkListGetAllController } from '../controllers/LinkListGetAllController';
 import { LinkTagGetAllController } from '../controllers/LinkTagGetAllController';
@@ -24,8 +24,8 @@ LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunctio
 
 LinksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new LinkRepo();
-  const linkGetAllUseCase = new LinkGetAllUseCase(userRepo);
-  const linkGetAllController = new LinkGetAllController(linkGetAllUseCase);
+  const linkGetAllUseCase = new LinkGetAllPublicUseCase(userRepo);
+  const linkGetAllController = new LinkGetAllPublicController(linkGetAllUseCase);
 
   const response = await linkGetAllController.execute(req, res, next);
 

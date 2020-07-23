@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS link_get_all;
+DROP PROCEDURE IF EXISTS link_get_all_public;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE link_get_all(
+CREATE PROCEDURE link_get_all_public(
   IN data JSON
 )
 
@@ -55,14 +55,6 @@ BEGIN
       SELECT
        bookmark.isPrivate
       FROM bookmark
-      WHERE bookmark.link_id = link.id
-    )
-    -- Select when user is owner of bookmark
-    OR @user_id IN (
-      SELECT
-        `user`.`id`
-      FROM bookmark
-      JOIN `user` ON bookmark.user_id = user.id
       WHERE bookmark.link_id = link.id
     )
   )

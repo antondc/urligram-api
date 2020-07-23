@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
 
-import { ILinkGetAllRequest } from '@domain/link/useCases/interfaces/ILinkGetAllRequest';
-import { ILinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
+import { ILinkGetAllPublicRequest } from '@domain/link/useCases/interfaces/ILinkGetAllPublicRequest';
+import { ILinkGetAllPublicUseCase } from '@domain/link/useCases/LinkGetAllPublicUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class LinkGetAllController extends BaseController {
-  useCase: ILinkGetAllUseCase;
+export class LinkGetAllPublicController extends BaseController {
+  useCase: ILinkGetAllPublicUseCase;
 
-  constructor(useCase: ILinkGetAllUseCase) {
+  constructor(useCase: ILinkGetAllPublicUseCase) {
     super();
     this.useCase = useCase;
   }
@@ -20,11 +20,11 @@ export class LinkGetAllController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const linkGetAllRequestDTO: ILinkGetAllRequest = {
+    const linkGetAllPublicRequestDTO: ILinkGetAllPublicRequest = {
       session,
     };
 
-    const response = await this.useCase.execute(linkGetAllRequestDTO);
+    const response = await this.useCase.execute(linkGetAllPublicRequestDTO);
 
     const formattedLinks = response.map((item) => {
       const urlWrapper = new URLWrapper(item.url);

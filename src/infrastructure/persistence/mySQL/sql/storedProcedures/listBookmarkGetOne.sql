@@ -6,7 +6,6 @@ CREATE PROCEDURE list_bookmark_get_one(
 )
 BEGIN
 
-  SET @session_id  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.sessionId'));
   SET @list_id     = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.listId'));
   SET @bookmark_id = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.bookmarkId'));
 
