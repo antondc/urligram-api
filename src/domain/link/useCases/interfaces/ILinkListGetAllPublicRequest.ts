@@ -1,6 +1,6 @@
 import { User } from '@domain/user/entities/User';
 
-export type ILinkListGetAllRequest = {
+export type ILinkListGetAllPublicRequest = {
   linkId: number;
   session: User;
 };

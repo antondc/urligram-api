@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { ILinkTagGetAllRequest } from '@domain/link/useCases/interfaces/ILinkTagGetAllRequest';
-import { ILinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllUseCase';
+import { ILinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllPublicUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 

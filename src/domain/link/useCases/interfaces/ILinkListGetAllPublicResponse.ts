@@ -1,3 +1,3 @@
 import { List } from '@domain/list/entitites/List';
 
-export type ILinkListGetAllResponse = List[];
+export type ILinkListGetAllPublicResponse = List[];

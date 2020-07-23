@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 
-import { ILinkListGetAllRequest } from '@domain/link/useCases/interfaces/ILinkListGetAllRequest';
-import { ILinkListGetAllUseCase } from '@domain/link/useCases/LinkListGetAllUseCase';
+import { ILinkListGetAllPublicRequest } from '@domain/link/useCases/interfaces/ILinkListGetAllPublicRequest';
+import { ILinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAllPublicUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-export class LinkListGetAllController extends BaseController {
-  useCase: ILinkListGetAllUseCase;
+export class LinkListGetAllPublicController extends BaseController {
+  useCase: ILinkListGetAllPublicUseCase;
 
-  constructor(useCase: ILinkListGetAllUseCase) {
+  constructor(useCase: ILinkListGetAllPublicUseCase) {
     super();
     this.useCase = useCase;
   }
@@ -21,7 +21,7 @@ export class LinkListGetAllController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const linkListGetOneRequest: ILinkListGetAllRequest = {
+    const linkListGetOneRequest: ILinkListGetAllPublicRequest = {
       linkId: Number(linkId),
       session,
     };

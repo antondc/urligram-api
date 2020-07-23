@@ -1,0 +1,31 @@
+import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
+import { RequestError } from '@shared/errors/RequestError';
+import { ILinkListGetAllPublicRequest } from './interfaces/ILinkListGetAllPublicRequest';
+import { ILinkListGetAllPublicResponse } from './interfaces/ILinkListGetAllPublicResponse';
+
+export interface ILinkListGetAllPublicUseCase {
+  execute: (linkListGetAllPublicRequest: ILinkListGetAllPublicRequest) => Promise<ILinkListGetAllPublicResponse>;
+}
+
+export class LinkListGetAllPublicUseCase implements ILinkListGetAllPublicUseCase {
+  private linkRepo: ILinkRepo;
+
+  constructor(linkRepo: ILinkRepo) {
+    this.linkRepo = linkRepo;
+  }
+
+  public async execute(linkListGetAllPublicRequest: ILinkListGetAllPublicRequest): Promise<ILinkListGetAllPublicResponse> {
+    const { linkId, session } = linkListGetAllPublicRequest;
+    const result = await this.linkRepo.linkListGetAllPublic({ linkId, userId: session?.id });
+
+    if (!result) throw new RequestError('There are no links in this list', 404, { message: '404 Not Found' });
+
+    return result;
+  }
+}
+
+/* --- DOC ---
+  Returns a collection of lists related to a link, when:
+    (1) Bookmark is public
+    (2) Bookmark is owned by user
+*/
