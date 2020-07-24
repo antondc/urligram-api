@@ -17,14 +17,16 @@ export class UserBookmarkGetAllUseCase implements IUserBookmarkGetAllUseCase {
     const { userId, session } = userBookmarkGetAllRequestDTO;
 
     const response = await this.userRepo.userBookmarkGetAll({ userId });
-    const filteredResponse = response.filter((item) => session?.id === userId || !item.isPrivate); // (1)(2)
+    const filteredResponse = response.filter((item) => session?.id === userId || !item.isPrivate); // (1) (2)
 
     return filteredResponse;
   }
 }
 
 /* --- DOC ---
-  Deletes a bookmark when:
+  Returns a collection of bookmarks
+  Returns when:
     (1) Bookmark is public
     (2) Bookmark is owned by user
+  Exceptions:
 */

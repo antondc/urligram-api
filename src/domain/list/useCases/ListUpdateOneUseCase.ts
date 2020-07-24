@@ -35,8 +35,9 @@ export class ListUpdateOneUseCase implements IListUpdateOneUseCase {
 }
 
 /* --- DOC ---
-  Updates a list, when
-  (1) List exists
-  (2) The user is in that list
-  (3) The user is not a reader of this list
+  Updates a list
+  Exceptions
+    (1) List doesn't exist
+    (2) The user is not in that list
+    (3) The user is in the list as «reader»
 */

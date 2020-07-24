@@ -20,14 +20,14 @@ export class UserBookmarkGetOneUseCase implements IUserBookmarkGetOneUseCase {
     const response = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
       bookmarkId,
       userId: session?.id,
-    }); // (1)(2)
+    }); // (1)
     if (!response) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
     return response;
   }
 }
 /* --- DOC ---
-  Deletes a bookmark when:
-    (1) User is logged in
-    (2) Bookmark is owned by user
+  Returns a bookmark
+  Exceptions
+    (1) Bookmark is not owned by user
 */

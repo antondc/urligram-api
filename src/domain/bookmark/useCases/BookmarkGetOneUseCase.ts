@@ -23,6 +23,7 @@ export class BookmarkGetOneUseCase implements IBookmarkGetOneUseCase {
 }
 
 /* --- DOC ---
-  Returns a bookmark within a list, except when
-  (1) The bookmark or the list are private, and the user is not in the list
+  Returns a bookmark within a list
+  Exceptions:
+    (1) The bookmark or the list are private, and the user is not in the list
 */

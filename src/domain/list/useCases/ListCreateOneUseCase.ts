@@ -37,6 +37,7 @@ export class ListCreateOneUseCase implements IListCreateOneUseCase {
 }
 
 /* --- DOC ---
-  Creates a list, if:
-    (1) List exists
+  Creates a list
+  Exceptions
+    (1) List doesn't exist
 */

@@ -33,7 +33,7 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
       domain,
       userId: session?.id,
     });
-    if (!!bookmarkExist) throw new RequestError('Bookmark already exists', 409, { message: '409 Conflict' }); // (1) (2)
+    if (!!bookmarkExist) throw new RequestError('Bookmark already exists', 409, { message: '409 Conflict' }); // (1)
 
     const result = await this.userRepo.userBookmarkCreate({ ...formattedUserBookmarkCreateRequest, userId: session.id });
 
@@ -47,7 +47,7 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
 }
 
 /* --- DOC ---
-  Creates a bookmark when:
-    (1) User is logged in
-    (2) Bookmark don't exist for this user
+  Creates a a bookmark
+  Exeptions
+    (1) Bookmark don't exist for this user
 */

@@ -38,7 +38,7 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
   }
 }
 /* --- DOC ---
-  Deletes a bookmark when:
-    (1) User is logged in
-    (2) Bookmark is owned by user
+  Deletes a bookmark
+  Exceptions
+    (1) Bookmark is not owned by user
 */

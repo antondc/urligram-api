@@ -27,9 +27,10 @@ export class UserListGetAllPublicUseCase implements IUserListGetAllPublicUseCase
 }
 
 /* --- DOC ---
-  Returns a collection of lists, except when
+  Returns a collection of lists
+  Exceptions:
     (1) There is no user
-  A list qualify for the collection if (MySQL)
-    (2) Is public
-    (3) Is private but user is within it
+  Returns
+    (2) List is public
+    (3) List is private but user is within it
 */

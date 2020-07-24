@@ -22,8 +22,5 @@ export class LinkGetAllPublicUseCase implements ILinkGetAllPublicUseCase {
 }
 
 /* --- DOC ---
-  Returns a collection of links
-  A link qualify for the collection if (MySQL)
-    (2) Is public
-    (3) Is private but user is owner of it
+  Returns a collection of public links
 */

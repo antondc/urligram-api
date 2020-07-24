@@ -21,7 +21,7 @@ export class UserBookmarkDeleteOneUseCase implements IUserBookmarkDeleteOneUseCa
       bookmarkId,
       userId: session?.id,
     });
-    if (!result) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' }); // (1) (2)
+    if (!result) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' }); // (1)
 
     const response = await this.userRepo.userBookmarkDeleteOne({ bookmarkId, userId: session?.id });
 
@@ -30,7 +30,7 @@ export class UserBookmarkDeleteOneUseCase implements IUserBookmarkDeleteOneUseCa
 }
 
 /* --- DOC ---
-  Deletes a bookmark when:
-    (1) User is logged in
-    (2) Bookmark exist for this user
+  Deletes a bookmark:
+  Exceptions
+    (1) Bookmark doesn't exist for this user
 */

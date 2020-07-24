@@ -16,8 +16,8 @@ export class LinkListGetAllPublicUseCase implements ILinkListGetAllPublicUseCase
 
   public async execute(linkListGetAllPublicRequest: ILinkListGetAllPublicRequest): Promise<ILinkListGetAllPublicResponse> {
     const { linkId, session } = linkListGetAllPublicRequest;
-    const result = await this.linkRepo.linkListGetAllPublic({ linkId, userId: session?.id });
 
+    const result = await this.linkRepo.linkListGetAllPublic({ linkId, userId: session?.id });
     if (!result) throw new RequestError('There are no links in this list', 404, { message: '404 Not Found' });
 
     return result;
@@ -25,7 +25,7 @@ export class LinkListGetAllPublicUseCase implements ILinkListGetAllPublicUseCase
 }
 
 /* --- DOC ---
-  Returns a collection of lists related to a link, when:
+  Returns a collection of public lists related to a public link:
     (1) Bookmark is public
     (2) Bookmark is owned by user
 */
