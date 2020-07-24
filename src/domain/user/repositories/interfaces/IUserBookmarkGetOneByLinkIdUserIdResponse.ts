@@ -1,3 +1,3 @@
-import { Bookmark } from '@domain/bookmarks/entities/Bookmark';
+import { Bookmark } from '@domain/bookmark/entities/Bookmark';
 
 export type IUserBookmarkGetOneByLinkIdUserIdResponse = Bookmark;

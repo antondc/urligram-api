@@ -1,4 +1,4 @@
-import { Bookmark } from '@domain/bookmarks/entities/Bookmark';
+import { Bookmark } from '@domain/bookmark/entities/Bookmark';
 
 export class Link {
   id: string;

@@ -1,3 +1,5 @@
+import { IListBookmarkCreateOneRequest } from './interfaces/IListBookmarkCreateOneRequest';
+import { IListBookmarkCreateOneResponse } from './interfaces/IListBookmarkCreateOneResponse';
 import { IListBookmarkGetAllRequest } from './interfaces/IListBookmarkGetAllRequest';
 import { IListBookmarkGetAllResponse } from './interfaces/IListBookmarkGetAllResponse';
 import { IListBookmarkGetOneRequest } from './interfaces/IListBookmarkGetOneRequest';
@@ -23,4 +25,5 @@ export interface IListRepo {
   listCreateOne: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
   listUpdateOne: (listUpdateOneRequestDTO: IListUpdateOneRequest) => Promise<IListUpdateOneResponse>;
   listBookmarkGetAll: (listBookmarkGetAllRequestDTO: IListBookmarkGetAllRequest) => Promise<IListBookmarkGetAllResponse>;
+  listBookmarkCreateOne: (listBookmarkCreateOneRequestDTO: IListBookmarkCreateOneRequest) => Promise<IListBookmarkCreateOneResponse>;
 }

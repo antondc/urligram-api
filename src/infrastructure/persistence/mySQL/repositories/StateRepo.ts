@@ -50,6 +50,7 @@ export class StateRepo {
   private userBookmarkUpdateProcedure: string;
   private userBookmarkDeleteOneProcedure: string;
   private userListGetAllPublicProcedure: string;
+  private bookmarkGetOneProcedure: string;
   private linkGetOneProcedure: string;
   private linkGetAllPublicProcedure: string;
   private linkListGetAllPublicProcedure: string;
@@ -60,6 +61,7 @@ export class StateRepo {
   private listUpdateOneProcedure: string;
   private listBookmarkGetOneProcedure: string;
   private listBookmarkGetAllProcedure: string;
+  private listBookmarkCreateOneProcedure: string;
   private listUserGetOneByListNameProcedure: string;
   private listUserGetOneByListIdProcedure: string;
   private tagGetAllProcedure: string;
@@ -131,6 +133,7 @@ export class StateRepo {
     this.userBookmarkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkUpdate.sql')).toString();
     this.userBookmarkDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkDeleteOne.sql')).toString();
     this.userListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAllPublic.sql')).toString();
+    this.bookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetOne.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAllPublic.sql')).toString();
     this.linkListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAllPublic.sql')).toString();
@@ -141,6 +144,7 @@ export class StateRepo {
     this.listUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUpdateOne.sql')).toString();
     this.listBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetOne.sql')).toString();
     this.listBookmarkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetAll.sql')).toString();
+    this.listBookmarkCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkCreateOne.sql')).toString();
     this.listUserGetOneByListNameProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetOneByListName.sql')).toString();
     this.listUserGetOneByListIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetOneByListId.sql')).toString();
     this.tagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAll.sql')).toString();
@@ -213,6 +217,7 @@ export class StateRepo {
       const createUserBookmarkUpdateProcedure = await mySQL.query(this.userBookmarkUpdateProcedure);
       const createUserBookmarkDeleteOneProcedure = await mySQL.query(this.userBookmarkDeleteOneProcedure);
       const createUserListGetAllPublicProcedure = await mySQL.query(this.userListGetAllPublicProcedure);
+      const createBookmarkGetoneProcedure = await mySQL.query(this.bookmarkGetOneProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllPublicProcedure = await mySQL.query(this.linkGetAllPublicProcedure);
       const createLinkListGetAllPublicProcedure = await mySQL.query(this.linkListGetAllPublicProcedure);
@@ -223,6 +228,7 @@ export class StateRepo {
       const createListUpdateOneProcedure = await mySQL.query(this.listUpdateOneProcedure);
       const createListBookmarkGetOneProcedure = await mySQL.query(this.listBookmarkGetOneProcedure);
       const createListBookmarkGetAllProcedure = await mySQL.query(this.listBookmarkGetAllProcedure);
+      const createListBookmarkCreateOneProcedure = await mySQL.query(this.listBookmarkCreateOneProcedure);
       const createListUserGetOneByListNameProcedure = await mySQL.query(this.listUserGetOneByListNameProcedure);
       const createListUserGetOneByListIdProcedure = await mySQL.query(this.listUserGetOneByListIdProcedure);
       const createTagGetAllProcedure = await mySQL.query(this.tagGetAllProcedure);
@@ -292,6 +298,8 @@ export class StateRepo {
         ...createUserBookmarkCreateProcedure,
         ...createUserBookmarkUpdateProcedure,
         ...createUserBookmarkDeleteOneProcedure,
+        ...createUserListGetAllPublicProcedure,
+        ...createBookmarkGetoneProcedure,
         ...createLinkGetOneProcedure,
         ...createLinkGetAllPublicProcedure,
         ...createLinkListGetAllPublicProcedure,
@@ -302,9 +310,9 @@ export class StateRepo {
         ...createListUpdateOneProcedure,
         ...createListBookmarkGetOneProcedure,
         ...createListBookmarkGetAllProcedure,
+        ...createListBookmarkCreateOneProcedure,
         ...createListUserGetOneByListNameProcedure,
         ...createListUserGetOneByListIdProcedure,
-        ...createUserListGetAllPublicProcedure,
         ...createTagGetAllProcedure,
 
         // Insert data
