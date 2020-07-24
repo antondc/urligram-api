@@ -1,4 +1,3 @@
-import { Bookmark } from '@domain/bookmarks/entities/Bookmark';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IListBookmarkGetOneRequest } from './interfaces/IListBookmarkGetOneRequest';
@@ -25,7 +24,6 @@ export class ListBookmarkGetOneUseCase implements IListBookmarkGetOneUseCase {
     const bookmark = await this.listRepo.listBookmarkGetOne({
       listId,
       bookmarkId,
-      sessionId: session?.id,
     });
     if (!bookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 

@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 
+import { ListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGetAllUseCase';
 import { ListBookmarkGetOneUseCase } from '@domain/list/useCases/ListBookmarkGetOneUseCase';
 import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
 import { ListGetAllPublicUseCase } from '@domain/list/useCases/ListGetAllPublicUseCase';
@@ -7,6 +8,7 @@ import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
+import { ListBookmarkGetAllController } from '../controllers/ListBookmarkGetAllController';
 import { ListBookmarkGetOneController } from '../controllers/ListBookmarkGetOneController';
 import { ListCreateOneController } from '../controllers/ListCreateOneController';
 import { ListGetAllPublicController } from '../controllers/ListGetAllPublicController';
@@ -72,6 +74,16 @@ ListsRoute.put('/:listId', async (req: Request, res: Response, next: NextFunctio
   const listUpdateController = new ListUpdateOneController(listUpdateUseCase);
 
   const response = await listUpdateController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.get('/:listId/bookmarks', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listBookmarksUseCase = new ListBookmarkGetAllUseCase(listRepo);
+  const listBookmarksController = new ListBookmarkGetAllController(listBookmarksUseCase);
+
+  const response = await listBookmarksController.execute(req, res, next);
 
   return response;
 });

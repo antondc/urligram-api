@@ -114,4 +114,20 @@ export class ListRepo implements IListRepo {
       await mySQL.close();
     }
   }
+
+  public async listBookmarkGetAll(listBookmarkGetAllRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const listBookmarkGetAllQuery = `CALL list_bookmark_get_all('${JSON.stringify(listBookmarkGetAllRequest)}')`;
+
+      const [results] = await mySQL.query(listBookmarkGetAllQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
