@@ -11,6 +11,7 @@ import { ListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase
 import { ListUserCreateOneUseCase } from '@domain/list/useCases/ListUserCreateOneUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
+import { ListUserUpdateOneUseCase } from '@domain/list/useCases/ListUserUpdateOneUseCase';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
@@ -25,6 +26,7 @@ import { ListUpdateOneController } from '../controllers/ListUpdateOneController'
 import { ListUserCreateOneController } from '../controllers/ListUserCreateOneController';
 import { ListUserGetAllController } from '../controllers/ListUserGetAllController';
 import { ListUserGetOneController } from '../controllers/ListUserGetOneController';
+import { ListUserUpdateOneController } from '../controllers/ListUserUpdateOneController';
 
 const ListsRoute = express.Router();
 
@@ -95,6 +97,17 @@ ListsRoute.post('/:listId/users/:userId', async (req: Request, res: Response, ne
   const listUserCreateOneController = new ListUserCreateOneController(listUserCreateOneUseCase);
 
   const response = await listUserCreateOneController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.put('/:listId/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const userRepo = new UserRepo();
+  const listUserUpdateOneUseCase = new ListUserUpdateOneUseCase(listRepo, userRepo);
+  const listUserUpdateOneController = new ListUserUpdateOneController(listUserUpdateOneUseCase);
+
+  const response = await listUserUpdateOneController.execute(req, res, next);
 
   return response;
 });

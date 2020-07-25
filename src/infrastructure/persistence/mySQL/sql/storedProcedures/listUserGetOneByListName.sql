@@ -22,7 +22,8 @@ BEGIN
    user.order,
    user.createdAt,
    user.updatedAt,
-  user_list.userRole
+  user_list.userRole,
+  user_list.userListStatus
   FROM `user`
   INNER JOIN user_list ON user_list.user_id = user.id
   INNER JOIN `list` ON user_list.list_id = list.id

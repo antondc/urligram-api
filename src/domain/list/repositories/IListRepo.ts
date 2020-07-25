@@ -21,6 +21,8 @@ import { IListUserGetOneByListIdRequest } from './interfaces/IListUserGetOneByLi
 import { IListUserGetOneByListIdResponse } from './interfaces/IListUserGetOneByListIdResponse';
 import { IListUserGetOneByListNameRequest } from './interfaces/IListUserGetOneByListNameRequest';
 import { IListUserGetOneByListNameResponse } from './interfaces/IListUserGetOneByListNameResponse';
+import { IListUserUpdateOneRequest } from './interfaces/IListUserUpdateOneRequest';
+import { IListUserUpdateOneResponse } from './interfaces/IListUserUpdateOneResponse';
 
 export interface IListRepo {
   listGetOneById: (listGetOneByIdRequest: IListGetOneByIdRequest) => Promise<IListGetOneByIdResponse>;
@@ -30,6 +32,7 @@ export interface IListRepo {
   listUserGetOneByListName: (listUserGetOneRequest: IListUserGetOneByListNameRequest) => Promise<IListUserGetOneByListNameResponse>;
   listUserGetAll: (listUserGetOneRequest: IListUserGetAllRequest) => Promise<IListUserGetAllResponse>;
   listUserCreateOne: (listUserGetOneRequest: IListUserCreateOneRequest) => Promise<IListUserCreateOneResponse>;
+  listUserUpdateOne: (listUserGetOneRequest: IListUserUpdateOneRequest) => Promise<IListUserUpdateOneResponse>;
   listCreateOne: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
   listUpdateOne: (listUpdateOneRequestDTO: IListUpdateOneRequest) => Promise<IListUpdateOneResponse>;
   listBookmarkGetAll: (listBookmarkGetAllRequestDTO: IListBookmarkGetAllRequest) => Promise<IListBookmarkGetAllResponse>;

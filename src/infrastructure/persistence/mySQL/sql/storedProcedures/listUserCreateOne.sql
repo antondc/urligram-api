@@ -9,18 +9,18 @@ BEGIN
   -- Retrieve values from JSON
   SET @list_id          = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listId'));
   SET @user_id          = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
-  SET @status           = JSON_UNQUOTE(JSON_EXTRACT(data, '$.status'));
+  SET @user_list_status           = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userListStatus'));
 
   -- Upsert into list
   INSERT INTO user_list (
     user_id,
     list_id,
-    status,
+    userListStatus,
     userRole
   ) VALUES (
     @user_id,
     @list_id,
-    @status,
+    @user_list_status,
     "reader"
   );
 

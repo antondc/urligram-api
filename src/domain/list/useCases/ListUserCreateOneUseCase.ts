@@ -33,10 +33,10 @@ export class ListUserCreateOneUseCase implements IListUserCreateOneUseCase {
     if (!!list.isPrivate && listSessionUser.userRole !== 'admin')
       throw new RequestError('You have no permission to edit this list', 403, { message: '403 Forbidden' });
 
-    if (!list.isPrivate) await this.listRepo.listUserCreateOne({ listId, userId, status: 'active' });
+    if (!list.isPrivate) await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'active' });
 
     if (!!list.isPrivate && userId !== session?.id && listSessionUser.userRole === 'admin')
-      await this.listRepo.listUserCreateOne({ listId, userId, status: 'pending' });
+      await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending' });
 
     const listUserCreated = await this.listRepo.listUserGetOneByListId({ listId, userId: userId });
 
