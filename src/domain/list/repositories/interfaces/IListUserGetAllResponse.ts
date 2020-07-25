@@ -1,7 +1,7 @@
 import { User } from '@domain/user/entities/User';
 
 interface UserWithUserListRole extends User {
-  userRole?: string;
+  userListRole?: string;
 }
 
-export type IListUserGetOneByListIdResponse = UserWithUserListRole;
+export type IListUserGetAllResponse = UserWithUserListRole[];
