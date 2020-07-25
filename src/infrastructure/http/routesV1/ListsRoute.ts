@@ -9,6 +9,7 @@ import { ListGetAllPublicUseCase } from '@domain/list/useCases/ListGetAllPublicU
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
 import { ListUserCreateOneUseCase } from '@domain/list/useCases/ListUserCreateOneUseCase';
+import { ListUserDeleteOneUseCase } from '@domain/list/useCases/ListUserDeleteOneUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
 import { ListUserUpdateOneUseCase } from '@domain/list/useCases/ListUserUpdateOneUseCase';
@@ -24,6 +25,7 @@ import { ListGetAllPublicController } from '../controllers/ListGetAllPublicContr
 import { ListGetOneController } from '../controllers/ListGetOneController';
 import { ListUpdateOneController } from '../controllers/ListUpdateOneController';
 import { ListUserCreateOneController } from '../controllers/ListUserCreateOneController';
+import { ListUserDeleteOneController } from '../controllers/ListUserDeleteOneController';
 import { ListUserGetAllController } from '../controllers/ListUserGetAllController';
 import { ListUserGetOneController } from '../controllers/ListUserGetOneController';
 import { ListUserUpdateOneController } from '../controllers/ListUserUpdateOneController';
@@ -108,6 +110,17 @@ ListsRoute.put('/:listId/users/:userId', async (req: Request, res: Response, nex
   const listUserUpdateOneController = new ListUserUpdateOneController(listUserUpdateOneUseCase);
 
   const response = await listUserUpdateOneController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.delete('/:listId/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const userRepo = new UserRepo();
+  const listUserDeleteOneUseCase = new ListUserDeleteOneUseCase(listRepo, userRepo);
+  const listUserDeleteOneController = new ListUserDeleteOneController(listUserDeleteOneUseCase);
+
+  const response = await listUserDeleteOneController.execute(req, res, next);
 
   return response;
 });
