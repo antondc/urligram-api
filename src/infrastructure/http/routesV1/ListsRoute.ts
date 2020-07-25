@@ -8,10 +8,12 @@ import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase
 import { ListGetAllPublicUseCase } from '@domain/list/useCases/ListGetAllPublicUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
+import { ListUserCreateOneUseCase } from '@domain/list/useCases/ListUserCreateOneUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
+import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { ListBookmarkCreateOneController } from '../controllers/ListBookmarkCreateOneController';
 import { ListBookmarkDeleteOneController } from '../controllers/ListBookmarkDeleteOneController';
 import { ListBookmarkGetAllController } from '../controllers/ListBookmarkGetAllController';
@@ -20,6 +22,7 @@ import { ListCreateOneController } from '../controllers/ListCreateOneController'
 import { ListGetAllPublicController } from '../controllers/ListGetAllPublicController';
 import { ListGetOneController } from '../controllers/ListGetOneController';
 import { ListUpdateOneController } from '../controllers/ListUpdateOneController';
+import { ListUserCreateOneController } from '../controllers/ListUserCreateOneController';
 import { ListUserGetAllController } from '../controllers/ListUserGetAllController';
 import { ListUserGetOneController } from '../controllers/ListUserGetOneController';
 
@@ -81,6 +84,17 @@ ListsRoute.get('/:listId/users', async (req: Request, res: Response, next: NextF
   const listUsersGetAllController = new ListUserGetAllController(listUsersGetAllUseCase);
 
   const response = await listUsersGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.post('/:listId/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const userRepo = new UserRepo();
+  const listUserCreateOneUseCase = new ListUserCreateOneUseCase(listRepo, userRepo);
+  const listUserCreateOneController = new ListUserCreateOneController(listUserCreateOneUseCase);
+
+  const response = await listUserCreateOneController.execute(req, res, next);
 
   return response;
 });

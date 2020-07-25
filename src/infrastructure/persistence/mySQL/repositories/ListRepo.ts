@@ -99,6 +99,22 @@ export class ListRepo implements IListRepo {
     }
   }
 
+  public async listUserCreateOne(listUserCreateOneRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const listUserCreateOneQuery = `CALL list_user_create_one('${JSON.stringify(listUserCreateOneRequest)}')`;
+
+      const [[results]] = await mySQL.query(listUserCreateOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async listCreateOne(listCreateOneRequest) {
     const mySQL = new MySQL();
 
