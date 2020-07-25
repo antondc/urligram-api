@@ -1,5 +1,7 @@
 import { IListBookmarkCreateOneRequest } from './interfaces/IListBookmarkCreateOneRequest';
 import { IListBookmarkCreateOneResponse } from './interfaces/IListBookmarkCreateOneResponse';
+import { IListBookmarkDeleteOneRequest } from './interfaces/IListBookmarkDeleteOneRequest';
+import { IListBookmarkDeleteOneResponse } from './interfaces/IListBookmarkDeleteOneResponse';
 import { IListBookmarkGetAllRequest } from './interfaces/IListBookmarkGetAllRequest';
 import { IListBookmarkGetAllResponse } from './interfaces/IListBookmarkGetAllResponse';
 import { IListBookmarkGetOneRequest } from './interfaces/IListBookmarkGetOneRequest';
@@ -26,4 +28,5 @@ export interface IListRepo {
   listUpdateOne: (listUpdateOneRequestDTO: IListUpdateOneRequest) => Promise<IListUpdateOneResponse>;
   listBookmarkGetAll: (listBookmarkGetAllRequestDTO: IListBookmarkGetAllRequest) => Promise<IListBookmarkGetAllResponse>;
   listBookmarkCreateOne: (listBookmarkCreateOneRequestDTO: IListBookmarkCreateOneRequest) => Promise<IListBookmarkCreateOneResponse>;
+  listBookmarkDeleteOne: (listBookmarkDeleteOneRequestDTO: IListBookmarkDeleteOneRequest) => Promise<IListBookmarkDeleteOneResponse>;
 }

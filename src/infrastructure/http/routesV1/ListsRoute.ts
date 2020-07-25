@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { ListBookmarkCreateOneUseCase } from '@domain/list/useCases/ListBookmarkCreateOneUseCase';
+import { ListBookmarkDeleteOneUseCase } from '@domain/list/useCases/ListBookmarkDeleteOneUseCase';
 import { ListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGetAllUseCase';
 import { ListBookmarkGetOneUseCase } from '@domain/list/useCases/ListBookmarkGetOneUseCase';
 import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
@@ -11,6 +12,7 @@ import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCa
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { ListBookmarkCreateOneController } from '../controllers/ListBookmarkCreateOneController';
+import { ListBookmarkDeleteOneController } from '../controllers/ListBookmarkDeleteOneController';
 import { ListBookmarkGetAllController } from '../controllers/ListBookmarkGetAllController';
 import { ListBookmarkGetOneController } from '../controllers/ListBookmarkGetOneController';
 import { ListCreateOneController } from '../controllers/ListCreateOneController';
@@ -101,4 +103,16 @@ ListsRoute.post('/:listId/bookmarks/:bookmarkId', async (req: Request, res: Resp
 
   return response;
 });
+
+ListsRoute.delete('/:listId/bookmarks/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const bookmarkRepo = new BookmarkRepo();
+  const listBookmarkDeleteOneUseCase = new ListBookmarkDeleteOneUseCase(listRepo, bookmarkRepo);
+  const listBookmarkDeleteOneController = new ListBookmarkDeleteOneController(listBookmarkDeleteOneUseCase);
+
+  const response = await listBookmarkDeleteOneController.execute(req, res, next);
+
+  return response;
+});
+
 export { ListsRoute };

@@ -146,4 +146,20 @@ export class ListRepo implements IListRepo {
       await mySQL.close();
     }
   }
+
+  public async listBookmarkDeleteOne(listBookmarkDeleteOneRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const listBookmarkDeleteOneQuery = `CALL list_bookmark_delete_one('${JSON.stringify(listBookmarkDeleteOneRequest)}')`;
+
+      const [[results]] = await mySQL.query(listBookmarkDeleteOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

@@ -62,6 +62,7 @@ export class StateRepo {
   private listBookmarkGetOneProcedure: string;
   private listBookmarkGetAllProcedure: string;
   private listBookmarkCreateOneProcedure: string;
+  private listBookmarkDeleteOneProcedure: string;
   private listUserGetOneByListNameProcedure: string;
   private listUserGetOneByListIdProcedure: string;
   private tagGetAllProcedure: string;
@@ -145,6 +146,7 @@ export class StateRepo {
     this.listBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetOne.sql')).toString();
     this.listBookmarkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetAll.sql')).toString();
     this.listBookmarkCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkCreateOne.sql')).toString();
+    this.listBookmarkDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkDeleteOne.sql')).toString();
     this.listUserGetOneByListNameProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetOneByListName.sql')).toString();
     this.listUserGetOneByListIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserGetOneByListId.sql')).toString();
     this.tagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAll.sql')).toString();
@@ -229,6 +231,7 @@ export class StateRepo {
       const createListBookmarkGetOneProcedure = await mySQL.query(this.listBookmarkGetOneProcedure);
       const createListBookmarkGetAllProcedure = await mySQL.query(this.listBookmarkGetAllProcedure);
       const createListBookmarkCreateOneProcedure = await mySQL.query(this.listBookmarkCreateOneProcedure);
+      const createListBookmarkDeleteOneProcedure = await mySQL.query(this.listBookmarkDeleteOneProcedure);
       const createListUserGetOneByListNameProcedure = await mySQL.query(this.listUserGetOneByListNameProcedure);
       const createListUserGetOneByListIdProcedure = await mySQL.query(this.listUserGetOneByListIdProcedure);
       const createTagGetAllProcedure = await mySQL.query(this.tagGetAllProcedure);
@@ -311,6 +314,7 @@ export class StateRepo {
         ...createListBookmarkGetOneProcedure,
         ...createListBookmarkGetAllProcedure,
         ...createListBookmarkCreateOneProcedure,
+        ...createListBookmarkDeleteOneProcedure,
         ...createListUserGetOneByListNameProcedure,
         ...createListUserGetOneByListIdProcedure,
         ...createTagGetAllProcedure,
