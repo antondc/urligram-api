@@ -34,4 +34,20 @@ export class TagRepo implements ITagRepo {
       await mySQL.close();
     }
   }
+
+  public async tagBookmarkGetAllPublic(tagBookmarkGetAllPublicRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const tagBookmarkGetAllPublicQuery = `CALL tag_bookmark_get_all('${JSON.stringify(tagBookmarkGetAllPublicRequest)}')`;
+
+      const [results] = await mySQL.query(tagBookmarkGetAllPublicQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
