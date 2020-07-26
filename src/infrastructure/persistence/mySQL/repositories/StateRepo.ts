@@ -71,6 +71,7 @@ export class StateRepo {
   private listUserUpdateOneProcedure: string;
   private listUserDeleteOneProcedure: string;
   private tagGetAllProcedure: string;
+  private tagListGetAllPublicProcedure: string;
 
   // Data
   private domainData: string;
@@ -160,6 +161,7 @@ export class StateRepo {
     this.listUserUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserUpdateOne.sql')).toString();
     this.listUserDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserDeleteOne.sql')).toString();
     this.tagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAll.sql')).toString();
+    this.tagListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagListGetAllPublic.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -250,6 +252,7 @@ export class StateRepo {
       const createListUserUpdateOneProcedure = await mySQL.query(this.listUserUpdateOneProcedure);
       const createListUserDeleteOneProcedure = await mySQL.query(this.listUserDeleteOneProcedure);
       const createTagGetAllProcedure = await mySQL.query(this.tagGetAllProcedure);
+      const createTagListGetAllPublicProcedure = await mySQL.query(this.tagListGetAllPublicProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -338,6 +341,7 @@ export class StateRepo {
         ...createListUserUpdateOneProcedure,
         ...createListUserDeleteOneProcedure,
         ...createTagGetAllProcedure,
+        ...createTagListGetAllPublicProcedure,
 
         // Insert data
         ...insertDomainData,

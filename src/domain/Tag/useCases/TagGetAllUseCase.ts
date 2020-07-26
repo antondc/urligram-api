@@ -1,5 +1,5 @@
 import { ITagRepo } from '@domain/tag/repositories/ITagRepo';
-import { ITagGetAllResponse } from './interfaces/TagGetAllResponse';
+import { ITagGetAllResponse } from './interfaces/ITagGetAllResponse';
 
 export interface ITagGetAllUseCase {
   execute: () => Promise<ITagGetAllResponse>;

@@ -18,4 +18,20 @@ export class TagRepo implements ITagRepo {
       await mySQL.close();
     }
   }
+
+  public async tagListGetAllPublic(tagListGetAllPublicRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const tagListGetAllPublicQuery = `CALL tag_list_get_all('${JSON.stringify(tagListGetAllPublicRequest)}')`;
+
+      const [results] = await mySQL.query(tagListGetAllPublicQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
