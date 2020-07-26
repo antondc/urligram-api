@@ -51,6 +51,7 @@ export class StateRepo {
   private userBookmarkDeleteOneProcedure: string;
   private userListGetAllPublicProcedure: string;
   private bookmarkGetOneProcedure: string;
+  private bookmarkGetAllPublicProcedure: string;
   private linkGetOneProcedure: string;
   private linkGetAllPublicProcedure: string;
   private linkListGetAllPublicProcedure: string;
@@ -143,6 +144,7 @@ export class StateRepo {
     this.userBookmarkDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkDeleteOne.sql')).toString();
     this.userListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAllPublic.sql')).toString();
     this.bookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetOne.sql')).toString();
+    this.bookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetAllPublic.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAllPublic.sql')).toString();
     this.linkListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAllPublic.sql')).toString();
@@ -235,7 +237,8 @@ export class StateRepo {
       const createUserBookmarkUpdateProcedure = await mySQL.query(this.userBookmarkUpdateProcedure);
       const createUserBookmarkDeleteOneProcedure = await mySQL.query(this.userBookmarkDeleteOneProcedure);
       const createUserListGetAllPublicProcedure = await mySQL.query(this.userListGetAllPublicProcedure);
-      const createBookmarkGetoneProcedure = await mySQL.query(this.bookmarkGetOneProcedure);
+      const createBookmarkGetOneProcedure = await mySQL.query(this.bookmarkGetOneProcedure);
+      const createBookmarkGetAllPublicProcedure = await mySQL.query(this.bookmarkGetAllPublicProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllPublicProcedure = await mySQL.query(this.linkGetAllPublicProcedure);
       const createLinkListGetAllPublicProcedure = await mySQL.query(this.linkListGetAllPublicProcedure);
@@ -326,7 +329,8 @@ export class StateRepo {
         ...createUserBookmarkUpdateProcedure,
         ...createUserBookmarkDeleteOneProcedure,
         ...createUserListGetAllPublicProcedure,
-        ...createBookmarkGetoneProcedure,
+        ...createBookmarkGetOneProcedure,
+        ...createBookmarkGetAllPublicProcedure,
         ...createLinkGetOneProcedure,
         ...createLinkGetAllPublicProcedure,
         ...createLinkListGetAllPublicProcedure,

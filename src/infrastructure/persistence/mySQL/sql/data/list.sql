@@ -1,7 +1,7 @@
 INSERT INTO `list` (
   `id`, `name`, `description`, `isPrivate`, `userId`, `createdAt`, `updatedAt`
 ) VALUES (
-  1, 'My fantastic list', 'This is our list', true, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', DEFAULT, DEFAULT
+  1, 'My fantastic list', 'This is our list', false, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', DEFAULT, DEFAULT
 );
 
 INSERT INTO `list` (
