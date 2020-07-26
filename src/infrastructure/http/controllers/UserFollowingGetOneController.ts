@@ -21,12 +21,12 @@ export class UserFollowingGetOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userFollowingGetOneRequestDTO: IUserFollowingGetOneRequest = {
+    const userFollowingGetOneRequest: IUserFollowingGetOneRequest = {
       session,
       followedId,
     };
 
-    const response = await this.useCase.execute(userFollowingGetOneRequestDTO);
+    const response = await this.useCase.execute(userFollowingGetOneRequest);
 
     const formattedResponse = {
       links: {

@@ -3,7 +3,7 @@ import { IUserFollowingDeleteRequest } from './interfaces/IUserFollowingDeleteRe
 import { IUserFollowingDeleteResponse } from './interfaces/IUserFollowingDeleteResponse';
 
 export interface IUserFollowingDeleteUseCase {
-  execute: (userFollowingDeleteRequestDTO: IUserFollowingDeleteRequest) => Promise<IUserFollowingDeleteResponse>;
+  execute: (userFollowingDeleteRequest: IUserFollowingDeleteRequest) => Promise<IUserFollowingDeleteResponse>;
 }
 
 export class UserFollowingDeleteUseCase implements IUserFollowingDeleteUseCase {
@@ -13,9 +13,9 @@ export class UserFollowingDeleteUseCase implements IUserFollowingDeleteUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userFollowingDeleteRequestDTO: IUserFollowingDeleteRequest): Promise<IUserFollowingDeleteResponse> {
-    const { session } = userFollowingDeleteRequestDTO;
-    const response = await this.userRepo.userFollowingDelete({ ...userFollowingDeleteRequestDTO, userId: session?.id });
+  public async execute(userFollowingDeleteRequest: IUserFollowingDeleteRequest): Promise<IUserFollowingDeleteResponse> {
+    const { session } = userFollowingDeleteRequest;
+    const response = await this.userRepo.userFollowingDelete({ ...userFollowingDeleteRequest, userId: session?.id });
 
     return response;
   }

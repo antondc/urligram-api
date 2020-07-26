@@ -21,13 +21,13 @@ export class ListUserGetOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listUserGetOneDTO: IListUserGetOneRequest = {
+    const listUserGetOne: IListUserGetOneRequest = {
       listId: Number(listId),
       userId,
       session,
     };
 
-    const response = await this.useCase.execute(listUserGetOneDTO);
+    const response = await this.useCase.execute(listUserGetOne);
 
     const formattedResponse = {
       links: {

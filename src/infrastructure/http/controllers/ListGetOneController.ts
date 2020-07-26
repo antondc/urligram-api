@@ -21,12 +21,12 @@ export class ListGetOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listGetOneRequestDTO: IListGetOneRequest = {
+    const listGetOneRequest: IListGetOneRequest = {
       listId: Number(listId),
       session,
     };
 
-    const response = await this.useCase.execute(listGetOneRequestDTO);
+    const response = await this.useCase.execute(listGetOneRequest);
 
     const formattedResponse = {
       lists: {

@@ -3,7 +3,7 @@ import { IUserFollowerGetAllRequest } from './interfaces/IUserFollowerGetAllRequ
 import { IUserFollowerGetAllResponse } from './interfaces/IUserFollowerGetAllResponse';
 
 export interface IUserFollowerGetAllUseCase {
-  execute: (userFollowerGetAllDTO: IUserFollowerGetAllRequest) => Promise<IUserFollowerGetAllResponse>;
+  execute: (userFollowerGetAll: IUserFollowerGetAllRequest) => Promise<IUserFollowerGetAllResponse>;
 }
 
 export class UserFollowerGetAllUseCase implements IUserFollowerGetAllUseCase {
@@ -13,8 +13,8 @@ export class UserFollowerGetAllUseCase implements IUserFollowerGetAllUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userFollowerGetAllDTO: IUserFollowerGetAllRequest): Promise<IUserFollowerGetAllResponse> {
-    const response = await this.userRepo.userFollowerGetAll(userFollowerGetAllDTO);
+  public async execute(userFollowerGetAll: IUserFollowerGetAllRequest): Promise<IUserFollowerGetAllResponse> {
+    const response = await this.userRepo.userFollowerGetAll(userFollowerGetAll);
 
     return response;
   }

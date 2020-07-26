@@ -11,17 +11,17 @@ export class User {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(userDTO?) {
-    this.id = userDTO?.id;
-    this.name = userDTO?.name;
-    this.level = userDTO?.level;
-    this.email = userDTO?.email;
-    this.status = userDTO?.status;
-    this.statement = userDTO?.statement;
-    this.location = userDTO?.location;
-    this.password = userDTO?.password;
-    this.order = userDTO?.order;
-    this.createdAt = userDTO?.createdAt;
-    this.updatedAt = userDTO?.updatedAt;
+  constructor(user?) {
+    this.id = user?.id;
+    this.name = user?.name;
+    this.level = user?.level;
+    this.email = user?.email;
+    this.status = user?.status;
+    this.statement = user?.statement;
+    this.location = user?.location;
+    this.password = user?.password;
+    this.order = user?.order;
+    this.createdAt = user?.createdAt;
+    this.updatedAt = user?.updatedAt;
   }
 }

@@ -21,14 +21,14 @@ export class UserPasswordUpdateController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userPasswordUpdateRequestDTO: IUserPasswordUpdateRequest = {
+    const userPasswordUpdateRequest: IUserPasswordUpdateRequest = {
       session,
       password,
       newPassword,
       newPasswordRepeated,
     };
 
-    const response = await this.useCase.execute(userPasswordUpdateRequestDTO);
+    const response = await this.useCase.execute(userPasswordUpdateRequest);
 
     const formattedResponse = {
       links: {

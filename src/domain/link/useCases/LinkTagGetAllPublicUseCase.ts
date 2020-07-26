@@ -4,7 +4,7 @@ import { ILinkTagGetAllRequest } from './interfaces/ILinkTagGetAllRequest';
 import { ILinkTagGetAllResponse } from './interfaces/ILinkTagGetAllResponse';
 
 export interface ILinkTagGetAllUseCase {
-  execute: (linkTagGetAllRequestDTO: ILinkTagGetAllRequest) => Promise<ILinkTagGetAllResponse>;
+  execute: (linkTagGetAllRequest: ILinkTagGetAllRequest) => Promise<ILinkTagGetAllResponse>;
 }
 
 export class LinkTagGetAllUseCase implements ILinkTagGetAllUseCase {
@@ -14,8 +14,8 @@ export class LinkTagGetAllUseCase implements ILinkTagGetAllUseCase {
     this.linkRepo = linkRepo;
   }
 
-  public async execute(linkTagGetAllRequestDTO: ILinkTagGetAllRequest): Promise<ILinkTagGetAllResponse> {
-    const result = await this.linkRepo.linkTagGetAll(linkTagGetAllRequestDTO);
+  public async execute(linkTagGetAllRequest: ILinkTagGetAllRequest): Promise<ILinkTagGetAllResponse> {
+    const result = await this.linkRepo.linkTagGetAll(linkTagGetAllRequest);
 
     if (!result) throw new RequestError('Link link does not exist', 404, { message: '404 Not Found' });
 

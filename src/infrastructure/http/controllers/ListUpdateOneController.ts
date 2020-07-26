@@ -22,7 +22,7 @@ export class ListUpdateOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listUpdateOneRequestDTO: IListUpdateOneRequest = {
+    const listUpdateOneRequest: IListUpdateOneRequest = {
       listId: Number(listId),
       name,
       description,
@@ -30,7 +30,7 @@ export class ListUpdateOneController extends BaseController {
       session,
     };
 
-    const response = await this.useCase.execute(listUpdateOneRequestDTO);
+    const response = await this.useCase.execute(listUpdateOneRequest);
 
     const formattedResponse = {
       lists: {

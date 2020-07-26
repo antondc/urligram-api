@@ -3,11 +3,11 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class LanguageRepo implements ILanguageRepo {
-  public async languageGetOne(languageGetOneRequestDTO) {
+  public async languageGetOne(languageGetOneRequest) {
     const mySQL = new MySQL();
 
     try {
-      const getLanguageQuery = `CALL language_get_one('${JSON.stringify(languageGetOneRequestDTO)}')`;
+      const getLanguageQuery = `CALL language_get_one('${JSON.stringify(languageGetOneRequest)}')`;
 
       const [[language]] = await mySQL.query(getLanguageQuery);
 

@@ -21,13 +21,13 @@ export class ListUserCreateOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listUserCreateOneDTO: IListUserCreateOneRequest = {
+    const listUserCreateOne: IListUserCreateOneRequest = {
       listId: Number(listId),
       userId,
       session,
     };
 
-    const response = await this.useCase.execute(listUserCreateOneDTO);
+    const response = await this.useCase.execute(listUserCreateOne);
 
     const formattedResponse = {
       links: {

@@ -3,7 +3,7 @@ import { IUserBookmarkGetAllRequest } from './interfaces/IUserBookmarkGetAllRequ
 import { IUserBookmarkGetAllResponse } from './interfaces/IUserBookmarkGetAllResponse';
 
 export interface IUserBookmarkGetAllUseCase {
-  execute: (userBookmarkGetAllRequestDTO: IUserBookmarkGetAllRequest) => Promise<IUserBookmarkGetAllResponse>;
+  execute: (userBookmarkGetAllRequest: IUserBookmarkGetAllRequest) => Promise<IUserBookmarkGetAllResponse>;
 }
 
 export class UserBookmarkGetAllUseCase implements IUserBookmarkGetAllUseCase {
@@ -13,8 +13,8 @@ export class UserBookmarkGetAllUseCase implements IUserBookmarkGetAllUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userBookmarkGetAllRequestDTO: IUserBookmarkGetAllRequest): Promise<IUserBookmarkGetAllResponse> {
-    const { userId, session } = userBookmarkGetAllRequestDTO;
+  public async execute(userBookmarkGetAllRequest: IUserBookmarkGetAllRequest): Promise<IUserBookmarkGetAllResponse> {
+    const { userId, session } = userBookmarkGetAllRequest;
 
     const response = await this.userRepo.userBookmarkGetAll({ userId });
     const filteredResponse = response.filter((item) => session?.id === userId || !item.isPrivate); // (1) (2)

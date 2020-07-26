@@ -3,7 +3,7 @@ import { IUserFollowingGetAllRequest } from './interfaces/IUserFollowingGetAllRe
 import { IUserFollowingGetAllResponse } from './interfaces/IUserFollowingGetAllResponse';
 
 export interface IUserFollowingGetAllUseCase {
-  execute: (getFollowingDTO: IUserFollowingGetAllRequest) => Promise<IUserFollowingGetAllResponse>;
+  execute: (getFollowing: IUserFollowingGetAllRequest) => Promise<IUserFollowingGetAllResponse>;
 }
 
 export class UserFollowingGetAllUseCase implements IUserFollowingGetAllUseCase {
@@ -13,8 +13,8 @@ export class UserFollowingGetAllUseCase implements IUserFollowingGetAllUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(getFollowingDTO: IUserFollowingGetAllRequest): Promise<IUserFollowingGetAllResponse> {
-    const response = await this.userRepo.userFollowingGetAll(getFollowingDTO);
+  public async execute(getFollowing: IUserFollowingGetAllRequest): Promise<IUserFollowingGetAllResponse> {
+    const response = await this.userRepo.userFollowingGetAll(getFollowing);
 
     return response;
   }

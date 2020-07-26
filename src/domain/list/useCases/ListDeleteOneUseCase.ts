@@ -4,7 +4,7 @@ import { IListDeleteOneRequest } from './interfaces/IListDeleteOneRequest';
 import { IListDeleteOneResponse } from './interfaces/IListDeleteOneResponse';
 
 export interface IListDeleteOneUseCase {
-  execute: (listDeleteOneRequestDTO: IListDeleteOneRequest) => Promise<IListDeleteOneResponse>;
+  execute: (listDeleteOneRequest: IListDeleteOneRequest) => Promise<IListDeleteOneResponse>;
 }
 
 export class ListDeleteOneUseCase implements IListDeleteOneUseCase {
@@ -14,8 +14,8 @@ export class ListDeleteOneUseCase implements IListDeleteOneUseCase {
     this.listRepo = listRepo;
   }
 
-  public async execute(listDeleteOneRequestDTO: IListDeleteOneRequest): Promise<IListDeleteOneResponse> {
-    const { session, listId } = listDeleteOneRequestDTO;
+  public async execute(listDeleteOneRequest: IListDeleteOneRequest): Promise<IListDeleteOneResponse> {
+    const { session, listId } = listDeleteOneRequest;
 
     const list = await this.listRepo.listGetOneById({ listId });
     if (!list) throw new RequestError("List doesn't exists", 404, { message: '404 Not Found' });

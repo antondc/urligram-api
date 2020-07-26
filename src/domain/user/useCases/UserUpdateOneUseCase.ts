@@ -6,7 +6,7 @@ import { IUserUpdateOneRequest } from './interfaces/IUserUpdateOneRequest';
 import { IUserUpdateOneResponse } from './interfaces/IUserUpdateOneResponse';
 
 export interface IUserUpdateOneUseCase {
-  execute: (userUpdateRequestDTO: IUserUpdateOneRequest) => Promise<IUserUpdateOneResponse>;
+  execute: (userUpdateRequest: IUserUpdateOneRequest) => Promise<IUserUpdateOneResponse>;
 }
 
 export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
@@ -16,16 +16,16 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userUpdateRequestDTO: IUserUpdateOneRequest): Promise<IUserUpdateOneResponse> {
-    const { email, session } = userUpdateRequestDTO;
+  public async execute(userUpdateRequest: IUserUpdateOneRequest): Promise<IUserUpdateOneResponse> {
+    const { email, session } = userUpdateRequest;
 
     const isEmail = StringValidator.validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409);
 
-    const userExists = await this.userRepo.userGetOne(userUpdateRequestDTO);
+    const userExists = await this.userRepo.userGetOne(userUpdateRequest);
     if (!userExists) throw new RequestError('User does not exist', 404);
 
-    await this.userRepo.userUpdateOne({ ...userUpdateRequestDTO, userId: session?.id });
+    await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id });
 
     const response = await this.userRepo.userGetOne({ userId: session?.id });
 

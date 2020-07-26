@@ -3,6 +3,6 @@ import { ILanguageGetOneRequest } from '@domain/language/repositories/interfaces
 import { ILanguageGetOneResponse } from '@domain/language/repositories/interfaces/ILanguageGetOneResponse';
 
 export interface ILanguageRepo {
-  languageGetOne: (languageGetOneRequestDTO: ILanguageGetOneRequest) => Promise<ILanguageGetOneResponse>;
+  languageGetOne: (languageGetOneRequest: ILanguageGetOneRequest) => Promise<ILanguageGetOneResponse>;
   languageGetAll: () => Promise<ILanguageGetAllResponse>;
 }

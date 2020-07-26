@@ -4,7 +4,7 @@ import { IUserLogoutRequest } from './interfaces/UserLogOutRequest';
 import { IUserLogoutResponse } from './interfaces/UserLogOutResponse';
 
 export interface IUserLogOutUseCase {
-  execute: (userLogoutDTO: IUserLogoutRequest) => Promise<IUserLogoutResponse>;
+  execute: (userLogout: IUserLogoutRequest) => Promise<IUserLogoutResponse>;
 }
 
 export class UserLogOutUseCase implements IUserLogOutUseCase {
@@ -14,8 +14,8 @@ export class UserLogOutUseCase implements IUserLogOutUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userLogoutDTO: IUserLogoutRequest): Promise<IUserLogoutResponse> {
-    const { session } = userLogoutDTO;
+  public async execute(userLogout: IUserLogoutRequest): Promise<IUserLogoutResponse> {
+    const { session } = userLogout;
 
     if (!session?.id) throw new AuthenticationError('User is not logged in', 500);
 

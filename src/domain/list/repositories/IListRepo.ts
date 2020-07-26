@@ -32,8 +32,8 @@ export interface IListRepo {
   listGetOneById: (listGetOneByIdRequest: IListGetOneByIdRequest) => Promise<IListGetOneByIdResponse>;
   listGetAllPublic: () => Promise<IListGetAllPublicResponse>;
   listCreateOne: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
-  listUpdateOne: (listUpdateOneRequestDTO: IListUpdateOneRequest) => Promise<IListUpdateOneResponse>;
-  listDeleteOne: (listDeleteOneRequestDTO: IListDeleteOneRequest) => Promise<IListDeleteOneResponse>;
+  listUpdateOne: (listUpdateOneRequest: IListUpdateOneRequest) => Promise<IListUpdateOneResponse>;
+  listDeleteOne: (listDeleteOneRequest: IListDeleteOneRequest) => Promise<IListDeleteOneResponse>;
   listBookmarkGetOne: (listBookmarkGetOneRequest: IListBookmarkGetOneRequest) => Promise<IListBookmarkGetOneResponse>;
   listUserGetOneByListId: (listUserGetOneRequest: IListUserGetOneByListIdRequest) => Promise<IListUserGetOneByListIdResponse>;
   listUserGetOneByListName: (listUserGetOneRequest: IListUserGetOneByListNameRequest) => Promise<IListUserGetOneByListNameResponse>;
@@ -42,7 +42,7 @@ export interface IListRepo {
   listUserUpdateOne: (listUserGetOneRequest: IListUserUpdateOneRequest) => Promise<IListUserUpdateOneResponse>;
   listUserDeleteOne: (listUserGetOneRequest: IListUserDeleteOneRequest) => Promise<IListUserDeleteOneResponse>;
 
-  listBookmarkGetAll: (listBookmarkGetAllRequestDTO: IListBookmarkGetAllRequest) => Promise<IListBookmarkGetAllResponse>;
-  listBookmarkCreateOne: (listBookmarkCreateOneRequestDTO: IListBookmarkCreateOneRequest) => Promise<IListBookmarkCreateOneResponse>;
-  listBookmarkDeleteOne: (listBookmarkDeleteOneRequestDTO: IListBookmarkDeleteOneRequest) => Promise<IListBookmarkDeleteOneResponse>;
+  listBookmarkGetAll: (listBookmarkGetAllRequest: IListBookmarkGetAllRequest) => Promise<IListBookmarkGetAllResponse>;
+  listBookmarkCreateOne: (listBookmarkCreateOneRequest: IListBookmarkCreateOneRequest) => Promise<IListBookmarkCreateOneResponse>;
+  listBookmarkDeleteOne: (listBookmarkDeleteOneRequest: IListBookmarkDeleteOneRequest) => Promise<IListBookmarkDeleteOneResponse>;
 }

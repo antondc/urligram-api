@@ -4,7 +4,7 @@ import { IListCreateOneRequest } from './interfaces/IListCreateOneRequest';
 import { IListCreateOneResponse } from './interfaces/IListCreateOneResponse';
 
 export interface IListCreateOneUseCase {
-  execute: (listCreateOneRequestDTO: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
+  execute: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
 }
 
 export class ListCreateOneUseCase implements IListCreateOneUseCase {
@@ -14,8 +14,8 @@ export class ListCreateOneUseCase implements IListCreateOneUseCase {
     this.listRepo = listRepo;
   }
 
-  public async execute(listCreateOneRequestDTO: IListCreateOneRequest): Promise<IListCreateOneResponse> {
-    const { session, listName, listDescription, listIsPrivate } = listCreateOneRequestDTO;
+  public async execute(listCreateOneRequest: IListCreateOneRequest): Promise<IListCreateOneResponse> {
+    const { session, listName, listDescription, listIsPrivate } = listCreateOneRequest;
 
     const listExists = await this.listRepo.listUserGetOneByListName({ listName, userId: session?.id }); // (1)
     if (!!listExists || listExists?.userRole === 'admin') throw new RequestError('List already exists', 409, { message: '409 Conflict' });

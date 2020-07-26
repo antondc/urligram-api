@@ -4,7 +4,7 @@ import { IUserBookmarkGetOneRequest } from './interfaces/IUserBookmarkGetOneRequ
 import { IUserBookmarkGetOneResponse } from './interfaces/IUserBookmarkGetOneResponse';
 
 export interface IUserBookmarkGetOneUseCase {
-  execute: (userBookmarkGetOneDTO: IUserBookmarkGetOneRequest) => Promise<IUserBookmarkGetOneResponse>;
+  execute: (userBookmarkGetOne: IUserBookmarkGetOneRequest) => Promise<IUserBookmarkGetOneResponse>;
 }
 
 export class UserBookmarkGetOneUseCase implements IUserBookmarkGetOneUseCase {

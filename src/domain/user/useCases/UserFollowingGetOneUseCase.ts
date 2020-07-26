@@ -4,7 +4,7 @@ import { IUserFollowingGetOneRequest } from './interfaces/IUserFollowingGetOneRe
 import { IUserFollowingGetOneResponse } from './interfaces/IUserFollowingGetOneResponse';
 
 export interface IUserFollowingGetOneUseCase {
-  execute: (userFollowingGetOneDTO: IUserFollowingGetOneRequest) => Promise<IUserFollowingGetOneResponse>;
+  execute: (userFollowingGetOne: IUserFollowingGetOneRequest) => Promise<IUserFollowingGetOneResponse>;
 }
 
 export class UserFollowingGetOneUseCase implements IUserFollowingGetOneUseCase {

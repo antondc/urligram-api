@@ -4,7 +4,7 @@ import { IUserFollowingCreateRequest } from './interfaces/IUserFollowingCreateRe
 import { IUserFollowingCreateResponse } from './interfaces/IUserFollowingCreateResponse';
 
 export interface IUserFollowingCreateUseCase {
-  execute: (userFollowRequestDTO: IUserFollowingCreateRequest) => Promise<IUserFollowingCreateResponse>;
+  execute: (userFollowRequest: IUserFollowingCreateRequest) => Promise<IUserFollowingCreateResponse>;
 }
 
 export class UserFollowingCreateUseCase implements IUserFollowingCreateUseCase {
@@ -14,8 +14,8 @@ export class UserFollowingCreateUseCase implements IUserFollowingCreateUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userFollowingCreateRequestDTO: IUserFollowingCreateRequest): Promise<IUserFollowingCreateResponse> {
-    const { session, followedId } = userFollowingCreateRequestDTO;
+  public async execute(userFollowingCreateRequest: IUserFollowingCreateRequest): Promise<IUserFollowingCreateResponse> {
+    const { session, followedId } = userFollowingCreateRequest;
 
     await this.userRepo.userFollowingCreate({ followedId, userId: session?.id });
 

@@ -8,7 +8,7 @@
 
 E. g.:
 
-- ILinkCreateResponseDTO
+- ILinkCreateResponse
 - UserFollowingDeleteController
 - LinkGetOneUseCase
 - ILinkRepo

@@ -21,12 +21,12 @@ export class UserBookmarkGetOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userBookmarkGetOneRequestDTO: IUserBookmarkGetOneRequest = {
+    const userBookmarkGetOneRequest: IUserBookmarkGetOneRequest = {
       bookmarkId: Number(bookmarkId),
       session,
     };
 
-    const response = await this.useCase.execute(userBookmarkGetOneRequestDTO);
+    const response = await this.useCase.execute(userBookmarkGetOneRequest);
 
     const formattedResponse = {
       links: {

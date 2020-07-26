@@ -5,7 +5,7 @@ import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { RequestError } from '@shared/errors/RequestError';
 
 export interface IUserBookmarkCreateUseCase {
-  execute: (bookmarkCreateRequestDTO: IUserBookmarkCreateRequest) => Promise<IUserBookmarkCreateResponse>;
+  execute: (bookmarkCreateRequest: IUserBookmarkCreateRequest) => Promise<IUserBookmarkCreateResponse>;
 }
 
 export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
@@ -15,14 +15,14 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(bookmarkCreateRequestDTO: IUserBookmarkCreateRequest): Promise<IUserBookmarkCreateResponse> {
-    const { url, session, title } = bookmarkCreateRequestDTO;
+  public async execute(bookmarkCreateRequest: IUserBookmarkCreateRequest): Promise<IUserBookmarkCreateResponse> {
+    const { url, session, title } = bookmarkCreateRequest;
     const parsedUrl = new URLWrapper(url);
     const domain = parsedUrl.getDomain();
     const path = parsedUrl.getPath() + parsedUrl.getSearch();
 
     const formattedUserBookmarkCreateRequest = {
-      ...bookmarkCreateRequestDTO,
+      ...bookmarkCreateRequest,
       domain,
       path,
       title: title ? title : domain + path,

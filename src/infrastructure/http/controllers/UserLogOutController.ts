@@ -19,11 +19,11 @@ export class UserLogOutController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listUserLogOutRequestDTO: IUserLogoutRequest = {
+    const listUserLogOutRequest: IUserLogoutRequest = {
       session,
     };
 
-    const response = await this.useCase.execute(listUserLogOutRequestDTO);
+    const response = await this.useCase.execute(listUserLogOutRequest);
 
     const formattedResponse = {
       links: {

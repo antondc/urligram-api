@@ -20,7 +20,7 @@ export class UserBookmarkCreateController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const linkCreateRequestDTO: IUserBookmarkCreateRequest = {
+    const linkCreateRequest: IUserBookmarkCreateRequest = {
       title,
       vote,
       saved,
@@ -30,7 +30,7 @@ export class UserBookmarkCreateController extends BaseController {
       session,
     };
 
-    const response = await this.useCase.execute(linkCreateRequestDTO);
+    const response = await this.useCase.execute(linkCreateRequest);
 
     const formattedResponse = {
       links: {

@@ -21,7 +21,7 @@ export class UserUpdateOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userUpdateRequestDTO: IUserUpdateOneRequest = {
+    const userUpdateRequest: IUserUpdateOneRequest = {
       session,
       name,
       email,
@@ -29,7 +29,7 @@ export class UserUpdateOneController extends BaseController {
       location,
     };
 
-    const response = await this.useCase.execute(userUpdateRequestDTO);
+    const response = await this.useCase.execute(userUpdateRequest);
 
     const formattedResponse = {
       links: {

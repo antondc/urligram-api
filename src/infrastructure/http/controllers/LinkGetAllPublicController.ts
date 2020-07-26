@@ -20,11 +20,11 @@ export class LinkGetAllPublicController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const linkGetAllPublicRequestDTO: ILinkGetAllPublicRequest = {
+    const linkGetAllPublicRequest: ILinkGetAllPublicRequest = {
       session,
     };
 
-    const response = await this.useCase.execute(linkGetAllPublicRequestDTO);
+    const response = await this.useCase.execute(linkGetAllPublicRequest);
 
     const formattedLinks = response.map((item) => {
       const urlWrapper = new URLWrapper(item.url);

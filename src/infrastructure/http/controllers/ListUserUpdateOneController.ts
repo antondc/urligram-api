@@ -22,14 +22,14 @@ export class ListUserUpdateOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const listUserUpdateOneDTO: IListUserUpdateOneRequest = {
+    const listUserUpdateOne: IListUserUpdateOneRequest = {
       listId: Number(listId),
       userId,
       userRole,
       session,
     };
 
-    const response = await this.useCase.execute(listUserUpdateOneDTO);
+    const response = await this.useCase.execute(listUserUpdateOne);
 
     const formattedResponse = {
       links: {

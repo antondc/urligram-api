@@ -3,7 +3,7 @@ import { ILanguageGetOneRequest } from '@domain/language/useCases/interfaces/ILa
 import { ILanguageGetOneResponse } from '@domain/language/useCases/interfaces/ILanguageGetOneResponse';
 
 export interface ILanguageGetOneUseCase {
-  execute: (getLanguagesRequestDTO: ILanguageGetOneRequest) => Promise<ILanguageGetOneResponse>;
+  execute: (getLanguagesRequest: ILanguageGetOneRequest) => Promise<ILanguageGetOneResponse>;
 }
 
 export class LanguageGetOneUseCase implements ILanguageGetOneUseCase {
@@ -13,8 +13,8 @@ export class LanguageGetOneUseCase implements ILanguageGetOneUseCase {
     this.languageRepo = languageRepo;
   }
 
-  public async execute(getLanguagesRequestDTO: ILanguageGetOneRequest): Promise<ILanguageGetOneResponse> {
-    const response = await this.languageRepo.languageGetOne(getLanguagesRequestDTO);
+  public async execute(getLanguagesRequest: ILanguageGetOneRequest): Promise<ILanguageGetOneResponse> {
+    const response = await this.languageRepo.languageGetOne(getLanguagesRequest);
 
     return response;
   }

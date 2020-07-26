@@ -16,11 +16,11 @@ export class LinkTagGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { id } = req.params;
 
-    const linkLinkGetAllRequestDTO: ILinkTagGetAllRequest = {
+    const linkLinkGetAllRequest: ILinkTagGetAllRequest = {
       linkId: Number(id),
     };
 
-    const response = await this.useCase.execute(linkLinkGetAllRequestDTO);
+    const response = await this.useCase.execute(linkLinkGetAllRequest);
 
     const formattedLinks = response.map((item) => {
       return {

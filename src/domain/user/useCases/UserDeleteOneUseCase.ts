@@ -4,7 +4,7 @@ import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
 
 export interface IUserDeleteOneUseCase {
-  execute: (userDeleteOneRequestDTO: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;
+  execute: (userDeleteOneRequest: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;
 }
 
 export class UserDeleteOneUseCase implements IUserDeleteOneUseCase {
@@ -14,8 +14,8 @@ export class UserDeleteOneUseCase implements IUserDeleteOneUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userDeleteOneRequestDTO: IUserDeleteOneRequest): Promise<IUserDeleteOneResponse> {
-    const { session } = userDeleteOneRequestDTO;
+  public async execute(userDeleteOneRequest: IUserDeleteOneRequest): Promise<IUserDeleteOneResponse> {
+    const { session } = userDeleteOneRequest;
 
     const userExists = await this.userRepo.userGetOne({ userId: session?.id });
     if (!userExists) throw new RequestError('User does not exist', 404);

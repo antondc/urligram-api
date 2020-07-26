@@ -5,7 +5,7 @@ import { UserError } from '@shared/errors/UserError';
 import { StringValidator } from '@shared/services/StringValidator';
 
 export interface IUserCreateOneUseCase {
-  execute: (createUserDTO: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;
+  execute: (createUser: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;
 }
 
 export class UserCreateOneUseCase implements IUserCreateOneUseCase {
@@ -15,18 +15,18 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(createUserDTO: IUserCreateOneRequest): Promise<IUserCreateOneResponse> {
-    const { email, password, password_repeated } = createUserDTO;
+  public async execute(createUser: IUserCreateOneRequest): Promise<IUserCreateOneResponse> {
+    const { email, password, password_repeated } = createUser;
 
     if (password !== password_repeated) throw new UserError('Passwords are not equal', 409);
 
     const isEmail = StringValidator.validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409);
 
-    const userAlreadyExists = await this.userRepo.userGetOne(createUserDTO);
+    const userAlreadyExists = await this.userRepo.userGetOne(createUser);
     if (!!userAlreadyExists) throw new UserError('User already exist', 409);
 
-    const response = await this.userRepo.userCreateOne(createUserDTO);
+    const response = await this.userRepo.userCreateOne(createUser);
 
     return response;
   }

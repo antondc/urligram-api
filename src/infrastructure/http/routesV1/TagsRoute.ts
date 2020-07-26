@@ -5,6 +5,7 @@ import { TagRepo } from '@infrastructure/persistence/mySQL/repositories/TagRepo'
 import { TagGetAllController } from '../controllers/TagGetAllController';
 
 const TagsRoute = express.Router();
+
 TagsRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const tagRepo = new TagRepo();
   const tagGetAllUseCase = new TagGetAllUseCase(tagRepo);

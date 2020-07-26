@@ -22,12 +22,12 @@ export class UserFollowingDeleteController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
 
-    const userFollowingCreateDTO: IUserFollowingDeleteRequest = {
+    const userFollowingCreate: IUserFollowingDeleteRequest = {
       followedId,
       session,
     };
 
-    const response = await this.useCase.execute(userFollowingCreateDTO);
+    const response = await this.useCase.execute(userFollowingCreate);
 
     const formattedResponse = {
       links: {
