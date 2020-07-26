@@ -35,6 +35,55 @@ export class ListRepo implements IListRepo {
     }
   }
 
+  public async listCreateOne(listCreateOneRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const listCreateOneQuery = `CALL list_create('${JSON.stringify(listCreateOneRequest)}')`;
+
+      const [[results]] = await mySQL.query(listCreateOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+
+  public async listDeleteOne(listDeleteOneRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const listDeleteOneQuery = `CALL list_delete_one('${JSON.stringify(listDeleteOneRequest)}')`;
+
+      const [[results]] = await mySQL.query(listDeleteOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async listUpdateOne(listUpdateOneRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const listUpdateOneQuery = `CALL list_update_one('${JSON.stringify(listUpdateOneRequest)}')`;
+
+      const [[results]] = await mySQL.query(listUpdateOneQuery);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async listBookmarkGetOne(listBookmarkGetOneRequest) {
     const mySQL = new MySQL();
 
@@ -138,38 +187,6 @@ export class ListRepo implements IListRepo {
       const listUserDeleteOneQuery = `CALL list_user_delete_one('${JSON.stringify(listUserDeleteOneRequest)}')`;
 
       const [[results]] = await mySQL.query(listUserDeleteOneQuery);
-
-      return results;
-    } catch (err) {
-      throw new BaseError('Something went wrong', 500, err);
-    } finally {
-      await mySQL.close();
-    }
-  }
-
-  public async listCreateOne(listCreateOneRequest) {
-    const mySQL = new MySQL();
-
-    try {
-      const listCreateOneQuery = `CALL list_create('${JSON.stringify(listCreateOneRequest)}')`;
-
-      const [[results]] = await mySQL.query(listCreateOneQuery);
-
-      return results;
-    } catch (err) {
-      throw new BaseError('Something went wrong', 500, err);
-    } finally {
-      await mySQL.close();
-    }
-  }
-
-  public async listUpdateOne(listUpdateOneRequest) {
-    const mySQL = new MySQL();
-
-    try {
-      const listUpdateOneQuery = `CALL list_update_one('${JSON.stringify(listUpdateOneRequest)}')`;
-
-      const [[results]] = await mySQL.query(listUpdateOneQuery);
 
       return results;
     } catch (err) {

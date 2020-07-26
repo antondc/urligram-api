@@ -5,6 +5,7 @@ import { ListBookmarkDeleteOneUseCase } from '@domain/list/useCases/ListBookmark
 import { ListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGetAllUseCase';
 import { ListBookmarkGetOneUseCase } from '@domain/list/useCases/ListBookmarkGetOneUseCase';
 import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
+import { ListDeleteOneUseCase } from '@domain/list/useCases/ListDeleteOneUseCase';
 import { ListGetAllPublicUseCase } from '@domain/list/useCases/ListGetAllPublicUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
@@ -21,6 +22,7 @@ import { ListBookmarkDeleteOneController } from '../controllers/ListBookmarkDele
 import { ListBookmarkGetAllController } from '../controllers/ListBookmarkGetAllController';
 import { ListBookmarkGetOneController } from '../controllers/ListBookmarkGetOneController';
 import { ListCreateOneController } from '../controllers/ListCreateOneController';
+import { ListDeleteOneController } from '../controllers/ListDeleteOneController';
 import { ListGetAllPublicController } from '../controllers/ListGetAllPublicController';
 import { ListGetOneController } from '../controllers/ListGetOneController';
 import { ListUpdateOneController } from '../controllers/ListUpdateOneController';
@@ -58,6 +60,16 @@ ListsRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
   const listCreateOneController = new ListCreateOneController(listCreateOneUseCase);
 
   const response = await listCreateOneController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.delete('/:listId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listDeleteOneUseCase = new ListDeleteOneUseCase(listRepo);
+  const listDeleteOneController = new ListDeleteOneController(listDeleteOneUseCase);
+
+  const response = await listDeleteOneController.execute(req, res, next);
 
   return response;
 });

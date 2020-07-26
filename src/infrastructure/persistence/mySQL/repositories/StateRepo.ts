@@ -59,6 +59,7 @@ export class StateRepo {
   private listGetAllPublicProcedure: string;
   private listCreateOneProcedure: string;
   private listUpdateOneProcedure: string;
+  private listDeleteOneProcedure: string;
   private listBookmarkGetOneProcedure: string;
   private listBookmarkGetAllProcedure: string;
   private listBookmarkCreateOneProcedure: string;
@@ -147,6 +148,7 @@ export class StateRepo {
     this.listGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetAllPublic.sql')).toString();
     this.listCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreateOne.sql')).toString();
     this.listUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUpdateOne.sql')).toString();
+    this.listDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listDeleteOne.sql')).toString();
     this.listBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetOne.sql')).toString();
     this.listBookmarkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetAll.sql')).toString();
     this.listBookmarkCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkCreateOne.sql')).toString();
@@ -236,6 +238,7 @@ export class StateRepo {
       const createListGetAllPublicProcedure = await mySQL.query(this.listGetAllPublicProcedure);
       const createListCreateOneProcedure = await mySQL.query(this.listCreateOneProcedure);
       const createListUpdateOneProcedure = await mySQL.query(this.listUpdateOneProcedure);
+      const createListDeleteOneProcedure = await mySQL.query(this.listDeleteOneProcedure);
       const createListBookmarkGetOneProcedure = await mySQL.query(this.listBookmarkGetOneProcedure);
       const createListBookmarkGetAllProcedure = await mySQL.query(this.listBookmarkGetAllProcedure);
       const createListBookmarkCreateOneProcedure = await mySQL.query(this.listBookmarkCreateOneProcedure);
@@ -323,6 +326,7 @@ export class StateRepo {
         ...createListGetAllPublicProcedure,
         ...createListCreateOneProcedure,
         ...createListUpdateOneProcedure,
+        ...createListDeleteOneProcedure,
         ...createListBookmarkGetOneProcedure,
         ...createListBookmarkGetAllProcedure,
         ...createListBookmarkCreateOneProcedure,

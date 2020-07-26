@@ -8,6 +8,8 @@ import { IListBookmarkGetOneRequest } from './interfaces/IListBookmarkGetOneRequ
 import { IListBookmarkGetOneResponse } from './interfaces/IListBookmarkGetOneResponse';
 import { IListCreateOneRequest } from './interfaces/IListCreateOneRequest';
 import { IListCreateOneResponse } from './interfaces/IListCreateOneResponse';
+import { IListDeleteOneRequest } from './interfaces/IListDeleteOneRequest';
+import { IListDeleteOneResponse } from './interfaces/IListDeleteOneResponse';
 import { IListGetAllPublicResponse } from './interfaces/IListGetAllPublicResponse';
 import { IListGetOneByIdRequest } from './interfaces/IListGetOneByIdRequest';
 import { IListGetOneByIdResponse } from './interfaces/IListGetOneByIdResponse';
@@ -29,6 +31,9 @@ import { IListUserUpdateOneResponse } from './interfaces/IListUserUpdateOneRespo
 export interface IListRepo {
   listGetOneById: (listGetOneByIdRequest: IListGetOneByIdRequest) => Promise<IListGetOneByIdResponse>;
   listGetAllPublic: () => Promise<IListGetAllPublicResponse>;
+  listCreateOne: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
+  listUpdateOne: (listUpdateOneRequestDTO: IListUpdateOneRequest) => Promise<IListUpdateOneResponse>;
+  listDeleteOne: (listDeleteOneRequestDTO: IListDeleteOneRequest) => Promise<IListDeleteOneResponse>;
   listBookmarkGetOne: (listBookmarkGetOneRequest: IListBookmarkGetOneRequest) => Promise<IListBookmarkGetOneResponse>;
   listUserGetOneByListId: (listUserGetOneRequest: IListUserGetOneByListIdRequest) => Promise<IListUserGetOneByListIdResponse>;
   listUserGetOneByListName: (listUserGetOneRequest: IListUserGetOneByListNameRequest) => Promise<IListUserGetOneByListNameResponse>;
@@ -36,8 +41,7 @@ export interface IListRepo {
   listUserCreateOne: (listUserGetOneRequest: IListUserCreateOneRequest) => Promise<IListUserCreateOneResponse>;
   listUserUpdateOne: (listUserGetOneRequest: IListUserUpdateOneRequest) => Promise<IListUserUpdateOneResponse>;
   listUserDeleteOne: (listUserGetOneRequest: IListUserDeleteOneRequest) => Promise<IListUserDeleteOneResponse>;
-  listCreateOne: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
-  listUpdateOne: (listUpdateOneRequestDTO: IListUpdateOneRequest) => Promise<IListUpdateOneResponse>;
+
   listBookmarkGetAll: (listBookmarkGetAllRequestDTO: IListBookmarkGetAllRequest) => Promise<IListBookmarkGetAllResponse>;
   listBookmarkCreateOne: (listBookmarkCreateOneRequestDTO: IListBookmarkCreateOneRequest) => Promise<IListBookmarkCreateOneResponse>;
   listBookmarkDeleteOne: (listBookmarkDeleteOneRequestDTO: IListBookmarkDeleteOneRequest) => Promise<IListBookmarkDeleteOneResponse>;

@@ -21,6 +21,7 @@ BEGIN
     FROM `list`
     LEFT JOIN user_list ON list.id = user_list.list_id
     WHERE `list`.`id` = @list_id
+    GROUP BY list.id
   ;
 
 END
