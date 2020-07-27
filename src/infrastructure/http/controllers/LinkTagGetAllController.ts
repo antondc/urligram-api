@@ -14,21 +14,18 @@ export class LinkTagGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { id } = req.params;
+    const { linkId } = req.params;
 
     const linkLinkGetAllRequest: ILinkTagGetAllRequest = {
-      linkId: Number(id),
+      linkId: Number(linkId),
     };
 
     const response = await this.useCase.execute(linkLinkGetAllRequest);
 
     const formattedLinks = response.map((item) => {
       return {
-        type: 'link',
+        type: 'tag',
         id: item.id,
-        session: {
-          self: URL_SERVER + '/tags/' + item.id,
-        },
         attributes: {
           ...item,
         },
@@ -37,7 +34,7 @@ export class LinkTagGetAllController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/links/' + id + '/tags',
+        self: URL_SERVER + '/links/' + linkId + '/tags',
       },
       data: formattedLinks,
       included: [],

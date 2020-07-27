@@ -42,7 +42,7 @@ LinksRoute.get('/:linkId/lists', async (req: Request, res: Response, next: NextF
   return response;
 });
 
-LinksRoute.get('/:id/tags', async (req: Request, res: Response, next: NextFunction) => {
+LinksRoute.get('/:linkId/tags', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new LinkRepo();
   const linkTagGetAllUseCase = new LinkTagGetAllUseCase(userRepo);
   const linkTagGetAllController = new LinkTagGetAllController(linkTagGetAllUseCase);

@@ -52,6 +52,7 @@ export class StateRepo {
   private userListGetAllPublicProcedure: string;
   private bookmarkGetOneProcedure: string;
   private bookmarkGetAllPublicProcedure: string;
+  private bookmarkTagGetAllProcedure: string;
   private linkGetOneProcedure: string;
   private linkGetAllPublicProcedure: string;
   private linkListGetAllPublicProcedure: string;
@@ -145,6 +146,7 @@ export class StateRepo {
     this.userListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAllPublic.sql')).toString();
     this.bookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetOne.sql')).toString();
     this.bookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetAllPublic.sql')).toString();
+    this.bookmarkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkTagGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAllPublic.sql')).toString();
     this.linkListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAllPublic.sql')).toString();
@@ -239,6 +241,7 @@ export class StateRepo {
       const createUserListGetAllPublicProcedure = await mySQL.query(this.userListGetAllPublicProcedure);
       const createBookmarkGetOneProcedure = await mySQL.query(this.bookmarkGetOneProcedure);
       const createBookmarkGetAllPublicProcedure = await mySQL.query(this.bookmarkGetAllPublicProcedure);
+      const createBookmarkTagGetAllProcedure = await mySQL.query(this.bookmarkTagGetAllProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllPublicProcedure = await mySQL.query(this.linkGetAllPublicProcedure);
       const createLinkListGetAllPublicProcedure = await mySQL.query(this.linkListGetAllPublicProcedure);
@@ -331,6 +334,7 @@ export class StateRepo {
         ...createUserListGetAllPublicProcedure,
         ...createBookmarkGetOneProcedure,
         ...createBookmarkGetAllPublicProcedure,
+        ...createBookmarkTagGetAllProcedure,
         ...createLinkGetOneProcedure,
         ...createLinkGetAllPublicProcedure,
         ...createLinkListGetAllPublicProcedure,
