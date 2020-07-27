@@ -9,11 +9,11 @@ export class List {
   isPrivate: boolean;
   users: User[];
 
-  constructor(user?) {
-    this.id = user?.id;
-    this.name = user?.name;
-    this.description = user?.description;
-    this.createdAt = user?.createdAt;
-    this.isPrivate = user?.isPrivate;
+  constructor(options) {
+    this.id = options.id;
+    this.name = options.name;
+    this.description = options.description;
+    this.createdAt = options.createdAt;
+    this.isPrivate = options.isPrivate;
   }
 }

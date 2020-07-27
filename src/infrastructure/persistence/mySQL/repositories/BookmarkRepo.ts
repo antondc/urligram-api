@@ -50,4 +50,20 @@ export class BookmarkRepo implements IBookmarkRepo {
       await mySQL.close();
     }
   }
+
+  public async bookmarkListGetAll(bookmarkListGetAllRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const bookmarkListGetAllQuery = `CALL bookmark_list_get_all('${JSON.stringify(bookmarkListGetAllRequest)}')`;
+
+      const [response] = await mySQL.query(bookmarkListGetAllQuery);
+
+      return response;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
