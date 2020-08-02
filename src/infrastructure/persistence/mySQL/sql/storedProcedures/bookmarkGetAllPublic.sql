@@ -12,6 +12,7 @@ BEGIN
   SELECT
     bookmark.id,
     bookmark.order,
+    link.image as img,
     CONCAT(domain.domain, link.path) AS url,
     bookmark.isPrivate,
     bookmark.saved,
