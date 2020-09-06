@@ -13,6 +13,7 @@ BEGIN
     bookmark.id,
     bookmark.order,
     link.image as img,
+    bookmark.title,
     CONCAT(domain.domain, link.path) AS url,
     bookmark.isPrivate,
     bookmark.saved,

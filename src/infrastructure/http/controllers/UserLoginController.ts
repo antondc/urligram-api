@@ -30,17 +30,15 @@ export class UserLoginController extends BaseController {
       links: {
         self: URL_SERVER + '/users/me',
       },
-      data: [
-        {
-          type: 'session',
-          id: response.id,
-          session: {
-            self: URL_SERVER + '/users/me',
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'session',
+        id: response.id,
+        session: {
+          self: URL_SERVER + '/users/me',
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 

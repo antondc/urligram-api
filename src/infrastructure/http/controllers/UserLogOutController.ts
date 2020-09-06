@@ -29,19 +29,18 @@ export class UserLogOutController extends BaseController {
       links: {
         self: URL_SERVER + '/login',
       },
-      data: [
-        {
-          type: 'session',
-          id: response.session?.id,
-          login: {
-            self: URL_SERVER + '/login',
-          },
-          attributes: {
-            id: response.session?.id,
-          },
-          relationships: {},
+      data: {
+        type: 'session',
+        id: response.session?.id,
+        login: {
+          self: URL_SERVER + '/login',
         },
-      ],
+        attributes: {
+          id: response.session?.id,
+        },
+        relationships: {},
+      },
+
       included: [],
     };
 

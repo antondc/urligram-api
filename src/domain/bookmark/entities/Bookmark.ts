@@ -1,6 +1,7 @@
 export class Bookmark {
   id: string;
   title: string;
+  image: string;
   vote: boolean;
   isPrivate: boolean;
   createdAt: Date;
