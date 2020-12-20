@@ -12,3 +12,9 @@ media/*
 dist/*
 __snapshots__
 node_modules
+__snapshots__
+tmp
+.well_known
+.htaccess
+.htpasswd
+*www-linking_frontend_*.pid
