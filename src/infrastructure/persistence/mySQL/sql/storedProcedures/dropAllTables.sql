@@ -1,6 +1,9 @@
-DROP PROCEDURE IF EXISTS drop_all_tables;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS drop_all_tables$$
 
 CREATE PROCEDURE drop_all_tables()
+
 BEGIN
   DECLARE _done INT DEFAULT FALSE;
   DECLARE _tableName VARCHAR(255);
@@ -27,4 +30,5 @@ BEGIN
 
   CLOSE _cursor;
   SET FOREIGN_KEY_CHECKS = 1;
-END
+END$$
+DELIMITER ;
