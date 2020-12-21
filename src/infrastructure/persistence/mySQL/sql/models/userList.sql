@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS `user_list` (
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE `unique_index`(`list_id`, `user_id`),
-  INDEX `fk_user_list_list1_idx` (`list_id` ASC) VISIBLE,
-  INDEX `fk_user_list_user1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_user_list_list1_idx` (`list_id` ASC),
+  INDEX `fk_user_list_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_list_list1`
     FOREIGN KEY (`list_id`)
     REFERENCES `list` (`id`)

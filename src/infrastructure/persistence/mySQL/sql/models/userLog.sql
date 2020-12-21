@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `user_session_log` (
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_user_session_log_user1_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_user_session_log_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_session_log_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)

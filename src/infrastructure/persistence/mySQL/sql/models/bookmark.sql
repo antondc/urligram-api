@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS `bookmark` (
   `link_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE `unique_index`(`user_id`, `link_id`),
-  INDEX `fk_bookmark_user1_idx` (`user_id` ASC) VISIBLE,
-  INDEX `fk_bookmark_link1_idx` (`link_id` ASC) VISIBLE,
+  INDEX `fk_bookmark_user1_idx` (`user_id` ASC),
+  INDEX `fk_bookmark_link1_idx` (`link_id` ASC),
   CONSTRAINT `fk_bookmark_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)

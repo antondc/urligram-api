@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS `bookmark_list` (
   `list_id` INT(11) NOT NULL,
   `bookmark_id` INT(11) NOT NULL,
   PRIMARY KEY (`list_id`, `bookmark_id`),
-  INDEX `fk_bookmark_list_list1_idx` (`list_id` ASC) VISIBLE,
-  INDEX `fk_bookmark_list_bookmark1_idx` (`bookmark_id` ASC) VISIBLE,
+  INDEX `fk_bookmark_list_list1_idx` (`list_id` ASC),
+  INDEX `fk_bookmark_list_bookmark1_idx` (`bookmark_id` ASC),
   CONSTRAINT `fk_bookmark_list_list1`
     FOREIGN KEY (`list_id`)
     REFERENCES `list` (`id`)

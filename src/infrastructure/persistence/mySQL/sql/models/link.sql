@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS `link` (
   `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `domain_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_link_domain1_idx` (`domain_id` ASC) VISIBLE,
-  UNIQUE INDEX `mul_path_domain_id_idx` (`path` ASC, `domain_id` ASC) VISIBLE,
+  INDEX `fk_link_domain1_idx` (`domain_id` ASC),
+  UNIQUE INDEX `mul_path_domain_id_idx` (`path` ASC, `domain_id` ASC),
   CONSTRAINT `fk_link_domain1`
     FOREIGN KEY (`domain_id`)
     REFERENCES `db_linking_local`.`domain` (`id`)

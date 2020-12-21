@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `user_user` (
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   `user_id1` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   PRIMARY KEY (`user_id`, `user_id1`),
-  INDEX `fk_user_user_user2_idx` (`user_id1` ASC) VISIBLE,
+  INDEX `fk_user_user_user2_idx` (`user_id1` ASC),
   CONSTRAINT `fk_user_user_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
