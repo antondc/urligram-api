@@ -34,7 +34,7 @@
       "user": "linking_prod",
       "database": "linking_prod",
       "password": "w_9aIjH3vfE2XpoYz",
-      "host": "linkingprod.czug6t4ev1us.eu-central-1.rds.amazonaws.com"
+      "host": "mysql-5703.dinaserver.com"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "linking-api-production.antoniodiaz.me",
