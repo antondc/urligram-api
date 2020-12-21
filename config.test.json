@@ -1,10 +1,10 @@
 {
   "development": {
     "database": {
-      "user": "user_linking_local",
-      "database": "db_linking_local",
-      "password": "o0IApFBrADXajxwd",
-      "host": "127.0.0.1"
+      "host": "mysql-5704.dinaserver.com",
+      "database": "linking_stage",
+      "user": "w_9aIfE2XpoYz",
+      "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "http://",
     "HOST_SERVER": "0.0.0.0",
@@ -16,10 +16,10 @@
   },
   "staging": {
     "database": {
-      "user": "user_linking_local",
-      "database": "db_linking_local",
-      "password": "o0IApFBrADXajxwd",
-      "host": "127.0.0.1"
+      "host": "mysql-5704.dinaserver.com",
+      "database": "linking_stage",
+      "user": "w_9aIfE2XpoYz",
+      "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "linking-api-staging.antoniodiaz.me",
@@ -31,10 +31,10 @@
   },
   "production": {
     "database": {
-      "user": "linking_prod",
+      "host": "mysql-5704.dinaserver.com",
       "database": "linking_prod",
-      "password": "w_9aIjH3vfE2XpoYz",
-      "host": "mysql-5703.dinaserver.com"
+      "user": "v_9uRshudbX",
+      "password": "w_9aIjH3vfE2XpoYz"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "linking-api-production.antoniodiaz.me",
