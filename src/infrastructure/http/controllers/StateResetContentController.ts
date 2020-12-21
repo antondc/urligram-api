@@ -1,18 +1,26 @@
 import { Request, Response } from 'express';
 
+import { IStateResetContentUseCaseRequest } from '@domain/state/useCases/interfaces/IStateResetContentUseCaseRequest';
 import { IStateResetContentUseCase } from '@domain/state/useCases/StateResetContentUseCase';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class StateResetContentController extends BaseController {
-  resetContentUseCase: IStateResetContentUseCase;
+  useCase: IStateResetContentUseCase;
 
   constructor(resetContentUseCase: IStateResetContentUseCase) {
     super();
-    this.resetContentUseCase = resetContentUseCase;
+    this.useCase = resetContentUseCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const response = await this.resetContentUseCase.execute();
+    const tokenService = new TokenService();
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const stateResetContentUseCaseRequest: IStateResetContentUseCaseRequest = {
+      session,
+    };
+    const response = await this.useCase.execute(stateResetContentUseCaseRequest);
 
     return res.status(200).send(response);
   }

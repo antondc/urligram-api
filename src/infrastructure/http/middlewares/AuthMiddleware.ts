@@ -7,8 +7,7 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
   if (
     (req.method === 'GET' && !req.baseUrl.includes('/me/')) || // All get are free except routes using "me"
     (req.method === 'POST' && req.baseUrl === '/api/v1/login') || // Allow login
-    (req.method === 'POST' && req.baseUrl === '/api/v1/users') || // Allow user creation
-    (req.method === 'DELETE' && req.baseUrl === '/api/v1/state') // Allow reset
+    (req.method === 'POST' && req.baseUrl === '/api/v1/users') // Allow user creation
   ) {
     return next();
   }
