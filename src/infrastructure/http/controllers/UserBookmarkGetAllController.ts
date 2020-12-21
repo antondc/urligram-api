@@ -19,7 +19,7 @@ export class UserBookmarkGetAllController extends BaseController {
     const { userId } = req.params;
 
     const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const userBookmarkGetAllRequest: IUserBookmarkGetAllRequest = {
       userId,

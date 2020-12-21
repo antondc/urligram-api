@@ -19,7 +19,7 @@ export class UserPasswordUpdateController extends BaseController {
     const { password, newPassword, newPasswordRepeated } = req.body;
 
     const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const userPasswordUpdateRequest: IUserPasswordUpdateRequest = {
       session,

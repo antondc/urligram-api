@@ -19,7 +19,7 @@ export class ListDeleteOneController extends BaseController {
     const { listId } = req.params;
 
     const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const listDeleteOneRequest: IListDeleteOneRequest = {
       session,

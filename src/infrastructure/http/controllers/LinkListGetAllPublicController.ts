@@ -19,7 +19,7 @@ export class LinkListGetAllPublicController extends BaseController {
     const { linkId } = req.params;
 
     const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const linkListGetOneRequest: ILinkListGetAllPublicRequest = {
       linkId: Number(linkId),

@@ -14,7 +14,7 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
   }
 
   const tokenService = new TokenService();
-  const session = tokenService.verifyToken(req.cookies.sessionToken);
+  const session = tokenService.decodeToken(req.cookies.sessionToken);
 
   if (!session) throw new AuthenticationError('401 Unauthorized', 401);
 

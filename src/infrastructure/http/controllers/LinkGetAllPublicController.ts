@@ -18,7 +18,7 @@ export class LinkGetAllPublicController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const linkGetAllPublicRequest: ILinkGetAllPublicRequest = {
       session,

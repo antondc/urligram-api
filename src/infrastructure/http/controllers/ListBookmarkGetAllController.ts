@@ -21,7 +21,7 @@ export class ListBookmarkGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { listId } = req.params;
     const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const listBookmarkGetAllRequest: IListBookmarkGetAllRequest = {
       listId: Number(listId),

@@ -20,7 +20,7 @@ export class ListUserUpdateOneController extends BaseController {
     const { listId, userId } = req.params;
     const { userRole } = req.body;
     const tokenService = new TokenService();
-    const session = tokenService.verifyToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const listUserUpdateOne: IListUserUpdateOneRequest = {
       listId: Number(listId),
