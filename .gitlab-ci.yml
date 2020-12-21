@@ -49,7 +49,7 @@ deploy_staging:
     - ssh antoniodiaz@antoniodiaz.me 'cd www/linking_api_staging && rm -rf node_modules dist/* tmp'
     - ssh antoniodiaz@antoniodiaz.me 'cd www/linking_api_staging && git pull origin staging'
     - ssh antoniodiaz@antoniodiaz.me 'export NPM_TOKEN=${NPM_TOKEN} && cd www/linking_api_staging && export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use && eval "[ -f .nvmrc ] && nvm install || nvm install stable" && nvm use --delete-prefix && git checkout staging && npm ci && npm run build'
-    - ssh antoniodiaz@antoniodiaz.me 'npm run copy:sql'
+    - ssh antoniodiaz@antoniodiaz.me 'cd www/linking_api_staging && npm run copy:sql'
     - ssh antoniodiaz@antoniodiaz.me 'cd www/linking_api_staging && mkdir -p tmp/always_restart.txt'
 
 deploy_production:
@@ -60,5 +60,5 @@ deploy_production:
     - ssh antoniodiaz@antoniodiaz.me 'cd www/linking_api_production && rm -rf node_modules dist/* tmp'
     - ssh antoniodiaz@antoniodiaz.me 'cd www/linking_api_production && git pull origin master'
     - ssh antoniodiaz@antoniodiaz.me 'export NPM_TOKEN=${NPM_TOKEN} && cd www/linking_api_production && export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use && eval "[ -f .nvmrc ] && nvm install || nvm install stable" && nvm use --delete-prefix && git checkout master && npm ci && npm run build'
-    - ssh antoniodiaz@antoniodiaz.me 'npm run copy:sql'
+    - ssh antoniodiaz@antoniodiaz.me 'cd www/linking_api_staging && npm run copy:sql'
     - ssh antoniodiaz@antoniodiaz.me 'cd www/linking_api_production && mkdir -p tmp/always_restart.txt'
