@@ -11,12 +11,13 @@ import { ErrorHandlerMiddleware } from '@infrastructure/http/middlewares/ErrorHa
 import { RouterV1 } from '@infrastructure/http/routesV1';
 import { ENDPOINT_CLIENTS, PORT_SERVER } from '@shared/constants/env';
 import { NetWorkError } from '@shared/errors/NetworkError';
+import { removeTrailingSlash } from '@tools/helpers/string/removeTrailingSlash';
 
 const app = express();
 
 /* - - - - - - - - - - - Cors - - - - - - - - - - - - - - */
 const corsTestOrigin = (origin, callback) => {
-  if (ENDPOINT_CLIENTS.indexOf(origin) !== -1) {
+  if (ENDPOINT_CLIENTS.indexOf(removeTrailingSlash(origin)) !== -1) {
     callback(null, true);
   } else {
     callback(new NetWorkError('Not allowed by CORS', 403));

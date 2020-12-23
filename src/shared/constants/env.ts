@@ -1,5 +1,6 @@
 import config from '@root/config.test.json';
 
+export const ENVIRONMENT = process.env.NODE_ENV;
 export const DATABASE_SETTINGS = config[process.env.NODE_ENV].database;
 export const PROTOCOL_SERVER = config[process.env.NODE_ENV].PROTOCOL_SERVER;
 export const HOST_SERVER = config[process.env.NODE_ENV].HOST_SERVER;
