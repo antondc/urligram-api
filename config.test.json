@@ -25,7 +25,7 @@
     "HOST_SERVER": "linking-api-staging.antoniodiaz.me",
     "PORT_SERVER": "16186",
     "VERSION_SERVER": "v1",
-    "ENDPOINT_CLIENTS": ["https://linking-staging.antoniodiaz.me", "http://0.0.0.0:4000"],
+    "ENDPOINT_CLIENTS": ["https://linking-staging.antoniodiaz.me", "http://0.0.0.0:3000"],
     "SECRET": "superSecret",
     "LOGGING": true
   },
