@@ -9,12 +9,26 @@ import logger from 'morgan';
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
 import { ErrorHandlerMiddleware } from '@infrastructure/http/middlewares/ErrorHandlerMiddleware';
 import { RouterV1 } from '@infrastructure/http/routesV1';
-import { ENDPOINT_CLIENT, PORT_SERVER } from '@shared/constants/env';
+import { ENDPOINT_CLIENTS, PORT_SERVER } from '@shared/constants/env';
+import { NetWorkError } from '@shared/errors/NetworkError';
 
 const app = express();
 
 /* - - - - - - - - - - - Cors - - - - - - - - - - - - - - */
-app.use(cors({ credentials: true, origin: ENDPOINT_CLIENT }));
+const corsTestOrigin = (origin, callback) => {
+  if (ENDPOINT_CLIENTS.indexOf(origin) !== -1) {
+    callback(null, true);
+  } else {
+    callback(new NetWorkError('Not allowed by CORS', 403));
+  }
+};
+
+app.use(
+  cors({
+    credentials: true,
+    origin: corsTestOrigin,
+  })
+);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 /* - - - - - - - - - - - Static - - - - - - - - - - - - - */
