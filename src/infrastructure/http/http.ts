@@ -17,7 +17,7 @@ const app = express();
 
 /* - - - - - - - - - - - Cors - - - - - - - - - - - - - - */
 const corsTestOrigin = (origin, callback) => {
-  if (ENDPOINT_CLIENTS.indexOf(removeTrailingSlash(origin)) !== -1) {
+  if (ENDPOINT_CLIENTS.indexOf(removeTrailingSlash(origin)) !== -1 || !origin) {
     callback(null, true);
   } else {
     callback(new NetWorkError('Not allowed by CORS', 403));
