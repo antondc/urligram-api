@@ -42,6 +42,10 @@ export class URLWrapper {
     return this.search;
   }
 
+  getHref(): string | undefined {
+    return this.url?.href;
+  }
+
   getUrl(): URL | undefined {
     return this.url;
   }

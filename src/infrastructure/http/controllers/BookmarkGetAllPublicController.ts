@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 
 import { IBookmarkGetAllPublicUseCase } from '@domain/bookmark/useCases/BookmarkGetAllPublicUseCase';
-import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -17,19 +16,13 @@ export class BookmarkGetAllPublicController extends BaseController {
     const response = await this.useCase.execute();
 
     const formattedBookmarks = response.map((item) => {
-      const urlWrapper = new URLWrapper(item.url);
-      const url = urlWrapper.getUrl();
-
       return {
         type: 'bookmark',
         id: item.id,
         session: {
           self: URL_SERVER + '/bookmarks/' + item.id,
         },
-        attributes: {
-          ...item,
-          url,
-        },
+        attributes: item,
       };
     });
 
