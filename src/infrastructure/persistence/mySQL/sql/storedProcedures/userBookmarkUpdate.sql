@@ -14,7 +14,6 @@ BEGIN
   SET @bookmark_id         = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.bookmarkId'));
   SET @user_id             = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.userId'));
   SET @order               = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.order'));
-  SET @vote                = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.vote'));
   SET @saved               = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.saved'));
   SET @is_private          = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.isPrivate'));
   SET @domain              = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.domain'));
@@ -77,7 +76,6 @@ BEGIN
     `bookmark`.`isPrivate`  = @is_private,
     `bookmark`.`saved`      = @saved,
     `bookmark`.`order`      = @order,
-    `bookmark`.`vote`       = @vote,
     `bookmark`.`user_id`    = @user_id,
     `bookmark`.`link_id`    = @new_link_id
   WHERE `bookmark`.id       = @bookmark_id;

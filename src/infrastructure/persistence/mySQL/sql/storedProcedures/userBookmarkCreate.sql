@@ -12,7 +12,6 @@ BEGIN
   -- Retrieve values from JSON
   SET @user_id     = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
   SET @title       = JSON_UNQUOTE(JSON_EXTRACT(data, '$.title'));
-  SET @vote        = JSON_UNQUOTE(JSON_EXTRACT(data, '$.vote'));
   SET @saved       = JSON_UNQUOTE(JSON_EXTRACT(data, '$.saved'));
   SET @is_private  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.isPrivate'));
   SET @domain      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.domain'));
@@ -59,20 +58,17 @@ BEGIN
     `bookmark`.`title`,
     `bookmark`.`isPrivate`,
     `bookmark`.`saved`,
-    `bookmark`.`vote`,
     `bookmark`.`user_id`,
     `bookmark`.`link_id`
   ) VALUES (
     @title,
     @is_private,
     @saved,
-    @vote,
     @user_id,
     @link_id
   ) ON DUPLICATE KEY UPDATE
     isPrivate   = @is_private,
     saved       = @saved,
-    vote        = @vote,
     user_id     = @user_id,
     link_id     = @link_id,
     updatedAt   = CURRENT_TIMESTAMP;

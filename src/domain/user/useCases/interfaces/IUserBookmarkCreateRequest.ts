@@ -11,7 +11,6 @@ type List = {
 export interface IUserBookmarkCreateRequest {
   title: string;
   saved: boolean;
-  vote: boolean;
   isPrivate: boolean;
   url: string;
   tags?: Tag[];

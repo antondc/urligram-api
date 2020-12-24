@@ -20,6 +20,7 @@ export class StateRepo {
   private bookmarkList: string;
   private tag: string;
   private bookmarkTag: string;
+  private userLink: string;
   private userList: string;
   private userLogins: string;
   private userUser: string;
@@ -89,6 +90,7 @@ export class StateRepo {
   private bookmarkListData: string;
   private tagData: string;
   private bookmarkTagData: string;
+  private userLinkData: string;
   private userListData: string;
   private userLoginData: string;
   private userUserData: string;
@@ -109,6 +111,7 @@ export class StateRepo {
     this.bookmarkList = fs.readFileSync(path.resolve(__dirname, '../sql/models/bookmarkList.sql')).toString();
     this.tag = fs.readFileSync(path.resolve(__dirname, '../sql/models/tag.sql')).toString();
     this.bookmarkTag = fs.readFileSync(path.resolve(__dirname, '../sql/models/bookmarkTag.sql')).toString();
+    this.userLink = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLink.sql')).toString();
     this.userList = fs.readFileSync(path.resolve(__dirname, '../sql/models/userList.sql')).toString();
     this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLog.sql')).toString();
     this.userUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/userUser.sql')).toString();
@@ -185,6 +188,7 @@ export class StateRepo {
     this.tagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/tag.sql')).toString();
     this.bookmarkTagData = fs.readFileSync(path.resolve(__dirname, '../sql/data/bookmarkTag.sql')).toString();
     this.userUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userUser.sql')).toString();
+    this.userLinkData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLink.sql')).toString();
     this.userListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userList.sql')).toString();
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
   }
@@ -211,6 +215,7 @@ export class StateRepo {
       const createLinkUserListTable = await mySQL.query(this.bookmarkList);
       const createTagTable = await mySQL.query(this.tag);
       const createLinkUserTagTable = await mySQL.query(this.bookmarkTag);
+      const createUserLinkTable = await mySQL.query(this.userLink);
       const createUserListTable = await mySQL.query(this.userList);
       const createUserLoginsTable = await mySQL.query(this.userLogins);
       const createUserUserTable = await mySQL.query(this.userUser);
@@ -280,6 +285,7 @@ export class StateRepo {
       const insertLinkUserListData = await mySQL.query(this.bookmarkListData);
       const insertTagData = await mySQL.query(this.tagData);
       const insertLinkUserTagData = await mySQL.query(this.bookmarkTagData);
+      const insertUserLinkData = await mySQL.query(this.userLinkData);
       const insertUserListData = await mySQL.query(this.userListData);
       const insertUserLoginData = await mySQL.query(this.userLoginData);
       const insertUserUserData = await mySQL.query(this.userUserData);
@@ -305,6 +311,7 @@ export class StateRepo {
         ...createLinkUserListTable,
         ...createTagTable,
         ...createLinkUserTagTable,
+        ...createUserLinkTable,
         ...createUserListTable,
         ...createUserLoginsTable,
         ...createUserUserTable,
@@ -374,6 +381,7 @@ export class StateRepo {
         ...insertLinkUserListData,
         ...insertTagData,
         ...insertLinkUserTagData,
+        ...insertUserLinkData,
         ...insertUserListData,
         ...insertUserLoginData,
         ...insertUserUserData,

@@ -16,7 +16,6 @@ BEGIN
     CONCAT(domain.domain, link.path) AS url,
     bookmark.isPrivate,
     bookmark.saved,
-    bookmark.vote,
     bookmark.user_id as userId,
     bookmark.createdAt,
     bookmark.updatedAt

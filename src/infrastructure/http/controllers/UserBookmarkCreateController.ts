@@ -16,13 +16,12 @@ export class UserBookmarkCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { title, vote, saved, isPrivate, url, tags } = req.body;
+    const { title, saved, isPrivate, url, tags } = req.body;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const linkCreateRequest: IUserBookmarkCreateRequest = {
       title,
-      vote,
       saved,
       isPrivate,
       url,

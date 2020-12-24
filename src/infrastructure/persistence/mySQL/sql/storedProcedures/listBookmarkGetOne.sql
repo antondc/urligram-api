@@ -15,8 +15,7 @@ BEGIN
     bookmark.user_id AS userId,
     CONCAT(domain.domain, link.path) AS url,
     bookmark.isPrivate,
-    bookmark.saved,
-    bookmark.vote
+    bookmark.saved
   FROM bookmark_list
   JOIN bookmark ON bookmark_list.bookmark_id  = bookmark.id
   JOIN link ON bookmark.link_id               = link.id

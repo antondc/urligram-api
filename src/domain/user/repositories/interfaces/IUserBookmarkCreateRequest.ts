@@ -12,7 +12,6 @@ export interface IUserBookmarkCreateRequest {
   userId: string;
   title: string;
   saved: boolean;
-  vote: boolean;
   isPrivate: boolean;
   url: string;
   tags?: Tag[];

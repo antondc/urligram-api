@@ -18,7 +18,6 @@ BEGIN
     CONCAT(domain.domain, link.path) AS url,
     `bookmark`.`isPrivate`,
     `bookmark`.`saved`,
-    `bookmark`.`vote`,
     `bookmark`.`createdAt`,
     `bookmark`.`updatedAt`
   FROM bookmark
