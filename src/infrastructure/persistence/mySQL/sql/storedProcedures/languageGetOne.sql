@@ -22,7 +22,8 @@ BEGIN
       'notFound', g.notFound,
       'tags', g.tags,
       'trending', g.trending,
-      'lists', g.lists
+      'lists', g.lists,
+      'bookmarks', g.bookmarks
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id

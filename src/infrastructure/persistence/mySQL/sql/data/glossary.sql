@@ -9,6 +9,7 @@ INSERT INTO `glossary` (
   `tags`,
   `trending`,
   `lists`,
+  `bookmarks`,
   `createdAt`,
   `updatedAt`
 ) VALUES (
@@ -21,6 +22,7 @@ INSERT INTO `glossary` (
   "Tags",
   "Trending",
   "Lists",
+  "Bookmarks",
   DEFAULT,
   DEFAULT
 );
@@ -36,6 +38,7 @@ INSERT INTO `glossary` (
   `tags`,
   `trending`,
   `lists`,
+  `bookmarks`,
   `createdAt`,
   `updatedAt`
 ) VALUES (
@@ -48,6 +51,7 @@ INSERT INTO `glossary` (
   "Tags",
   "Trending",
   "Listas",
+  "Bookmarks",
   DEFAULT,
   DEFAULT
 );
