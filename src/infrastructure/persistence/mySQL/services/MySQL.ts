@@ -19,6 +19,7 @@ export class MySQL {
   typeCast(field, useDefaultTypeCasting) {
     // We only want to cast TINY fields that have a single digit in them. If the field
     // has more than one integer, then we cannot assume it is supposed to be a Boolean.
+
     if (field.type === 'TINY' && field.length === 1) {
       const bytes = field.buffer(); // Extract value
 

@@ -55,7 +55,7 @@ BEGIN
         )
       )
       FROM `bookmark`
-      JOIN USER ON bookmark.user_id = user.id
+      JOIN user ON bookmark.user_id = user.id
       WHERE bookmark.link_id = link.id
       AND (
         bookmark.isPrivate != TRUE
