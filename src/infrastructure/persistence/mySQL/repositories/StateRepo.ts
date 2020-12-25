@@ -64,7 +64,7 @@ export class StateRepo {
   private listCreateOneProcedure: string;
   private listUpdateOneProcedure: string;
   private listDeleteOneProcedure: string;
-  private linkGetVotesByLinkIdProcedure: string;
+  private linkGetVotesProcedure: string;
   private listBookmarkGetOneProcedure: string;
   private listBookmarkGetAllProcedure: string;
   private listBookmarkCreateOneProcedure: string;
@@ -162,7 +162,7 @@ export class StateRepo {
     this.listCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreateOne.sql')).toString();
     this.listUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUpdateOne.sql')).toString();
     this.listDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listDeleteOne.sql')).toString();
-    this.linkGetVotesByLinkIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetVotesByLinkId.sql')).toString();
+    this.linkGetVotesProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetVotes.sql')).toString();
     this.listBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetOne.sql')).toString();
     this.listBookmarkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkGetAll.sql')).toString();
     this.listBookmarkCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkCreateOne.sql')).toString();
@@ -261,7 +261,7 @@ export class StateRepo {
       const createListCreateOneProcedure = await mySQL.query(this.listCreateOneProcedure);
       const createListUpdateOneProcedure = await mySQL.query(this.listUpdateOneProcedure);
       const createListDeleteOneProcedure = await mySQL.query(this.listDeleteOneProcedure);
-      const createLinkGetVotesByLinkIdProcedure = await mySQL.query(this.linkGetVotesByLinkIdProcedure);
+      const createLinkGetVotesProcedure = await mySQL.query(this.linkGetVotesProcedure);
       const createListBookmarkGetOneProcedure = await mySQL.query(this.listBookmarkGetOneProcedure);
       const createListBookmarkGetAllProcedure = await mySQL.query(this.listBookmarkGetAllProcedure);
       const createListBookmarkCreateOneProcedure = await mySQL.query(this.listBookmarkCreateOneProcedure);
@@ -358,7 +358,7 @@ export class StateRepo {
         ...createListCreateOneProcedure,
         ...createListUpdateOneProcedure,
         ...createListDeleteOneProcedure,
-        ...createLinkGetVotesByLinkIdProcedure,
+        ...createLinkGetVotesProcedure,
         ...createListBookmarkGetOneProcedure,
         ...createListBookmarkGetAllProcedure,
         ...createListBookmarkCreateOneProcedure,

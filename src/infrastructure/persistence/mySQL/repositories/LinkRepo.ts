@@ -67,13 +67,13 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkGetVotesByLinkId(linkGetVotesByLinkIdRequest) {
+  public async linkGetVotes(linkGetVotesRequest) {
     const mySQL = new MySQL();
 
     try {
-      const linkGetVotesByLinkIdQuery = `CALL link_get_votes_by_link_id('${JSON.stringify(linkGetVotesByLinkIdRequest)}')`;
+      const linkGetVotesQuery = `CALL link_get_votes('${JSON.stringify(linkGetVotesRequest)}')`;
 
-      const [results] = await mySQL.query(linkGetVotesByLinkIdQuery);
+      const [results] = await mySQL.query(linkGetVotesQuery);
 
       return results;
     } catch (err) {
