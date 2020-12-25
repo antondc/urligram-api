@@ -2,7 +2,7 @@ import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { ILinkGetOneRequest } from './interfaces/ILinkGetOneRequest';
 import { ILinkGetOneResponse } from './interfaces/ILinkGetOneResponse';
-import { ILinkGetAvgVoteByLinkIdUseCase, LinkGetAvgVoteByLinkIdUseCase } from './LinkGetAvgVoteByLinkId';
+import { ILinkGetTotalVoteByLinkIdUseCase } from './LinkGetTotalVoteByLinkId';
 
 export interface ILinkGetOneUseCase {
   execute: (linkGetOneRequest: ILinkGetOneRequest) => Promise<ILinkGetOneResponse>;
@@ -10,11 +10,11 @@ export interface ILinkGetOneUseCase {
 
 export class LinkGetOneUseCase implements ILinkGetOneUseCase {
   private linkRepo: ILinkRepo;
-  private linkAvgVoteByLinkId: ILinkGetAvgVoteByLinkIdUseCase;
+  private linkGetTotalVoteByLinkIdUseCase: ILinkGetTotalVoteByLinkIdUseCase;
 
-  constructor(linkRepo: ILinkRepo) {
+  constructor(linkRepo: ILinkRepo, linkGetTotalVoteByLinkId: ILinkGetTotalVoteByLinkIdUseCase) {
     this.linkRepo = linkRepo;
-    this.linkAvgVoteByLinkId = new LinkGetAvgVoteByLinkIdUseCase(linkRepo);
+    this.linkGetTotalVoteByLinkIdUseCase = linkGetTotalVoteByLinkId;
   }
 
   public async execute(linkGetOneRequest: ILinkGetOneRequest): Promise<ILinkGetOneResponse> {
@@ -23,7 +23,7 @@ export class LinkGetOneUseCase implements ILinkGetOneUseCase {
 
     if (!response) throw new RequestError('Link not found', 404, { message: '404 Not found' });
 
-    const { averageVote } = await this.linkAvgVoteByLinkId.execute({ linkId, session });
+    const { averageVote } = await this.linkGetTotalVoteByLinkIdUseCase.execute({ linkId, session });
 
     const reponseWithAverageVote = {
       ...response,

@@ -73,7 +73,7 @@ export class LinkRepo implements ILinkRepo {
     try {
       const linkGetVotesByLinkIdQuery = `CALL link_get_votes_by_link_id('${JSON.stringify(linkGetVotesByLinkIdRequest)}')`;
 
-      const [[results]] = await mySQL.query(linkGetVotesByLinkIdQuery);
+      const [results] = await mySQL.query(linkGetVotesByLinkIdQuery);
 
       return results;
     } catch (err) {

@@ -1,3 +1,1 @@
-export type ILinkGetVotesByLinkIdResponse = {
-  votes: number[];
-};
+export type ILinkGetVotesByLinkIdResponse = Array<{ vote: boolean }>;

@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'; // eslint-di
 
 import { LinkGetAllPublicUseCase } from '@domain/link/useCases/LinkGetAllPublicUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
+import { LinkGetTotalVoteByLinkIdUseCase } from '@domain/link/useCases/LinkGetTotalVoteByLinkId';
 import { LinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAllPublicUseCase';
 import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllPublicUseCase';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
@@ -14,7 +15,9 @@ const LinksRoute = express.Router();
 
 LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const linkGetOneUseCase = new LinkGetOneUseCase(linkRepo);
+  const linkGetTotalVoteByLinkIdUseCase = new LinkGetTotalVoteByLinkIdUseCase(linkRepo);
+  
+  const linkGetOneUseCase = new LinkGetOneUseCase(linkRepo, linkGetTotalVoteByLinkIdUseCase);
   const linkGetOneController = new LinkGetOneController(linkGetOneUseCase);
 
   const response = await linkGetOneController.execute(req, res, next);
