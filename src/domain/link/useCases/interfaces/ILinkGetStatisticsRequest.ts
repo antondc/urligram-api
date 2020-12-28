@@ -1,6 +1,6 @@
 import { User } from '@domain/user/entities/User';
 
-export type ILinkGetTotalVoteRequest = {
+export type ILinkGetStatisticsRequest = {
   linkId: number;
   session: User;
 };

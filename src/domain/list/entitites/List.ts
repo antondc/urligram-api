@@ -1,7 +1,7 @@
 import { User } from '@domain/user/entities/User';
 
 export class List {
-  id: string;
+  id: number;
   name: string;
   description: string;
   createdAt: Date;

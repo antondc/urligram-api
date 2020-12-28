@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'; // eslint-di
 
 import { LinkGetAllPublicUseCase } from '@domain/link/useCases/LinkGetAllPublicUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
-import { LinkGetTotalVoteUseCase } from '@domain/link/useCases/LinkGetTotalVote';
+import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { LinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAllPublicUseCase';
 import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllPublicUseCase';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
@@ -15,9 +15,9 @@ const LinksRoute = express.Router();
 
 LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const linkGetTotalVoteUseCase = new LinkGetTotalVoteUseCase(linkRepo);
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
 
-  const linkGetOneUseCase = new LinkGetOneUseCase(linkRepo, linkGetTotalVoteUseCase);
+  const linkGetOneUseCase = new LinkGetOneUseCase(linkRepo, linkGetStatisticsUseCase);
   const linkGetOneController = new LinkGetOneController(linkGetOneUseCase);
 
   const response = await linkGetOneController.execute(req, res, next);
@@ -27,9 +27,9 @@ LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunctio
 
 LinksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const linkGetTotalVoteUseCase = new LinkGetTotalVoteUseCase(linkRepo);
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
 
-  const linkGetAllUseCase = new LinkGetAllPublicUseCase(linkRepo, linkGetTotalVoteUseCase);
+  const linkGetAllUseCase = new LinkGetAllPublicUseCase(linkRepo, linkGetStatisticsUseCase);
   const linkGetAllController = new LinkGetAllPublicController(linkGetAllUseCase);
 
   const response = await linkGetAllController.execute(req, res, next);
