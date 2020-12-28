@@ -21,11 +21,11 @@ export class LinkGetAllPublicUseCase implements ILinkGetAllPublicUseCase {
     const response = await this.linkRepo.linkGetAllPublic({ userId: session?.id });
 
     const responseWithVotesPromises = response.map(async (item) => {
-      const averageVote = await this.linkGetStatisticsUseCase.execute({ linkId: item.id, session });
+      const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.id, session });
 
       return {
         ...item,
-        averageVote,
+        statistics,
       };
     });
     const responseWithVotes = await Promise.all(responseWithVotesPromises);

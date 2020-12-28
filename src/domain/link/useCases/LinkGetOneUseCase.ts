@@ -23,13 +23,13 @@ export class LinkGetOneUseCase implements ILinkGetOneUseCase {
 
     if (!response) throw new RequestError('Link not found', 404, { message: '404 Not found' });
 
-    const averageVote = await this.linkGetStatisticsUseCase.execute({ linkId, session });
+    const statistics = await this.linkGetStatisticsUseCase.execute({ linkId, session });
 
-    const reponseWithAverageVote = {
+    const reponseWithStatistics = {
       ...response,
-      averageVote,
+      statistics,
     };
 
-    return reponseWithAverageVote;
+    return reponseWithStatistics;
   }
 }

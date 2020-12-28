@@ -1,1 +1,3 @@
-export type ILinkGetStatisticsResponse = number | null;
+import { ILinkStatistics } from '@domain/link/entities/LinkStatistics';
+
+export type ILinkGetStatisticsResponse = ILinkStatistics;

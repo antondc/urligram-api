@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS link_get_statistics;
+DROP PROCEDURE IF EXISTS link_get_votes;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE link_get_statistics(
+CREATE PROCEDURE link_get_votes(
     IN data JSON
 )
 
