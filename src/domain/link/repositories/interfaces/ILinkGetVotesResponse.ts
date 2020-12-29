@@ -1,1 +1,4 @@
-export type ILinkGetVotesResponse = Array<{ vote: boolean }>;
+export type ILinkGetVotesResponse = {
+  vote: boolean;
+  userId: string;
+}[];

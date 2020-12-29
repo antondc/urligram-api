@@ -1,5 +1,5 @@
 export class Bookmark {
-  id: string;
+  id: number;
   title: string;
   image: string;
   vote: boolean;
@@ -7,6 +7,7 @@ export class Bookmark {
   createdAt: Date;
   updatedAt: Date;
   userId: string;
+  linkId: number;
 
   constructor(options) {
     this.id = options.id;
@@ -16,5 +17,6 @@ export class Bookmark {
     this.createdAt = options.createdAt;
     this.updatedAt = options.updatedAt;
     this.userId = options.userId;
+    this.linkId = options.linkId;
   }
 }

@@ -3,4 +3,5 @@ export type ILinkStatistics = {
   timesVoted: number;
   averageVote: number | null;
   timesBookmarked: number;
+  vote: boolean | null;
 };

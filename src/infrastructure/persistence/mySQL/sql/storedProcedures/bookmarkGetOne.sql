@@ -14,6 +14,8 @@ BEGIN
     bookmark.id,
     bookmark.order,
     CONCAT(domain.domain, link.path) AS url,
+    link.id AS linkId,
+    bookmark.user_id AS userId,
     bookmark.isPrivate,
     bookmark.saved,
     bookmark.createdAt,
@@ -46,7 +48,7 @@ BEGIN
         ) AS JSON
       ) AS lists
       FROM bookmark_list
-      JOIN list ON bookmark_list.list_id = list.id
+      JOIN `list` ON bookmark_list.list_id = list.id
       JOIN user_list ON user_list.list_id = list.id
       WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPrivate != 1
     ) AS lists

@@ -14,7 +14,7 @@ export class LinkGetStatisticsUseCase implements ILinkGetStatisticsUseCase {
   }
 
   public async execute(linkGetStatisticsRequest: ILinkGetStatisticsRequest): Promise<ILinkGetStatisticsResponse> {
-    const { linkId } = linkGetStatisticsRequest;
+    const { session, linkId } = linkGetStatisticsRequest;
     const votes = await this.linkRepo.linkGetVotes({ linkId });
     if (!votes.length)
       return {
@@ -22,8 +22,10 @@ export class LinkGetStatisticsUseCase implements ILinkGetStatisticsUseCase {
         timesVoted: 0,
         averageVote: null,
         timesBookmarked: 0,
+        vote: null,
       };
 
+    const vote = votes.find((item) => item.userId === session.id)?.vote || null;
     const votesArray = votes.map((item) => item.vote);
     const timesVoted = votesArray?.length;
     const timesPositiveVote = votesArray?.filter((item) => item === true)?.length;
@@ -35,6 +37,7 @@ export class LinkGetStatisticsUseCase implements ILinkGetStatisticsUseCase {
       timesVoted: 0,
       averageVote,
       timesBookmarked: 0,
+      vote,
     };
   }
 }

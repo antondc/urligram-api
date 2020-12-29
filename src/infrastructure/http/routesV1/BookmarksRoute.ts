@@ -4,9 +4,11 @@ import { BookmarkGetAllPublicUseCase } from '@domain/bookmark/useCases/BookmarkG
 import { BookmarkGetOneUseCase } from '@domain/bookmark/useCases/BookmarkGetOneUseCase';
 import { BookmarkListGetAllUseCase } from '@domain/bookmark/useCases/BookmarkListGetAllUseCase';
 import { BookmarkTagGetAllUseCase } from '@domain/bookmark/useCases/BookmarkTagGetAllUseCase';
+import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { BookmarkGetAllPublicController } from '@infrastructure/http/controllers/BookmarkGetAllPublicController';
 import { BookmarkGetOneController } from '@infrastructure/http/controllers/BookmarkGetOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
+import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { BookmarkListGetAllController } from '../controllers/BookmarkListGetAllController';
 import { BookmarkTagGetAllController } from '../controllers/BookmarkTagGetAllController';
 
@@ -24,7 +26,10 @@ BookmarksRoute.get('/', async (req: Request, res: Response, next: NextFunction) 
 
 BookmarksRoute.get('/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
   const bookmarkRepo = new BookmarkRepo();
-  const bookmarkGetOneUseCase = new BookmarkGetOneUseCase(bookmarkRepo);
+  const linkRepo = new LinkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+
+  const bookmarkGetOneUseCase = new BookmarkGetOneUseCase(bookmarkRepo, linkGetStatisticsUseCase);
   const bookmarkGetOneController = new BookmarkGetOneController(bookmarkGetOneUseCase);
 
   const response = await bookmarkGetOneController.execute(req, res, next);
