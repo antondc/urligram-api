@@ -25,7 +25,7 @@ export class LinkGetStatisticsUseCase implements ILinkGetStatisticsUseCase {
         vote: null,
       };
 
-    const vote = votes.find((item) => item.userId === session?.id)?.vote || null;
+    const { vote } = votes.find((item) => item.userId === session?.id) || { vote: null }; // We need to retrieve true | false; in case no value is retrieved, we set an explicit null.
     const votesArray = votes.map((item) => item.vote);
     const timesVoted = votesArray?.length;
     const timesPositiveVote = votesArray?.filter((item) => item === true)?.length;

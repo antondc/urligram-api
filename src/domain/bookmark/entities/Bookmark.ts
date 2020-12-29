@@ -1,3 +1,5 @@
+import { ILinkStatistics } from '@domain/link/entities/LinkStatistics';
+
 export class Bookmark {
   id: number;
   title: string;
@@ -8,6 +10,7 @@ export class Bookmark {
   updatedAt: Date;
   userId: string;
   linkId: number;
+  statistics: ILinkStatistics;
 
   constructor(options) {
     this.id = options.id;
@@ -18,5 +21,6 @@ export class Bookmark {
     this.updatedAt = options.updatedAt;
     this.userId = options.userId;
     this.linkId = options.linkId;
+    this.statistics = options.statistics;
   }
 }

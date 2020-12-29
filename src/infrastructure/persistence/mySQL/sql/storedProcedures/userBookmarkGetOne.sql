@@ -18,6 +18,7 @@ BEGIN
     `bookmark`.`id`,
     `bookmark`.`order`,
     CONCAT(domain.domain, link.path) AS url,
+    `bookmark`.`link_id` AS linkId,
     `bookmark`.`isPrivate`,
     `bookmark`.`saved`,
     `bookmark`.`createdAt`,
