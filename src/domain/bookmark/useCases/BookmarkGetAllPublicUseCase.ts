@@ -1,23 +1,39 @@
 import { IBookmarkRepo } from '@domain/bookmark/repositories/IBookmarkRepo';
+import { ILinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
+import { IBookmarkGetAllPublicRequest } from './interfaces/IBookmarkGetAllPublicRequest';
 import { IBookmarkGetAllPublicResponse } from './interfaces/IBookmarkGetAllPublicResponse';
 
 export interface IBookmarkGetAllPublicUseCase {
-  execute: () => Promise<IBookmarkGetAllPublicResponse>;
+  execute: (bookmarkGetAllPublicRequest: IBookmarkGetAllPublicRequest) => Promise<IBookmarkGetAllPublicResponse>;
 }
 
 export class BookmarkGetAllPublicUseCase implements IBookmarkGetAllPublicUseCase {
   private bookmarkRepo: IBookmarkRepo;
+  private linkGetStatisticsUseCase: ILinkGetStatisticsUseCase;
 
-  constructor(bookmarkRepo: IBookmarkRepo) {
+  constructor(bookmarkRepo: IBookmarkRepo, linkGetStatisticsUseCase: ILinkGetStatisticsUseCase) {
     this.bookmarkRepo = bookmarkRepo;
+    this.linkGetStatisticsUseCase = linkGetStatisticsUseCase;
   }
 
-  public async execute(): Promise<IBookmarkGetAllPublicResponse> {
+  public async execute(bookmarkGetAllPublicRequest: IBookmarkGetAllPublicRequest): Promise<IBookmarkGetAllPublicResponse> {
+    const { session } = bookmarkGetAllPublicRequest;
+
     const bookmarks = await this.bookmarkRepo.bookmarkGetAllPublic();
 
     const filteredBookmarks = bookmarks.filter((bookmark) => !bookmark.isPrivate); // (1)
 
-    return filteredBookmarks;
+    const responseWithVotesPromises = filteredBookmarks.map(async (item) => {
+      const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.linkId, session });
+
+      return {
+        ...item,
+        statistics,
+      };
+    });
+    const responseWithVotes = await Promise.all(responseWithVotesPromises);
+
+    return responseWithVotes;
   }
 }
 /* --- DOC ---

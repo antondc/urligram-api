@@ -16,7 +16,9 @@ const BookmarksRoute = express.Router();
 
 BookmarksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const bookmarkRepo = new BookmarkRepo();
-  const bookmarkGetAllPublicUseCase = new BookmarkGetAllPublicUseCase(bookmarkRepo);
+  const linkRepo = new LinkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+  const bookmarkGetAllPublicUseCase = new BookmarkGetAllPublicUseCase(bookmarkRepo, linkGetStatisticsUseCase);
   const bookmarkGetAllPublicController = new BookmarkGetAllPublicController(bookmarkGetAllPublicUseCase);
 
   const response = await bookmarkGetAllPublicController.execute(req, res, next);

@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 
 import { IBookmarkGetAllPublicUseCase } from '@domain/bookmark/useCases/BookmarkGetAllPublicUseCase';
+import { IBookmarkGetAllPublicRequest } from '@domain/bookmark/useCases/interfaces/IBookmarkGetAllPublicRequest';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -13,7 +16,14 @@ export class BookmarkGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const response = await this.useCase.execute();
+    const tokenService = new TokenService();
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+
+    const bookmarkGetAllPublicRequest: IBookmarkGetAllPublicRequest = {
+      session,
+    };
+
+    const response = await this.useCase.execute(bookmarkGetAllPublicRequest);
 
     const formattedBookmarks = response.map((item) => {
       return {
