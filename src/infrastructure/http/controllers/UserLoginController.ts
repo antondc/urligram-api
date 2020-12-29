@@ -47,6 +47,7 @@ export class UserLoginController extends BaseController {
         maxAge: 900000,
         httpOnly: true,
         sameSite: 'none',
+        secure: false,
         path: '/',
       })
       .json(formattedResponse)
