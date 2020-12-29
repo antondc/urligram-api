@@ -1,3 +1,4 @@
+import { ILinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserBookmarkGetAllRequest } from './interfaces/IUserBookmarkGetAllRequest';
 import { IUserBookmarkGetAllResponse } from './interfaces/IUserBookmarkGetAllResponse';
@@ -8,18 +9,30 @@ export interface IUserBookmarkGetAllUseCase {
 
 export class UserBookmarkGetAllUseCase implements IUserBookmarkGetAllUseCase {
   private userRepo: IUserRepo;
+  private linkGetStatisticsUseCase: ILinkGetStatisticsUseCase;
 
-  constructor(userRepo: IUserRepo) {
+  constructor(userRepo: IUserRepo, linkGetStatisticsUseCase: ILinkGetStatisticsUseCase) {
     this.userRepo = userRepo;
+    this.linkGetStatisticsUseCase = linkGetStatisticsUseCase;
   }
 
   public async execute(userBookmarkGetAllRequest: IUserBookmarkGetAllRequest): Promise<IUserBookmarkGetAllResponse> {
     const { userId, session } = userBookmarkGetAllRequest;
 
-    const response = await this.userRepo.userBookmarkGetAll({ userId });
-    const filteredResponse = response.filter((item) => session?.id === userId || !item.isPrivate); // (1) (2)
+    const allBookmarks = await this.userRepo.userBookmarkGetAll({ userId });
+    const filteredBookmarks = allBookmarks.filter((item) => session?.id === userId || !item.isPrivate); // (1) (2)
 
-    return filteredResponse;
+    const bookmarksWithVotesPromises = filteredBookmarks.map(async (item) => {
+      const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.linkId, session });
+
+      return {
+        ...item,
+        statistics,
+      };
+    });
+    const bookmarksWithVotes = await Promise.all(bookmarksWithVotesPromises);
+
+    return bookmarksWithVotes;
   }
 }
 

@@ -152,7 +152,9 @@ UsersRoute.get('/:userId/followers', async (req: Request, res: Response, next: N
 
 UsersRoute.get('/:userId/bookmarks', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userLinkGetAllUseCase = new UserBookmarkGetAllUseCase(userRepo);
+  const linkRepo = new LinkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+  const userLinkGetAllUseCase = new UserBookmarkGetAllUseCase(userRepo, linkGetStatisticsUseCase);
   const userLinkGetAllController = new UserBookmarkGetAllController(userLinkGetAllUseCase);
 
   const response = await userLinkGetAllController.execute(req, res, next);
