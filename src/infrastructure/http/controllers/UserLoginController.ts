@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
+import { CookieOptions, Request, Response } from 'express';
 
 import { IUserLoginRequest } from '@domain/user/useCases/interfaces/IUserLoginRequest';
 import { IUserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
-import { URL_SERVER } from '@shared/constants/env';
+import { DEVELOPMENT, PRODUCTION, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserLoginController extends BaseController {
@@ -42,13 +42,14 @@ export class UserLoginController extends BaseController {
       included: [],
     };
 
-    return res
-      .cookie('sessionToken', token, {
-        maxAge: 900000,
-        httpOnly: true,
-        path: '/',
-      })
-      .json(formattedResponse)
-      .end();
+    const cookieOptions: CookieOptions = {
+      maxAge: 900000,
+      httpOnly: true,
+      path: '/',
+      sameSite: PRODUCTION ? 'strict' : 'none',
+      secure: DEVELOPMENT ? false : true,
+    };
+
+    return res.cookie('sessionToken', token, cookieOptions).json(formattedResponse).end();
   }
 }
