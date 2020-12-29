@@ -46,6 +46,7 @@ export class UserLoginController extends BaseController {
       .cookie('sessionToken', token, {
         maxAge: 900000,
         httpOnly: true,
+        sameSite: 'none',
         path: '/',
       })
       .json(formattedResponse)
