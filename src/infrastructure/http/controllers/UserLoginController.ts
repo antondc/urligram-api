@@ -26,6 +26,10 @@ export class UserLoginController extends BaseController {
     const tokenService = new TokenService();
     const token = tokenService.createToken(response);
 
+    const clientFound = ENDPOINT_CLIENTS.some((item) => req.headers.referer.includes(item));
+
+    const domain = clientFound ? `.${req.hostname}` : '';
+
     const formattedResponse = {
       links: {
         self: URL_SERVER + '/users/me',
@@ -39,13 +43,18 @@ export class UserLoginController extends BaseController {
         attributes: response,
         relationships: {},
       },
-      included: [],
+      included: [
+        req.headers,
+        {
+          'req.hostname': req.hostname,
+          'req.originalUrl': req.originalUrl,
+          'req.baseUrl': req.baseUrl,
+          'req.subdomains': req.subdomains,
+          clientFound,
+          domain,
+        },
+      ],
     };
-
-    const clientFound = ENDPOINT_CLIENTS.some((item) => req.headers.referer.includes(item));
-    console.log('req.hostname: ', req);
-    console.log('clientFound: ', clientFound);
-    const domain = clientFound ? `.${req.hostname}` : '';
 
     return res
       .cookie('sessionToken', token, {
@@ -56,7 +65,7 @@ export class UserLoginController extends BaseController {
         // secure: DEVELOPMENT ? false : true,
         domain,
       })
-      .json(req)
+      .json(formattedResponse)
       .end();
   }
 }
