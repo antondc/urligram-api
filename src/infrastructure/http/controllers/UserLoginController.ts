@@ -47,7 +47,7 @@ export class UserLoginController extends BaseController {
       httpOnly: true,
       path: '/',
       sameSite: DEVELOPMENT || STAGING ? 'none' : 'strict',
-      secure: DEVELOPMENT ? false : true,
+      secure: DEVELOPMENT || STAGING ? false : true,
     };
 
     return res.cookie('sessionToken', token, cookieOptions).json(formattedResponse).end();
