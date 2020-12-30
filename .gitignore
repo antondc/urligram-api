@@ -18,3 +18,4 @@ tmp
 .htaccess
 .htpasswd
 *www-linking_frontend_*.pid
+development/ssl/private.*
