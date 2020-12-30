@@ -54,7 +54,7 @@ export class UserLoginController extends BaseController {
         maxAge: 24 * 60 * 60 * 1000 * 30, // One month
         httpOnly: true,
         path: '/',
-        domain: '.antoniodiaz.me',
+        domain: '.' + domainForCookie,
       })
       .json(formattedResponse)
       .end();

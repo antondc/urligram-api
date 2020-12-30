@@ -10,7 +10,7 @@
     "HOST_SERVER": "0.0.0.0",
     "PORT_SERVER": "3000",
     "VERSION_SERVER": "api/v1",
-    "ENDPOINT_CLIENTS": ["http://0.0.0.0:4000", "http://test.linking.me.uk:4000", "http://linking-staging.antoniodiaz.me:4000"],
+    "ENDPOINT_CLIENTS": ["http://0.0.0.0:4000", "http://linking.me:4000"],
     "SECRET": "superSecret",
     "LOGGING": true
   },
@@ -25,7 +25,7 @@
     "HOST_SERVER": "linking-api-staging.antoniodiaz.me",
     "PORT_SERVER": "16186",
     "VERSION_SERVER": "v1",
-    "ENDPOINT_CLIENTS": ["https://linking-staging.antoniodiaz.me", "http://0.0.0.0:4000", "http://linking.me:4000"],
+    "ENDPOINT_CLIENTS": ["https://linking-staging.antoniodiaz.me", "http://linking.me:4000"],
     "SECRET": "superSecret",
     "LOGGING": true
   },
