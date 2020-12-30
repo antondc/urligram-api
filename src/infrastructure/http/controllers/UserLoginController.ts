@@ -30,8 +30,8 @@ export class UserLoginController extends BaseController {
     const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.hostname));
 
     const urlWrapper = new URLWrapper(req.hostname);
-    const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
-    const domainForCookie = clientFound ? domainWithoutSubdomain : '';
+    // const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
+    // const domainForCookie = clientFound ? domainWithoutSubdomain : '';
 
     const formattedResponse = {
       links: {
@@ -46,7 +46,13 @@ export class UserLoginController extends BaseController {
         attributes: response,
         relationships: {},
       },
-      included: [],
+      included: [
+        {
+          'req.hostname': req.hostname,
+          urlWrapper: urlWrapper,
+          clientFound: clientFound,
+        },
+      ],
     };
 
     return res
@@ -54,7 +60,7 @@ export class UserLoginController extends BaseController {
         maxAge: 24 * 60 * 60 * 1000 * 30, // One month
         httpOnly: true,
         path: '/',
-        domain: domainForCookie,
+        // domain: domainForCookie,
       })
       .json(formattedResponse)
       .end();
