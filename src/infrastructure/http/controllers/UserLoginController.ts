@@ -43,9 +43,9 @@ export class UserLoginController extends BaseController {
     };
 
     const clientFound = ENDPOINT_CLIENTS.some((item) => req.headers.referer.includes(item));
-    console.log('req.hostname: ', req.hostname);
+    console.log('req.hostname: ', req);
     console.log('clientFound: ', clientFound);
-    const domain = clientFound ? req.hostname : '';
+    const domain = clientFound ? `.${req.hostname}` : '';
 
     return res
       .cookie('sessionToken', token, {
@@ -56,7 +56,7 @@ export class UserLoginController extends BaseController {
         // secure: DEVELOPMENT ? false : true,
         domain,
       })
-      .json(formattedResponse)
+      .json(req)
       .end();
   }
 }
