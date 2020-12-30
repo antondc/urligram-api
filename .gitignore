@@ -18,3 +18,6 @@ tmp
 .htaccess
 .htpasswd
 *www-linking_frontend_*.pid
+src/infrastructure/http/ssl/private.crt
+src/infrastructure/http/ssl/private.csr
+src/infrastructure/http/ssl/private.key
