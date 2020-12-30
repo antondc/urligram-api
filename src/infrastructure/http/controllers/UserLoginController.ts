@@ -1,9 +1,9 @@
-import { CookieOptions, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 import { IUserLoginRequest } from '@domain/user/useCases/interfaces/IUserLoginRequest';
 import { IUserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
-import { DEVELOPMENT, PRODUCTION, STAGING, URL_SERVER } from '@shared/constants/env';
+import { DOMAIN, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserLoginController extends BaseController {
@@ -47,6 +47,7 @@ export class UserLoginController extends BaseController {
         maxAge: 24 * 60 * 60 * 1000 * 30, // One month
         httpOnly: true,
         path: '/',
+        domain: DOMAIN,
       })
       .json(formattedResponse)
       .end();
