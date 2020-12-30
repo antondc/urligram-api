@@ -27,7 +27,7 @@ export class UserLoginController extends BaseController {
     const tokenService = new TokenService();
     const token = tokenService.createToken(response);
 
-    const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.hostname));
+    const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.headers.origin));
 
     const urlWrapper = new URLWrapper(req.hostname);
     const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
@@ -54,7 +54,7 @@ export class UserLoginController extends BaseController {
         maxAge: 24 * 60 * 60 * 1000 * 30, // One month
         httpOnly: true,
         path: '/',
-        domain: domainForCookie,
+        domain: '.antoniodiaz.me',
       })
       .json(formattedResponse)
       .end();
