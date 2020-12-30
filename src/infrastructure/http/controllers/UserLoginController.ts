@@ -42,14 +42,15 @@ export class UserLoginController extends BaseController {
       included: [],
     };
 
-    const cookieOptions: CookieOptions = {
-      maxAge: 24 * 60 * 60 * 1000 * 30, // One month
-      httpOnly: true,
-      path: '/',
-      sameSite: 'lax',
-      secure: DEVELOPMENT ? false : true,
-    };
-
-    return res.cookie('sessionToken', token, cookieOptions).json(formattedResponse).end();
+    return res
+      .cookie('sessionToken', token, {
+        maxAge: 24 * 60 * 60 * 1000 * 30, // One month
+        httpOnly: true,
+        path: '/',
+        sameSite: 'strict',
+        secure: DEVELOPMENT ? false : true,
+      })
+      .json(formattedResponse)
+      .end();
   }
 }
