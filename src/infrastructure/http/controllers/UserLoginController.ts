@@ -49,6 +49,7 @@ export class UserLoginController extends BaseController {
         path: '/',
         sameSite: DEVELOPMENT ? 'lax' : 'strict',
         secure: DEVELOPMENT ? false : true,
+        domain: '.antoniodiaz.me',
       })
       .json(formattedResponse)
       .end();
