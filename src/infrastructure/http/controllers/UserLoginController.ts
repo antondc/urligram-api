@@ -46,8 +46,8 @@ export class UserLoginController extends BaseController {
       maxAge: 24 * 60 * 60 * 1000 * 30, // One month
       httpOnly: true,
       path: '/',
-      sameSite: DEVELOPMENT || STAGING ? 'none' : 'strict',
-      secure: DEVELOPMENT || STAGING ? false : true,
+      sameSite: 'strict',
+      secure: DEVELOPMENT ? false : true,
     };
 
     return res.cookie('sessionToken', token, cookieOptions).json(formattedResponse).end();
