@@ -32,7 +32,7 @@ export class UserLoginController extends BaseController {
     const domain = clientFound ? `.${req.hostname}` : '';
 
     const urlWrapper = new URLWrapper(req.hostname);
-    const urlWrapperDomain = urlWrapper.getDomain;
+    const urlWrapperDomain = urlWrapper.getDomainWithuotSubdomain;
 
     const formattedResponse = {
       links: {
