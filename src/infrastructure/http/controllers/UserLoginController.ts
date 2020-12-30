@@ -4,7 +4,7 @@ import { IUserLoginRequest } from '@domain/user/useCases/interfaces/IUserLoginRe
 import { IUserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URLWrapper } from '@infrastructure/services/UrlWrapper';
-import { DEVELOPMENT, ENDPOINT_CLIENTS, URL_SERVER } from '@shared/constants/env';
+import { ENDPOINT_CLIENTS, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserLoginController extends BaseController {
@@ -27,12 +27,11 @@ export class UserLoginController extends BaseController {
     const tokenService = new TokenService();
     const token = tokenService.createToken(response);
 
-    const clientFound = ENDPOINT_CLIENTS.some((item) => req.headers.referer.includes(item));
-
-    const domain = clientFound ? `.${req.hostname}` : '';
+    const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.hostname));
 
     const urlWrapper = new URLWrapper(req.hostname);
-    const urlWrapperDomain = urlWrapper.getDomainWithuotSubdomain();
+    const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
+    const domainForCookie = clientFound ? domainWithoutSubdomain : '';
 
     const formattedResponse = {
       links: {
@@ -47,18 +46,7 @@ export class UserLoginController extends BaseController {
         attributes: response,
         relationships: {},
       },
-      included: [
-        req.headers,
-        {
-          urlWrapperDomain: urlWrapperDomain,
-          'req.hostname': req.hostname,
-          'req.originalUrl': req.originalUrl,
-          'req.baseUrl': req.baseUrl,
-          'req.subdomains': req.subdomains,
-          clientFound,
-          domain,
-        },
-      ],
+      included: [],
     };
 
     return res
@@ -66,9 +54,7 @@ export class UserLoginController extends BaseController {
         maxAge: 24 * 60 * 60 * 1000 * 30, // One month
         httpOnly: true,
         path: '/',
-        // sameSite: DEVELOPMENT ? 'lax' : 'strict',
-        // secure: DEVELOPMENT ? false : true,
-        domain,
+        domain: domainForCookie,
       })
       .json(formattedResponse)
       .end();

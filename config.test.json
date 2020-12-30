@@ -10,7 +10,7 @@
     "HOST_SERVER": "0.0.0.0",
     "PORT_SERVER": "3000",
     "VERSION_SERVER": "api/v1",
-    "ENDPOINT_CLIENTS": ["http://0.0.0.0:4000", "http://linking.me:4000"],
+    "ENDPOINT_CLIENTS": ["http://0.0.0.0:4000", "http://test.linking.me.uk:4000"],
     "SECRET": "superSecret",
     "LOGGING": true
   },

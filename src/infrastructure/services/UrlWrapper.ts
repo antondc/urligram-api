@@ -1,5 +1,6 @@
+import psl from 'psl';
+
 import { addDefaultHttps } from '@tools/helpers/url/addDefaultHttps';
-import psl from './psl.js';
 
 export class URLWrapper {
   private readonly url: URL;
@@ -23,8 +24,8 @@ export class URLWrapper {
     }
   }
 
-  getDomainWithuotSubdomain(): string {
-    return psl.parse(this.url);
+  getDomainWithoutSubdomain(): string {
+    return psl.get(this.url.hostname);
   }
 
   getParam(name: string): string | undefined {
