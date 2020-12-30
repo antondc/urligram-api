@@ -66,7 +66,7 @@ let server;
 if (!!DEVELOPMENT) {
   server = https.createServer(certOptions, app);
 } else {
-  http.createServer(app);
+  server = http.createServer(app);
 }
 
 server.listen(PORT_SERVER);
