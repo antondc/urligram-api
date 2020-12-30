@@ -46,7 +46,7 @@ export class UserLoginController extends BaseController {
       maxAge: 2592000,
       httpOnly: true,
       path: '/',
-      sameSite: PRODUCTION ? 'strict' : 'none',
+      sameSite: !DEVELOPMENT ? 'strict' : 'none',
       secure: DEVELOPMENT ? false : true,
     };
 
