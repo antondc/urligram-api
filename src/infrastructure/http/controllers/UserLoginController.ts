@@ -48,7 +48,6 @@ export class UserLoginController extends BaseController {
         httpOnly: true,
         path: '/',
         sameSite: 'strict',
-        secure: DEVELOPMENT ? false : true,
       })
       .json(formattedResponse)
       .end();
