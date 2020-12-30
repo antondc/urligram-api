@@ -43,7 +43,7 @@ export class UserLoginController extends BaseController {
     };
 
     const cookieOptions: CookieOptions = {
-      maxAge: 900000,
+      maxAge: 2592000,
       httpOnly: true,
       path: '/',
       sameSite: PRODUCTION ? 'strict' : 'none',
