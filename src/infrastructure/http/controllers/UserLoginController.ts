@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { IUserLoginRequest } from '@domain/user/useCases/interfaces/IUserLoginRequest';
 import { IUserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
+import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { DEVELOPMENT, ENDPOINT_CLIENTS, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -30,6 +31,9 @@ export class UserLoginController extends BaseController {
 
     const domain = clientFound ? `.${req.hostname}` : '';
 
+    const urlWrapper = new URLWrapper(req.hostname);
+    const urlWrapperDomain = urlWrapper.getDomain;
+
     const formattedResponse = {
       links: {
         self: URL_SERVER + '/users/me',
@@ -46,6 +50,7 @@ export class UserLoginController extends BaseController {
       included: [
         req.headers,
         {
+          urlWrapperDomain: urlWrapperDomain,
           'req.hostname': req.hostname,
           'req.originalUrl': req.originalUrl,
           'req.baseUrl': req.baseUrl,
