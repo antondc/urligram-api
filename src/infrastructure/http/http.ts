@@ -5,7 +5,7 @@ import cors from 'cors';
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
-// import https from 'https';
+import https from 'https';
 import logger from 'morgan';
 import path from 'path';
 
@@ -44,27 +44,28 @@ app.use(cookieParser());
 app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
-// const aaa = fs.readFileSync('./ssl/private.key');
-
-app.use('*', (req, res) => {
-  return res.send({ DEVELOPMENT: DEVELOPMENT, nodeEnv: process.env.NODE_ENV, aaa: 'aaa' });
-});
-
 app.use('*', AuthMiddleware);
 app.use('/api/v1/', RouterV1);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-/* - - - - - - - - - - - Errors Handler - - - - - - - - - - - - - -*/
+/* - - - - - - - - - - - Errors Handler - - - - - - - - - -*/
 app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-/* - - - - - - - - - - - SSL options - - - - - - - - - - - - - - */
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
 /* - - - - - - - - - - - Server - - - - - - - - - - - - - -*/
-const server = /*DEVELOPMENT ? https.createServer(certOptions, app) : */ http.createServer(app);
+/* - - - - - - - - - - - SSL options - - - - - - - - - - - */
+if (DEVELOPMENT) {
+  const certOptions = {
+    key: fs.readFileSync(path.resolve(process.cwd(), 'src/infrastructure/http/ssl/private.key')),
+    cert: fs.readFileSync(path.resolve(process.cwd(), 'src/infrastructure/http/ssl/private.crt')),
+  };
+  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-server.listen(PORT_SERVER);
+  const server = https.createServer(certOptions, app);
+  server.listen(PORT_SERVER);
+} else {
+  const server = http.createServer(app);
+  server.listen(PORT_SERVER);
+}
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
