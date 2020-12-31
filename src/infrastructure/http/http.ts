@@ -3,12 +3,12 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-// import fs from 'fs';
+import fs from 'fs';
 import http from 'http';
 // import https from 'https';
 import logger from 'morgan';
+import path from 'path';
 
-// import path from 'path';
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
 import { ErrorHandlerMiddleware } from '@infrastructure/http/middlewares/ErrorHandlerMiddleware';
 import { RouterV1 } from '@infrastructure/http/routesV1';
@@ -58,10 +58,12 @@ app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - SSL options - - - - - - - - - - - - - - */
-// const certOptions = {
-//   key: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.key')),
-//   cert: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.crt')),
-// };
+const certOptions = {
+  key: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.key')),
+  cert: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.crt')),
+};
+console.log(certOptions);
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 /* - - - - - - - - - - - Server - - - - - - - - - - - - - -*/
