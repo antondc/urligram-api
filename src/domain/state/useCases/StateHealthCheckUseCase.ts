@@ -13,8 +13,8 @@ export class StateHealthCheckUseCase {
 
   public async execute() {
     const MySQL = await this.stateRepo.healthCheck();
-    const node = process.version;
+    const Node = process.version;
 
-    return { MySQL, node };
+    return { MySQL, Node };
   }
 }
