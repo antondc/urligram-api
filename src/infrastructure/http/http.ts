@@ -3,12 +3,12 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-import fs from 'fs';
+// import fs from 'fs';
 import http from 'http';
-import https from 'https';
+// import https from 'https';
 import logger from 'morgan';
-import path from 'path';
 
+// import path from 'path';
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
 import { ErrorHandlerMiddleware } from '@infrastructure/http/middlewares/ErrorHandlerMiddleware';
 import { RouterV1 } from '@infrastructure/http/routesV1';
@@ -44,6 +44,10 @@ app.use(cookieParser());
 app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
+app.use('*', (req, res) => {
+  return res.send({ DEVELOPMENT: DEVELOPMENT });
+});
+
 app.use('*', AuthMiddleware);
 app.use('/api/v1/', RouterV1);
 
@@ -54,20 +58,14 @@ app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - SSL options - - - - - - - - - - - - - - */
-const certOptions = {
-  key: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.key')),
-  cert: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.crt')),
-};
+// const certOptions = {
+//   key: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.key')),
+//   cert: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.crt')),
+// };
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 /* - - - - - - - - - - - Server - - - - - - - - - - - - - -*/
-let server;
-
-if (!!DEVELOPMENT) {
-  server = https.createServer(certOptions, app);
-} else {
-  server = http.createServer(app);
-}
+const server = /*DEVELOPMENT ? https.createServer(certOptions, app) : */ http.createServer(app);
 
 server.listen(PORT_SERVER);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
