@@ -44,8 +44,10 @@ app.use(cookieParser());
 app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
+const aaa = fs.readFileSync('./ssl/private.key');
+
 app.use('*', (req, res) => {
-  return res.send({ DEVELOPMENT: DEVELOPMENT, nodeEnv: process.env.NODE_ENV });
+  return res.send({ DEVELOPMENT: DEVELOPMENT, nodeEnv: process.env.NODE_ENV, aaa: aaa });
 });
 
 app.use('*', AuthMiddleware);
@@ -58,8 +60,6 @@ app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - SSL options - - - - - - - - - - - - - - */
-const aaa = fs.readFileSync('./ssl/private.key');
-console.log(aaa);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
