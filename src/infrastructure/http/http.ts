@@ -58,11 +58,8 @@ app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - SSL options - - - - - - - - - - - - - - */
-const certOptions = {
-  key: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.key')),
-  cert: fs.readFileSync(path.resolve(process.cwd(), 'src', 'infrastructure', 'http', 'ssl', 'private.crt')),
-};
-console.log(certOptions);
+const aaa = fs.readFileSync('src/infrastructure/http/ssl/private.key');
+console.log(aaa);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
