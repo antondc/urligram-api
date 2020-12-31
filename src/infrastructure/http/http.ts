@@ -45,7 +45,7 @@ app.use(logger('dev'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* - - - - - - - - - - - Routes - - - - - - - - - - - - - -*/
 app.use('*', (req, res) => {
-  return res.send({ DEVELOPMENT: DEVELOPMENT });
+  return res.send({ DEVELOPMENT: DEVELOPMENT, nodeEnv: process.env.NODE_ENV });
 });
 
 app.use('*', AuthMiddleware);
