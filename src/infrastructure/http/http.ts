@@ -58,7 +58,7 @@ app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - SSL options - - - - - - - - - - - - - - */
-const aaa = fs.readFileSync('src/infrastructure/http/ssl/private.key');
+const aaa = fs.readFileSync('./ssl/private.key');
 console.log(aaa);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
