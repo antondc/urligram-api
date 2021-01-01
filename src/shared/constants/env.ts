@@ -8,10 +8,11 @@ export const DOMAIN = config[process.env.NODE_ENV].HOST_SERVER;
 export const DATABASE_SETTINGS = config[process.env.NODE_ENV].database;
 export const PROTOCOL_SERVER = config[process.env.NODE_ENV].PROTOCOL_SERVER;
 export const HOST_SERVER = config[process.env.NODE_ENV].HOST_SERVER;
-export const PORT_SERVER = config[process.env.NODE_ENV].PORT_SERVER;
+export const PORT_SERVER_HTTP = config[process.env.NODE_ENV].PORT_SERVER_HTTP; // To be deprecated, currently useful for staging and prod
+export const PORT_SERVER_HTTPS = config[process.env.NODE_ENV].PORT_SERVER_HTTPS;
 export const VERSION_SERVER = config[process.env.NODE_ENV].VERSION_SERVER;
 export const LOGGING = config[process.env.NODE_ENV].LOGGING;
 export const ENDPOINT_CLIENTS = config[process.env.NODE_ENV].ENDPOINT_CLIENTS;
-export const URL_SERVER = PROTOCOL_SERVER + HOST_SERVER + ':' + PORT_SERVER + '/' + VERSION_SERVER;
+export const URL_SERVER = PROTOCOL_SERVER + HOST_SERVER + ':' + PORT_SERVER_HTTPS + '/' + VERSION_SERVER; // The URL_SERVER will always be with https
 
 export const SECRET = config[process.env.NODE_ENV].SECRET;

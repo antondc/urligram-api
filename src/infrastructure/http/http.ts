@@ -12,7 +12,7 @@ import path from 'path';
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
 import { ErrorHandlerMiddleware } from '@infrastructure/http/middlewares/ErrorHandlerMiddleware';
 import { RouterV1 } from '@infrastructure/http/routesV1';
-import { DEVELOPMENT, ENDPOINT_CLIENTS, PORT_SERVER } from '@shared/constants/env';
+import { ENDPOINT_CLIENTS, PORT_SERVER_HTTP, PORT_SERVER_HTTPS } from '@shared/constants/env';
 
 const app = express();
 
@@ -54,18 +54,19 @@ app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* - - - - - - - - - - - Server - - - - - - - - - - - - - -*/
-/* - - - - - - - - - - - SSL options - - - - - - - - - - - */
-if (DEVELOPMENT) {
+// Try to load conf files for HTTPS. In any case, load HTTP server.
+try {
+  // /* - - - - - - - - - - - SSL options - - - - - - - - - - - */
   const certOptions = {
     key: fs.readFileSync(path.resolve(process.cwd(), 'src/infrastructure/http/ssl/private.key')),
     cert: fs.readFileSync(path.resolve(process.cwd(), 'src/infrastructure/http/ssl/private.crt')),
   };
-  /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
-  const server = https.createServer(certOptions, app);
-  server.listen(PORT_SERVER);
-} else {
-  const server = http.createServer(app);
-  server.listen(PORT_SERVER);
+  const httpsServer = https.createServer(certOptions, app);
+  httpsServer.listen(PORT_SERVER_HTTPS);
+} catch {
+  // Do nothing
+} finally {
+  const httpServer = http.createServer(app);
+  httpServer.listen(PORT_SERVER_HTTP);
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
