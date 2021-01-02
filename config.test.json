@@ -11,7 +11,7 @@
     "PORT_SERVER_HTTP": "0",
     "PORT_SERVER_HTTPS": "3000",
     "VERSION_SERVER": "api/v1",
-    "ENDPOINT_CLIENTS": ["http://0.0.0.0:4000", "http://linking.me:4000"],
+    "ENDPOINT_CLIENTS": ["http://dev.linking.me", "https://dev.linking.me"],
     "SECRET": "superSecret",
     "LOGGING": true
   },
@@ -27,7 +27,7 @@
     "PORT_SERVER_HTTP": "16186",
     "PORT_SERVER_HTTPS": "0",
     "VERSION_SERVER": "v1",
-    "ENDPOINT_CLIENTS": ["https://linking-staging.antoniodiaz.me", "http://0.0.0.0:4000", "http://linking.me:4000"],
+    "ENDPOINT_CLIENTS": ["https://linking-staging.antoniodiaz.me", "http://0.0.0.0:4000", "http://dev.linking.me:4000"],
     "SECRET": "superSecret",
     "LOGGING": true
   },
