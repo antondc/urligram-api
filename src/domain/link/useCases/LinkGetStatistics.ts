@@ -27,7 +27,7 @@ export class LinkGetStatisticsUseCase implements ILinkGetStatisticsUseCase {
         absoluteVote: null,
         timesVoted: 0,
         averageVote: null,
-        timesBookmarked: 0,
+        timesBookmarked,
         vote: null,
       };
 
