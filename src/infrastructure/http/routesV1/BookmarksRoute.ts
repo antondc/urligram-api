@@ -17,7 +17,7 @@ const BookmarksRoute = express.Router();
 BookmarksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const bookmarkRepo = new BookmarkRepo();
   const linkRepo = new LinkRepo();
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
   const bookmarkGetAllPublicUseCase = new BookmarkGetAllPublicUseCase(bookmarkRepo, linkGetStatisticsUseCase);
   const bookmarkGetAllPublicController = new BookmarkGetAllPublicController(bookmarkGetAllPublicUseCase);
 
@@ -29,7 +29,7 @@ BookmarksRoute.get('/', async (req: Request, res: Response, next: NextFunction) 
 BookmarksRoute.get('/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
   const bookmarkRepo = new BookmarkRepo();
   const linkRepo = new LinkRepo();
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
 
   const bookmarkGetOneUseCase = new BookmarkGetOneUseCase(bookmarkRepo, linkGetStatisticsUseCase);
   const bookmarkGetOneController = new BookmarkGetOneController(bookmarkGetOneUseCase);

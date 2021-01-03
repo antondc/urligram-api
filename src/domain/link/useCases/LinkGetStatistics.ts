@@ -1,3 +1,4 @@
+import { IBookmarkRepo } from '@domain/bookmark/repositories/IBookmarkRepo';
 import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
 import { ILinkGetStatisticsRequest } from './interfaces/ILinkGetStatisticsRequest';
 import { ILinkGetStatisticsResponse } from './interfaces/ILinkGetStatisticsResponse';
@@ -8,14 +9,19 @@ export interface ILinkGetStatisticsUseCase {
 
 export class LinkGetStatisticsUseCase implements ILinkGetStatisticsUseCase {
   private linkRepo: ILinkRepo;
+  private bookmarkRepo: IBookmarkRepo;
 
-  constructor(linkRepo: ILinkRepo) {
+  constructor(linkRepo: ILinkRepo, bookmarkRepo: IBookmarkRepo) {
     this.linkRepo = linkRepo;
+    this.bookmarkRepo = bookmarkRepo;
   }
 
   public async execute(linkGetStatisticsRequest: ILinkGetStatisticsRequest): Promise<ILinkGetStatisticsResponse> {
     const { session, linkId } = linkGetStatisticsRequest;
     const votes = await this.linkRepo.linkGetVotes({ linkId });
+    const bookmarks = await this.bookmarkRepo.bookmarkGetAllByLinkId({ linkId, userId: session?.id });
+    const timesBookmarked = bookmarks.length;
+
     if (!votes.length)
       return {
         absoluteVote: null,
@@ -34,9 +40,9 @@ export class LinkGetStatisticsUseCase implements ILinkGetStatisticsUseCase {
 
     return {
       absoluteVote,
-      timesVoted: 0,
+      timesVoted,
       averageVote,
-      timesBookmarked: 0,
+      timesBookmarked,
       vote,
     };
   }

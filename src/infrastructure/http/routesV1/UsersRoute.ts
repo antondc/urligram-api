@@ -32,6 +32,7 @@ import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAl
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserPasswordUpdateController } from '@infrastructure/http/controllers/UserPasswordUpdateController';
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
+import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserBookmarkDeleteOneController } from '../controllers/UserBookmarkDeleteOneController';
@@ -153,7 +154,8 @@ UsersRoute.get('/:userId/followers', async (req: Request, res: Response, next: N
 UsersRoute.get('/:userId/bookmarks', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const linkRepo = new LinkRepo();
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
   const userLinkGetAllUseCase = new UserBookmarkGetAllUseCase(userRepo, linkGetStatisticsUseCase);
   const userLinkGetAllController = new UserBookmarkGetAllController(userLinkGetAllUseCase);
 
@@ -165,7 +167,8 @@ UsersRoute.get('/:userId/bookmarks', async (req: Request, res: Response, next: N
 UsersRoute.get('/me/bookmarks/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const linkRepo = new LinkRepo();
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
   const userLinkGetOneUseCase = new UserBookmarkGetOneUseCase(userRepo, linkGetStatisticsUseCase);
   const userLinkGetOneController = new UserBookmarkGetOneController(userLinkGetOneUseCase);
 

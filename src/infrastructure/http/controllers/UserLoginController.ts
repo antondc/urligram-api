@@ -46,14 +46,14 @@ export class UserLoginController extends BaseController {
     const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.headers.origin)); // Identify the client
     const urlWrapper = new URLWrapper(req.hostname);
     const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
-    const domainForCookie = clientFound ? domainWithoutSubdomain : null; // Return domain only for recognized clients
+    const domainForCookie = clientFound ? '.' + domainWithoutSubdomain : null; // Return domain only for recognized clients
 
     return res
       .cookie('sessionToken', token, {
         maxAge: 24 * 60 * 60 * 1000 * 30, // One month
         httpOnly: true,
         path: '/',
-        domain: '.' + domainForCookie, // We need to prepend «.» to enable any subdomain
+        domain: domainForCookie, // We need to prepend «.» to enable any subdomain
       })
       .json(formattedResponse)
       .end();

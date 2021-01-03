@@ -66,4 +66,20 @@ export class BookmarkRepo implements IBookmarkRepo {
       await mySQL.close();
     }
   }
+
+  public async bookmarkGetAllByLinkId(bookmarkGetAllByLinkIdRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const bookmarkGetAllByLinkIdQuery = `CALL bookmark_get_all_by_link_id('${JSON.stringify(bookmarkGetAllByLinkIdRequest)}')`;
+
+      const [response] = await mySQL.query(bookmarkGetAllByLinkIdQuery);
+
+      return response;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
