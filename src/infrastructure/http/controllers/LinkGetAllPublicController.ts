@@ -44,7 +44,7 @@ export class LinkGetAllPublicController extends BaseController {
     });
 
     const formattedResponse = {
-      links: {
+      Links: {
         self: URL_SERVER + '/links',
       },
       data: formattedLinks,
