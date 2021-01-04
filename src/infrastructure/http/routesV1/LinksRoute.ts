@@ -5,6 +5,7 @@ import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { LinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAllPublicUseCase';
 import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllPublicUseCase';
+import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { LinkGetAllPublicController } from '../controllers/LinkGetAllPublicController';
 import { LinkGetOneController } from '../controllers/LinkGetOneController';
@@ -15,7 +16,8 @@ const LinksRoute = express.Router();
 
 LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+  const bookmarkRepoRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepoRepo);
 
   const linkGetOneUseCase = new LinkGetOneUseCase(linkRepo, linkGetStatisticsUseCase);
   const linkGetOneController = new LinkGetOneController(linkGetOneUseCase);
@@ -27,7 +29,8 @@ LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunctio
 
 LinksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo);
+  const bookmarkRepoRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepoRepo);
 
   const linkGetAllUseCase = new LinkGetAllPublicUseCase(linkRepo, linkGetStatisticsUseCase);
   const linkGetAllController = new LinkGetAllPublicController(linkGetAllUseCase);

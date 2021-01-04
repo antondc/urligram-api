@@ -1,4 +1,5 @@
 import psl from 'psl';
+import { URL } from 'url';
 
 import { addDefaultHttps } from '@tools/helpers/url/addDefaultHttps';
 
