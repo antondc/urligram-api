@@ -13,6 +13,11 @@ export class Language {
     Tags: string;
     Trending: string;
     Lists: string;
+    Bookmarks: string;
+    Links: string;
+    Users: string;
+    Followers: string;
+    Following: string;
   };
 
   constructor(options) {

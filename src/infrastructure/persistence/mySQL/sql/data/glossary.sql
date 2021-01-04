@@ -10,6 +10,10 @@ INSERT INTO `glossary` (
   `trending`,
   `lists`,
   `bookmarks`,
+  `links`,
+  `users`,
+  `followers`,
+  `following`,
   `createdAt`,
   `updatedAt`
 ) VALUES (
@@ -23,6 +27,10 @@ INSERT INTO `glossary` (
   "Trending",
   "Lists",
   "Bookmarks",
+  "Links",
+  "Users",
+  "Followers",
+  "Following",
   DEFAULT,
   DEFAULT
 );
@@ -39,6 +47,10 @@ INSERT INTO `glossary` (
   `trending`,
   `lists`,
   `bookmarks`,
+  `links`,
+  `users`,
+  `followers`,
+  `following`,
   `createdAt`,
   `updatedAt`
 ) VALUES (
@@ -52,6 +64,10 @@ INSERT INTO `glossary` (
   "Trending",
   "Listas",
   "Bookmarks",
+  "Links",
+  "Usuarios",
+  "Seguidores",
+  "Siguiendo",
   DEFAULT,
   DEFAULT
 );

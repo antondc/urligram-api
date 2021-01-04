@@ -23,7 +23,11 @@ BEGIN
       'tags', g.tags,
       'trending', g.trending,
       'lists', g.lists,
-      'bookmarks', g.bookmarks
+      'bookmarks', g.bookmarks,
+      'links', g.links,
+      'users', g.users,
+      'followers', g.followers,
+      'following', g.following
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id
