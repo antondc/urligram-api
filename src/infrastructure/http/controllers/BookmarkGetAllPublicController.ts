@@ -29,7 +29,7 @@ export class BookmarkGetAllPublicController extends BaseController {
       return {
         type: 'bookmark',
         id: item.id,
-        session: {
+        links: {
           self: URL_SERVER + '/bookmarks/' + item.id,
         },
         attributes: item,

@@ -23,20 +23,12 @@ export class LanguageGetOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/language',
+        self: URL_SERVER + '/languages/' + response.slug,
       },
-      data: [
-        {
-          type: 'language',
-          id: response.id,
-          session: {
-            self: URL_SERVER + '/language',
-          },
-          attributes: response,
-          relationships: {},
-        },
-      ],
-      included: [],
+      data: {
+        type: 'language',
+        attributes: response,
+      },
     };
 
     return res.status(200).send(formattedResponse);

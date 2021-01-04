@@ -15,21 +15,21 @@ export class LanguageGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const response = await this.useCase.execute();
 
+    const items = response.reduce((acc, curr) => {
+      return acc.concat({
+        type: 'languages',
+        attributes: curr,
+        links: {
+          self: URL_SERVER + '/languages/' + curr.slug,
+        },
+      });
+    }, []);
+
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/language',
+        self: URL_SERVER + '/languages',
       },
-      data: [
-        {
-          type: 'language',
-          session: {
-            self: URL_SERVER + '/language',
-          },
-          attributes: response,
-          relationships: {},
-        },
-      ],
-      included: [],
+      data: items,
     };
 
     return res.status(200).send(formattedResponse);

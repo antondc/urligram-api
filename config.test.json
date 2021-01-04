@@ -7,7 +7,7 @@
       "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "0.0.0.0",
+    "HOST_SERVER": "dev.linking.me",
     "PORT_SERVER_HTTP": "0",
     "PORT_SERVER_HTTPS": "3000",
     "VERSION_SERVER": "api/v1",
