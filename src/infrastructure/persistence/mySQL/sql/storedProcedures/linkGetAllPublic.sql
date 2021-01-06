@@ -11,6 +11,7 @@ BEGIN
 
   SELECT
     link.id,
+    link.title,
     link.image as img,
     link.order,
     CONCAT(domain.domain, link.path) AS url,

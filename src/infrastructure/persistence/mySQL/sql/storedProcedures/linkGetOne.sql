@@ -15,6 +15,7 @@ BEGIN
   -- Returns «links» with tags used in public bookmarks or bookmarked by the user, public bookmarks or owned by the user, and users that bookmarked it as public, or own user
   SELECT
     link.id,
+    link.title,
     link.image as img,
     link.order,
     CONCAT(domain.domain, link.path) AS url,

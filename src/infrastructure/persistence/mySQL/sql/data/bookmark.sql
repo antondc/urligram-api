@@ -27,3 +27,27 @@ INSERT INTO `bookmark` (
 ) VALUES (
   5, 4, "My bookmark 4", false, true, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 12
 );
+
+INSERT INTO `bookmark` (
+  `id`, `order`, `title`, `isPrivate`, `saved`, `createdAt`, `updatedAt`, `user_id`, `link_id`
+) VALUES (
+  6, 4, "My bookmark 4", false, true, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1
+);
+
+INSERT INTO `bookmark` (
+  `id`, `order`, `title`, `isPrivate`, `saved`, `createdAt`, `updatedAt`, `user_id`, `link_id`
+) VALUES (
+  7, 4, "My bookmark 4", false, true, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 2
+);
+
+INSERT INTO `bookmark` (
+  `id`, `order`, `title`, `isPrivate`, `saved`, `createdAt`, `updatedAt`, `user_id`, `link_id`
+) VALUES (
+  8, 4, "My bookmark 4", false, true, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 3
+);
+
+INSERT INTO `bookmark` (
+  `id`, `order`, `title`, `isPrivate`, `saved`, `createdAt`, `updatedAt`, `user_id`, `link_id`
+) VALUES (
+  9, 4, "My bookmark 4", false, true, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 4
+);
