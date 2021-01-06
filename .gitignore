@@ -4,7 +4,6 @@
 .Spotlight-V100
 .Trashes
 yarn.lock
-package-lock.json
 node_modules
 ehthumbs.db
 Thumbs.db
