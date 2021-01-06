@@ -11,6 +11,8 @@ BEGIN
 
   SELECT
     link.id,
+    link.image as img,
+    link.order,
     CONCAT(domain.domain, link.path) AS url,
     (
       -- Perform a select with custom array to remove repetitions
