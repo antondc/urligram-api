@@ -1,8 +1,9 @@
 import { IListRepo } from '@domain/list/repositories/IListRepo';
+import { IListGetAllPublicRequest } from './interfaces/IListGetAllPublicRequest';
 import { IListGetAllPublicResponse } from './interfaces/IListGetAllPublicResponse';
 
 export interface IListGetAllPublicUseCase {
-  execute: () => Promise<IListGetAllPublicResponse>;
+  execute: (listGetAllPublicRequest: IListGetAllPublicRequest) => Promise<IListGetAllPublicResponse>;
 }
 
 export class ListGetAllPublicUseCase implements IListGetAllPublicUseCase {
@@ -12,8 +13,10 @@ export class ListGetAllPublicUseCase implements IListGetAllPublicUseCase {
     this.listRepo = listRepo;
   }
 
-  public async execute(): Promise<IListGetAllPublicResponse> {
-    const response = await this.listRepo.listGetAllPublic();
+  public async execute(listGetAllPublicRequest: IListGetAllPublicRequest): Promise<IListGetAllPublicResponse> {
+    const { session, sort, size } = listGetAllPublicRequest;
+
+    const response = await this.listRepo.listGetAllPublic({ userId: session?.id, size, sort });
 
     return response;
   }

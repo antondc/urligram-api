@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS list_user_get_one_by_list_id;
 CREATE PROCEDURE list_user_get_one_by_list_id(
   IN data JSON
 )
+
 BEGIN
 
   -- Retrieve values from JSON

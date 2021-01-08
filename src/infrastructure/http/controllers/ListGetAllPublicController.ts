@@ -1,8 +1,17 @@
 import { Request, Response } from 'express';
 
 import { IListGetAllPublicUseCase } from '@domain/list/useCases/ListGetAllPublicUseCase';
+import { User } from '@domain/user/entities/User';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
+
+type ListGetAllPublicControllerQueryType = {
+  sort: string;
+  page: {
+    size: string;
+  };
+};
 
 export class ListGetAllPublicController extends BaseController {
   useCase: IListGetAllPublicUseCase;
@@ -13,7 +22,14 @@ export class ListGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const response = await this.useCase.execute();
+    const {
+      sort,
+      page: { size },
+    } = req.query as ListGetAllPublicControllerQueryType;
+    const tokenService = new TokenService();
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+
+    const response = await this.useCase.execute({ session, size: Number(size), sort });
 
     const formattedLists = response.map((item) => {
       return {
@@ -33,7 +49,6 @@ export class ListGetAllPublicController extends BaseController {
         self: URL_SERVER + '/lists',
       },
       data: formattedLists,
-      included: [],
     };
 
     return res.status(200).send(formattedResponse);

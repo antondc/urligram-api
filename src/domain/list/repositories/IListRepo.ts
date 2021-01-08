@@ -10,6 +10,7 @@ import { IListCreateOneRequest } from './interfaces/IListCreateOneRequest';
 import { IListCreateOneResponse } from './interfaces/IListCreateOneResponse';
 import { IListDeleteOneRequest } from './interfaces/IListDeleteOneRequest';
 import { IListDeleteOneResponse } from './interfaces/IListDeleteOneResponse';
+import { IListGetAllPublicRequest } from './interfaces/IListGetAllPublicRequest';
 import { IListGetAllPublicResponse } from './interfaces/IListGetAllPublicResponse';
 import { IListGetOneByIdRequest } from './interfaces/IListGetOneByIdRequest';
 import { IListGetOneByIdResponse } from './interfaces/IListGetOneByIdResponse';
@@ -30,7 +31,7 @@ import { IListUserUpdateOneResponse } from './interfaces/IListUserUpdateOneRespo
 
 export interface IListRepo {
   listGetOneById: (listGetOneByIdRequest: IListGetOneByIdRequest) => Promise<IListGetOneByIdResponse>;
-  listGetAllPublic: () => Promise<IListGetAllPublicResponse>;
+  listGetAllPublic: (listGetAllPublicRequest: IListGetAllPublicRequest) => Promise<IListGetAllPublicResponse>;
   listCreateOne: (listCreateOneRequest: IListCreateOneRequest) => Promise<IListCreateOneResponse>;
   listUpdateOne: (listUpdateOneRequest: IListUpdateOneRequest) => Promise<IListUpdateOneResponse>;
   listDeleteOne: (listDeleteOneRequest: IListDeleteOneRequest) => Promise<IListDeleteOneResponse>;

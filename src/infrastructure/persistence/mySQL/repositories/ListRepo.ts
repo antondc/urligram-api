@@ -3,11 +3,11 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class ListRepo implements IListRepo {
-  public async listGetAllPublic() {
+  public async listGetAllPublic(listGetAllPublicRequest) {
     const mySQL = new MySQL();
 
     try {
-      const listGetAllPublicQuery = `CALL list_get_all_public()`;
+      const listGetAllPublicQuery = `CALL list_get_all_public('${JSON.stringify(listGetAllPublicRequest)}')`;
 
       const [list] = await mySQL.query(listGetAllPublicQuery);
 
@@ -50,7 +50,6 @@ export class ListRepo implements IListRepo {
       await mySQL.close();
     }
   }
-
 
   public async listDeleteOne(listDeleteOneRequest) {
     const mySQL = new MySQL();
