@@ -46,8 +46,14 @@ BEGIN
       OR `user_list`.`user_id` = @user_id
     GROUP BY list.id
       ORDER BY
-      CASE WHEN @sort = "members" THEN count(members) ELSE '' END ASC,
-      CASE WHEN @sort = "-members" THEN count(members) ELSE '' END DESC
+      CASE WHEN @sort = "members"     THEN count(members) 	ELSE NULL END ASC,
+      CASE WHEN @sort = "-members"    THEN count(members) 	ELSE NULL END DESC,
+      CASE WHEN @sort = 'id'          THEN `list`.id      	ELSE NULL END ASC,
+      CASE WHEN @sort = '-id'         THEN `list`.id      	ELSE NULL END DESC,
+      CASE WHEN @sort = 'createdAt'   THEN `list`.createdAt	ELSE NULL END ASC,
+      CASE WHEN @sort = '-createdAt'  THEN `list`.createdAt ELSE NULL END DESC,
+      CASE WHEN @sort = 'updatedAt'   THEN `list`.updatedAt ELSE NULL END ASC,
+      CASE WHEN @sort = '-updatedAt'  THEN `list`.updatedAt ELSE NULL END DESC
     LIMIT CASTED_SIZE
   ;
 
