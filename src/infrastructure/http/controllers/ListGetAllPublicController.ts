@@ -22,10 +22,7 @@ export class ListGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const {
-      sort,
-      page: { size },
-    } = req.query as ListGetAllPublicControllerQueryType;
+    const { sort, page: { size } = {} } = req.query as ListGetAllPublicControllerQueryType;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
