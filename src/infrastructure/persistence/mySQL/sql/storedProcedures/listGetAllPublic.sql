@@ -8,10 +8,9 @@ CREATE PROCEDURE list_get_all_public(
 BEGIN
   DECLARE CASTED_SIZE INT DEFAULT -1;
   SET @user_id  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.userId'));
-  SET @limit = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.limit'));
-  SET @sortBy  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.sortBy'));
-  SET @sortStrategy  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.sortStrategy'));
-  SET CASTED_SIZE = IF(@limit, @limit, CASTED_SIZE);
+  SET @size = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.size'));
+  SET @sort  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.sort'));
+  SET CASTED_SIZE = IF(@size IS NULL, -1, @size);
 
   -- Returns a collection of public lists or those where user is member, along with the number of users in each list
   SELECT

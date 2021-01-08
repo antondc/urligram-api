@@ -7,7 +7,7 @@ import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 type ListGetAllPublicControllerQueryType = {
-  sort: string;
+  sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'members' | '-members';
   page: {
     size: string;
   };
