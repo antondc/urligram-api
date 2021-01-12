@@ -35,6 +35,22 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
+  public async linkVoteOne(linkVoteOnePublicRequest) {
+    const mySQL = new MySQL();
+
+    try {
+      const linkVoteOnePublicQuery = `CALL link_vote_one('${JSON.stringify(linkVoteOnePublicRequest)}')`;
+
+      const [[link]] = await mySQL.query(linkVoteOnePublicQuery);
+
+      return link;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async linkListGetAllPublic(linkListGetAllPublicRequest) {
     const mySQL = new MySQL();
 

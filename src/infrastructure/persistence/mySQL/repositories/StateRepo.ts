@@ -58,6 +58,7 @@ export class StateRepo {
   private bookmarkListGetAllProcedure: string;
   private linkGetOneProcedure: string;
   private linkGetAllPublicProcedure: string;
+  private linkVoteOneProcedure: string;
   private linkListGetAllPublicProcedure: string;
   private linkTagGetAllProcedure: string;
   private listGetOneByIdProcedure: string;
@@ -157,6 +158,7 @@ export class StateRepo {
     this.bookmarkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkListGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
     this.linkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAllPublic.sql')).toString();
+    this.linkVoteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkVoteOne.sql')).toString();
     this.linkListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAllPublic.sql')).toString();
     this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
     this.listGetOneByIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOneById.sql')).toString();
@@ -257,6 +259,7 @@ export class StateRepo {
       const createBookmarkListGetAllProcedure = await mySQL.query(this.bookmarkListGetAllProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
       const createLinkGetAllPublicProcedure = await mySQL.query(this.linkGetAllPublicProcedure);
+      const createLinkVoteOneProcedure = await mySQL.query(this.linkVoteOneProcedure);
       const createLinkListGetAllPublicProcedure = await mySQL.query(this.linkListGetAllPublicProcedure);
       const createLinkTagGetAllProcedure = await mySQL.query(this.linkTagGetAllProcedure);
       const createListGetOneByIdProcedure = await mySQL.query(this.listGetOneByIdProcedure);
@@ -355,6 +358,7 @@ export class StateRepo {
         ...createBookmarkListGetAllProcedure,
         ...createLinkGetOneProcedure,
         ...createLinkGetAllPublicProcedure,
+        ...createLinkVoteOneProcedure,
         ...createLinkListGetAllPublicProcedure,
         ...createLinkTagGetAllProcedure,
         ...createListGetOneByIdProcedure,
