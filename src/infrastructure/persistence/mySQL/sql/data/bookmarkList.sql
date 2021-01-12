@@ -1,23 +1,26 @@
-INSERT INTO `bookmark_list` (
-  `order`, `createdAt`, `updatedAt`, `list_id`, `bookmark_id`
-) VALUES (
-  1, DEFAULT, DEFAULT, 1, 1
-);
-
-INSERT INTO `bookmark_list` (
-  `order`, `createdAt`, `updatedAt`, `list_id`, `bookmark_id`
-) VALUES (
-  2, DEFAULT, DEFAULT, 1, 2
-);
-
-INSERT INTO `bookmark_list` (
-  `order`, `createdAt`, `updatedAt`, `list_id`, `bookmark_id`
-) VALUES (
-  3, DEFAULT, DEFAULT, 1, 3
-);
-
-INSERT INTO `bookmark_list` (
-  `order`, `createdAt`, `updatedAt`, `list_id`, `bookmark_id`
-) VALUES (
-  4, DEFAULT, DEFAULT, 2, 4
-);
+INSERT INTO `bookmark_list` (`order`, `createdAt`, `updatedAt`, `list_id`, `bookmark_id`)
+VALUES
+	(1, DEFAULT, DEFAULT, 1, 1),
+	(2, DEFAULT, DEFAULT, 1, 3),
+	(3, DEFAULT, DEFAULT, 1, 5),
+	(4, DEFAULT, DEFAULT, 1, 7),
+	(5, DEFAULT, DEFAULT, 1, 9),
+	(6, DEFAULT, DEFAULT, 1, 11),
+	(7, DEFAULT, DEFAULT, 1, 18),
+	(8, DEFAULT, DEFAULT, 1, 20),
+	(9, DEFAULT, DEFAULT, 2, 2),
+	(10, DEFAULT, DEFAULT, 2, 6),
+	(11, DEFAULT, DEFAULT, 2, 10),
+	(12, DEFAULT, DEFAULT, 2, 13),
+	(13, DEFAULT, DEFAULT, 2, 16),
+	(14, DEFAULT, DEFAULT, 2, 19),
+	(15, DEFAULT, DEFAULT, 3, 3),
+	(16, DEFAULT, DEFAULT, 3, 7),
+	(17, DEFAULT, DEFAULT, 3, 12),
+	(18, DEFAULT, DEFAULT, 3, 17),
+	(19, DEFAULT, DEFAULT, 3, 18),
+	(20, DEFAULT, DEFAULT, 3, 19),
+	(21, DEFAULT, DEFAULT, 4, 1),
+	(22, DEFAULT, DEFAULT, 4, 4),
+	(23, DEFAULT, DEFAULT, 4, 15),
+	(24, DEFAULT, DEFAULT, 4, 19);

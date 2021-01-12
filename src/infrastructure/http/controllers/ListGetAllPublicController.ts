@@ -25,8 +25,10 @@ export class ListGetAllPublicController extends BaseController {
     const { sort, page: { size } = {} } = req.query as ListGetAllPublicControllerQueryType;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const checkedSize = Number(size) || undefined;
+    const checkedSort = sort || undefined;
 
-    const response = await this.useCase.execute({ session, size: Number(size), sort });
+    const response = await this.useCase.execute({ session, size: checkedSize, sort: checkedSort });
 
     const formattedLists = response.map((item) => {
       return {

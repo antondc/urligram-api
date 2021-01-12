@@ -1,131 +1,96 @@
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  0, DEFAULT, DEFAULT, 1, 1
-);
 
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  1, DEFAULT, DEFAULT, 1, 2
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  2, DEFAULT, DEFAULT, 1, 3
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  3, DEFAULT, DEFAULT, 1, 4
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  4, DEFAULT, DEFAULT, 1, 5
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  5, DEFAULT, DEFAULT, 1, 6
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  6, DEFAULT, DEFAULT, 1, 7
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  7, DEFAULT, DEFAULT, 2, 8
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  8, DEFAULT, DEFAULT, 2, 1
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  9, DEFAULT, DEFAULT, 2, 3
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  10, DEFAULT, DEFAULT, 2, 5
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  11, DEFAULT, DEFAULT, 2, 6
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  12, DEFAULT, DEFAULT, 3, 1
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  13, DEFAULT, DEFAULT, 3, 8
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  14, DEFAULT, DEFAULT, 3, 3
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  15, DEFAULT, DEFAULT, 3, 4
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  16, DEFAULT, DEFAULT, 3, 5
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  17, DEFAULT, DEFAULT, 3, 6
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  18, DEFAULT, DEFAULT, 3, 7
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  20, DEFAULT, DEFAULT, 4, 1
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  21, DEFAULT, DEFAULT, 4, 2
-);
-
-INSERT INTO `bookmark_tag` (
-  `order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`
-) VALUES (
-  22, DEFAULT, DEFAULT, 4, 5
-);
+INSERT INTO `bookmark_tag`
+  (`order`, `createdAt`, `updatedAt`, `bookmark_id`, `tag_id`)
+VALUES
+	(0, DEFAULT, DEFAULT, 1, 1),
+	(1, DEFAULT, DEFAULT, 1, 2),
+	(2, DEFAULT, DEFAULT, 1, 3),
+	(3, DEFAULT, DEFAULT, 1, 4),
+	(4, DEFAULT, DEFAULT, 1, 5),
+	(5, DEFAULT, DEFAULT, 1, 6),
+	(6, DEFAULT, DEFAULT, 1, 7),
+	(8, DEFAULT, DEFAULT, 2, 1),
+	(9, DEFAULT, DEFAULT, 2, 3),
+	(10, DEFAULT, DEFAULT, 2, 5),
+	(11, DEFAULT, DEFAULT, 2, 6),
+	(12, DEFAULT, DEFAULT, 2, 8),
+	(13, DEFAULT, DEFAULT, 3, 1),
+	(14, DEFAULT, DEFAULT, 3, 3),
+	(15, DEFAULT, DEFAULT, 3, 4),
+	(16, DEFAULT, DEFAULT, 3, 5),
+	(17, DEFAULT, DEFAULT, 3, 6),
+	(18, DEFAULT, DEFAULT, 3, 7),
+	(19, DEFAULT, DEFAULT, 3, 8),
+	(20, DEFAULT, DEFAULT, 4, 1),
+	(21, DEFAULT, DEFAULT, 4, 2),
+	(22, DEFAULT, DEFAULT, 4, 5),
+	(23, DEFAULT, DEFAULT, 5, 1),
+	(24, DEFAULT, DEFAULT, 5, 2),
+	(25, DEFAULT, DEFAULT, 5, 3),
+	(26, DEFAULT, DEFAULT, 5, 4),
+	(27, DEFAULT, DEFAULT, 6, 5),
+	(28, DEFAULT, DEFAULT, 6, 6),
+	(29, DEFAULT, DEFAULT, 6, 7),
+	(30, DEFAULT, DEFAULT, 6, 8),
+	(31, DEFAULT, DEFAULT, 7, 1),
+	(32, DEFAULT, DEFAULT, 7, 2),
+	(33, DEFAULT, DEFAULT, 7, 3),
+	(34, DEFAULT, DEFAULT, 7, 4),
+	(35, DEFAULT, DEFAULT, 8, 5),
+	(36, DEFAULT, DEFAULT, 8, 6),
+	(37, DEFAULT, DEFAULT, 8, 7),
+	(38, DEFAULT, DEFAULT, 8, 8),
+	(39, DEFAULT, DEFAULT, 9, 1),
+	(40, DEFAULT, DEFAULT, 9, 2),
+	(41, DEFAULT, DEFAULT, 9, 3),
+	(42, DEFAULT, DEFAULT, 9, 4),
+	(43, DEFAULT, DEFAULT, 10 ,5),
+	(44, DEFAULT, DEFAULT, 10 ,6),
+	(45, DEFAULT, DEFAULT, 10 ,7),
+	(46, DEFAULT, DEFAULT, 10 ,8),
+	(47, DEFAULT, DEFAULT, 11 ,1),
+	(48, DEFAULT, DEFAULT, 11 ,2),
+	(49, DEFAULT, DEFAULT, 11 ,3),
+	(50, DEFAULT, DEFAULT, 11 ,4),
+	(51, DEFAULT, DEFAULT, 11 ,5),
+	(52, DEFAULT, DEFAULT, 11 ,6),
+	(53, DEFAULT, DEFAULT, 11 ,7),
+	(54, DEFAULT, DEFAULT, 12 ,1),
+	(55, DEFAULT, DEFAULT, 12 ,3),
+	(56, DEFAULT, DEFAULT, 12 ,5),
+	(57, DEFAULT, DEFAULT, 12 ,6),
+	(58, DEFAULT, DEFAULT, 12 ,8),
+	(59, DEFAULT, DEFAULT, 13 ,1),
+	(60, DEFAULT, DEFAULT, 13 ,3),
+	(61, DEFAULT, DEFAULT, 13 ,4),
+	(62, DEFAULT, DEFAULT, 13 ,5),
+	(63, DEFAULT, DEFAULT, 13 ,6),
+	(64, DEFAULT, DEFAULT, 13 ,7),
+	(65, DEFAULT, DEFAULT, 13 ,8),
+	(66, DEFAULT, DEFAULT, 14 ,1),
+	(67, DEFAULT, DEFAULT, 14 ,2),
+	(68, DEFAULT, DEFAULT, 14 ,5),
+	(69, DEFAULT, DEFAULT, 15 ,1),
+	(70, DEFAULT, DEFAULT, 15 ,2),
+	(71, DEFAULT, DEFAULT, 15 ,3),
+	(72, DEFAULT, DEFAULT, 15 ,4),
+	(73, DEFAULT, DEFAULT, 16 ,5),
+	(74, DEFAULT, DEFAULT, 16 ,6),
+	(75, DEFAULT, DEFAULT, 16 ,7),
+	(76, DEFAULT, DEFAULT, 16 ,8),
+	(77, DEFAULT, DEFAULT, 17 ,1),
+	(78, DEFAULT, DEFAULT, 17 ,2),
+	(79, DEFAULT, DEFAULT, 17 ,3),
+	(80, DEFAULT, DEFAULT, 17 ,4),
+	(81, DEFAULT, DEFAULT, 18 ,5),
+	(82, DEFAULT, DEFAULT, 18 ,6),
+	(83, DEFAULT, DEFAULT, 18 ,7),
+	(84, DEFAULT, DEFAULT, 18 ,8),
+	(85, DEFAULT, DEFAULT, 19 ,1),
+	(86, DEFAULT, DEFAULT, 19 ,2),
+	(87, DEFAULT, DEFAULT, 19 ,3),
+	(88, DEFAULT, DEFAULT, 19 ,4),
+	(89, DEFAULT, DEFAULT, 20 ,5),
+	(90, DEFAULT, DEFAULT, 20 ,6),
+	(91, DEFAULT, DEFAULT, 20 ,7),
+	(92, DEFAULT, DEFAULT, 20, 8);

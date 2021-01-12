@@ -39,7 +39,7 @@ BEGIN
       WHERE user_list.list_id = list.id
     ) AS members
     FROM `list`
-    INNER JOIN user_list   ON `list`.id = user_list.list_id
+    LEFT JOIN user_list   ON `list`.id = user_list.list_id
     WHERE
       `list`.`isPrivate` IS NOT TRUE
       OR `list`.`userId`       = @user_id
