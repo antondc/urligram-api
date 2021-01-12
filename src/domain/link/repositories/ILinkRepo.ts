@@ -8,6 +8,8 @@ import { ILinkListGetAllPublicRequest } from './interfaces/ILinkListGetAllPublic
 import { ILinkListGetAllPublicResponse } from './interfaces/ILinkListGetAllPublicResponse';
 import { ILinkTagGetAllRequest } from './interfaces/ILinkTagGetAllRequest';
 import { ILinkTagGetAllResponse } from './interfaces/ILinkTagGetAllResponse';
+import { ILinkVoteOneRequest } from './interfaces/ILinkVoteOneRequest';
+import { ILinkVoteOneResponse } from './interfaces/ILinkVoteOneResponse';
 
 export interface ILinkRepo {
   linkGetOne: (linkGetOneRequest: ILinkGetOneRequest) => Promise<ILinkGetOneResponse>;
@@ -15,4 +17,5 @@ export interface ILinkRepo {
   linkListGetAllPublic: (linkListGetAllPublicRequest: ILinkListGetAllPublicRequest) => Promise<ILinkListGetAllPublicResponse>;
   linkTagGetAll: (linkTagGetAllRequest: ILinkTagGetAllRequest) => Promise<ILinkTagGetAllResponse>;
   linkGetVotes: (linkGetVotesRequest: ILinkGetVotesRequest) => Promise<ILinkGetVotesResponse>;
+  linkVoteOne: (linkVoteOneRequest: ILinkVoteOneRequest) => Promise<ILinkVoteOneResponse>;
 }
