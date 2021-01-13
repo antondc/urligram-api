@@ -6,10 +6,18 @@ CREATE PROCEDURE link_vote_one(
 )
 
 BEGIN
+
+  DECLARE CASTED_VOTE INT;
   -- Retrieve values from JSON
-  SET @user_id  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.userId'));
-  SET @link_id  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.linkId'));
-  SET @vote  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.vote'));
+  SET @user_id  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
+  SET @link_id  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.linkId'));
+  SET @vote  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.vote'));
+
+
+  IF      @vote = "true"  THEN SET  CASTED_VOTE = 1;
+  ELSEIF  @vote = "false" THEN SET  CASTED_VOTE = 0;
+  ELSE SET                          CASTED_VOTE = NULL;
+  END IF;
 
     -- Upsert into list
   INSERT INTO user_link (
@@ -19,11 +27,11 @@ BEGIN
   ) VALUES (
     @user_id,
     @link_id,
-    @vote
+    CASTED_VOTE
   ) ON DUPLICATE KEY UPDATE
     user_id      = @user_id,
     link_id      = @link_id,
-    vote         = @vote,
+    vote         = CASTED_VOTE,
     updatedAt    = CURRENT_TIMESTAMP
   ;
 
@@ -37,5 +45,6 @@ BEGIN
     AND
     link_id = @link_id
   ;
+
 
 END
