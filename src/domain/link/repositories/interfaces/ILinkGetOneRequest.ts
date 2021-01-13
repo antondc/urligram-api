@@ -6,6 +6,7 @@ export type byUserIdPathAndDomain = {
 
 export type byLinkId = {
   linkId: number;
+  userId: string;
 };
 
 export type ILinkGetOneRequest = byLinkId | byUserIdPathAndDomain;

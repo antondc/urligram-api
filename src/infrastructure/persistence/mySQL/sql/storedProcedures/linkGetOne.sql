@@ -2,15 +2,13 @@ DROP PROCEDURE IF EXISTS link_get_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE link_get_one(
-  IN data JSON
+  IN LINK_ID INT,
+  IN USER_ID VARCHAR(40),
+  IN URL_PATH TEXT,
+  IN URL_DOMAIN TEXT
 )
 
 BEGIN
-  -- Retrieve values from JSON
-  SET @link_id  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.linkId'));
-  SET @user_id  = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.userId'));
-  SET @path     = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.path'));
-  SET @domain   = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.domain'));
 
   -- Returns «links» with tags used in public bookmarks or bookmarked by the user, public bookmarks or owned by the user, and users that bookmarked it as public, or own user
   SELECT
@@ -41,7 +39,7 @@ BEGIN
         WHERE bookmark.link_id = link.id
         AND (
           bookmark.isPrivate != TRUE
-          OR bookmark.user_id = @user_id
+          OR bookmark.user_id = USER_ID
         )
       ) AS tags,
     (
@@ -62,7 +60,7 @@ BEGIN
       WHERE bookmark.link_id = link.id
       AND (
         bookmark.isPrivate != TRUE
-        OR bookmark.user_id = @user_id
+        OR bookmark.user_id = USER_ID
       )
     ) AS users,
     (
@@ -80,17 +78,17 @@ BEGIN
       WHERE bookmark.link_id = link.id
       AND (
         bookmark.isPrivate != TRUE
-        OR bookmark.user_id = @user_id
+        OR bookmark.user_id = USER_ID
       )
     ) AS bookmarks
   FROM link
   INNER JOIN domain ON link.domain_id = domain.id
   WHERE
-    link.id = @link_id
+    link.id = LINK_ID
     OR (
-      link.path = @path
+      link.path = URL_PATH
       AND
-      domain.domain = @domain
+      domain.domain = URL_DOMAIN
     );
 
 

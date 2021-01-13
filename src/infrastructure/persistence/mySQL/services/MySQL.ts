@@ -34,7 +34,7 @@ export class MySQL {
     return useDefaultTypeCasting();
   }
 
-  query(sql: string, args?: undefined | { [key: string]: number | boolean | string }) {
+  query(sql: string, args?: undefined | { [key: string]: number | boolean | string } | Array<number | boolean | string>) {
     // If we receive args object, transform it to an array of values; otherwise undefined
     const arrayArgs = args ? Object.values(args) : undefined;
 
