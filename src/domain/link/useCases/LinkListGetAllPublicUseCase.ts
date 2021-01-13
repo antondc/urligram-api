@@ -15,9 +15,9 @@ export class LinkListGetAllPublicUseCase implements ILinkListGetAllPublicUseCase
   }
 
   public async execute(linkListGetAllPublicRequest: ILinkListGetAllPublicRequest): Promise<ILinkListGetAllPublicResponse> {
-    const { linkId, session } = linkListGetAllPublicRequest;
+    const { linkId } = linkListGetAllPublicRequest;
 
-    const result = await this.linkRepo.linkListGetAllPublic({ linkId, userId: session?.id });
+    const result = await this.linkRepo.linkListGetAllPublic({ linkId });
     if (!result) throw new RequestError('There are no links in this list', 404, { message: '404 Not Found' });
 
     return result;

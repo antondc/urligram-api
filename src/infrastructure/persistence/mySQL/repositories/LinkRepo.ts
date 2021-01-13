@@ -19,14 +19,13 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkGetAllPublic(linkGetAllPublicRequest) {
+  public async linkGetAllPublic() {
     const mySQL = new MySQL();
 
     try {
-      const linkGetAllPublicQuery = 'CALL link_get_all_public(?)';
-      console.log(linkGetAllPublicRequest);
+      const linkGetAllPublicQuery = 'CALL link_get_all_public()';
 
-      const [link] = await mySQL.query(linkGetAllPublicQuery, linkGetAllPublicRequest);
+      const [link] = await mySQL.query(linkGetAllPublicQuery);
 
       return link;
     } catch (err) {
@@ -36,12 +35,12 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkVoteOne(linkVoteOnePublicRequest) {
+  public async linkVoteOne({ linkId, userId, vote }) {
     const mySQL = new MySQL();
 
     try {
       const linkVoteOnePublicQuery = 'CALL link_vote_one(?, ?, ?)';
-      const [[link]] = await mySQL.query(linkVoteOnePublicQuery, linkVoteOnePublicRequest);
+      const [[link]] = await mySQL.query(linkVoteOnePublicQuery, [linkId, userId, vote]);
 
       return link;
     } catch (err) {
@@ -51,13 +50,13 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkListGetAllPublic(linkListGetAllPublicRequest) {
+  public async linkListGetAllPublic({ linkId }) {
     const mySQL = new MySQL();
 
     try {
-      const linkListGetAllPublicQuery = `CALL link_list_get_all_public('${JSON.stringify(linkListGetAllPublicRequest)}')`;
+      const linkListGetAllPublicQuery = 'CALL link_list_get_all_public(?)';
 
-      const [results] = await mySQL.query(linkListGetAllPublicQuery);
+      const [results] = await mySQL.query(linkListGetAllPublicQuery, [linkId]);
 
       return results;
     } catch (err) {
@@ -67,13 +66,13 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkTagGetAll(linkTagGetAllRequest) {
+  public async linkTagGetAll({ linkId }) {
     const mySQL = new MySQL();
 
     try {
-      const linkTagGetAllQuery = `CALL link_tag_get_all('${JSON.stringify(linkTagGetAllRequest)}')`;
+      const linkTagGetAllQuery = 'CALL link_tag_get_all(?)';
 
-      const [results] = await mySQL.query(linkTagGetAllQuery);
+      const [results] = await mySQL.query(linkTagGetAllQuery, [linkId]);
 
       return results;
     } catch (err) {
@@ -83,13 +82,13 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkGetVotes(linkGetVotesRequest) {
+  public async linkGetVotes({ linkId }) {
     const mySQL = new MySQL();
 
     try {
-      const linkGetVotesQuery = `CALL link_get_votes('${JSON.stringify(linkGetVotesRequest)}')`;
+      const linkGetVotesQuery = 'CALL link_get_votes(?)';
 
-      const [results] = await mySQL.query(linkGetVotesQuery);
+      const [results] = await mySQL.query(linkGetVotesQuery, [linkId]);
 
       return results;
     } catch (err) {

@@ -1,9 +1,7 @@
 DROP PROCEDURE IF EXISTS link_get_all_public;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE link_get_all_public(
-  IN USER_ID VARCHAR(40)
-)
+CREATE PROCEDURE link_get_all_public()
 
 BEGIN
 
