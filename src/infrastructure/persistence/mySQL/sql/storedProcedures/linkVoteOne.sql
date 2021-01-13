@@ -1,49 +1,37 @@
 DROP PROCEDURE IF EXISTS link_vote_one;
 
--- Stored procedure to insert post and tags
 CREATE PROCEDURE link_vote_one(
-  IN data JSON
+  IN LINK_ID INT,
+  IN USER_ID TEXT,
+  IN VOTE BOOLEAN
 )
 
 BEGIN
 
-  DECLARE CASTED_VOTE INT;
-  -- Retrieve values from JSON
-  SET @user_id  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
-  SET @link_id  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.linkId'));
-  SET @vote  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.vote'));
-
-
-  IF      @vote = "true"  THEN SET  CASTED_VOTE = 1;
-  ELSEIF  @vote = "false" THEN SET  CASTED_VOTE = 0;
-  ELSE SET                          CASTED_VOTE = NULL;
-  END IF;
-
-    -- Upsert into list
   INSERT INTO user_link (
-    user_id,
     link_id,
+    user_id,
     vote
   ) VALUES (
-    @user_id,
-    @link_id,
-    CASTED_VOTE
+    LINK_ID,
+    USER_ID,
+    VOTE
   ) ON DUPLICATE KEY UPDATE
-    user_id      = @user_id,
-    link_id      = @link_id,
-    vote         = CASTED_VOTE,
+    link_id      = LINK_ID,
+    user_id      = USER_ID,
+    vote         = VOTE,
     updatedAt    = CURRENT_TIMESTAMP
   ;
 
   SELECT
-    user_id,
     link_id AS id,
+    user_id,
     vote
   FROM user_link
   WHERE
-    user_id = @user_id
+    user_id = USER_ID
     AND
-    link_id = @link_id
+    link_id = LINK_ID
   ;
 
 

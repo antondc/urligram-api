@@ -39,9 +39,8 @@ export class LinkRepo implements ILinkRepo {
     const mySQL = new MySQL();
 
     try {
-      const linkVoteOnePublicQuery = `CALL link_vote_one('${JSON.stringify(linkVoteOnePublicRequest)}')`;
-
-      const [[link]] = await mySQL.query(linkVoteOnePublicQuery);
+      const linkVoteOnePublicQuery = `CALL link_vote_one(?, ?, ?)`;
+      const [[link]] = await mySQL.query(linkVoteOnePublicQuery, linkVoteOnePublicRequest);
 
       return link;
     } catch (err) {
