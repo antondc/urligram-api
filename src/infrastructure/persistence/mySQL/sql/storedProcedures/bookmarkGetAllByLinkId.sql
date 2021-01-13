@@ -2,8 +2,8 @@ DROP PROCEDURE IF EXISTS bookmark_get_all_by_link_id;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE bookmark_get_all_by_link_id(
-  IN LINK_ID INT,
-  IN USER_ID VARCHAR(40)
+  IN $LINK_ID INT,
+  IN $USER_ID VARCHAR(40)
 )
 
 BEGIN
@@ -37,10 +37,10 @@ BEGIN
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id
-  WHERE bookmark.link_id = LINK_ID
+  WHERE bookmark.link_id = $LINK_ID
   AND
     (
-      bookmark.isPrivate != TRUE OR bookmark.user_id = USER_ID
+      bookmark.isPrivate != TRUE OR bookmark.user_id = $USER_ID
     )
   ORDER BY bookmark.id
   ;

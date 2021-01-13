@@ -2,7 +2,7 @@ DROP PROCEDURE IF EXISTS link_list_get_all_public;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE link_list_get_all_public(
-    IN LINK_ID INT
+  IN $LINK_ID INT
 )
 
 BEGIN
@@ -18,7 +18,7 @@ BEGIN
     FROM `list`
     JOIN bookmark_list ON bookmark_list.list_id = list.id
     JOIN bookmark ON bookmark_list.bookmark_id = bookmark.id
-    WHERE bookmark.link_id = LINK_ID
+    WHERE bookmark.link_id = $LINK_ID
       AND bookmark.isPrivate IS NOT TRUE
   ;
 

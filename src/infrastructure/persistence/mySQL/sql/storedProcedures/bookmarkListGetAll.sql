@@ -2,7 +2,7 @@ DROP PROCEDURE IF EXISTS bookmark_list_get_all;
 
 -- Stored procedure to insert post and lists
 CREATE PROCEDURE bookmark_list_get_all(
-  IN BOOKMARK_ID INT
+  IN $BOOKMARK_ID INT
 )
 
 BEGIN
@@ -30,7 +30,7 @@ BEGIN
     ) AS users
   FROM `list`
   JOIN bookmark_list ON bookmark_list.list_id = list.id
-  WHERE bookmark_list.bookmark_id = BOOKMARK_ID
+  WHERE bookmark_list.bookmark_id = $BOOKMARK_ID
   ORDER BY list.id
   ;
 

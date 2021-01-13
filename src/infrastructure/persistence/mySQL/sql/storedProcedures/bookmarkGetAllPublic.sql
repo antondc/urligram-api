@@ -1,13 +1,9 @@
 DROP PROCEDURE IF EXISTS bookmark_get_all_public;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE bookmark_get_all_public(
-    /* IN data JSON */
-)
+CREATE PROCEDURE bookmark_get_all_public()
 
 BEGIN
-
-  -- Retrieve values from JSON
 
   SELECT
     bookmark.id,

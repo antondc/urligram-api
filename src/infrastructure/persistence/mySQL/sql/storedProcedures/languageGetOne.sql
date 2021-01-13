@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS language_get_one;
 
 CREATE PROCEDURE language_get_one(
-    IN SLUG VARCHAR(4)
+  IN $SLUG VARCHAR(4)
 )
 
 BEGIN
@@ -30,6 +30,6 @@ BEGIN
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id
-  WHERE l.slug = SLUG;
+  WHERE l.slug = $SLUG;
 
 END

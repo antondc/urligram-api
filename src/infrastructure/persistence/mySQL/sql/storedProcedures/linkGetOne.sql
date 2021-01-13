@@ -2,10 +2,10 @@ DROP PROCEDURE IF EXISTS link_get_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE link_get_one(
-  IN LINK_ID INT,
-  IN USER_ID VARCHAR(40),
-  IN URL_PATH TEXT,
-  IN URL_DOMAIN TEXT
+  IN $LINK_ID INT,
+  IN $USER_ID VARCHAR(40),
+  IN $URL_PATH TEXT,
+  IN $URL_DOMAIN TEXT
 )
 
 BEGIN
@@ -39,7 +39,7 @@ BEGIN
         WHERE bookmark.link_id = link.id
         AND (
           bookmark.isPrivate != TRUE
-          OR bookmark.user_id = USER_ID
+          OR bookmark.user_id = $USER_ID
         )
       ) AS tags,
     (
@@ -60,7 +60,7 @@ BEGIN
       WHERE bookmark.link_id = link.id
       AND (
         bookmark.isPrivate != TRUE
-        OR bookmark.user_id = USER_ID
+        OR bookmark.user_id = $USER_ID
       )
     ) AS users,
     (
@@ -78,17 +78,17 @@ BEGIN
       WHERE bookmark.link_id = link.id
       AND (
         bookmark.isPrivate != TRUE
-        OR bookmark.user_id = USER_ID
+        OR bookmark.user_id = $USER_ID
       )
     ) AS bookmarks
   FROM link
   INNER JOIN domain ON link.domain_id = domain.id
   WHERE
-    link.id = LINK_ID
+    link.id = $LINK_ID
     OR (
-      link.path = URL_PATH
+      link.path = $URL_PATH
       AND
-      domain.domain = URL_DOMAIN
+      domain.domain = $URL_DOMAIN
     );
 
 
