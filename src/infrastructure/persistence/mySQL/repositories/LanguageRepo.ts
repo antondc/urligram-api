@@ -7,9 +7,9 @@ export class LanguageRepo implements ILanguageRepo {
     const mySQL = new MySQL();
 
     try {
-      const getLanguageQuery = `CALL language_get_one('${JSON.stringify(languageGetOneRequest)}')`;
+      const getLanguageQuery = `CALL language_get_one(?)`;
 
-      const [[language]] = await mySQL.query(getLanguageQuery);
+      const [[language]] = await mySQL.query(getLanguageQuery, languageGetOneRequest);
 
       return language;
     } catch (err) {

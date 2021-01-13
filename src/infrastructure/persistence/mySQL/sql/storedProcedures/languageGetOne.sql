@@ -1,11 +1,10 @@
 DROP PROCEDURE IF EXISTS language_get_one;
 
 CREATE PROCEDURE language_get_one(
-    IN language_data JSON
+    IN SLUG VARCHAR(4)
 )
-BEGIN
 
-  SET @slug = JSON_UNQUOTE(JSON_EXTRACT(language_data, '$.slug'));
+BEGIN
 
  SELECT
     l.id,
@@ -31,6 +30,6 @@ BEGIN
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id
-  WHERE l.slug = @slug;
+  WHERE l.slug = SLUG;
 
 END
