@@ -3,13 +3,13 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class BookmarkRepo implements IBookmarkRepo {
-  public async bookmarkGetOne(bookmarkGetOneRequest) {
+  public async bookmarkGetOne({ bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
       const bookmarkGetOneQuery = `CALL bookmark_get_one(?)`;
 
-      const [[bookmark]] = await mySQL.query(bookmarkGetOneQuery, bookmarkGetOneRequest);
+      const [[bookmark]] = await mySQL.query(bookmarkGetOneQuery, [bookmarkId]);
 
       return bookmark;
     } catch (err) {
@@ -19,13 +19,13 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkTagGetAll(bookmarkTagGetAllRequest) {
+  public async bookmarkTagGetAll({ bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
       const bookmarkTagGetAllQuery = `CALL bookmark_tag_get_all(?)`;
 
-      const [response] = await mySQL.query(bookmarkTagGetAllQuery, bookmarkTagGetAllRequest);
+      const [response] = await mySQL.query(bookmarkTagGetAllQuery, [bookmarkId]);
 
       return response;
     } catch (err) {
@@ -51,13 +51,13 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkListGetAll(bookmarkListGetAllRequest) {
+  public async bookmarkListGetAll({ bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
       const bookmarkListGetAllQuery = `CALL bookmark_list_get_all(?)`;
 
-      const [response] = await mySQL.query(bookmarkListGetAllQuery, bookmarkListGetAllRequest);
+      const [response] = await mySQL.query(bookmarkListGetAllQuery, [bookmarkId]);
 
       return response;
     } catch (err) {
@@ -67,13 +67,13 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkGetAllByLinkId(bookmarkGetAllByLinkIdRequest) {
+  public async bookmarkGetAllByLinkId({ linkId, userId }) {
     const mySQL = new MySQL();
 
     try {
       const bookmarkGetAllByLinkIdQuery = `CALL bookmark_get_all_by_link_id(?, ?)`;
 
-      const [response] = await mySQL.query(bookmarkGetAllByLinkIdQuery, bookmarkGetAllByLinkIdRequest);
+      const [response] = await mySQL.query(bookmarkGetAllByLinkIdQuery, [linkId, userId]);
 
       return response;
     } catch (err) {
