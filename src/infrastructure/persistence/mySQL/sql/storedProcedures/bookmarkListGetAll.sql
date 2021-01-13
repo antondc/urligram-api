@@ -2,13 +2,10 @@ DROP PROCEDURE IF EXISTS bookmark_list_get_all;
 
 -- Stored procedure to insert post and lists
 CREATE PROCEDURE bookmark_list_get_all(
-  IN data JSON
+  IN BOOKMARK_ID INT
 )
 
 BEGIN
-
-  -- Retrieve values from JSON
-  SET @bookmark_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.bookmarkId'));
 
   -- Return lists where a bookmark is in
   SELECT
@@ -31,9 +28,9 @@ BEGIN
       JOIN `user` ON user.id = user_list.user_id
       WHERE list.id = user_list.list_id
     ) AS users
-  FROM `LIST`
+  FROM `list`
   JOIN bookmark_list ON bookmark_list.list_id = list.id
-  WHERE bookmark_list.bookmark_id = @bookmark_id
+  WHERE bookmark_list.bookmark_id = BOOKMARK_ID
   ORDER BY list.id
   ;
 
