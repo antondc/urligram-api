@@ -2,14 +2,11 @@ DROP PROCEDURE IF EXISTS bookmark_get_all_by_link_id;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE bookmark_get_all_by_link_id(
-  IN data JSON
+  IN LINK_ID INT,
+  IN USER_ID VARCHAR(40)
 )
 
 BEGIN
-
-  -- Retrieve values from JSON
-  SET @link_id  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.linkId'));
-  SET @user_id  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
 
   SELECT
     bookmark.id,
@@ -40,10 +37,10 @@ BEGIN
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id
-  WHERE bookmark.link_id = @link_id
+  WHERE bookmark.link_id = LINK_ID
   AND
     (
-      bookmark.isPrivate != TRUE OR bookmark.user_id = @user_id
+      bookmark.isPrivate != TRUE OR bookmark.user_id = USER_ID
     )
   ORDER BY bookmark.id
   ;
