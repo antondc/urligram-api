@@ -2,12 +2,10 @@ DROP PROCEDURE IF EXISTS link_get_all_public;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE link_get_all_public(
-  IN data JSON
+  IN USER_ID VARCHAR(40)
 )
 
 BEGIN
-  -- Retrieve values from JSON
-  SET @link_id  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
 
   SELECT
     link.id,

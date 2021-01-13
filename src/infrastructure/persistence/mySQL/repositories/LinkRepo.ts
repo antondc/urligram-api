@@ -7,7 +7,7 @@ export class LinkRepo implements ILinkRepo {
     const mySQL = new MySQL();
 
     try {
-      const linkGetOneQuery = `CALL link_get_one(?, ?, ?, ?)`;
+      const linkGetOneQuery = 'CALL link_get_one(?, ?, ?, ?)';
 
       const [[link]] = await mySQL.query(linkGetOneQuery, [linkId, userId, path, domain]);
 
@@ -23,9 +23,10 @@ export class LinkRepo implements ILinkRepo {
     const mySQL = new MySQL();
 
     try {
-      const linkGetAllPublicQuery = `CALL link_get_all_public('${JSON.stringify(linkGetAllPublicRequest)}')`;
+      const linkGetAllPublicQuery = 'CALL link_get_all_public(?)';
+      console.log(linkGetAllPublicRequest);
 
-      const [link] = await mySQL.query(linkGetAllPublicQuery);
+      const [link] = await mySQL.query(linkGetAllPublicQuery, linkGetAllPublicRequest);
 
       return link;
     } catch (err) {
@@ -39,7 +40,7 @@ export class LinkRepo implements ILinkRepo {
     const mySQL = new MySQL();
 
     try {
-      const linkVoteOnePublicQuery = `CALL link_vote_one(?, ?, ?)`;
+      const linkVoteOnePublicQuery = 'CALL link_vote_one(?, ?, ?)';
       const [[link]] = await mySQL.query(linkVoteOnePublicQuery, linkVoteOnePublicRequest);
 
       return link;
