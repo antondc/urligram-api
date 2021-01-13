@@ -2,19 +2,17 @@ DROP PROCEDURE IF EXISTS list_bookmark_delete_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_bookmark_delete_one(
-  IN data JSON
+  IN $LIST_ID INT,
+  IN $BOOKMARK_ID INT
 )
 BEGIN
 
-  SET @list_id          = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listId'));
-  SET @bookmark_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.bookmarkId'));
-
   DELETE FROM bookmark_list
   WHERE
-    list_id = @list_id
-    AND bookmark_id = @bookmark_id
+    list_id = $LIST_ID
+    AND bookmark_id = $BOOKMARK_ID
   ;
 
-  SELECT @list_id AS listId, @bookmark_id AS bookmarkId;
+  SELECT $LIST_ID AS listId, $BOOKMARK_ID AS bookmarkId;
 
 END

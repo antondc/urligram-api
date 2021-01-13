@@ -2,19 +2,18 @@ DROP PROCEDURE IF EXISTS list_user_delete_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_user_delete_one(
-  IN data JSON
+  IN $LIST_ID INT,
+  IN $USER_ID TEXT
 )
-BEGIN
 
-  SET @list_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listId'));
-  SET @user_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
+BEGIN
 
   DELETE FROM user_list
   WHERE
-    list_id     = @list_id
-    AND user_id = @user_id
+    list_id     = $LIST_ID
+    AND user_id = $USER_ID
   ;
 
-  SELECT @list_id AS listId, @user_id AS userId;
+  SELECT $LIST_ID AS listId, $USER_ID AS userId;
 
 END

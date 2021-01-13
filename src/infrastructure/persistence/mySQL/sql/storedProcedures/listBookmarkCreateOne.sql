@@ -2,27 +2,24 @@ DROP PROCEDURE IF EXISTS list_bookmark_create_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_bookmark_create_one(
-  IN data JSON
+  IN $LIST_ID INT,
+  IN $BOOKMARK_ID INT
 )
 BEGIN
-
-  -- Retrieve values from JSON
-  SET @list_id          = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listId'));
-  SET @bookmark_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.bookmarkId'));
 
   -- Upsert into list
   INSERT INTO bookmark_list (
     list_id,
     bookmark_id
   ) VALUES (
-    @list_id,
-    @bookmark_id
+    $LIST_ID,
+    $BOOKMARK_ID
   ) ON DUPLICATE KEY UPDATE
-    list_id      = @list_id,
-    bookmark_id  = @bookmark_id,
+    list_id      = $LIST_ID,
+    bookmark_id  = $BOOKMARK_ID,
     updatedAt    = CURRENT_TIMESTAMP;
 
 
-  SELECT @list_id AS listId, @bookmark_id AS bookmarkId;
+  SELECT $LIST_ID AS listId, $BOOKMARK_ID AS bookmarkId;
 
 END

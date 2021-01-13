@@ -2,32 +2,29 @@ DROP PROCEDURE IF EXISTS list_create;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_create(
-  IN data JSON
+  IN $LIST_USER_ID TEXT,
+  IN $LIST_NAME TEXT,
+  IN $LIST_DESCRIPTION TEXT,
+  IN $LIST_IS_PRIVATE BOOLEAN
 )
 BEGIN
 
-  -- Retrieve values from JSON
-  SET @list_user_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
-  SET @list_name         = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listName'));
-  SET @list_description  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listDescription'));
-  SET @list_is_private   = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listIsPrivate'));
-
   -- Upsert into list
-  INSERT INTO list (
+  INSERT INTO `list` (
     `name`,
     `description`,
     `isPrivate`,
     `userId`
   ) VALUES (
-    @list_name,
-    @list_description,
-    @list_is_private,
-    @list_user_id
+    $LIST_NAME,
+    $LIST_DESCRIPTION,
+    $LIST_IS_PRIVATE,
+    $LIST_USER_ID
   ) ON DUPLICATE KEY UPDATE
-    name        = @list_name,
-    description = @list_description,
-    isPrivate   = @list_is_private,
-    userId      = @list_user_id,
+    name        = $LIST_NAME,
+    description = $LIST_DESCRIPTION,
+    isPrivate   = $LIST_IS_PRIVATE,
+    userId      = $LIST_USER_ID,
     updatedAt   = CURRENT_TIMESTAMP;
 
   -- Retrieve the upserted id

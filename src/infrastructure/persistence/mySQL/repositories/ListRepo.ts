@@ -3,13 +3,13 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class ListRepo implements IListRepo {
-  public async listGetAllPublic(listGetAllPublicRequest) {
+  public async listGetAllPublic({ userId, sort, size }) {
     const mySQL = new MySQL();
 
     try {
-      const listGetAllPublicQuery = `CALL list_get_all_public('${JSON.stringify(listGetAllPublicRequest)}')`;
+      const listGetAllPublicQuery = 'CALL list_get_all_public(?, ?, ?)';
 
-      const [list] = await mySQL.query(listGetAllPublicQuery);
+      const [list] = await mySQL.query(listGetAllPublicQuery, [userId, sort, size]);
 
       return list;
     } catch (err) {
@@ -19,13 +19,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listGetOneById(listGetOneRequest) {
+  public async listGetOneById({ listId }) {
     const mySQL = new MySQL();
 
     try {
-      const listGetOneQuery = `CALL list_get_one('${JSON.stringify(listGetOneRequest)}')`;
+      const listGetOneQuery = 'CALL list_get_one(?)';
 
-      const [[list]] = await mySQL.query(listGetOneQuery);
+      const [[list]] = await mySQL.query(listGetOneQuery, [listId]);
 
       return list;
     } catch (err) {
@@ -35,13 +35,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listCreateOne(listCreateOneRequest) {
+  public async listCreateOne({ userId, listName, listDescription, listIsPrivate }) {
     const mySQL = new MySQL();
 
     try {
-      const listCreateOneQuery = `CALL list_create('${JSON.stringify(listCreateOneRequest)}')`;
+      const listCreateOneQuery = 'CALL list_create(?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listCreateOneQuery);
+      const [[results]] = await mySQL.query(listCreateOneQuery, [userId, listName, listDescription, listIsPrivate]);
 
       return results;
     } catch (err) {
@@ -51,13 +51,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listDeleteOne(listDeleteOneRequest) {
+  public async listDeleteOne({ listId }) {
     const mySQL = new MySQL();
 
     try {
-      const listDeleteOneQuery = `CALL list_delete_one('${JSON.stringify(listDeleteOneRequest)}')`;
+      const listDeleteOneQuery = 'CALL list_delete_one(?)';
 
-      const [[results]] = await mySQL.query(listDeleteOneQuery);
+      const [[results]] = await mySQL.query(listDeleteOneQuery, [listId]);
 
       return results;
     } catch (err) {
@@ -67,13 +67,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUpdateOne(listUpdateOneRequest) {
+  public async listUpdateOne({ listId, userId, name, description, isPrivate }) {
     const mySQL = new MySQL();
 
     try {
-      const listUpdateOneQuery = `CALL list_update_one('${JSON.stringify(listUpdateOneRequest)}')`;
+      const listUpdateOneQuery = 'CALL list_update_one(?, ?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listUpdateOneQuery);
+      const [[results]] = await mySQL.query(listUpdateOneQuery, [listId, userId, name, description, isPrivate]);
 
       return results;
     } catch (err) {
@@ -83,13 +83,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listBookmarkGetOne(listBookmarkGetOneRequest) {
+  public async listBookmarkGetOne({ listId, bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
-      const listBookmarkGetOneQuery = `CALL list_bookmark_get_one('${JSON.stringify(listBookmarkGetOneRequest)}')`;
+      const listBookmarkGetOneQuery = 'CALL list_bookmark_get_one(?, ?)';
 
-      const [[results]] = await mySQL.query(listBookmarkGetOneQuery);
+      const [[results]] = await mySQL.query(listBookmarkGetOneQuery, [listId, bookmarkId]);
 
       return results;
     } catch (err) {
@@ -99,13 +99,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserGetOneByListId(listUserGetOneByListIdRequest) {
+  public async listUserGetOneByListId({ userId, listId }) {
     const mySQL = new MySQL();
 
     try {
-      const listUserGetOneByListIdQuery = `CALL list_user_get_one_by_list_id('${JSON.stringify(listUserGetOneByListIdRequest)}')`;
+      const listUserGetOneByListIdQuery = 'CALL list_user_get_one_by_list_id(?, ?)';
 
-      const [[results]] = await mySQL.query(listUserGetOneByListIdQuery);
+      const [[results]] = await mySQL.query(listUserGetOneByListIdQuery, [userId, listId]);
 
       return results;
     } catch (err) {
@@ -115,13 +115,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserGetOneByListName(listUserGetOneByListNameRequest) {
+  public async listUserGetOneByListName({ userId, listName }) {
     const mySQL = new MySQL();
 
     try {
-      const listUserGetOneByListNameQuery = `CALL list_user_get_one_by_list_name('${JSON.stringify(listUserGetOneByListNameRequest)}')`;
+      const listUserGetOneByListNameQuery = 'CALL list_user_get_one_by_list_name(?, ?)';
 
-      const [[results]] = await mySQL.query(listUserGetOneByListNameQuery);
+      const [[results]] = await mySQL.query(listUserGetOneByListNameQuery, [userId, listName]);
 
       return results;
     } catch (err) {
@@ -131,13 +131,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserGetAll(listUserGetAllRequest) {
+  public async listUserGetAll({ listId }) {
     const mySQL = new MySQL();
 
     try {
-      const listUserGetAllQuery = `CALL list_user_get_all('${JSON.stringify(listUserGetAllRequest)}')`;
+      const listUserGetAllQuery = 'CALL list_user_get_all(?)';
 
-      const [results] = await mySQL.query(listUserGetAllQuery);
+      const [results] = await mySQL.query(listUserGetAllQuery, [listId]);
 
       return results;
     } catch (err) {
@@ -147,13 +147,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserCreateOne(listUserCreateOneRequest) {
+  public async listUserCreateOne({ listId, userId, userListStatus }) {
     const mySQL = new MySQL();
 
     try {
-      const listUserCreateOneQuery = `CALL list_user_create_one('${JSON.stringify(listUserCreateOneRequest)}')`;
+      const listUserCreateOneQuery = 'CALL list_user_create_one(?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listUserCreateOneQuery);
+      const [[results]] = await mySQL.query(listUserCreateOneQuery, [listId, userId, userListStatus]);
 
       return results;
     } catch (err) {
@@ -163,13 +163,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserUpdateOne(listUserUpdateOneRequest) {
+  public async listUserUpdateOne({ listId, userId, userRole, userListStatus }) {
     const mySQL = new MySQL();
 
     try {
-      const listUserUpdateOneQuery = `CALL list_user_update_one('${JSON.stringify(listUserUpdateOneRequest)}')`;
+      const listUserUpdateOneQuery = 'CALL list_user_update_one(?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listUserUpdateOneQuery);
+      const [[results]] = await mySQL.query(listUserUpdateOneQuery, [listId, userId, userRole, userListStatus]);
 
       return results;
     } catch (err) {
@@ -179,13 +179,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserDeleteOne(listUserDeleteOneRequest) {
+  public async listUserDeleteOne({ listId, userId }) {
     const mySQL = new MySQL();
 
     try {
-      const listUserDeleteOneQuery = `CALL list_user_delete_one('${JSON.stringify(listUserDeleteOneRequest)}')`;
+      const listUserDeleteOneQuery = 'CALL list_user_delete_one(?, ?)';
 
-      const [[results]] = await mySQL.query(listUserDeleteOneQuery);
+      const [[results]] = await mySQL.query(listUserDeleteOneQuery, [listId, userId]);
 
       return results;
     } catch (err) {
@@ -195,13 +195,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listBookmarkGetAll(listBookmarkGetAllRequest) {
+  public async listBookmarkGetAll({ listId }) {
     const mySQL = new MySQL();
 
     try {
-      const listBookmarkGetAllQuery = `CALL list_bookmark_get_all('${JSON.stringify(listBookmarkGetAllRequest)}')`;
+      const listBookmarkGetAllQuery = 'CALL list_bookmark_get_all(?)';
 
-      const [results] = await mySQL.query(listBookmarkGetAllQuery);
+      const [results] = await mySQL.query(listBookmarkGetAllQuery, [listId]);
 
       return results;
     } catch (err) {
@@ -211,13 +211,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listBookmarkCreateOne(listBookmarkCreateOneRequest) {
+  public async listBookmarkCreateOne({ listId, bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
-      const listBookmarkCreateOneQuery = `CALL list_bookmark_create_one('${JSON.stringify(listBookmarkCreateOneRequest)}')`;
+      const listBookmarkCreateOneQuery = 'CALL list_bookmark_create_one(?, ?)';
 
-      const [[results]] = await mySQL.query(listBookmarkCreateOneQuery);
+      const [[results]] = await mySQL.query(listBookmarkCreateOneQuery, [listId, bookmarkId]);
 
       return results;
     } catch (err) {
@@ -227,13 +227,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listBookmarkDeleteOne(listBookmarkDeleteOneRequest) {
+  public async listBookmarkDeleteOne({ listId, bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
-      const listBookmarkDeleteOneQuery = `CALL list_bookmark_delete_one('${JSON.stringify(listBookmarkDeleteOneRequest)}')`;
+      const listBookmarkDeleteOneQuery = 'CALL list_bookmark_delete_one(?, ?)';
 
-      const [[results]] = await mySQL.query(listBookmarkDeleteOneQuery);
+      const [[results]] = await mySQL.query(listBookmarkDeleteOneQuery, [listId, bookmarkId]);
 
       return results;
     } catch (err) {

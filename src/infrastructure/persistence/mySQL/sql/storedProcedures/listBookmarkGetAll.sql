@@ -2,11 +2,9 @@ DROP PROCEDURE IF EXISTS list_bookmark_get_all;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_bookmark_get_all(
-  IN data JSON
+  IN $LIST_ID INT
 )
 BEGIN
-
-  SET @list_id     = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listId'));
 
   SELECT
     bookmark.id,
@@ -22,7 +20,7 @@ BEGIN
   JOIN `list` ON bookmark_list.list_id        = list.id
   LEFT JOIN user_list ON user_list.list_id    = list.id
   WHERE
-    list.id                                   = @list_id
+    list.id                                   = $LIST_ID
   ;
 
 END

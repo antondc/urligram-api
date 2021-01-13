@@ -2,24 +2,23 @@ DROP PROCEDURE IF EXISTS list_update_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_update_one(
-  IN data JSON
+  IN $LIST_ID INT,
+  IN $USER_ID TEXT,
+  IN $NAME TEXT,
+  IN $DESCRIPTION TEXT,
+  IN $IS_PRIVATE BOOLEAN
 )
 
 BEGIN
-  -- Retrieve values from JSON
-  SET @user_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
-  SET @list_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.listId'));
-  SET @name         = JSON_UNQUOTE(JSON_EXTRACT(data, '$.name'));
-  SET @description  = JSON_UNQUOTE(JSON_EXTRACT(data, '$.description'));
-  SET @is_private   = JSON_UNQUOTE(JSON_EXTRACT(data, '$.isPrivate'));
 
   UPDATE `list`
   SET
-    `name`          = @name,
-    `description`   = @description,
-    `isPrivate`     = @is_private,
+    `name`          = $NAME,
+    `description`   = $DESCRIPTION,
+    `isPrivate`     = $IS_PRIVATE,
     `updatedAt`     = CURRENT_TIMESTAMP
-  WHERE `list`.`id` = @list_id;
+  WHERE `list`.`id` = $LIST_ID
+  ;
 
-  SELECT @list_id as listId;
+  SELECT $LIST_ID as listId;
 END
