@@ -19,13 +19,13 @@ export class TagRepo implements ITagRepo {
     }
   }
 
-  public async tagListGetAllPublic(tagListGetAllPublicRequest) {
+  public async tagListGetAllPublic({ tagId }) {
     const mySQL = new MySQL();
 
     try {
-      const tagListGetAllPublicQuery = `CALL tag_list_get_all('${JSON.stringify(tagListGetAllPublicRequest)}')`;
+      const tagListGetAllPublicQuery = `CALL tag_list_get_all(?)`;
 
-      const [results] = await mySQL.query(tagListGetAllPublicQuery);
+      const [results] = await mySQL.query(tagListGetAllPublicQuery, [tagId]);
 
       return results;
     } catch (err) {
@@ -35,13 +35,13 @@ export class TagRepo implements ITagRepo {
     }
   }
 
-  public async tagBookmarkGetAllPublic(tagBookmarkGetAllPublicRequest) {
+  public async tagBookmarkGetAllPublic({ tagId }) {
     const mySQL = new MySQL();
 
     try {
-      const tagBookmarkGetAllPublicQuery = `CALL tag_bookmark_get_all('${JSON.stringify(tagBookmarkGetAllPublicRequest)}')`;
+      const tagBookmarkGetAllPublicQuery = `CALL tag_bookmark_get_all(?)`;
 
-      const [results] = await mySQL.query(tagBookmarkGetAllPublicQuery);
+      const [results] = await mySQL.query(tagBookmarkGetAllPublicQuery, [tagId]);
 
       return results;
     } catch (err) {
@@ -51,13 +51,13 @@ export class TagRepo implements ITagRepo {
     }
   }
 
-  public async tagUserGetAllPublic(tagUserGetAllPublicRequest) {
+  public async tagUserGetAllPublic({ tagId }) {
     const mySQL = new MySQL();
 
     try {
-      const tagUserGetAllPublicQuery = `CALL tag_bookmark_get_all('${JSON.stringify(tagUserGetAllPublicRequest)}')`;
+      const tagUserGetAllPublicQuery = `CALL tag_user_get_all(?)`;
 
-      const [results] = await mySQL.query(tagUserGetAllPublicQuery);
+      const [results] = await mySQL.query(tagUserGetAllPublicQuery, [tagId]);
 
       return results;
     } catch (err) {
