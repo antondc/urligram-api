@@ -2,11 +2,10 @@ DROP PROCEDURE IF EXISTS user_follower_get_all;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_follower_get_all(
-  IN user_data JSON
+  IN $USER_ID VARCHAR(40)
 )
+
 BEGIN
-  -- Retrieve values from JSON
-  SET @user_id = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.userId'));
 
   -- Select user
   SELECT
@@ -41,6 +40,6 @@ BEGIN
   FROM user
   LEFT JOIN `user_user` ON `user`.`id` = user_user.user_id1
   LEFT JOIN `user` user2 ON user2.id = user_user.user_id
-  WHERE `user`.`id` = @user_id;
+  WHERE `user`.`id` = $USER_ID;
 
 END

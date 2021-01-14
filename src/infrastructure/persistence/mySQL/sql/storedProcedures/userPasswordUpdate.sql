@@ -2,21 +2,19 @@ DROP PROCEDURE IF EXISTS user_password_update;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_password_update(
-  IN user_data JSON
+  IN $USER_ID VARCHAR(40),
+  IN $NEW_PASSWORD VARCHAR(40)
 )
 
 BEGIN
-  -- Retrieve values from JSON
-  SET @user_id      = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.userId'));
-  SET @new_password = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.newPassword'));
 
   -- Retrieve user
   UPDATE user
   SET
-   `password`       = @new_password,
+   `password`       = $NEW_PASSWORD,
    `updatedAt`      = CURRENT_TIMESTAMP
-  WHERE id          = @user_id;
+  WHERE id          = $USER_ID;
 
-  SELECT @user_id AS userId;
+  SELECT $USER_ID AS userId;
 
 END

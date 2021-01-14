@@ -2,20 +2,18 @@ DROP PROCEDURE IF EXISTS user_delete_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_delete_one(
-  IN user_data JSON
+  IN $USER_ID VARCHAR(40)
 )
 
 BEGIN
-  -- Retrieve values from JSON
-  SET @user_id = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.userId'));
 
   -- Retrieve user
   UPDATE user
   SET
    `status`     = 'disabled',
    `createdAt`  = CURRENT_TIMESTAMP
-  WHERE id      = @user_id;
+  WHERE id      = $USER_ID;
 
-  SELECT @id AS userId;
+  SELECT $USER_ID AS userId;
 
 END

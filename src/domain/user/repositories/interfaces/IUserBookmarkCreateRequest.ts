@@ -1,11 +1,5 @@
-import { User } from '@domain/user/entities/User';
-
 type Tag = {
   tag: string;
-};
-
-type List = {
-  id: number;
 };
 
 export interface IUserBookmarkCreateRequest {
@@ -13,8 +7,7 @@ export interface IUserBookmarkCreateRequest {
   title: string;
   saved: boolean;
   isPrivate: boolean;
-  url: string;
+  domain: string;
+  path: string;
   tags?: Tag[];
-  lists?: List[];
-  session: User;
 }

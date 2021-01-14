@@ -2,22 +2,21 @@ DROP PROCEDURE IF EXISTS user_log_session;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_log_session(
-  IN log_data JSON
+  IN $USER_ID VARCHAR(40),
+  IN $RESULT VARCHAR(40),
+  IN $TYPE VARCHAR(40)
 )
 BEGIN
-  -- Retrieve values from JSON
-  SET @user_id     = JSON_UNQUOTE(JSON_EXTRACT(log_data, '$.userId'));
-  SET @result      = JSON_UNQUOTE(JSON_EXTRACT(log_data, '$.result'));
-  SET @type        = JSON_UNQUOTE(JSON_EXTRACT(log_data, '$.type'));
+
 
   INSERT INTO user_session_log (
     `result`,
     `type`,
     `user_id`
   ) VALUES(
-    @result,
-    @type,
-    @user_id
+    $RESULT,
+    $TYPE,
+    $USER_ID
   );
 
 END

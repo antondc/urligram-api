@@ -4,17 +4,13 @@ type Tag = {
   tag: string;
 };
 
-type List = {
-  id: number;
-};
-
 export interface IUserBookmarkUpdateRequest {
   bookmarkId: number;
   order: number;
+  title: string;
   saved: boolean;
   isPrivate: boolean;
   url: string;
   tags: Tag[];
-  lists?: List[];
   session: User;
 }

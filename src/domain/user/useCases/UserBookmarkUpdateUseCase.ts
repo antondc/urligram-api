@@ -16,7 +16,7 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
   }
 
   public async execute(userBookmarkUpdateRequest: IUserBookmarkUpdateRequest): Promise<IUserBookmarkUpdateResponse> {
-    const { session, url, bookmarkId } = userBookmarkUpdateRequest;
+    const { session, bookmarkId, order, title, url, saved, isPrivate, tags } = userBookmarkUpdateRequest;
     const parsedUrl = new URLWrapper(url);
     const domain = parsedUrl.getDomain();
     const path = parsedUrl.getPath() + parsedUrl.getSearch();
@@ -27,7 +27,17 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
     });
     if (!bookmarkExists) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' }); // (1)(2)
 
-    const result = await this.userRepo.userBookmarkUpdate({ ...userBookmarkUpdateRequest, domain, path, userId: session?.id });
+    const result = await this.userRepo.userBookmarkUpdate({
+      userId: session?.id,
+      bookmarkId,
+      order,
+      title,
+      saved,
+      isPrivate,
+      domain,
+      path,
+      tags,
+    });
 
     const response = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
       bookmarkId: result.bookmarkId,

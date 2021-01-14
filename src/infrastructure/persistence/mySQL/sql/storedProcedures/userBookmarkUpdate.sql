@@ -2,7 +2,15 @@ DROP PROCEDURE IF EXISTS user_bookmark_update;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_update(
-  IN data JSON
+  IN $BOOKMARK_ID VARCHAR(40),
+  IN $ORDER INT,
+  IN $TITLE VARCHAR(80),
+  IN $USER_ID VARCHAR(40),
+  IN $SAVED BOOLEAN,
+  IN $IS_PRIVATE BOOLEAN,
+  IN $DOMAIN VARCHAR(40),
+  IN $PATH_ TEXT,
+  IN $TAGS JSON
 )
 
 BEGIN
@@ -10,22 +18,12 @@ BEGIN
   -- Declare iterator variable to use it later on in the loop
   DECLARE i INT DEFAULT 0;
 
-  -- Retrieve values from JSON
-  SET @bookmark_id         = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.bookmarkId'));
-  SET @user_id             = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.userId'));
-  SET @order               = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.order'));
-  SET @saved               = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.saved'));
-  SET @is_private          = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.isPrivate'));
-  SET @domain              = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.domain'));
-  SET @path                = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.path'));
-  SET @tags                = JSON_EXTRACT(DATA, '$.tags');
-
   --  Select old variables
   SET @original_link_id = (
       SELECT
         bookmark.link_id
       FROM bookmark
-      WHERE bookmark.id = @bookmark_id
+      WHERE bookmark.id = $BOOKMARK_ID
   );
 
   SET @original_domain_id = (
@@ -39,16 +37,16 @@ BEGIN
   INSERT INTO domain (
     `domain`
   ) VALUES (
-    @domain
+    $DOMAIN
   ) ON DUPLICATE KEY UPDATE
-    domain    = @domain,
+    domain    = $DOMAIN,
     updatedAt = CURRENT_TIMESTAMP;
 
   -- Retrieve the upserted id
   SET @new_domain_id = (
     SELECT domain.id
     FROM domain
-    WHERE domain.domain = @domain
+    WHERE domain.domain = $DOMAIN
   );
 
   -- Upsert new link
@@ -56,10 +54,10 @@ BEGIN
     `path`,
     `domain_id`
   ) VALUES (
-    @path,
+    $PATH_,
     @new_domain_id
   ) ON DUPLICATE KEY UPDATE
-    path      = @path,
+    path      = $PATH_,
     domain_id = @new_domain_id,
     updatedAt = CURRENT_TIMESTAMP;
 
@@ -67,18 +65,19 @@ BEGIN
   SET @new_link_id = (
     SELECT link.id
     FROM link
-    WHERE link.path = @path AND link.domain_id = @new_domain_id
+    WHERE link.path = $PATH_ AND link.domain_id = @new_domain_id
   );
 
   -- Upsert into bookmark
   UPDATE bookmark
   SET
-    `bookmark`.`isPrivate`  = @is_private,
-    `bookmark`.`saved`      = @saved,
-    `bookmark`.`order`      = @order,
-    `bookmark`.`user_id`    = @user_id,
+    `bookmark`.`isPrivate`  = $IS_PRIVATE,
+    `bookmark`.`saved`      = $SAVED,
+    `bookmark`.`order`      = $ORDER,
+    `bookmark`.`title`      = $TITLE,
+    `bookmark`.`user_id`    = $USER_ID,
     `bookmark`.`link_id`    = @new_link_id
-  WHERE `bookmark`.id       = @bookmark_id;
+  WHERE `bookmark`.id       = $BOOKMARK_ID;
 
   -- Clean link
   DELETE link FROM link
@@ -91,17 +90,17 @@ BEGIN
   WHERE link.id IS NULL AND domain.id = @original_domain_id;
 
   -- Get tags length for the loop
-  SET @tags_length = JSON_LENGTH(@tags);
+  SET @tags_length = JSON_LENGTH($TAGS);
 
     -- Clear intermediate table for bookmark_tag
   DELETE FROM bookmark_tag
-  WHERE bookmark_id = @bookmark_id;
+  WHERE bookmark_id = $BOOKMARK_ID;
 
   -- Execute loop over tags length
   WHILE i < @tags_length DO
 
     -- Retrieve current tag from tags array
-    SET @tag = JSON_EXTRACT(DATA, CONCAT('$.tags[',i,'].tag'));
+    SET @tag = JSON_EXTRACT($TAGS, CONCAT('$[',i,'].tag'));
 
     -- Insert tag
     INSERT INTO tag (
@@ -122,10 +121,10 @@ BEGIN
       bookmark_id,
       tag_id
     ) VALUES (
-      @bookmark_id,
+      $BOOKMARK_ID,
       @last_tag
     ) ON DUPLICATE KEY UPDATE
-      bookmark_id   = @bookmark_id,
+      bookmark_id   = $BOOKMARK_ID,
       tag_id        = @last_tag,
       updatedAt     = CURRENT_TIMESTAMP;
 
@@ -133,6 +132,6 @@ BEGIN
     SELECT i + 1 INTO i;
   END WHILE;
 
-  SELECT @bookmark_id AS bookmarkId;
+  SELECT $BOOKMARK_ID AS bookmarkId;
 
 END

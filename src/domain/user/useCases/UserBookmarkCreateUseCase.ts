@@ -16,17 +16,10 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
   }
 
   public async execute(bookmarkCreateRequest: IUserBookmarkCreateRequest): Promise<IUserBookmarkCreateResponse> {
-    const { url, session, title } = bookmarkCreateRequest;
+    const { url, session, title, saved, isPrivate, tags } = bookmarkCreateRequest;
     const parsedUrl = new URLWrapper(url);
     const domain = parsedUrl.getDomain();
     const path = parsedUrl.getPath() + parsedUrl.getSearch();
-
-    const formattedUserBookmarkCreateRequest = {
-      ...bookmarkCreateRequest,
-      domain,
-      path,
-      title: title ? title : domain + path,
-    };
 
     const bookmarkExist = await this.userRepo.userBookmarkGetOneByUserIdPathDomain({
       path,
@@ -35,7 +28,15 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
     });
     if (!!bookmarkExist) throw new RequestError('Bookmark already exists', 409, { message: '409 Conflict' }); // (1)
 
-    const result = await this.userRepo.userBookmarkCreate({ ...formattedUserBookmarkCreateRequest, userId: session.id });
+    const result = await this.userRepo.userBookmarkCreate({
+      userId: session.id,
+      saved,
+      isPrivate,
+      tags,
+      path,
+      domain,
+      title: title ? title : domain + path,
+    });
 
     const response = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
       bookmarkId: result.bookmarkId,

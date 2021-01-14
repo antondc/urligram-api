@@ -7,7 +7,7 @@ export class UserRepo implements IUserRepo {
   public async userGetAll() {
     const mySQL = new MySQL();
     try {
-      const userGetAllQuery = `CALL user_get_all()`;
+      const userGetAllQuery = 'CALL user_get_all()';
       const [results] = await mySQL.query(userGetAllQuery);
 
       return results;
@@ -18,11 +18,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userGetOne(userGetOne) {
+  public async userGetOne({ userId = null, email = null, name = null }) {
     const mySQL = new MySQL();
     try {
-      const userGetOneQuery = `CALL user_get_one('${JSON.stringify(userGetOne)}')`;
-      const [[results]] = await mySQL.query(userGetOneQuery);
+      const userGetOneQuery = 'CALL user_get_one(?, ?, ?)';
+      const [[results]] = await mySQL.query(userGetOneQuery, [userId, email, name]);
 
       return results;
     } catch (err) {
@@ -32,11 +32,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userCreateOne(userCreateOne) {
+  public async userCreateOne({ name, email, password }) {
     const mySQL = new MySQL();
     try {
-      const userCreateQuery = `CALL user_create('${JSON.stringify(userCreateOne)}')`;
-      const [[results]] = await mySQL.query(userCreateQuery);
+      const userCreateQuery = 'CALL user_create(?, ?, ?)';
+      const [[results]] = await mySQL.query(userCreateQuery, [name, email, password]);
 
       return results;
     } catch (err) {
@@ -46,11 +46,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userUpdateOne(userUpdateOne) {
+  public async userUpdateOne({ userId, name, email, statement, location }) {
     const mySQL = new MySQL();
     try {
-      const userUpdateQuery = `CALL user_update('${JSON.stringify(userUpdateOne)}')`;
-      const [[results]] = await mySQL.query(userUpdateQuery);
+      const userUpdateQuery = 'CALL user_update(?, ?, ?, ?, ?)';
+      const [[results]] = await mySQL.query(userUpdateQuery, [userId, name, email, statement, location]);
 
       return results;
     } catch (err) {
@@ -60,11 +60,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userDeleteOne(userDeleteOne) {
+  public async userDeleteOne({ userId }) {
     const mySQL = new MySQL();
     try {
-      const userDeleteQuery = `CALL user_delete_one('${JSON.stringify(userDeleteOne)}')`;
-      const [[results]] = await mySQL.query(userDeleteQuery);
+      const userDeleteQuery = 'CALL user_delete_one(?)';
+      const [[results]] = await mySQL.query(userDeleteQuery, [userId]);
 
       return results;
     } catch (err) {
@@ -74,12 +74,12 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userLogin(userLogin) {
+  public async userLogin({ name, password, userId = null }) {
     const mySQL = new MySQL();
     try {
-      const userLoginQuery = `CALL user_login('${JSON.stringify(userLogin)}')`;
+      const userLoginQuery = 'CALL user_login(?, ?, ?)';
 
-      const [[user]] = await mySQL.query(userLoginQuery);
+      const [[user]] = await mySQL.query(userLoginQuery, [name, password, userId]);
 
       return user;
     } catch (err) {
@@ -89,12 +89,12 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userLogSession(userLogSession) {
+  public async userLogSession({ userId, result, type }) {
     const mySQL = new MySQL();
     try {
-      const logSessionQuery = `CALL user_log_session('${JSON.stringify(userLogSession)}')`;
+      const logSessionQuery = 'CALL user_log_session(?, ?, ?)';
 
-      await mySQL.query(logSessionQuery);
+      await mySQL.query(logSessionQuery, [userId, result, type]);
 
       return null;
     } catch (err) {
@@ -104,11 +104,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userPasswordUpdate(userPasswordUpdate) {
+  public async userPasswordUpdate({ userId, newPassword }) {
     const mySQL = new MySQL();
     try {
-      const userPasswordUpdateQuery = `CALL user_password_update('${JSON.stringify(userPasswordUpdate)}')`;
-      const [[results]] = await mySQL.query(userPasswordUpdateQuery);
+      const userPasswordUpdateQuery = 'CALL user_password_update(?, ?)';
+      const [[results]] = await mySQL.query(userPasswordUpdateQuery, [userId, newPassword]);
 
       return results;
     } catch (err) {
@@ -118,11 +118,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingGetAll(userFollowingGetAllRequest) {
+  public async userFollowingGetAll({ userId }) {
     const mySQL = new MySQL();
     try {
-      const userFollowingGetAllQuery = `CALL user_following_get_all('${JSON.stringify(userFollowingGetAllRequest)}')`;
-      const [results] = await mySQL.query(userFollowingGetAllQuery);
+      const userFollowingGetAllQuery = 'CALL user_following_get_all(?)';
+      const [results] = await mySQL.query(userFollowingGetAllQuery, [userId]);
 
       return results;
     } catch (err) {
@@ -132,11 +132,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingGetOne(userFollowingGetOneRequest) {
+  public async userFollowingGetOne({ userId, followedId }) {
     const mySQL = new MySQL();
     try {
-      const userFollowingGetOneQuery = `CALL user_following_get_one('${JSON.stringify(userFollowingGetOneRequest)}')`;
-      const [[results]] = await mySQL.query(userFollowingGetOneQuery);
+      const userFollowingGetOneQuery = 'CALL user_following_get_one(?, ?)';
+      const [[results]] = await mySQL.query(userFollowingGetOneQuery, [userId, followedId]);
 
       return results;
     } catch (err) {
@@ -146,11 +146,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingCreate(userFollowingCreate) {
+  public async userFollowingCreate({ userId, followedId }) {
     const mySQL = new MySQL();
     try {
-      const userFollowingQuery = `CALL user_following_create('${JSON.stringify(userFollowingCreate)}')`;
-      const [[results]] = await mySQL.query(userFollowingQuery);
+      const userFollowingQuery = 'CALL user_following_create(?, ?)';
+      const [[results]] = await mySQL.query(userFollowingQuery, [userId, followedId]);
 
       return results;
     } catch (err) {
@@ -160,11 +160,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingDelete(userFollowingDelete) {
+  public async userFollowingDelete({ userId, followedId }) {
     const mySQL = new MySQL();
     try {
-      const userFollowingDeleteQuery = `CALL user_following_delete('${JSON.stringify(userFollowingDelete)}')`;
-      const [[results]] = await mySQL.query(userFollowingDeleteQuery);
+      const userFollowingDeleteQuery = 'CALL user_following_delete(?, ?)';
+      const [[results]] = await mySQL.query(userFollowingDeleteQuery, [userId, followedId]);
 
       return results;
     } catch (err) {
@@ -174,11 +174,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowerGetAll(userFollowerGetAll) {
+  public async userFollowerGetAll({ userId }) {
     const mySQL = new MySQL();
     try {
-      const userFollowerGetAllQuery = `CALL user_follower_get_all('${JSON.stringify(userFollowerGetAll)}')`;
-      const [[results]] = await mySQL.query(userFollowerGetAllQuery);
+      const userFollowerGetAllQuery = 'CALL user_follower_get_all(?)';
+      const [[results]] = await mySQL.query(userFollowerGetAllQuery, [userId]);
 
       return results;
     } catch (err) {
@@ -188,11 +188,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetAll(userBookmarkGetAll) {
+  public async userBookmarkGetAll({ userId }) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetAllQuery = `CALL user_bookmark_get_all('${JSON.stringify(userBookmarkGetAll)}')`;
-      const [results] = await mySQL.query(userBookmarkGetAllQuery);
+      const userBookmarkGetAllQuery = 'CALL user_bookmark_get_all(?)';
+      const [results] = await mySQL.query(userBookmarkGetAllQuery, [userId]);
 
       return results;
     } catch (err) {
@@ -202,11 +202,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOneByBookmarkIdUserId(userBookmarkGetOneByBookmarkIdUserId) {
+  public async userBookmarkGetOneByBookmarkIdUserId({ bookmarkId, userId }) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetOneByBookmarkIdUserIdQuery = `CALL user_bookmark_get_one_by_id('${JSON.stringify(userBookmarkGetOneByBookmarkIdUserId)}')`;
-      const [[results]] = await mySQL.query(userBookmarkGetOneByBookmarkIdUserIdQuery);
+      const userBookmarkGetOneByBookmarkIdUserIdQuery = 'CALL user_bookmark_get_one_by_id(?, ?)';
+      const [[results]] = await mySQL.query(userBookmarkGetOneByBookmarkIdUserIdQuery, [bookmarkId, userId]);
 
       return results;
     } catch (err) {
@@ -216,11 +216,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOneByLinkIdUserId(userBookmarkGetOneByLinkIdUserId) {
+  public async userBookmarkGetOneByLinkIdUserId({ linkId, userId }) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetOneByLinkIdUserIdQuery = `CALL user_bookmark_get_one_by_link_user('${JSON.stringify(userBookmarkGetOneByLinkIdUserId)}')`;
-      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery);
+      const userBookmarkGetOneByLinkIdUserIdQuery = 'CALL user_bookmark_get_one_by_link_user(?, ?)';
+      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery, [linkId, userId]);
 
       return results;
     } catch (err) {
@@ -230,11 +230,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOneByUserIdPathDomain(userBookmarkGetOneByLinkIdUserId) {
+  public async userBookmarkGetOneByUserIdPathDomain({ userId, path, domain }) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetOneByLinkIdUserIdQuery = `CALL user_bookmark_get_one_by_user_path_domain('${JSON.stringify(userBookmarkGetOneByLinkIdUserId)}')`;
-      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery);
+      const userBookmarkGetOneByLinkIdUserIdQuery = 'CALL user_bookmark_get_one_by_user_path_domain(?, ?, ?)';
+      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery, [userId, path, domain]);
 
       return results;
     } catch (err) {
@@ -244,13 +244,13 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkCreate(userBookmarkCreateRequest) {
+  public async userBookmarkCreate({ userId, title, saved, isPrivate, domain, path, tags }) {
     const mySQL = new MySQL();
 
     try {
-      const userBookmarkCreateQuery = `CALL user_bookmark_create('${JSON.stringify(userBookmarkCreateRequest)}')`;
+      const userBookmarkCreateQuery = 'CALL user_bookmark_create(?, ?, ?, ?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(userBookmarkCreateQuery);
+      const [[results]] = await mySQL.query(userBookmarkCreateQuery, [userId, title, saved, isPrivate, domain, path, JSON.stringify(tags)]);
 
       return results;
     } catch (err) {
@@ -260,13 +260,13 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkUpdate(userBookmarkUpdateRequest) {
+  public async userBookmarkUpdate({ bookmarkId, order, title, userId, saved, isPrivate, domain, path, tags }) {
     const mySQL = new MySQL();
 
     try {
-      const userBookmarkUpdateQuery = `CALL user_bookmark_update('${JSON.stringify(userBookmarkUpdateRequest)}')`;
+      const userBookmarkUpdateQuery = 'CALL user_bookmark_update(?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(userBookmarkUpdateQuery);
+      const [[results]] = await mySQL.query(userBookmarkUpdateQuery, [bookmarkId, order, title, userId, saved, isPrivate, domain, path, JSON.stringify(tags)]);
 
       return results;
     } catch (err) {
@@ -276,13 +276,13 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkDeleteOne(userBookmarkDeleteOneRequest) {
+  public async userBookmarkDeleteOne({ bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
-      const userBookmarkDeleteOneQuery = `CALL user_bookmark_delete('${JSON.stringify(userBookmarkDeleteOneRequest)}')`;
+      const userBookmarkDeleteOneQuery = 'CALL user_bookmark_delete(?)';
 
-      const [[result]] = await mySQL.query(userBookmarkDeleteOneQuery);
+      const [[result]] = await mySQL.query(userBookmarkDeleteOneQuery, [bookmarkId]);
 
       return result;
     } catch (err) {
@@ -292,11 +292,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userListGetAllPublic(userListGetAllPublicRequest) {
+  public async userListGetAllPublic({ userId }) {
     const mySQL = new MySQL();
     try {
-      const userListGetAllPublicQuery = `CALL user_list_get_all_public('${JSON.stringify(userListGetAllPublicRequest)}')`;
-      const [results] = await mySQL.query(userListGetAllPublicQuery);
+      const userListGetAllPublicQuery = 'CALL user_list_get_all_public(?)';
+      const [results] = await mySQL.query(userListGetAllPublicQuery, [userId]);
 
       return results;
     } catch (err) {

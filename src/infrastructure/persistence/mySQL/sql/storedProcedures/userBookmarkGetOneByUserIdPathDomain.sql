@@ -2,15 +2,12 @@ DROP PROCEDURE IF EXISTS user_bookmark_get_one_by_user_path_domain;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_get_one_by_user_path_domain(
-    IN data JSON
+  IN $USER_ID VARCHAR(40),
+  IN $_PATH TEXT,
+  IN $DOMAIN VARCHAR(40)
 )
 
 BEGIN
-
-  -- Retrieve values from JSON
-  SET @user_id      = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
-  SET @path         = JSON_UNQUOTE(JSON_EXTRACT(data, '$.path'));
-  SET @domain       = JSON_UNQUOTE(JSON_EXTRACT(data, '$.domain'));
 
   SELECT
     `bookmark`.`id`,
@@ -25,9 +22,9 @@ BEGIN
   INNER JOIN `link` ON `bookmark`.`link_id` = `link`.`id`
   INNER JOIN `domain` ON `link`.`domain_id` = `domain`.`id`
   WHERE
-    `bookmark`.`user_id`      = @user_id
-    AND `link`.`path`         = @path
-    AND `domain`.`domain`     = @domain
+    `bookmark`.`user_id`      = $USER_ID
+    AND `link`.`path`         = $_PATH
+    AND `domain`.`domain`     = $DOMAIN
   ;
 
 END

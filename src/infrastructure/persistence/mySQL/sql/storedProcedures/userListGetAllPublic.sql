@@ -2,12 +2,10 @@ DROP PROCEDURE IF EXISTS user_list_get_all_public;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_list_get_all_public(
-    IN data JSON
+    IN $USER_ID VARCHAR(40)
 )
 
 BEGIN
-
-  SET @user_id = JSON_UNQUOTE(JSON_EXTRACT(DATA, '$.userId'));
 
   SELECT
     list.id,
@@ -25,7 +23,7 @@ BEGIN
   INNER JOIN `user` ON user_list.user_id = user.id
   WHERE
     list.isPrivate IS NOT TRUE
-    AND list.userId = @user_id
+    AND list.userId = $USER_ID
   ;
 
 END

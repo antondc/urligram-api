@@ -2,27 +2,25 @@ DROP PROCEDURE IF EXISTS user_update;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_update(
-  IN user_data JSON
+  IN $USER_ID VARCHAR(40),
+  IN $NAME VARCHAR(40),
+  IN $EMAIL VARCHAR(40),
+  IN $STATEMENT VARCHAR(40),
+  IN $LOCATION VARCHAR(40)
 )
 
 BEGIN
-  -- Retrieve values from JSON
-  SET @user_id    = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.userId'));
-  SET @name       = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.name'));
-  SET @email      = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.email'));
-  SET @statement  = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.statement'));
-  SET @location   = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.location'));
 
   -- Retrieve user
   UPDATE user
   SET
-   `name`       = @name,
-   `email`      = @email,
-   `statement`  = @statement,
-   `location`   = @location,
+   `name`       = $NAME,
+   `email`      = $EMAIL,
+   `statement`  = $STATEMENT,
+   `location`   = $LOCATION,
    `createdAt`  = CURRENT_TIMESTAMP
-  WHERE id      = @user_id;
+  WHERE id      = $USER_ID;
 
-  SELECT @userId AS userId;
+  SELECT $USER_ID AS userId;
 
 END

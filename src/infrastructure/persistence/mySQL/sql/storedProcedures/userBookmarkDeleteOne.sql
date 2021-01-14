@@ -3,20 +3,18 @@ DROP PROCEDURE IF EXISTS user_bookmark_delete;
 
 -- Stored procedure to delete bookmark
 CREATE PROCEDURE user_bookmark_delete(
-  IN data JSON
+  IN $BOOKMARK_ID INT
 )
 
 BEGIN
-  -- Retrieve values from JSON
-  SET @bookmark_id   = JSON_UNQUOTE(JSON_EXTRACT(data, '$.bookmarkId'));
-  SET @user_id   = JSON_UNQUOTE(JSON_EXTRACT(data, '$.userId'));
+
 
   SET @link_id = (
     SELECT
       link_id
     FROM bookmark
     WHERE
-      bookmark.id = @bookmark_id
+      bookmark.id = $BOOKMARK_ID
   );
 
   SET @domain_id = (
@@ -25,14 +23,14 @@ BEGIN
   );
 
   DELETE FROM bookmark_tag
-  WHERE bookmark_id  = @bookmark_id;
+  WHERE bookmark_id  = $BOOKMARK_ID;
 
   DELETE FROM bookmark_list
-  WHERE bookmark_id  = @bookmark_id;
+  WHERE bookmark_id  = $BOOKMARK_ID;
 
   -- Finally remove bookmark entry
   DELETE FROM bookmark
-  WHERE id            = @bookmark_id;
+  WHERE id            = $BOOKMARK_ID;
 
   DELETE link FROM link
   LEFT JOIN bookmark ON bookmark.link_id = link.id
@@ -43,6 +41,6 @@ BEGIN
   LEFT JOIN link ON link.domain_id = domain.id
   WHERE link.id IS NULL AND domain.id = @domain_id;
 
-  SELECT @bookmark_id AS bookmarkId;
+  SELECT $BOOKMARK_ID AS bookmarkId;
 
 END

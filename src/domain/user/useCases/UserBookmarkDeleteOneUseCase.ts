@@ -23,7 +23,7 @@ export class UserBookmarkDeleteOneUseCase implements IUserBookmarkDeleteOneUseCa
     });
     if (!result) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' }); // (1)
 
-    const response = await this.userRepo.userBookmarkDeleteOne({ bookmarkId, userId: session?.id });
+    const response = await this.userRepo.userBookmarkDeleteOne({ bookmarkId });
 
     return response;
   }

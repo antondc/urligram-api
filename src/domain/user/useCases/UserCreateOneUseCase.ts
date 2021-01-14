@@ -16,7 +16,7 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
   }
 
   public async execute(createUser: IUserCreateOneRequest): Promise<IUserCreateOneResponse> {
-    const { email, password, password_repeated } = createUser;
+    const { name, email, password, password_repeated } = createUser;
 
     if (password !== password_repeated) throw new UserError('Passwords are not equal', 409);
 
@@ -26,7 +26,7 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     const userAlreadyExists = await this.userRepo.userGetOne(createUser);
     if (!!userAlreadyExists) throw new UserError('User already exist', 409);
 
-    const response = await this.userRepo.userCreateOne(createUser);
+    const response = await this.userRepo.userCreateOne({ name, email, password });
 
     return response;
   }

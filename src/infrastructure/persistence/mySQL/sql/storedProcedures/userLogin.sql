@@ -2,13 +2,11 @@ DROP PROCEDURE IF EXISTS user_login;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_login(
-  IN user_data JSON
+  IN $NAME VARCHAR(40),
+  IN $PASS VARCHAR(40),
+  IN $USER_ID VARCHAR(40)
 )
 BEGIN
-  -- Retrieve values from JSON
-  SET @user_id       = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.userId'));
-  SET @name          = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.name'));
-  SET @password      = JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.password'));
 
   -- Select user
   SELECT
@@ -24,10 +22,11 @@ BEGIN
     `user`.`updatedAt`
   FROM `user`
   WHERE
-    `password` = @password
+    `password` = $PASS
   AND (
-    `name` = @name
-    OR `id` = @user_id
+    `name` = $NAME
+    OR
+    `id` = $USER_ID
   );
 
 END
