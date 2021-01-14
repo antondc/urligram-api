@@ -7,7 +7,7 @@ export class TagRepo implements ITagRepo {
     const mySQL = new MySQL();
 
     try {
-      const tagGetAllQuery = `CALL tag_get_all()`;
+      const tagGetAllQuery = 'CALL tag_get_all()';
 
       const [tags] = await mySQL.query(tagGetAllQuery);
 
@@ -23,7 +23,7 @@ export class TagRepo implements ITagRepo {
     const mySQL = new MySQL();
 
     try {
-      const tagListGetAllPublicQuery = `CALL tag_list_get_all(?)`;
+      const tagListGetAllPublicQuery = 'CALL tag_list_get_all(?)';
 
       const [results] = await mySQL.query(tagListGetAllPublicQuery, [tagId]);
 
@@ -39,7 +39,7 @@ export class TagRepo implements ITagRepo {
     const mySQL = new MySQL();
 
     try {
-      const tagBookmarkGetAllPublicQuery = `CALL tag_bookmark_get_all(?)`;
+      const tagBookmarkGetAllPublicQuery = 'CALL tag_bookmark_get_all(?)';
 
       const [results] = await mySQL.query(tagBookmarkGetAllPublicQuery, [tagId]);
 
@@ -55,7 +55,7 @@ export class TagRepo implements ITagRepo {
     const mySQL = new MySQL();
 
     try {
-      const tagUserGetAllPublicQuery = `CALL tag_user_get_all(?)`;
+      const tagUserGetAllPublicQuery = 'CALL tag_user_get_all(?)';
 
       const [results] = await mySQL.query(tagUserGetAllPublicQuery, [tagId]);
 

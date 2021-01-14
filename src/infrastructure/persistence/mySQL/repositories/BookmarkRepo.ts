@@ -7,7 +7,7 @@ export class BookmarkRepo implements IBookmarkRepo {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkGetOneQuery = `CALL bookmark_get_one(?)`;
+      const bookmarkGetOneQuery = 'CALL bookmark_get_one(?)';
 
       const [[bookmark]] = await mySQL.query(bookmarkGetOneQuery, [bookmarkId]);
 
@@ -23,7 +23,7 @@ export class BookmarkRepo implements IBookmarkRepo {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkTagGetAllQuery = `CALL bookmark_tag_get_all(?)`;
+      const bookmarkTagGetAllQuery = 'CALL bookmark_tag_get_all(?)';
 
       const [response] = await mySQL.query(bookmarkTagGetAllQuery, [bookmarkId]);
 
@@ -39,7 +39,7 @@ export class BookmarkRepo implements IBookmarkRepo {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkGetAllPublicQuery = `CALL bookmark_get_all_public()`;
+      const bookmarkGetAllPublicQuery = 'CALL bookmark_get_all_public()';
 
       const [bookmark] = await mySQL.query(bookmarkGetAllPublicQuery);
 
@@ -55,7 +55,7 @@ export class BookmarkRepo implements IBookmarkRepo {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkListGetAllQuery = `CALL bookmark_list_get_all(?)`;
+      const bookmarkListGetAllQuery = 'CALL bookmark_list_get_all(?)';
 
       const [response] = await mySQL.query(bookmarkListGetAllQuery, [bookmarkId]);
 
@@ -71,7 +71,7 @@ export class BookmarkRepo implements IBookmarkRepo {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkGetAllByLinkIdQuery = `CALL bookmark_get_all_by_link_id(?, ?)`;
+      const bookmarkGetAllByLinkIdQuery = 'CALL bookmark_get_all_by_link_id(?, ?)';
 
       const [response] = await mySQL.query(bookmarkGetAllByLinkIdQuery, [linkId, userId]);
 
