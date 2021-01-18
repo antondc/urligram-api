@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 
+import { User } from '@domain/user/entities/User';
 import { IUserListGetAllPublicRequest } from '@domain/user/useCases/interfaces/IUserListGetAllPublicRequest';
 import { IUserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -15,9 +17,12 @@ export class UserListGetAllPublicController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { userId } = req.params;
+    const tokenService = new TokenService();
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const userListGetAllPublicRequest: IUserListGetAllPublicRequest = {
       userId,
+      session,
     };
 
     const response = await this.useCase.execute(userListGetAllPublicRequest);
