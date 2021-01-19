@@ -16,17 +16,18 @@ export class UserPasswordUpdateUseCase implements IUserPasswordUpdateUseCase {
   }
 
   public async execute(userPasswordUpdateRequest: IUserPasswordUpdateRequest): Promise<IUserPasswordUpdateResponse> {
-    // Use case to change password
-    // This is not to recover password
-    // User needs to be logged in
     const { password, newPassword, newPasswordRepeated, session } = userPasswordUpdateRequest;
+
     const userAuthenticated = await this.userRepo.userLogin({
       password,
       name: session.name,
     });
     if (!userAuthenticated) throw new AuthenticationError('Username or password not correct', 403);
 
-    const userFound = await this.userRepo.userGetOne(userAuthenticated);
+    const userFound = await this.userRepo.userGetOne({
+      sessionId: session?.id,
+      userId: userAuthenticated?.id,
+    });
     if (!userFound) throw new AuthenticationError('User not found', 404);
 
     if (!newPassword || !newPasswordRepeated) throw new UserError('One of the passwords is missing', 409);
@@ -37,3 +38,7 @@ export class UserPasswordUpdateUseCase implements IUserPasswordUpdateUseCase {
     return userFound;
   }
 }
+
+// Use case to change password
+// This is not to recover password
+// User needs to be logged in

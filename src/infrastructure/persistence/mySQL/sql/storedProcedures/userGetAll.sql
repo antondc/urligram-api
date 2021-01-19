@@ -1,11 +1,9 @@
 DROP PROCEDURE IF EXISTS user_get_all;
 
--- Stored procedure to insert post and tags
 CREATE PROCEDURE user_get_all(
   IN $SESSION_ID VARCHAR(40)
 )
 BEGIN
-
 
 -- Select user
 SELECT
@@ -43,7 +41,7 @@ SELECT
         (
           subQuery.isPrivate IS NOT TRUE
           OR
-          subQuery.user_id = @SESSION_ID
+          subQuery.user_id = $SESSION_ID
         )
   ) AS tags,
   (
@@ -57,7 +55,7 @@ SELECT
         (
           bookmark.isPrivate IS NOT TRUE
           OR
-          bookmark.user_id = @SESSION_ID
+          bookmark.user_id = $SESSION_ID
         )
   ) AS bookmarks,
   JSON_MERGE(
@@ -76,7 +74,7 @@ SELECT
         (
           list.isPrivate IS NOT TRUE
           OR
-          list.userId = @SESSION_ID
+          list.userId = $SESSION_ID
         )
     ),
     (
@@ -95,7 +93,7 @@ SELECT
         (
           list.isPrivate IS NOT TRUE
           OR
-          `user_list`.user_id = @SESSION_ID
+          `user_list`.user_id = $SESSION_ID
         )
     )
   ) AS lists,
@@ -116,10 +114,6 @@ SELECT
     WHERE user_user.user_id1 = user.id
   ) AS following
   FROM `user`
--- WHERE
---   `USER`.`id` = @USER_ID
---   OR `NAME` = "JSON_UNQUOTE($NAME)"
---   OR `email` = "JSON_UNQUOTE($EMAIL)"
   GROUP BY `user`.`id`
 ;
 

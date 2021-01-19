@@ -17,17 +17,17 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
   }
 
   public async execute(userUpdateRequest: IUserUpdateOneRequest): Promise<IUserUpdateOneResponse> {
-    const { email, session } = userUpdateRequest;
+    const { email, name, session } = userUpdateRequest;
 
     const isEmail = StringValidator.validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409);
 
-    const userExists = await this.userRepo.userGetOne(userUpdateRequest);
+    const userExists = await this.userRepo.userGetOne({ sessionId: session?.id, email, name });
     if (!userExists) throw new RequestError('User does not exist', 404);
 
     await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id });
 
-    const response = await this.userRepo.userGetOne({ userId: session?.id });
+    const response = await this.userRepo.userGetOne({ sessionId: session?.id, userId: session?.id });
 
     return response;
   }

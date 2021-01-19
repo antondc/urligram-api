@@ -17,7 +17,7 @@ export class UserListGetAllPublicUseCase implements IUserListGetAllPublicUseCase
   public async execute(userListGetAllPublicRequest: IUserListGetAllPublicRequest): Promise<IUserListGetAllPublicResponse> {
     const { userId, session } = userListGetAllPublicRequest;
 
-    const user = await this.userRepo.userGetOne({ userId });
+    const user = await this.userRepo.userGetOne({ sessionId: session?.id, userId });
     if (!user) throw new RequestError('User not found', 404, { message: '404 Not Found' });
 
     const lists = await this.userRepo.userListGetAllPublic({ userId, sessionId: session?.id });

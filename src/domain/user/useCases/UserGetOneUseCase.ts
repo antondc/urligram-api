@@ -3,7 +3,7 @@ import { IUserGetOneRequest } from './interfaces/IUserGetOneRequest';
 import { IUserGetOneResponse } from './interfaces/IUserGetOneResponse';
 
 export interface IUserGetOneUseCase {
-  execute: (userGetOne: IUserGetOneRequest) => Promise<IUserGetOneResponse>;
+  execute: (userGetOneRequest: IUserGetOneRequest) => Promise<IUserGetOneResponse>;
 }
 
 export class UserGetOneUseCase implements IUserGetOneUseCase {
@@ -13,8 +13,10 @@ export class UserGetOneUseCase implements IUserGetOneUseCase {
     this.userRepo = userRepo;
   }
 
-  public async execute(userGetOne) {
-    const response = await this.userRepo.userGetOne(userGetOne);
+  public async execute(userGetOneRequest: IUserGetOneRequest): Promise<IUserGetOneResponse> {
+    const { session, userId, email, name } = userGetOneRequest;
+
+    const response = await this.userRepo.userGetOne({ sessionId: session?.id, userId, name, email });
 
     return response;
   }

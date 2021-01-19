@@ -1,10 +1,8 @@
-interface byUserId {
-  userId: string;
-}
+import { User } from '@domain/user/entities/User';
 
-interface byEmailAndName {
-  email: string;
-  name: string;
-}
-
-export type IUserGetOneRequest = byUserId | byEmailAndName;
+export type IUserGetOneRequest = {
+  session?: User;
+  userId?: string;
+  email?: string;
+  name?: string;
+};
