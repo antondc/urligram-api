@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS user (
   `name` VARCHAR(255) UNIQUE NULL DEFAULT NULL,
   `level` ENUM('admin', 'user') NOT NULL DEFAULT 'user',
   `email` VARCHAR(255) UNIQUE NULL DEFAULT NULL,
+  `image` VARCHAR(255) NULL DEFAULT NULL,
   `password` VARCHAR(255) NOT NULL,
   `status` ENUM('inactive', 'active', 'disabled', 'removed') NOT NULL DEFAULT 'inactive',
   `statement` VARCHAR(255) NULL DEFAULT NULL,
