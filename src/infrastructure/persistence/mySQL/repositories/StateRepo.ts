@@ -81,6 +81,7 @@ export class StateRepo {
   private tagListGetAllPublicProcedure: string;
   private tagBookmarkGetAllPublicProcedure: string;
   private tagUserGetAllPublicProcedure: string;
+  private tagGetAllByUserIdProcedure: string;
 
   // Data
   private domainData: string;
@@ -181,6 +182,7 @@ export class StateRepo {
     this.tagListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagListGetAllPublic.sql')).toString();
     this.tagBookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagBookmarkGetAllPublic.sql')).toString();
     this.tagUserGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagUserGetAllPublic.sql')).toString();
+    this.tagGetAllByUserIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAllByUserId.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -282,6 +284,7 @@ export class StateRepo {
       const createTagListGetAllPublicProcedure = await mySQL.query(this.tagListGetAllPublicProcedure);
       const createTagBookmarkGetAllPublicProcedure = await mySQL.query(this.tagBookmarkGetAllPublicProcedure);
       const createTagUserGetAllPublicProcedure = await mySQL.query(this.tagUserGetAllPublicProcedure);
+      const createTagGetAllByUserIdProcedure = await mySQL.query(this.tagGetAllByUserIdProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -381,6 +384,7 @@ export class StateRepo {
         ...createTagListGetAllPublicProcedure,
         ...createTagBookmarkGetAllPublicProcedure,
         ...createTagUserGetAllPublicProcedure,
+        ...createTagGetAllByUserIdProcedure,
 
         // Insert data
         ...insertDomainData,

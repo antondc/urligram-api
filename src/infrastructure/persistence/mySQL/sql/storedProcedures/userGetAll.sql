@@ -21,33 +21,6 @@ SELECT
   (
     SELECT
       JSON_ARRAYAGG(
-        JSON_OBJECT(
-          'id', subQuery.id,
-          'name', subQuery.name
-        )
-      )
-      FROM (
-        SELECT DISTINCT
-        tag.id,
-        tag.name,
-        bookmark.user_id,
-        bookmark.isPrivate
-        FROM tag
-        INNER JOIN bookmark_tag ON bookmark_tag.tag_id = tag.id
-        INNER JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
-        INNER JOIN `user` ON user.id = bookmark.user_id
-      ) subQuery
-      WHERE user.id = subQuery.user_id
-      AND
-        (
-          subQuery.isPrivate IS NOT TRUE
-          OR
-          subQuery.user_id = $SESSION_ID
-        )
-  ) AS tags,
-  (
-    SELECT
-      JSON_ARRAYAGG(
         bookmark.id
       )
     FROM bookmark

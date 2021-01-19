@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
+import { TagGetAllByUserIdUseCase } from '@domain/tag/useCases/TagGetAllByUserIdUseCase';
 import { UserBookmarkCreateUseCase } from '@domain/user/useCases/UserBookmarkCreateUseCase';
 import { UserBookmarkDeleteOneUseCase } from '@domain/user/useCases/UserBookmarkDeleteOneUseCase';
 import { UserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
@@ -34,6 +35,7 @@ import { UserPasswordUpdateController } from '@infrastructure/http/controllers/U
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
+import { TagRepo } from '@infrastructure/persistence/mySQL/repositories/TagRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserBookmarkDeleteOneController } from '../controllers/UserBookmarkDeleteOneController';
 import { UserBookmarkUpdateController } from '../controllers/UserBookmarkUpdateController';
@@ -43,7 +45,9 @@ const UsersRoute = express.Router();
 
 UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userGetAllUseCase = new UserGetAllUseCase(userRepo);
+  const tagRepo = new TagRepo();
+  const tagGetAllByUserIdUseCase = new TagGetAllByUserIdUseCase(tagRepo);
+  const userGetAllUseCase = new UserGetAllUseCase(userRepo, tagGetAllByUserIdUseCase);
   const userGetAllController = new UserGetAllController(userGetAllUseCase);
 
   const response = await userGetAllController.execute(req, res, next);
@@ -53,7 +57,9 @@ UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
 UsersRoute.get('/:userId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userGetOneUseCase = new UserGetOneUseCase(userRepo);
+  const tagRepo = new TagRepo();
+  const tagGetAllByUserIdUseCase = new TagGetAllByUserIdUseCase(tagRepo);
+  const userGetOneUseCase = new UserGetOneUseCase(userRepo, tagGetAllByUserIdUseCase);
   const userGetOneController = new UserGetOneController(userGetOneUseCase);
 
   const response = await userGetOneController.execute(req, res, next);
