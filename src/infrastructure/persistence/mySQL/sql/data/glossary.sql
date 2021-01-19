@@ -14,6 +14,7 @@ INSERT INTO `glossary` (
   `users`,
   `followers`,
   `following`,
+  `since`,
   `createdAt`,
   `updatedAt`
 ) VALUES (
@@ -31,29 +32,10 @@ INSERT INTO `glossary` (
   "Users",
   "Followers",
   "Following",
+  "Since",
   DEFAULT,
   DEFAULT
-);
-
-
-INSERT INTO `glossary` (
-  `id`,
-  `home`,
-  `login`,
-  `logout`,
-  `control`,
-  `notFound`,
-  `tags`,
-  `trending`,
-  `lists`,
-  `bookmarks`,
-  `links`,
-  `users`,
-  `followers`,
-  `following`,
-  `createdAt`,
-  `updatedAt`
-) VALUES (
+), (
   2,
   "Casa",
   "Log in",
@@ -68,6 +50,7 @@ INSERT INTO `glossary` (
   "Usuarios",
   "Seguidores",
   "Siguiendo",
+  "Desde",
   DEFAULT,
   DEFAULT
 );

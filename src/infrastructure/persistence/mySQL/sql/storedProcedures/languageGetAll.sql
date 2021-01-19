@@ -24,7 +24,8 @@ BEGIN
       'links', g.links,
       'users', g.users,
       'followers', g.followers,
-      'following', g.following
+      'following', g.following,
+      'since', g.since
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id;
