@@ -51,6 +51,7 @@ export class StateRepo {
   private userBookmarkUpdateProcedure: string;
   private userBookmarkDeleteOneProcedure: string;
   private userListGetAllPublicProcedure: string;
+  private userTagsGetAllProcedure: string;
   private bookmarkGetOneProcedure: string;
   private bookmarkGetAllPublicProcedure: string;
   private bookmarkGetAllByLinkIdProcedure: string;
@@ -81,7 +82,7 @@ export class StateRepo {
   private tagListGetAllPublicProcedure: string;
   private tagBookmarkGetAllPublicProcedure: string;
   private tagUserGetAllPublicProcedure: string;
-  private tagGetAllByUserIdProcedure: string;
+
 
   // Data
   private domainData: string;
@@ -152,6 +153,7 @@ export class StateRepo {
     this.userBookmarkUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkUpdate.sql')).toString();
     this.userBookmarkDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkDeleteOne.sql')).toString();
     this.userListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userListGetAllPublic.sql')).toString();
+    this.userTagsGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userTagsGetAll.sql')).toString();
     this.bookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetOne.sql')).toString();
     this.bookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetAllPublic.sql')).toString();
     this.bookmarkGetAllByLinkIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetAllByLinkId.sql')).toString();
@@ -182,7 +184,6 @@ export class StateRepo {
     this.tagListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagListGetAllPublic.sql')).toString();
     this.tagBookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagBookmarkGetAllPublic.sql')).toString();
     this.tagUserGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagUserGetAllPublic.sql')).toString();
-    this.tagGetAllByUserIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAllByUserId.sql')).toString();
 
     //  Data
     this.domainData = fs.readFileSync(path.resolve(__dirname, '../sql/data/domain.sql')).toString();
@@ -254,6 +255,7 @@ export class StateRepo {
       const createUserBookmarkUpdateProcedure = await mySQL.query(this.userBookmarkUpdateProcedure);
       const createUserBookmarkDeleteOneProcedure = await mySQL.query(this.userBookmarkDeleteOneProcedure);
       const createUserListGetAllPublicProcedure = await mySQL.query(this.userListGetAllPublicProcedure);
+      const createUserTagsGetAllProcedure = await mySQL.query(this.userTagsGetAllProcedure);
       const createBookmarkGetOneProcedure = await mySQL.query(this.bookmarkGetOneProcedure);
       const createBookmarkGetAllPublicProcedure = await mySQL.query(this.bookmarkGetAllPublicProcedure);
       const createBookmarkGetAllByLinkIdProcedure = await mySQL.query(this.bookmarkGetAllByLinkIdProcedure);
@@ -284,7 +286,6 @@ export class StateRepo {
       const createTagListGetAllPublicProcedure = await mySQL.query(this.tagListGetAllPublicProcedure);
       const createTagBookmarkGetAllPublicProcedure = await mySQL.query(this.tagBookmarkGetAllPublicProcedure);
       const createTagUserGetAllPublicProcedure = await mySQL.query(this.tagUserGetAllPublicProcedure);
-      const createTagGetAllByUserIdProcedure = await mySQL.query(this.tagGetAllByUserIdProcedure);
 
       // Insert data
       const insertDomainData = await mySQL.query(this.domainData);
@@ -354,6 +355,7 @@ export class StateRepo {
         ...createUserBookmarkUpdateProcedure,
         ...createUserBookmarkDeleteOneProcedure,
         ...createUserListGetAllPublicProcedure,
+        ...createUserTagsGetAllProcedure,
         ...createBookmarkGetOneProcedure,
         ...createBookmarkGetAllPublicProcedure,
         ...createBookmarkGetAllByLinkIdProcedure,
@@ -384,7 +386,6 @@ export class StateRepo {
         ...createTagListGetAllPublicProcedure,
         ...createTagBookmarkGetAllPublicProcedure,
         ...createTagUserGetAllPublicProcedure,
-        ...createTagGetAllByUserIdProcedure,
 
         // Insert data
         ...insertDomainData,

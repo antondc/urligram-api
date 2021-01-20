@@ -1,4 +1,4 @@
-export type ITagGetAllByUserIdRequest = {
+export type IUserTagsGetAllRequest = {
   userId: string;
   sessionId: string;
 };

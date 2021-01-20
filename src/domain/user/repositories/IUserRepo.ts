@@ -38,6 +38,8 @@ import { IUserLogSessionRequest } from './interfaces/IUserLogSessionRequest';
 import { IUserLogSessionResponse } from './interfaces/IUserLogSessionResponse';
 import { IUserPasswordUpdateRequest } from './interfaces/IUserPasswordUpdateRequest';
 import { IUserPasswordUpdateResponse } from './interfaces/IUserPasswordUpdateResponse';
+import { IUserTagsGetAllRequest } from './interfaces/IUserTagsGetAllRequest';
+import { IUserTagsGetAllResponse } from './interfaces/IUserTagsGetAllResponse';
 import { IUserUpdateOneRequest } from './interfaces/IUserUpdateOneRequest';
 import { IUserUpdateOneResponse } from './interfaces/IUserUpdateOneResponse';
 
@@ -69,4 +71,5 @@ export interface IUserRepo {
   userBookmarkUpdate: (userBookmarkUpdate: IUserBookmarkUpdateRequest) => Promise<IUserBookmarkUpdateResponse>;
   userBookmarkDeleteOne: (userBookmarkDeleteOne: IUserBookmarkDeleteOneRequest) => Promise<IUserBookmarkDeleteOneResponse>;
   userListGetAllPublic: (userListGetAllPublic: IUserListGetAllPublicRequest) => Promise<IUserListGetAllPublicResponse>;
+  userTagsGetAll: (userTagsGetAll: IUserTagsGetAllRequest) => Promise<IUserTagsGetAllResponse>;
 }

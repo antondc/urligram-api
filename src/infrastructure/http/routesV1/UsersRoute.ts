@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
-import { TagGetAllByUserIdUseCase } from '@domain/tag/useCases/TagGetAllByUserIdUseCase';
 import { UserBookmarkCreateUseCase } from '@domain/user/useCases/UserBookmarkCreateUseCase';
 import { UserBookmarkDeleteOneUseCase } from '@domain/user/useCases/UserBookmarkDeleteOneUseCase';
 import { UserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
@@ -18,6 +17,7 @@ import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
 import { UserPasswordUpdateUseCase } from '@domain/user/useCases/UserPasswordUpdateUseCase';
+import { UserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
 import { UserBookmarkCreateController } from '@infrastructure/http/controllers/UserBookmarkCreateController';
 import { UserBookmarkGetAllController } from '@infrastructure/http/controllers/UserBookmarkGetAllController';
@@ -35,19 +35,18 @@ import { UserPasswordUpdateController } from '@infrastructure/http/controllers/U
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
-import { TagRepo } from '@infrastructure/persistence/mySQL/repositories/TagRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { UserBookmarkDeleteOneController } from '../controllers/UserBookmarkDeleteOneController';
 import { UserBookmarkUpdateController } from '../controllers/UserBookmarkUpdateController';
 import { UserListGetAllPublicController } from '../controllers/UserListGetAllPublicController';
+import { UserTagsGetAllController } from '../controllers/UserTagsGetAllController';
 
 const UsersRoute = express.Router();
 
 UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const tagRepo = new TagRepo();
-  const tagGetAllByUserIdUseCase = new TagGetAllByUserIdUseCase(tagRepo);
-  const userGetAllUseCase = new UserGetAllUseCase(userRepo, tagGetAllByUserIdUseCase);
+  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
+  const userGetAllUseCase = new UserGetAllUseCase(userRepo, userTagsGetAllUseCase);
   const userGetAllController = new UserGetAllController(userGetAllUseCase);
 
   const response = await userGetAllController.execute(req, res, next);
@@ -57,9 +56,8 @@ UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
 UsersRoute.get('/:userId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const tagRepo = new TagRepo();
-  const tagGetAllByUserIdUseCase = new TagGetAllByUserIdUseCase(tagRepo);
-  const userGetOneUseCase = new UserGetOneUseCase(userRepo, tagGetAllByUserIdUseCase);
+  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
+  const userGetOneUseCase = new UserGetOneUseCase(userRepo, userTagsGetAllUseCase);
   const userGetOneController = new UserGetOneController(userGetOneUseCase);
 
   const response = await userGetOneController.execute(req, res, next);
@@ -219,6 +217,16 @@ UsersRoute.get('/:userId/lists', async (req: Request, res: Response, next: NextF
   const userListGetAllPublicController = new UserListGetAllPublicController(userListGetAllPublicUseCase);
 
   const response = await userListGetAllPublicController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/:userId/tags', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
+  const userTagsGetAllController = new UserTagsGetAllController(userTagsGetAllUseCase);
+
+  const response = await userTagsGetAllController.execute(req, res, next);
 
   return response;
 });

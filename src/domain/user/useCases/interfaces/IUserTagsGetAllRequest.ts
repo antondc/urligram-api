@@ -1,6 +1,6 @@
 import { User } from '@domain/user/entities/User';
 
-export type ITagGetAllByUserIdRequest = {
+export type IUserTagsGetAllRequest = {
   session: User;
   userId: string;
 };

@@ -305,4 +305,20 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userTagsGetAll({ userId, sessionId }) {
+    const mySQL = new MySQL();
+
+    try {
+      const userTagsGetAllQuery = 'CALL user_tags_get_all(?, ?)';
+
+      const [results] = await mySQL.query(userTagsGetAllQuery, [userId, sessionId]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

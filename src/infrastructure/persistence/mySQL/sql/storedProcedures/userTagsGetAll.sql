@@ -1,6 +1,6 @@
-DROP PROCEDURE IF EXISTS tag_get_all_by_user_id;
+DROP PROCEDURE IF EXISTS user_tags_get_all;
 
-CREATE PROCEDURE tag_get_all_by_user_id(
+CREATE PROCEDURE user_tags_get_all(
   IN $USER_ID VARCHAR(40),
   IN $SESSION_ID VARCHAR(40)
 )

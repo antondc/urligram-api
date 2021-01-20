@@ -1,3 +1,3 @@
 import { Tag } from '@domain/tag/entities/Tag';
 
-export type ITagGetAllByUserIdResponse = Tag[];
+export type IUserTagsGetAllResponse = Tag[];
