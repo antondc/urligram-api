@@ -1,9 +1,14 @@
 DROP PROCEDURE IF EXISTS bookmark_get_all_public;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE bookmark_get_all_public()
+CREATE PROCEDURE bookmark_get_all_public(
+  IN $SORT VARCHAR(20),
+  IN $SIZE INT,
+  IN $OFFSET INT
+)
 
 BEGIN
+  SET $SIZE = IFNULL($SIZE, -1);
 
   SELECT
     bookmark.id,
@@ -52,7 +57,14 @@ BEGIN
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id
-  ORDER BY bookmark.id
+  ORDER BY
+    CASE WHEN $SORT = 'id'          THEN `bookmark`.id      	ELSE NULL END ASC,
+    CASE WHEN $SORT = '-id'         THEN `bookmark`.id      	ELSE NULL END DESC,
+    CASE WHEN $SORT = 'createdAt'   THEN `bookmark`.createdAt	ELSE NULL END ASC,
+    CASE WHEN $SORT = '-createdAt'  THEN `bookmark`.createdAt ELSE NULL END DESC,
+    CASE WHEN $SORT = 'updatedAt'   THEN `bookmark`.updatedAt ELSE NULL END ASC,
+    CASE WHEN $SORT = '-updatedAt'  THEN `bookmark`.updatedAt ELSE NULL END DESC
+  LIMIT $OFFSET , $SIZE
   ;
 
 END

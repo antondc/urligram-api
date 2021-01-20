@@ -17,9 +17,9 @@ export class BookmarkGetAllPublicUseCase implements IBookmarkGetAllPublicUseCase
   }
 
   public async execute(bookmarkGetAllPublicRequest: IBookmarkGetAllPublicRequest): Promise<IBookmarkGetAllPublicResponse> {
-    const { session } = bookmarkGetAllPublicRequest;
+    const { session, sort, size, after } = bookmarkGetAllPublicRequest;
 
-    const bookmarks = await this.bookmarkRepo.bookmarkGetAllPublic();
+    const bookmarks = await this.bookmarkRepo.bookmarkGetAllPublic({ sort, size, after });
 
     const filteredBookmarks = bookmarks.filter((bookmark) => !bookmark.isPrivate); // (1)
 

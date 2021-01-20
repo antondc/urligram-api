@@ -35,13 +35,13 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkGetAllPublic() {
+  public async bookmarkGetAllPublic({ sort, size, after }) {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkGetAllPublicQuery = 'CALL bookmark_get_all_public()';
+      const bookmarkGetAllPublicQuery = 'CALL bookmark_get_all_public(?, ?, ?)';
 
-      const [bookmark] = await mySQL.query(bookmarkGetAllPublicQuery);
+      const [bookmark] = await mySQL.query(bookmarkGetAllPublicQuery, [sort, size, after]);
 
       return bookmark;
     } catch (err) {

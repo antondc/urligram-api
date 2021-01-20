@@ -1,7 +1,6 @@
-import { User } from '@domain/user/entities/User';
+import { NumericLiteral } from 'typescript';
 
 export type IBookmarkGetAllPublicRequest = {
-  session: User;
   sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   size: number;
   after: number;

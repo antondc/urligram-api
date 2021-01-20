@@ -8,8 +8,7 @@ CREATE PROCEDURE list_get_all_public(
 )
 
 BEGIN
-  DECLARE CASTED_SIZE INT DEFAULT -1;
-  SET CASTED_SIZE = IF($SIZE IS NULL, -1, $SIZE);
+  SET $SIZE = IFNULL($SIZE, -1);
 
   -- Returns a collection of public lists or those where user is member, along with the number of users in each list
   SELECT
@@ -53,7 +52,7 @@ BEGIN
       CASE WHEN $SORT = '-createdAt'  THEN `list`.createdAt ELSE NULL END DESC,
       CASE WHEN $SORT = 'updatedAt'   THEN `list`.updatedAt ELSE NULL END ASC,
       CASE WHEN $SORT = '-updatedAt'  THEN `list`.updatedAt ELSE NULL END DESC
-    LIMIT CASTED_SIZE
+    LIMIT $SIZE
   ;
 
 END

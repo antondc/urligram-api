@@ -1,5 +1,6 @@
 import { IBookmarkGetAllByLinkIdRequest } from './interfaces/IBookmarkGetAllByLinkIdRequest';
 import { IBookmarkGetAllByLinkIdResponse } from './interfaces/IBookmarkGetAllByLinkIdResponse';
+import { IBookmarkGetAllPublicRequest } from './interfaces/IBookmarkGetAllPublicRequest';
 import { IBookmarkGetAllPublicResponse } from './interfaces/IBookmarkGetAllPublicResponse';
 import { IBookmarkGetOneRequest } from './interfaces/IBookmarkGetOneRequest';
 import { IBookmarkGetOneResponse } from './interfaces/IBookmarkGetOneResponse';
@@ -10,7 +11,7 @@ import { IBookmarkTagGetAllResponse } from './interfaces/IBookmarkTagGetAllRespo
 
 export interface IBookmarkRepo {
   bookmarkGetOne: (bookmarkGetOneRequest: IBookmarkGetOneRequest) => Promise<IBookmarkGetOneResponse>;
-  bookmarkGetAllPublic: () => Promise<IBookmarkGetAllPublicResponse>;
+  bookmarkGetAllPublic: (bookmarkGetAllPublicRequest: IBookmarkGetAllPublicRequest) => Promise<IBookmarkGetAllPublicResponse>;
   bookmarkGetAllByLinkId: (bookmarkGetAllByLinkIdRequest: IBookmarkGetAllByLinkIdRequest) => Promise<IBookmarkGetAllByLinkIdResponse>;
   bookmarkTagGetAll: (bookmarkTagGetAllRequest: IBookmarkTagGetAllRequest) => Promise<IBookmarkTagGetAllResponse>;
   bookmarkListGetAll: (bookmarkListGetAllRequest: IBookmarkListGetAllRequest) => Promise<IBookmarkListGetAllResponse>;
