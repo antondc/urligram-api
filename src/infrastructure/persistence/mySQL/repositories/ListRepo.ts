@@ -19,13 +19,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listGetOneById({ listId }) {
+  public async listGetOneById({ listId, sessionId }) {
     const mySQL = new MySQL();
 
     try {
-      const listGetOneQuery = 'CALL list_get_one(?)';
+      const listGetOneQuery = 'CALL list_get_one(?, ?)';
 
-      const [[list]] = await mySQL.query(listGetOneQuery, [listId]);
+      const [[list]] = await mySQL.query(listGetOneQuery, [listId, sessionId]);
 
       return list;
     } catch (err) {

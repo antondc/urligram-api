@@ -17,7 +17,7 @@ export class ListUpdateOneUseCase implements IListUpdateOneUseCase {
   public async execute(listUpdateOneRequest: IListUpdateOneRequest): Promise<IListUpdateOneResponse> {
     const { session, listId, name, description, isPrivate } = listUpdateOneRequest;
 
-    const originalList = await this.listRepo.listGetOneById({ listId });
+    const originalList = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!originalList) throw new RequestError('List does not exist', 404, { message: '404 Not Found' });
 
     const listUser = await this.listRepo.listUserGetOneByListId({
@@ -28,7 +28,7 @@ export class ListUpdateOneUseCase implements IListUpdateOneUseCase {
 
     const result = await this.listRepo.listUpdateOne({ listId, userId: session?.id, name, description, isPrivate });
 
-    const updatedList = await this.listRepo.listGetOneById({ listId: result.listId });
+    const updatedList = await this.listRepo.listGetOneById({ listId: result.listId, sessionId: session?.id });
 
     return updatedList;
   }

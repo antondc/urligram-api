@@ -17,7 +17,7 @@ export class ListDeleteOneUseCase implements IListDeleteOneUseCase {
   public async execute(listDeleteOneRequest: IListDeleteOneRequest): Promise<IListDeleteOneResponse> {
     const { session, listId } = listDeleteOneRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId });
+    const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError("List doesn't exists", 404, { message: '404 Not Found' });
 
     const listUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id }); // (1)

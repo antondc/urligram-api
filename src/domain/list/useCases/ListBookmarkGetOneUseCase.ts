@@ -18,7 +18,7 @@ export class ListBookmarkGetOneUseCase implements IListBookmarkGetOneUseCase {
     const { listId, bookmarkId } = listBookmarkGetOneRequest;
     const { session } = listBookmarkGetOneRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId });
+    const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
     const bookmark = await this.listRepo.listBookmarkGetOne({

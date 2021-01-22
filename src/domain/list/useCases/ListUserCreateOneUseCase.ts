@@ -20,7 +20,7 @@ export class ListUserCreateOneUseCase implements IListUserCreateOneUseCase {
   public async execute(listUserCreateOneRequest: IListUserCreateOneRequest): Promise<IListUserCreateOneResponse> {
     const { listId, userId, session } = listUserCreateOneRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId });
+    const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' }); // (1)
     const user = await this.userRepo.userGetOne({ userId });
     if (!user) throw new RequestError('User not found', 404, { message: '404 Not Found' }); // (1)

@@ -20,7 +20,7 @@ export class ListBookmarkDeleteOneUseCase implements IListBookmarkDeleteOneUseCa
   public async execute(listBookmarkDeleteOneRequest: IListBookmarkDeleteOneRequest): Promise<IListBookmarkDeleteOneResponse> {
     const { session, listId, bookmarkId } = listBookmarkDeleteOneRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId });
+    const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List does not exist', 404, { message: '404 Not Found' }); // (1)
 
     const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId });

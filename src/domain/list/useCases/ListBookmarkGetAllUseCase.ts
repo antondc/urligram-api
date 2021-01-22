@@ -17,7 +17,7 @@ export class ListBookmarkGetAllUseCase implements IListBookmarkGetAllUseCase {
   public async execute(listBookmarkGetAllRequest: IListBookmarkGetAllRequest): Promise<IListBookmarkGetAllResponse> {
     const { listId, session } = listBookmarkGetAllRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId });
+    const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
     const bookmarks = await this.listRepo.listBookmarkGetAll({ listId });

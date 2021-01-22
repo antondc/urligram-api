@@ -16,9 +16,9 @@ export class ListGetOneUseCase implements IListGetOneUseCase {
 
   public async execute(listGetOneRequest: IListGetOneRequest): Promise<IListGetOneResponse> {
     // Returns only if list is public, or if user is in list (1)
-    const {  listId } = listGetOneRequest;
+    const { listId, session } = listGetOneRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId });
+    const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not found' });
 
     return list;

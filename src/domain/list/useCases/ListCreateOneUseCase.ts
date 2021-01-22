@@ -29,6 +29,7 @@ export class ListCreateOneUseCase implements IListCreateOneUseCase {
 
     const createdList = await this.listRepo.listGetOneById({
       listId: createList?.listId,
+      sessionId: session?.id,
     });
     if (!createdList) throw new RequestError('List creation failed', 500, { message: '500 Server error' });
 

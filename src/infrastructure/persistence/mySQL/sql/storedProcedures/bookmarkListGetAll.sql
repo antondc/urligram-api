@@ -27,7 +27,7 @@ BEGIN
       FROM user_list
       JOIN `user` ON user.id = user_list.user_id
       WHERE list.id = user_list.list_id
-    ) AS users
+    ) AS members
   FROM `list`
   JOIN bookmark_list ON bookmark_list.list_id = list.id
   WHERE bookmark_list.bookmark_id = $BOOKMARK_ID

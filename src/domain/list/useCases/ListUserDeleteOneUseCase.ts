@@ -20,7 +20,7 @@ export class ListUserDeleteOneUseCase implements IListUserDeleteOneUseCase {
   public async execute(listUserDeleteOneRequest: IListUserDeleteOneRequest): Promise<IListUserDeleteOneResponse> {
     const { listId, userId, session } = listUserDeleteOneRequest;
 
-    const list = await this.listRepo.listGetOneById({ listId });
+    const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' }); // (1)
 
     const user = await this.userRepo.userGetOne({ userId });
@@ -28,7 +28,7 @@ export class ListUserDeleteOneUseCase implements IListUserDeleteOneUseCase {
 
     const listUser = await this.listRepo.listUserGetOneByListId({ listId, userId });
     if (!listUser) throw new RequestError('User is not in that list', 404, { message: '404 Not Found' }); // (3)
-    
+
     if (listUser.userRole === 'admin') throw new RequestError('Admins can not be removed from lists', 409, { message: '409 Conflict' }); // (4)
 
     const listSessionUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id });

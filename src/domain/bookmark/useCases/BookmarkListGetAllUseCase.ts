@@ -23,7 +23,7 @@ export class BookmarkListGetAllUseCase implements IBookmarkListGetAllUseCase {
     const bookmarkLists = await this.bookmarkRepo.bookmarkListGetAll({ bookmarkId });
 
     const filteredBookmarkLists = bookmarkLists.filter((bookmarkList) => {
-      return !bookmarkList.isPrivate || bookmarkList.users.some((item) => item.id === session.id);
+      return !bookmarkList.isPrivate || bookmarkList.members.some((item) => item.id === session.id);
     }); // (2)
 
     return filteredBookmarkLists;
