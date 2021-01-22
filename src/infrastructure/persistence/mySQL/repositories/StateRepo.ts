@@ -78,6 +78,7 @@ export class StateRepo {
   private listUserCreateOneProcedure: string;
   private listUserUpdateOneProcedure: string;
   private listUserDeleteOneProcedure: string;
+  private listTagsGetAllProcedure: string;
   private tagGetAllProcedure: string;
   private tagListGetAllPublicProcedure: string;
   private tagBookmarkGetAllPublicProcedure: string;
@@ -179,6 +180,7 @@ export class StateRepo {
     this.listUserCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserCreateOne.sql')).toString();
     this.listUserUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserUpdateOne.sql')).toString();
     this.listUserDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserDeleteOne.sql')).toString();
+    this.listTagsGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listTagsGetAll.sql')).toString();
     this.tagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAll.sql')).toString();
     this.tagListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagListGetAllPublic.sql')).toString();
     this.tagBookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagBookmarkGetAllPublic.sql')).toString();
@@ -281,6 +283,7 @@ export class StateRepo {
       const createListUserCreateOneProcedure = await mySQL.query(this.listUserCreateOneProcedure);
       const createListUserUpdateOneProcedure = await mySQL.query(this.listUserUpdateOneProcedure);
       const createListUserDeleteOneProcedure = await mySQL.query(this.listUserDeleteOneProcedure);
+      const createListTagsGetAllProcedure = await mySQL.query(this.listTagsGetAllProcedure);
       const createTagGetAllProcedure = await mySQL.query(this.tagGetAllProcedure);
       const createTagListGetAllPublicProcedure = await mySQL.query(this.tagListGetAllPublicProcedure);
       const createTagBookmarkGetAllPublicProcedure = await mySQL.query(this.tagBookmarkGetAllPublicProcedure);
@@ -381,6 +384,7 @@ export class StateRepo {
         ...createListUserCreateOneProcedure,
         ...createListUserUpdateOneProcedure,
         ...createListUserDeleteOneProcedure,
+        ...createListTagsGetAllProcedure,
         ...createTagGetAllProcedure,
         ...createTagListGetAllPublicProcedure,
         ...createTagBookmarkGetAllPublicProcedure,

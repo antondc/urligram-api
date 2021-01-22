@@ -14,6 +14,8 @@ import { IListGetAllRequest } from './interfaces/IListGetAllRequest';
 import { IListGetAllResponse } from './interfaces/IListGetAllResponse';
 import { IListGetOneByIdRequest } from './interfaces/IListGetOneByIdRequest';
 import { IListGetOneByIdResponse } from './interfaces/IListGetOneByIdResponse';
+import { IListTagsGetAllRequest } from './interfaces/IListTagsGetAllRequest';
+import { IListTagsGetAllResponse } from './interfaces/IListTagsGetAllResponse';
 import { IListUpdateOneRequest } from './interfaces/IListUpdateOneRequest';
 import { IListUpdateOneResponse } from './interfaces/IListUpdateOneResponse';
 import { IListUserCreateOneRequest } from './interfaces/IListUserCreateOneRequest';
@@ -46,4 +48,5 @@ export interface IListRepo {
   listBookmarkGetAll: (listBookmarkGetAllRequest: IListBookmarkGetAllRequest) => Promise<IListBookmarkGetAllResponse>;
   listBookmarkCreateOne: (listBookmarkCreateOneRequest: IListBookmarkCreateOneRequest) => Promise<IListBookmarkCreateOneResponse>;
   listBookmarkDeleteOne: (listBookmarkDeleteOneRequest: IListBookmarkDeleteOneRequest) => Promise<IListBookmarkDeleteOneResponse>;
+  listTagsGetAll: (listTagsGetAllRequest: IListTagsGetAllRequest) => Promise<IListTagsGetAllResponse>;
 }

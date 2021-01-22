@@ -242,4 +242,20 @@ export class ListRepo implements IListRepo {
       await mySQL.close();
     }
   }
+
+  public async listTagsGetAll({ sessionId, listId }) {
+    const mySQL = new MySQL();
+
+    try {
+      const listBookmarkDeleteOneQuery = 'CALL list_tags_get_all(?, ?)';
+
+      const [results] = await mySQL.query(listBookmarkDeleteOneQuery, [sessionId, listId]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
