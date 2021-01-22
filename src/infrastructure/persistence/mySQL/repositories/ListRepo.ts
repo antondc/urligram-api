@@ -3,13 +3,13 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class ListRepo implements IListRepo {
-  public async listGetAllPublic({ userId, sort, size }) {
+  public async listGetAll({ userId, sort, size }) {
     const mySQL = new MySQL();
 
     try {
-      const listGetAllPublicQuery = 'CALL list_get_all_public(?, ?, ?)';
+      const listGetAllQuery = 'CALL list_get_all(?, ?, ?)';
 
-      const [list] = await mySQL.query(listGetAllPublicQuery, [userId, sort, size]);
+      const [list] = await mySQL.query(listGetAllQuery, [userId, sort, size]);
 
       return list;
     } catch (err) {

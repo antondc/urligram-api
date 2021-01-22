@@ -6,7 +6,7 @@ import { ListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGet
 import { ListBookmarkGetOneUseCase } from '@domain/list/useCases/ListBookmarkGetOneUseCase';
 import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
 import { ListDeleteOneUseCase } from '@domain/list/useCases/ListDeleteOneUseCase';
-import { ListGetAllPublicUseCase } from '@domain/list/useCases/ListGetAllPublicUseCase';
+import { ListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
 import { ListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
 import { ListUserCreateOneUseCase } from '@domain/list/useCases/ListUserCreateOneUseCase';
@@ -23,7 +23,7 @@ import { ListBookmarkGetAllController } from '../controllers/ListBookmarkGetAllC
 import { ListBookmarkGetOneController } from '../controllers/ListBookmarkGetOneController';
 import { ListCreateOneController } from '../controllers/ListCreateOneController';
 import { ListDeleteOneController } from '../controllers/ListDeleteOneController';
-import { ListGetAllPublicController } from '../controllers/ListGetAllPublicController';
+import { ListGetAllController } from '../controllers/ListGetAllController';
 import { ListGetOneController } from '../controllers/ListGetOneController';
 import { ListUpdateOneController } from '../controllers/ListUpdateOneController';
 import { ListUserCreateOneController } from '../controllers/ListUserCreateOneController';
@@ -36,10 +36,10 @@ const ListsRoute = express.Router();
 
 ListsRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
-  const listGetAllPublicUseCase = new ListGetAllPublicUseCase(listRepo);
-  const listGetAllPublicController = new ListGetAllPublicController(listGetAllPublicUseCase);
+  const listGetAllUseCase = new ListGetAllUseCase(listRepo);
+  const listGetAllController = new ListGetAllController(listGetAllUseCase);
 
-  const response = await listGetAllPublicController.execute(req, res, next);
+  const response = await listGetAllController.execute(req, res, next);
 
   return response;
 });
