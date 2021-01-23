@@ -33,16 +33,15 @@ export class UserGetOneController extends BaseController {
       links: {
         self: URL_SERVER + '/users/' + userId,
       },
-      data: [
-        {
-          type: 'user',
-          session: {
-            self: URL_SERVER + '/users/' + userId,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'user',
+        session: {
+          self: URL_SERVER + '/users/' + userId,
         },
-      ],
+        id: response?.id,
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 
