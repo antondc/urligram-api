@@ -15,6 +15,7 @@ BEGIN
 
   SELECT DISTINCT
     bookmark.id,
+    bookmark.title,
     bookmark.order,
     CONCAT(domain.domain, link.path) AS url,
     bookmark.link_id AS linkId,
