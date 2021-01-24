@@ -7,6 +7,14 @@ import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
+type BookmarkGetAllPublicControllerQueryType = {
+  sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
+  page: {
+    size: string;
+    offset: string;
+  };
+};
+
 export class UserBookmarkGetAllController extends BaseController {
   useCase: IUserBookmarkGetAllUseCase;
 
@@ -17,13 +25,19 @@ export class UserBookmarkGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { userId } = req.params;
+    const { sort, page: { size, offset } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const checkedSize = Number(size) || undefined;
+    const castedOffset = Number(offset) || undefined;
 
     const userBookmarkGetAllRequest: IUserBookmarkGetAllRequest = {
       userId,
       session,
+      sort,
+      size: checkedSize,
+      offset: castedOffset,
     };
 
     const response = await this.useCase.execute(userBookmarkGetAllRequest);

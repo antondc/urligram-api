@@ -188,11 +188,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetAll({ userId }) {
+  public async userBookmarkGetAll({ sessionId, userId, sort, size, offset }) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetAllQuery = 'CALL user_bookmark_get_all(?)';
-      const [results] = await mySQL.query(userBookmarkGetAllQuery, [userId]);
+      const userBookmarkGetAllQuery = 'CALL user_bookmark_get_all(?, ?, ?, ?, ?)';
+      const [results] = await mySQL.query(userBookmarkGetAllQuery, [sessionId, userId, sort, size, offset]);
 
       return results;
     } catch (err) {

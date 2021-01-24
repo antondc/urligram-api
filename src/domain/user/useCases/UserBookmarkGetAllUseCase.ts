@@ -17,12 +17,17 @@ export class UserBookmarkGetAllUseCase implements IUserBookmarkGetAllUseCase {
   }
 
   public async execute(userBookmarkGetAllRequest: IUserBookmarkGetAllRequest): Promise<IUserBookmarkGetAllResponse> {
-    const { userId, session } = userBookmarkGetAllRequest;
+    const { userId, session, sort, size, offset } = userBookmarkGetAllRequest;
 
-    const allBookmarks = await this.userRepo.userBookmarkGetAll({ userId });
-    const filteredBookmarks = allBookmarks.filter((item) => session?.id === userId || !item.isPrivate); // (1) (2)
+    const userBookmarks = await this.userRepo.userBookmarkGetAll({
+      userId,
+      sessionId: session?.id,
+      sort,
+      size,
+      offset,
+    }); // (1)(2)
 
-    const bookmarksWithVotesPromises = filteredBookmarks.map(async (item) => {
+    const bookmarksWithVotesPromises = userBookmarks.map(async (item) => {
       const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.linkId, session });
 
       return {
