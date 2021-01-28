@@ -292,11 +292,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userListGetAllPublic({ userId, sessionId }) {
+  public async userListGetAllPublic({ userId, sessionId, sort, size, offset }) {
     const mySQL = new MySQL();
     try {
-      const userListGetAllPublicQuery = 'CALL user_list_get_all_public(?, ?)';
-      const [results] = await mySQL.query(userListGetAllPublicQuery, [userId, sessionId]);
+      const userListGetAllPublicQuery = 'CALL user_list_get_all_public(?, ?, ?, ?, ?)';
+      const [results] = await mySQL.query(userListGetAllPublicQuery, [userId, sessionId, sort, size, offset]);
 
       return results;
     } catch (err) {
