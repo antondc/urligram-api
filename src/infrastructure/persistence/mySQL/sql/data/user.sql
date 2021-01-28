@@ -91,7 +91,7 @@ INSERT INTO `user` (
   'active',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  5,
   '2017-02-07 19:47:48',
   '2021-11-02 19:47:48'
 ),
@@ -105,7 +105,7 @@ INSERT INTO `user` (
   'active',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  6,
   '2019-07-07 19:47:48',
   '2021-10-01 19:47:48'
 ),
@@ -119,7 +119,7 @@ INSERT INTO `user` (
   'active',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  7,
   '2010-07-07 19:47:48',
   '2020-05-10 19:47:48'
 ),
@@ -133,7 +133,7 @@ INSERT INTO `user` (
   'active',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  8,
   '2014-07-17 19:47:48',
   '2021-01-10 19:47:48'
 ),
@@ -147,7 +147,7 @@ INSERT INTO `user` (
   'active',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  9,
   '2013-07-17 19:47:48',
   '2021-01-20 19:47:48'
 ),
@@ -161,7 +161,7 @@ INSERT INTO `user` (
   'active',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  10,
   '2013-07-17 19:47:48',
   '2021-01-20 19:47:48'
 ),
@@ -175,7 +175,7 @@ INSERT INTO `user` (
   'inactive',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  11,
   '2013-07-17 19:47:48',
   '2021-01-20 19:47:48'
 ),
@@ -189,7 +189,7 @@ INSERT INTO `user` (
   'disabled',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  12,
   '2013-07-17 19:47:48',
   '2021-01-20 19:47:48'
 ),
@@ -203,7 +203,7 @@ INSERT INTO `user` (
   'removed',
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
-  4,
+  13,
   '2013-07-17 19:47:48',
   '2021-01-20 19:47:48'
 );

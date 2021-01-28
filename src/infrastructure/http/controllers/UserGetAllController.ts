@@ -6,6 +6,28 @@ import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
+type UserGetAllControllerQueryType = {
+  sort:
+    | 'order'
+    | '-order'
+    | 'createdAt'
+    | '-createdAt'
+    | 'updatedAt'
+    | '-updatedAt'
+    | 'followers'
+    | '-followers'
+    | 'following'
+    | '-following'
+    | 'bookmarks'
+    | '-bookmarks'
+    | 'lists'
+    | '-lists';
+  page: {
+    size: string;
+    offset: string;
+  };
+};
+
 export class UserGetAllController extends BaseController {
   useCase: IUserGetAllUseCase;
 
@@ -16,9 +38,15 @@ export class UserGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
+    const { sort, page: { size, offset } = {} } = req.query as UserGetAllControllerQueryType;
+
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
-    const users = await this.useCase.execute({ session });
+    const castedSort = sort;
+    const castedSize = Number(size) || null;
+    const castedOffset = Number(offset) || null;
+
+    const users = await this.useCase.execute({ session, sort: castedSort, size: castedSize, offset: castedOffset });
 
     const formattedUsers = users.map((item) => {
       return {

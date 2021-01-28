@@ -4,11 +4,11 @@ import { BaseError } from '@shared/errors/BaseError';
 import { RequestError } from '@shared/errors/RequestError';
 
 export class UserRepo implements IUserRepo {
-  public async userGetAll({ sessionId }) {
+  public async userGetAll({ sessionId, sort, size, offset }) {
     const mySQL = new MySQL();
     try {
-      const userGetAllQuery = 'CALL user_get_all(?)';
-      const [results] = await mySQL.query(userGetAllQuery, [sessionId]);
+      const userGetAllQuery = 'CALL user_get_all(?, ?, ?, ?)';
+      const [results] = await mySQL.query(userGetAllQuery, [sessionId, sort, size, offset]);
 
       return results;
     } catch (err) {
