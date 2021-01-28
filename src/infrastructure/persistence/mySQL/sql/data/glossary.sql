@@ -15,6 +15,7 @@ INSERT INTO `glossary` (
   `followers`,
   `following`,
   `since`,
+  `serverError`,
   `createdAt`,
   `updatedAt`
 ) VALUES (
@@ -33,6 +34,7 @@ INSERT INTO `glossary` (
   "Followers",
   "Following",
   "Since",
+  "Server Error",
   DEFAULT,
   DEFAULT
 ), (
@@ -51,6 +53,7 @@ INSERT INTO `glossary` (
   "Seguidores",
   "Siguiendo",
   "Desde",
+  "Error de servidor",
   DEFAULT,
   DEFAULT
 );

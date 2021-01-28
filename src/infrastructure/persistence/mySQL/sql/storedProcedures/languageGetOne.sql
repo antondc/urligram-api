@@ -27,7 +27,8 @@ BEGIN
       'users', g.users,
       'followers', g.followers,
       'following', g.following,
-      'since', g.since
+      'since', g.since,
+      'serverError', g.serverError
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id
