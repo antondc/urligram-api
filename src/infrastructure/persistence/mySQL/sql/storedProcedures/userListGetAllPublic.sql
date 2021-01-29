@@ -12,7 +12,7 @@ CREATE PROCEDURE user_list_get_all(
 
 BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
-  SET @filterRole  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.role'));
+  SET @filterRole  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.role') = NULL);
 
  SELECT
     list.id,
