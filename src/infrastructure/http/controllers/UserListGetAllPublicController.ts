@@ -30,10 +30,10 @@ export class UserListGetAllPublicController extends BaseController {
     const { sort, page: { size, offset } = {}, filter: { role } = {} } = req.query as UserListGetAllPublicControllerQueryType;
     const checkedSize = Number(size) || undefined;
     const checkedOffset = Number(offset) || undefined;
-
+    const parsedRole = role?.split(',') || null;
     const { userId } = req.params;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;1
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const userListGetAllPublicRequest: IUserListGetAllPublicRequest = {
       userId,
@@ -41,7 +41,9 @@ export class UserListGetAllPublicController extends BaseController {
       sort,
       size: checkedSize,
       offset: checkedOffset,
-      filter: { role: role || null },
+      filter: {
+        role: parsedRole,
+      },
     };
 
     const response = await this.useCase.execute(userListGetAllPublicRequest);

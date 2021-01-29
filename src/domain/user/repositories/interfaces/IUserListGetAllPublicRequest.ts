@@ -5,6 +5,6 @@ export interface IUserListGetAllPublicRequest {
   size?: number;
   offset?: number;
   filter?: {
-    role?: string;
+    role?: string[];
   };
 }
