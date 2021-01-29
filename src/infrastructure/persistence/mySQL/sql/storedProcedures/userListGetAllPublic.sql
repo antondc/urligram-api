@@ -1,68 +1,91 @@
-DROP PROCEDURE IF EXISTS user_list_get_all_public;
+DROP PROCEDURE IF EXISTS user_list_get_all;
 
 -- Stored procedure to insert post and tags
-CREATE PROCEDURE user_list_get_all_public(
+CREATE PROCEDURE user_list_get_all(
   IN $USER_ID VARCHAR(40),
   IN $SESSION_ID VARCHAR(40),
   IN $SORT VARCHAR(40),
   IN $SIZE INT,
-  IN $OFFSET INT
+  IN $OFFSET INT,
+  IN $FILTER JSON
 )
 
 BEGIN
+  SET $SIZE = IFNULL($SIZE, -1);
+  SET @filterRole  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.role'));
 
-  SELECT
+ SELECT
     list.id,
     list.order,
     list.name,
     list.description,
     list.name,
-    user_list.userRole,
-    user.id AS userId,
+    user_list.user_id AS userId,
     list.createdAt,
     list.isPrivate,
-    user_list.userRole,
+    IFNULL(
+      (
+        SELECT
+        user_list.userRole
+        FROM user_list
+        WHERE user_list.list_id = list.id AND user_list.user_id = $USER_ID
+      ), "admin"
+    ) userRole,
     (
       SELECT
-        JSON_ARRAYAGG(
-          bookmark_list.bookmark_id
-        )
+        JSON_ARRAYAGG(bookmark_list.bookmark_id)
       FROM bookmark_list
       WHERE bookmark_list.list_id = list.id
-    ) AS bookmarks
+    ) AS bookmarks,
+    (
+      SELECT
+        JSON_ARRAYAGG(user.id)
+      FROM user_list
+      JOIN `user` ON user.id = user_list.user_id
+      WHERE list.id = user_list.list_id
+    ) AS members
   FROM `list`
-  INNER JOIN user_list ON user_list.list_id = list.id
-  INNER JOIN `user` ON user_list.user_id = user.id
+  LEFT JOIN user_list ON user_list.list_id = list.id
   WHERE
+    (
+      list.userId = $USER_ID
+      OR
+      user_list.user_id = $USER_ID
+    )
+    AND
+    (
+      list.isPrivate IS NOT TRUE
+      OR
       (
-        list.userId = $USER_ID
+        list.userId = $SESSION_ID
         OR
-        user_list.user_id = $USER_ID
+        user_list.user_id = $SESSION_ID
       )
-      AND
-      (
-        list.isPrivate IS NOT TRUE
+    )
+    AND
+    (
+      CASE
+        WHEN @filterRole IS NOT NULL AND FIND_IN_SET("admin", @filterRole) THEN list.userId = $USER_ID END
         OR
-          (
-            list.userId = $SESSION_ID
-            OR
-            user_list.user_id = $SESSION_ID
-          )
-      )
-    GROUP BY list.id
-      ORDER BY
-      CASE WHEN $SORT = 'id'          THEN `list`.id      	        ELSE NULL END ASC,
-      CASE WHEN $SORT = '-id'         THEN `list`.id      	        ELSE NULL END DESC,
-      CASE WHEN $SORT = 'order'       THEN `list`.order      	        ELSE NULL END ASC,
-      CASE WHEN $SORT = '-order'      THEN `list`.order      	        ELSE NULL END DESC,
-      CASE WHEN $SORT = 'createdAt'   THEN `list`.createdAt	        ELSE NULL END ASC,
-      CASE WHEN $SORT = '-createdAt'  THEN `list`.createdAt         ELSE NULL END DESC,
-      CASE WHEN $SORT = 'updatedAt'   THEN `list`.updatedAt         ELSE NULL END ASC,
-      CASE WHEN $SORT = '-updatedAt'  THEN `list`.updatedAt         ELSE NULL END DESC,
-      CASE WHEN $SORT = 'bookmarks'   THEN JSON_LENGTH(bookmarks)         ELSE NULL END ASC,
-      CASE WHEN $SORT = '-bookmarks'  THEN JSON_LENGTH(bookmarks)         ELSE NULL END DESC,
-      CASE WHEN $SORT != 'order' AND $SORT != '-order'      THEN `user`.order        ELSE NULL END ASC
-    LIMIT $OFFSET , $SIZE
+        CASE  WHEN @filterRole IS NOT NULL THEN FIND_IN_SET(user_list.userRole, @filterRole) AND user_list.user_id = $USER_ID
+      END
+    )
+  GROUP BY list.id
+  ORDER BY
+    CASE WHEN $SORT = 'id'                              THEN `list`.id      	          ELSE NULL END ASC,
+    CASE WHEN $SORT = '-id'                             THEN `list`.id      	          ELSE NULL END DESC,
+    CASE WHEN $SORT = 'order'                           THEN `list`.order      	        ELSE NULL END ASC,
+    CASE WHEN $SORT = '-order'                          THEN `list`.order      	        ELSE NULL END DESC,
+    CASE WHEN $SORT = 'createdAt'                       THEN `list`.createdAt	          ELSE NULL END ASC,
+    CASE WHEN $SORT = '-createdAt'                      THEN `list`.createdAt           ELSE NULL END DESC,
+    CASE WHEN $SORT = 'updatedAt'                       THEN `list`.updatedAt           ELSE NULL END ASC,
+    CASE WHEN $SORT = '-updatedAt'                      THEN `list`.updatedAt           ELSE NULL END DESC,
+    CASE WHEN $SORT = 'bookmarks'                       THEN JSON_LENGTH(bookmarks)     ELSE NULL END ASC,
+    CASE WHEN $SORT = '-bookmarks'                      THEN JSON_LENGTH(bookmarks)     ELSE NULL END DESC,
+    CASE WHEN $SORT = 'members'                       THEN JSON_LENGTH(members)         ELSE NULL END ASC,
+    CASE WHEN $SORT = '-members'                      THEN JSON_LENGTH(members)         ELSE NULL END DESC,
+    CASE WHEN $SORT != 'order' AND $SORT != '-order'    THEN `list`.order               ELSE NULL END ASC
+  LIMIT $OFFSET , $SIZE
   ;
 
 END

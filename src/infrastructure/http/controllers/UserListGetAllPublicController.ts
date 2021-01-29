@@ -8,10 +8,13 @@ import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 type UserListGetAllPublicControllerQueryType = {
-  sort: 'id' | '-id' | 'order' | '-order' | 'bookmarks' | '-bookmarks' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
+  sort?: 'id' | '-id' | 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'members' | '-members' | 'bookmarks' | '-bookmarks';
   page: {
     size: string;
     offset: string;
+  };
+  filter?: {
+    role?: string;
   };
 };
 
@@ -24,13 +27,13 @@ export class UserListGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {} } = req.query as UserListGetAllPublicControllerQueryType;
+    const { sort, page: { size, offset } = {}, filter: { role } = {} } = req.query as UserListGetAllPublicControllerQueryType;
     const checkedSize = Number(size) || undefined;
     const checkedOffset = Number(offset) || undefined;
 
     const { userId } = req.params;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;1
 
     const userListGetAllPublicRequest: IUserListGetAllPublicRequest = {
       userId,
@@ -38,6 +41,7 @@ export class UserListGetAllPublicController extends BaseController {
       sort,
       size: checkedSize,
       offset: checkedOffset,
+      filter: { role: role || null },
     };
 
     const response = await this.useCase.execute(userListGetAllPublicRequest);

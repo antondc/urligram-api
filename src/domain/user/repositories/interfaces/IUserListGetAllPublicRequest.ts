@@ -1,7 +1,10 @@
 export interface IUserListGetAllPublicRequest {
   userId: string;
   sessionId: string;
-  sort?: 'id' | '-id' | 'order' | '-order' | 'bookmarks' | '-bookmarks' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
+  sort?: 'id' | '-id' | 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'members' | '-members' | 'bookmarks' | '-bookmarks';
   size?: number;
   offset?: number;
+  filter?: {
+    role?: string;
+  };
 }
