@@ -1,3 +1,6 @@
+-- Example CALL
+-- CALL user_list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1',"e4e2bb46-c210-4a47-9e84-f45c789fcec1","id",NULL,NULL,'{"role": ["admin","reader","editor"]}');
+
 DROP PROCEDURE IF EXISTS user_list_get_all;
 
 -- Stored procedure to insert post and tags
@@ -12,7 +15,7 @@ CREATE PROCEDURE user_list_get_all(
 
 BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
-  SET @filterRole  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.role') = NULL);
+  SET @filterRole  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.role'));
 
  SELECT
     list.id,
