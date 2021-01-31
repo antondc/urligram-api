@@ -14,8 +14,8 @@ export class UserFollowingGetAllUseCase implements IUserFollowingGetAllUseCase {
   }
 
   public async execute(getFollowing: IUserFollowingGetAllRequest): Promise<IUserFollowingGetAllResponse> {
-    const { userId, sort, size, offset } = getFollowing;
-    const response = await this.userRepo.userFollowingGetAll({ userId, sort, size, offset });
+    const { session, userId, sort, size, offset } = getFollowing;
+    const response = await this.userRepo.userFollowingGetAll({ sessionId: session?.id, userId, sort, size, offset });
 
     return response;
   }

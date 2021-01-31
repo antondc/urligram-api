@@ -8,7 +8,9 @@ type UserFollowingGetAllControllerQueryType = {
   };
 };
 
+import { User } from '@domain/user/entities/User';
 import { IUserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -26,8 +28,10 @@ export class UserFollowingGetAllController extends BaseController {
     const { userId } = req.params;
     const castedSize = Number(size) || undefined;
     const castedOffset = Number(offset) || undefined;
+    const tokenService = new TokenService();
+    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
-    const response = await this.useCase.execute({ userId, sort, size: castedSize, offset: castedOffset });
+    const response = await this.useCase.execute({ session, userId, sort, size: castedSize, offset: castedOffset });
 
     const formattedItems = response.map((item) => {
       return {
