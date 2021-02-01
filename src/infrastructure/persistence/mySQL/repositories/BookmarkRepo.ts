@@ -35,7 +35,7 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkGetAllPublic({ sort, size, after }) {
+  public async bookmarkGetAllPublic({ sort, size = 30, after }) {
     const mySQL = new MySQL();
 
     try {

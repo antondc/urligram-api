@@ -38,7 +38,7 @@ BEGIN
             OR
             bookmark.user_id = $SESSION_ID
           )
-    ) AS bookmarks,
+    ) AS bookmarksIds,
     JSON_MERGE(
       (
         SELECT
@@ -108,8 +108,8 @@ BEGIN
       CASE WHEN $SORT = '-followers'  THEN JSON_LENGTH(followers)         ELSE NULL END DESC,
       CASE WHEN $SORT = 'following'   THEN JSON_LENGTH(following)         ELSE NULL END ASC,
       CASE WHEN $SORT = '-following'  THEN JSON_LENGTH(following)         ELSE NULL END DESC,
-      CASE WHEN $SORT = 'bookmarks'   THEN JSON_LENGTH(bookmarks)         ELSE NULL END ASC,
-      CASE WHEN $SORT = '-bookmarks'  THEN JSON_LENGTH(bookmarks)         ELSE NULL END DESC,
+      CASE WHEN $SORT = 'bookmarks'   THEN JSON_LENGTH(bookmarksIds)         ELSE NULL END ASC,
+      CASE WHEN $SORT = '-bookmarks'  THEN JSON_LENGTH(bookmarksIds)         ELSE NULL END DESC,
       CASE WHEN $SORT = 'lists'       THEN JSON_LENGTH(lists)             ELSE NULL END ASC,
       CASE WHEN $SORT = '-lists'      THEN JSON_LENGTH(lists)             ELSE NULL END DESC,
       CASE WHEN $SORT != 'order' AND $SORT != '-order'      THEN `user`.order        ELSE NULL END ASC

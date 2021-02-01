@@ -8,6 +8,9 @@ export class User {
   password: number;
   statement: string;
   location: string;
+  bookmarksIds: number[];
+  followersIds: number[];
+  followingIds: number[];
   order: number;
   createdAt: Date;
   updatedAt: Date;
@@ -21,6 +24,9 @@ export class User {
     this.status = user?.status;
     this.statement = user?.statement;
     this.location = user?.location;
+    this.bookmarksIds = user?.bookmarksIds;
+    this.followersIds = user?.followersIds;
+    this.followingIds = user?.followingIds;
     this.password = user?.password;
     this.order = user?.order;
     this.createdAt = user?.createdAt;

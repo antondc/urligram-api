@@ -37,6 +37,7 @@ export class MySQL {
   query(sql: string, args?: undefined | { [key: string]: number | boolean | string } | Array<number | boolean | string>) {
     // If we receive args object, transform it to an array of values; otherwise undefined
     const arrayArgs = args ? Object.values(args) : undefined;
+    if (process.env.NODE_ENV === 'development') console.log(sql, args);
 
     return promisify(this.mySQL.query).call(this.mySQL, sql, arrayArgs);
   }

@@ -1,29 +1,74 @@
 INSERT INTO `user_user` (
   `order`, `createdAt`, `updatedAt`, `user_id`, `user_id1`
 ) VALUES (
-  1, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
-);
-
-INSERT INTO `user_user` (
-  `order`, `createdAt`, `updatedAt`, `user_id`, `user_id1`
-) VALUES (
-  2, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000'
-);
-
-INSERT INTO `user_user` (
-  `order`, `createdAt`, `updatedAt`, `user_id`, `user_id1`
-) VALUES (
+  1, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000'
+),
+(
+  2, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '609c8f1c-5b69-11eb-ae93-0242ac130002'
+),
+(
   3, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '75442486-0878-440c-9db1-a7006c25a39f'
-);
-
-INSERT INTO `user_user` (
-  `order`, `createdAt`, `updatedAt`, `user_id`, `user_id1`
-) VALUES (
-  4, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
-);
-
-INSERT INTO `user_user` (
-  `order`, `createdAt`, `updatedAt`, `user_id`, `user_id1`
-) VALUES (
-  5, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '75442486-0878-440c-9db1-a7006c25a39f'
+),
+(
+  4, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '92fac4aa-5b6a-11eb-ae93-0242ac130002'
+),
+(
+  5, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '9b360892-5b69-11eb-ae93-0242ac130002'
+),
+(
+  6, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '9b360518-5b69-11eb-ae93-0242ac130002'
+),
+(
+  7, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000'
+),
+(
+  8, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '609c8f1c-5b69-11eb-ae93-0242ac130002'
+),
+(
+  9, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '75442486-0878-440c-9db1-a7006c25a39f'
+),
+(
+  10, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '92fac4aa-5b6a-11eb-ae93-0242ac130002'
+),
+(
+  11, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '9b360892-5b69-11eb-ae93-0242ac130002'
+),
+(
+  12, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '9b360518-5b69-11eb-ae93-0242ac130002'
+),
+(
+  13, DEFAULT, DEFAULT, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+),
+(
+  14, DEFAULT, DEFAULT, '609c8f1c-5b69-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+),
+(
+  15, DEFAULT, DEFAULT, '75442486-0878-440c-9db1-a7006c25a39f', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+),
+(
+  16, DEFAULT, DEFAULT, '92fac4aa-5b6a-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+),
+(
+  17, DEFAULT, DEFAULT, '9b360892-5b69-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+),
+(
+  18, DEFAULT, DEFAULT, '9b360518-5b69-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+),
+(
+  19, DEFAULT, DEFAULT, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
+),
+(
+  20, DEFAULT, DEFAULT, '609c8f1c-5b69-11eb-ae93-0242ac130002', 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
+),
+(
+  21, DEFAULT, DEFAULT, '75442486-0878-440c-9db1-a7006c25a39f', 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
+),
+(
+  22, DEFAULT, DEFAULT, '92fac4aa-5b6a-11eb-ae93-0242ac130002', 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
+),
+(
+  23, DEFAULT, DEFAULT, '9b360892-5b69-11eb-ae93-0242ac130002', 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
+),
+(
+  24, DEFAULT, DEFAULT, '9b360518-5b69-11eb-ae93-0242ac130002', 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
 );

@@ -24,9 +24,7 @@ SELECT
   `user`.`updatedAt`,
   (
     SELECT
-      JSON_ARRAYAGG(
-        bookmark.id
-      )
+      JSON_ARRAYAGG(bookmark.id)
     FROM bookmark
     WHERE user.id = bookmark.user_id
       AND
@@ -35,7 +33,7 @@ SELECT
           OR
           bookmark.user_id = $SESSION_ID
         )
-  ) AS bookmarks,
+  ) AS bookmarksIds,
   JSON_MERGE(
     (
       SELECT
@@ -77,17 +75,13 @@ SELECT
   ) AS lists,
   (
     SELECT
-      JSON_ARRAYAGG(
-        user_user.user_id1
-      )
+      JSON_ARRAYAGG(user_user.user_id1)
     FROM user_user
     WHERE user_user.user_id = user.id
   ) AS followers,
   (
     SELECT
-      JSON_ARRAYAGG(
-        user_user.user_id
-      )
+      JSON_ARRAYAGG(user_user.user_id)
     FROM user_user
     WHERE user_user.user_id1 = user.id
   ) AS following
