@@ -8,10 +8,7 @@ export class List {
   userId: string;
   image: string;
   bookmarksIds: number[];
-  members: {
-    id: string;
-    userRole?: 'reader' | 'editor' | 'admin';
-  }[];
+  membersIds: string[];
   tags: Tag[];
   createdAt: Date;
   updatedAt: Date;
@@ -24,7 +21,7 @@ export class List {
     this.userId = options.userId;
     this.image = options.image;
     this.bookmarksIds = options.bookmarksIds;
-    this.members = options.members;
+    this.membersIds = options.membersIds;
     this.tags = options.tags;
     this.createdAt = options.createdAt;
     this.updatedAt = options.updatedAt;

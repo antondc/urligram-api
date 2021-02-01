@@ -39,14 +39,14 @@ BEGIN
         JSON_ARRAYAGG(bookmark_list.bookmark_id)
       FROM bookmark_list
       WHERE bookmark_list.list_id = list.id
-    ) AS bookmarks,
+    ) AS bookmarksIds,
     (
       SELECT
         JSON_ARRAYAGG(user.id)
       FROM user_list
       JOIN `user` ON user.id = user_list.user_id
       WHERE list.id = user_list.list_id
-    ) AS members
+    ) AS membersIds
   FROM `list`
   LEFT JOIN user_list ON user_list.list_id = list.id
   WHERE
@@ -82,10 +82,10 @@ BEGIN
     CASE WHEN $SORT = '-createdAt'                      THEN `list`.createdAt           ELSE NULL END DESC,
     CASE WHEN $SORT = 'updatedAt'                       THEN `list`.updatedAt           ELSE NULL END ASC,
     CASE WHEN $SORT = '-updatedAt'                      THEN `list`.updatedAt           ELSE NULL END DESC,
-    CASE WHEN $SORT = 'bookmarks'                       THEN JSON_LENGTH(bookmarks)     ELSE NULL END ASC,
-    CASE WHEN $SORT = '-bookmarks'                      THEN JSON_LENGTH(bookmarks)     ELSE NULL END DESC,
-    CASE WHEN $SORT = 'members'                       THEN JSON_LENGTH(members)         ELSE NULL END ASC,
-    CASE WHEN $SORT = '-members'                      THEN JSON_LENGTH(members)         ELSE NULL END DESC,
+    CASE WHEN $SORT = 'bookmarks'                       THEN JSON_LENGTH(bookmarksIds)     ELSE NULL END ASC,
+    CASE WHEN $SORT = '-bookmarks'                      THEN JSON_LENGTH(bookmarksIds)     ELSE NULL END DESC,
+    CASE WHEN $SORT = 'members'                       THEN JSON_LENGTH(membersIds)         ELSE NULL END ASC,
+    CASE WHEN $SORT = '-members'                      THEN JSON_LENGTH(membersIds)         ELSE NULL END DESC,
     CASE WHEN $SORT != 'order' AND $SORT != '-order'    THEN `list`.order               ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
   ;
