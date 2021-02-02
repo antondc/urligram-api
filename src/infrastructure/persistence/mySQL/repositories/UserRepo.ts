@@ -174,11 +174,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowerGetAll({ userId }) {
+  public async userFollowerGetAll({ sessionId, userId, sort, size, offset }) {
     const mySQL = new MySQL();
     try {
-      const userFollowerGetAllQuery = 'CALL user_follower_get_all(?)';
-      const [[results]] = await mySQL.query(userFollowerGetAllQuery, [userId]);
+      const userFollowerGetAllQuery = 'CALL user_follower_get_all(?, ?, ?, ?, ?)';
+      const [results] = await mySQL.query(userFollowerGetAllQuery, [sessionId, userId, sort, size, offset]);
 
       return results;
     } catch (err) {

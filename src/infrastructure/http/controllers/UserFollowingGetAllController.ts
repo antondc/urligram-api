@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
 
+import { User } from '@domain/user/entities/User';
+import { IUserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
+import { TokenService } from '@infrastructure/services/TokenService';
+import { URL_SERVER } from '@shared/constants/env';
+import { BaseController } from './BaseController';
+
 type UserFollowingGetAllControllerQueryType = {
   sort?: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   page: {
@@ -7,12 +13,6 @@ type UserFollowingGetAllControllerQueryType = {
     offset: string;
   };
 };
-
-import { User } from '@domain/user/entities/User';
-import { IUserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
-import { URL_SERVER } from '@shared/constants/env';
-import { BaseController } from './BaseController';
 
 export class UserFollowingGetAllController extends BaseController {
   useCase: IUserFollowingGetAllUseCase;
