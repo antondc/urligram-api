@@ -6,13 +6,31 @@ CREATE PROCEDURE list_bookmark_get_all(
 )
 BEGIN
 
-  SELECT
+  SELECT DISTINCT
     bookmark.id,
-    bookmark.title AS bookmarkTitle,
-    bookmark.user_id AS userId,
+    bookmark.order,
+    link.image AS img,
+    bookmark.title,
     CONCAT(domain.domain, link.path) AS url,
+    link.id AS linkId,
+    bookmark.user_id AS userId,
     bookmark.isPrivate,
-    bookmark.saved
+    bookmark.saved,
+    bookmark.createdAt,
+    bookmark.updatedAt,
+    (
+      SELECT
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'id', tag.id,
+            'name', tag.name
+          )
+        )
+      FROM bookmark_tag
+      JOIN tag
+      ON bookmark_tag.tag_id = tag.id
+      WHERE bookmark.id = bookmark_tag.bookmark_id
+    ) AS tags
   FROM bookmark_list
   JOIN bookmark ON bookmark_list.bookmark_id  = bookmark.id
   JOIN link ON bookmark.link_id               = link.id

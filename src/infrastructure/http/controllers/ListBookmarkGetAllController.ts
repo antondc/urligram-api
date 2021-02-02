@@ -51,16 +51,7 @@ export class ListBookmarkGetAllController extends BaseController {
       links: {
         self: URL_SERVER + '/lists/' + listId + '/bookmarks/',
       },
-      data: [
-        {
-          type: 'bookmarks',
-          session: {
-            self: URL_SERVER + '/bookmarks/',
-          },
-          attributes: formattedBookmarks,
-          relationships: {},
-        },
-      ],
+      data: formattedBookmarks,
       included: [],
     };
 
