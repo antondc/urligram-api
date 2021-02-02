@@ -1,7 +1,7 @@
 INSERT INTO `user_user` (
   `order`, `createdAt`, `updatedAt`, `user_id`, `user_id1`
 ) VALUES (
-  1, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000'
+  1, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '9b361026-5b69-11eb-ae93-0242ac130002'
 ),
 (
   2, DEFAULT, DEFAULT, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '609c8f1c-5b69-11eb-ae93-0242ac130002'
@@ -43,13 +43,13 @@ INSERT INTO `user_user` (
   14, DEFAULT, DEFAULT, '609c8f1c-5b69-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
 ),
 (
-  15, DEFAULT, DEFAULT, '75442486-0878-440c-9db1-a7006c25a39f', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+  15, DEFAULT, DEFAULT, '92fac6d0-5b6a-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
 ),
 (
-  16, DEFAULT, DEFAULT, '92fac4aa-5b6a-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+  16, DEFAULT, DEFAULT, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
 ),
 (
-  17, DEFAULT, DEFAULT, '9b360892-5b69-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
+  17, DEFAULT, DEFAULT, '9b36072a-5b69-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'
 ),
 (
   18, DEFAULT, DEFAULT, '9b360518-5b69-11eb-ae93-0242ac130002', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1'

@@ -1,6 +1,3 @@
--- Example CALL
--- CALL user_following_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL);
-
 DROP PROCEDURE IF EXISTS user_following_get_all;
 
 -- Stored procedure to insert post and tags
@@ -110,3 +107,6 @@ BEGIN
   ;
 
 END
+
+-- Example CALL
+-- CALL user_following_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL);

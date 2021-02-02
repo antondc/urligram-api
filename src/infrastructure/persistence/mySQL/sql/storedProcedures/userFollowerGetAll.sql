@@ -1,6 +1,3 @@
--- Example CALL
--- CALL user_follower_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL);
-
 DROP PROCEDURE IF EXISTS user_follower_get_all;
 
 -- Stored procedure to insert post and tags
@@ -19,14 +16,14 @@ BEGIN
     `user_user`.`order`,
     `user_user`.`createdAt`,
     `user_user`.`updatedAt`,
-    `user2`.`id`,
-    `user2`.`name`,
-    `user2`.`level`,
-    `user2`.`email`,
-    `user2`.`status`,
-    `user2`.`statement`,
-    `user2`.`location`,
-    (
+    `user`.`id`,
+    `user`.`name`,
+    `user`.`level`,
+    `user`.`email`,
+    `user`.`status`,
+    `user`.`statement`,
+    `user`.`location`,
+      (
       SELECT
         JSON_ARRAYAGG(
           bookmark.id
@@ -85,7 +82,7 @@ BEGIN
           user_user.user_id1
         )
       FROM user_user
-      WHERE user_user.user_id = user.id
+      WHERE user_user.user_id = user2.id
     ) AS followers,
     (
       SELECT
@@ -93,12 +90,12 @@ BEGIN
           user_user.user_id
         )
       FROM user_user
-      WHERE user_user.user_id1 = user.id
-    ) AS follower
+      WHERE user_user.user_id1 = user2.id
+    ) AS following
   FROM `user`
-  LEFT JOIN `user_user` ON `user`.id = `user_user`.`user_id`
-  LEFT JOIN `user` `user2` ON `user2`.`id` = `user_user`.`user_id1`
-  WHERE `user`.`id` = $USER_ID
+  INNER JOIN `user_user` ON `user`.id = `user_user`.`user_id`
+  INNER JOIN `user` `user2` ON `user2`.`id` = `user_user`.`user_id1`
+  WHERE `user_user`.`user_id1` = $USER_ID
   ORDER BY
     CASE WHEN $SORT = 'createdAt'                       THEN `user_user`.createdAt	          ELSE NULL END ASC,
     CASE WHEN $SORT = '-createdAt'                      THEN `user_user`.createdAt           ELSE NULL END DESC,
@@ -110,3 +107,6 @@ BEGIN
   ;
 
 END
+
+-- Example CALL
+-- CALL user_follower_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL);
