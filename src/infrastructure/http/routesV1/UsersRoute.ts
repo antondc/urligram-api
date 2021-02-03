@@ -14,14 +14,17 @@ import { UserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingD
 import { UserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { UserFollowingGetOneUseCase } from '@domain/user/useCases/UserFollowingGetOneUseCase';
 import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
+import { UserGetByIdsUseCase } from '@domain/user/useCases/UserGetByIdsUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
 import { UserPasswordUpdateUseCase } from '@domain/user/useCases/UserPasswordUpdateUseCase';
 import { UserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
 import { UserBookmarkCreateController } from '@infrastructure/http/controllers/UserBookmarkCreateController';
+import { UserBookmarkDeleteOneController } from '@infrastructure/http/controllers/UserBookmarkDeleteOneController';
 import { UserBookmarkGetAllController } from '@infrastructure/http/controllers/UserBookmarkGetAllController';
 import { UserBookmarkGetOneController } from '@infrastructure/http/controllers/UserBookmarkGetOneController';
+import { UserBookmarkUpdateController } from '@infrastructure/http/controllers/UserBookmarkUpdateController';
 import { UserCreateOneController } from '@infrastructure/http/controllers/UserCreateOneController';
 import { UserDeleteOneController } from '@infrastructure/http/controllers/UserDeleteOneController';
 import { UserFollowerGetAllController } from '@infrastructure/http/controllers/UserFollowerGetAllController';
@@ -30,16 +33,15 @@ import { UserFollowingDeleteController } from '@infrastructure/http/controllers/
 import { UserFollowingGetAllController } from '@infrastructure/http/controllers/UserFollowingGetAllController';
 import { UserFollowingGetOneController } from '@infrastructure/http/controllers/UserFollowingGetOneController';
 import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAllController';
+import { UserGetByIdsController } from '@infrastructure/http/controllers/UserGetByIdsController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
+import { UserListGetAllPublicController } from '@infrastructure/http/controllers/UserListGetAllPublicController';
 import { UserPasswordUpdateController } from '@infrastructure/http/controllers/UserPasswordUpdateController';
+import { UserTagsGetAllController } from '@infrastructure/http/controllers/UserTagsGetAllController';
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { UserBookmarkDeleteOneController } from '../controllers/UserBookmarkDeleteOneController';
-import { UserBookmarkUpdateController } from '../controllers/UserBookmarkUpdateController';
-import { UserListGetAllPublicController } from '../controllers/UserListGetAllPublicController';
-import { UserTagsGetAllController } from '../controllers/UserTagsGetAllController';
 
 const UsersRoute = express.Router();
 
@@ -50,6 +52,17 @@ UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const userGetAllController = new UserGetAllController(userGetAllUseCase);
 
   const response = await userGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/ids', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
+  const userGetByIdsUseCase = new UserGetByIdsUseCase(userRepo, userTagsGetAllUseCase);
+  const userGetByIdsController = new UserGetByIdsController(userGetByIdsUseCase);
+
+  const response = await userGetByIdsController.execute(req, res, next);
 
   return response;
 });

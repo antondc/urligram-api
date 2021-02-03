@@ -18,6 +18,20 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userGetByIds({ sessionId, userIds, sort, size, offset }) {
+    const mySQL = new MySQL();
+    try {
+      const userGetByIdsQuery = 'CALL user_get_by_ids(?, ?, ?, ?, ?)';
+      const [results] = await mySQL.query(userGetByIdsQuery, [sessionId, JSON.stringify(userIds), sort, size, offset]);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async userGetOne({ sessionId = null, userId = null, email = null, name = null }) {
     const mySQL = new MySQL();
     try {

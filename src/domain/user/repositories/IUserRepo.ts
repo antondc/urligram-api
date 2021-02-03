@@ -28,6 +28,8 @@ import { IUserFollowingGetOneRequest } from './interfaces/IUserFollowingGetOneRe
 import { IUserFollowingGetOneResponse } from './interfaces/IUserFollowingGetOneResponse';
 import { IUserGetAllRequest } from './interfaces/IUserGetAllRequest';
 import { IUserGetAllResponse } from './interfaces/IUserGetAllResponse';
+import { IUserGetByIdsRequest } from './interfaces/IUserGetByIdsRequest';
+import { IUserGetByIdsResponse } from './interfaces/IUserGetByIdsResponse';
 import { IUserGetOneRequest } from './interfaces/IUserGetOneRequest';
 import { IUserGetOneResponse } from './interfaces/IUserGetOneResponse';
 import { IUserListGetAllPublicRequest } from './interfaces/IUserListGetAllPublicRequest';
@@ -45,7 +47,8 @@ import { IUserUpdateOneResponse } from './interfaces/IUserUpdateOneResponse';
 
 export interface IUserRepo {
   userGetOne: (userGetOneRequest: IUserGetOneRequest) => Promise<IUserGetOneResponse>;
-  userGetAll: (uSerGetAllRequest: IUserGetAllRequest) => Promise<IUserGetAllResponse>;
+  userGetAll: (userGetAllRequest: IUserGetAllRequest) => Promise<IUserGetAllResponse>;
+  userGetByIds: (userGetByIdsRequest: IUserGetByIdsRequest) => Promise<IUserGetByIdsResponse>;
   userCreateOne: (userCreateOneRequest: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;
   userUpdateOne: (userUpdateOneRequest: IUserUpdateOneRequest) => Promise<IUserUpdateOneResponse>;
   userDeleteOne: (userDeleteOneRequest: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;

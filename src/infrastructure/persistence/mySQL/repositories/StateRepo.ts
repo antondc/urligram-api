@@ -30,6 +30,7 @@ export class StateRepo {
   private languageGetOneProcedure: string;
   private languageGetAllProcedure: string;
   private userGetAllProcedure: string;
+  private userGetByIdsProcedure: string;
   private userGetOneProcedure: string;
   private userCreateOneProcedure: string;
   private userUpdateOneProcedure: string;
@@ -126,6 +127,7 @@ export class StateRepo {
     this.languageGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetOne.sql')).toString();
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
     this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
+    this.userGetByIdsProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetByIds.sql')).toString();
     this.userGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetOne.sql')).toString();
     this.userCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateOne.sql')).toString();
     this.userUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userUpdateOne.sql')).toString();
@@ -235,6 +237,7 @@ export class StateRepo {
       const createLanguageGetOneProcedure = await mySQL.query(this.languageGetOneProcedure);
       const createLanguageGetAllProcedure = await mySQL.query(this.languageGetAllProcedure);
       const createUserGetAllProcedure = await mySQL.query(this.userGetAllProcedure);
+      const createUserGetByIdsProcedure = await mySQL.query(this.userGetByIdsProcedure);
       const createUserGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
       const createUserCreateOneProcedure = await mySQL.query(this.userCreateOneProcedure);
       const createUserUpdateOneProcedure = await mySQL.query(this.userUpdateOneProcedure);
@@ -336,6 +339,7 @@ export class StateRepo {
         ...createLanguageGetOneProcedure,
         ...createLanguageGetAllProcedure,
         ...createUserGetAllProcedure,
+        ...createUserGetByIdsProcedure,
         ...createUserGetOneProcedure,
         ...createUserCreateOneProcedure,
         ...createUserUpdateOneProcedure,
