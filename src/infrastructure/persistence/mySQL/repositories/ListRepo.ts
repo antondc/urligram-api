@@ -258,4 +258,28 @@ export class ListRepo implements IListRepo {
       await mySQL.close();
     }
   }
+
+  public async listSimilarGetAll({ sessionId, listId, bookmarksIds, tagsIds, sort, size, offset }) {
+    const mySQL = new MySQL();
+
+    try {
+      const listSimilarGetAllQuery = 'CALL list_similar_get_all(?, ?, ?, ?, ?, ?, ?)';
+
+      const [results] = await mySQL.query(listSimilarGetAllQuery, [
+        sessionId,
+        listId,
+        JSON.stringify(bookmarksIds),
+        JSON.stringify(tagsIds),
+        sort,
+        size,
+        offset,
+      ]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

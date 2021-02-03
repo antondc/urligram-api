@@ -8,29 +8,31 @@ import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase
 import { ListDeleteOneUseCase } from '@domain/list/useCases/ListDeleteOneUseCase';
 import { ListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
 import { ListGetOneUseCase } from '@domain/list/useCases/ListGetOneUseCase';
+import { ListSimilarGetAllUseCase } from '@domain/list/useCases/ListSimilarGetAllUseCase';
 import { ListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
 import { ListUserCreateOneUseCase } from '@domain/list/useCases/ListUserCreateOneUseCase';
 import { ListUserDeleteOneUseCase } from '@domain/list/useCases/ListUserDeleteOneUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
 import { ListUserUpdateOneUseCase } from '@domain/list/useCases/ListUserUpdateOneUseCase';
+import { ListBookmarkCreateOneController } from '@infrastructure/http/controllers/ListBookmarkCreateOneController';
+import { ListBookmarkDeleteOneController } from '@infrastructure/http/controllers/ListBookmarkDeleteOneController';
+import { ListBookmarkGetAllController } from '@infrastructure/http/controllers/ListBookmarkGetAllController';
+import { ListBookmarkGetOneController } from '@infrastructure/http/controllers/ListBookmarkGetOneController';
+import { ListCreateOneController } from '@infrastructure/http/controllers/ListCreateOneController';
+import { ListDeleteOneController } from '@infrastructure/http/controllers/ListDeleteOneController';
+import { ListGetAllController } from '@infrastructure/http/controllers/ListGetAllController';
+import { ListGetOneController } from '@infrastructure/http/controllers/ListGetOneController';
+import { ListSimilarGetAllController } from '@infrastructure/http/controllers/ListSimilarGetAllController';
+import { ListUpdateOneController } from '@infrastructure/http/controllers/ListUpdateOneController';
+import { ListUserCreateOneController } from '@infrastructure/http/controllers/ListUserCreateOneController';
+import { ListUserDeleteOneController } from '@infrastructure/http/controllers/ListUserDeleteOneController';
+import { ListUserGetAllController } from '@infrastructure/http/controllers/ListUserGetAllController';
+import { ListUserGetOneController } from '@infrastructure/http/controllers/ListUserGetOneController';
+import { ListUserUpdateOneController } from '@infrastructure/http/controllers/ListUserUpdateOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { ListBookmarkCreateOneController } from '../controllers/ListBookmarkCreateOneController';
-import { ListBookmarkDeleteOneController } from '../controllers/ListBookmarkDeleteOneController';
-import { ListBookmarkGetAllController } from '../controllers/ListBookmarkGetAllController';
-import { ListBookmarkGetOneController } from '../controllers/ListBookmarkGetOneController';
-import { ListCreateOneController } from '../controllers/ListCreateOneController';
-import { ListDeleteOneController } from '../controllers/ListDeleteOneController';
-import { ListGetAllController } from '../controllers/ListGetAllController';
-import { ListGetOneController } from '../controllers/ListGetOneController';
-import { ListUpdateOneController } from '../controllers/ListUpdateOneController';
-import { ListUserCreateOneController } from '../controllers/ListUserCreateOneController';
-import { ListUserDeleteOneController } from '../controllers/ListUserDeleteOneController';
-import { ListUserGetAllController } from '../controllers/ListUserGetAllController';
-import { ListUserGetOneController } from '../controllers/ListUserGetOneController';
-import { ListUserUpdateOneController } from '../controllers/ListUserUpdateOneController';
 
 const ListsRoute = express.Router();
 
@@ -175,6 +177,16 @@ ListsRoute.delete('/:listId/bookmarks/:bookmarkId', async (req: Request, res: Re
   const listBookmarkDeleteOneController = new ListBookmarkDeleteOneController(listBookmarkDeleteOneUseCase);
 
   const response = await listBookmarkDeleteOneController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.get('/:listId/similar', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listSimilarGetAllUseCase = new ListSimilarGetAllUseCase(listRepo);
+  const listSimilarGetAllController = new ListSimilarGetAllController(listSimilarGetAllUseCase);
+
+  const response = await listSimilarGetAllController.execute(req, res, next);
 
   return response;
 });
