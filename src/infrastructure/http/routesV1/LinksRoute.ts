@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
-import { LinkGetAllPublicUseCase } from '@domain/link/useCases/LinkGetAllPublicUseCase';
+import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { LinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAllPublicUseCase';
@@ -8,7 +8,7 @@ import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllPublicU
 import { LinkVoteOneUseCase } from '@domain/link/useCases/LinkVoteOneUseCase';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
-import { LinkGetAllPublicController } from '../controllers/LinkGetAllPublicController';
+import { LinkGetAllController } from '../controllers/LinkGetAllController';
 import { LinkGetOneController } from '../controllers/LinkGetOneController';
 import { LinkListGetAllPublicController } from '../controllers/LinkListGetAllPublicController';
 import { LinkTagGetAllController } from '../controllers/LinkTagGetAllController';
@@ -48,8 +48,8 @@ LinksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const bookmarkRepoRepo = new BookmarkRepo();
   const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepoRepo);
 
-  const linkGetAllUseCase = new LinkGetAllPublicUseCase(linkRepo, linkGetStatisticsUseCase);
-  const linkGetAllController = new LinkGetAllPublicController(linkGetAllUseCase);
+  const linkGetAllUseCase = new LinkGetAllUseCase(linkRepo, linkGetStatisticsUseCase);
+  const linkGetAllController = new LinkGetAllController(linkGetAllUseCase);
 
   const response = await linkGetAllController.execute(req, res, next);
 

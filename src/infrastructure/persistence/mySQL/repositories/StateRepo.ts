@@ -59,7 +59,7 @@ export class StateRepo {
   private bookmarkTagGetAllProcedure: string;
   private bookmarkListGetAllProcedure: string;
   private linkGetOneProcedure: string;
-  private linkGetAllPublicProcedure: string;
+  private linkGetAllProcedure: string;
   private linkVoteOneProcedure: string;
   private linkListGetAllPublicProcedure: string;
   private linkTagGetAllProcedure: string;
@@ -163,7 +163,7 @@ export class StateRepo {
     this.bookmarkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkTagGetAll.sql')).toString();
     this.bookmarkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkListGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
-    this.linkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAllPublic.sql')).toString();
+    this.linkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetAll.sql')).toString();
     this.linkVoteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkVoteOne.sql')).toString();
     this.linkListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAllPublic.sql')).toString();
     this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
@@ -268,7 +268,7 @@ export class StateRepo {
       const createBookmarkTagGetAllProcedure = await mySQL.query(this.bookmarkTagGetAllProcedure);
       const createBookmarkListGetAllProcedure = await mySQL.query(this.bookmarkListGetAllProcedure);
       const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
-      const createLinkGetAllPublicProcedure = await mySQL.query(this.linkGetAllPublicProcedure);
+      const createLinkGetAllProcedure = await mySQL.query(this.linkGetAllProcedure);
       const createLinkVoteOneProcedure = await mySQL.query(this.linkVoteOneProcedure);
       const createLinkListGetAllPublicProcedure = await mySQL.query(this.linkListGetAllPublicProcedure);
       const createLinkTagGetAllProcedure = await mySQL.query(this.linkTagGetAllProcedure);
@@ -371,7 +371,7 @@ export class StateRepo {
         ...createBookmarkTagGetAllProcedure,
         ...createBookmarkListGetAllProcedure,
         ...createLinkGetOneProcedure,
-        ...createLinkGetAllPublicProcedure,
+        ...createLinkGetAllProcedure,
         ...createLinkVoteOneProcedure,
         ...createLinkListGetAllPublicProcedure,
         ...createLinkTagGetAllProcedure,

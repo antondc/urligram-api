@@ -1,6 +1,6 @@
 import { User } from '@domain/user/entities/User';
 
-export type ILinkGetAllPublicRequest = {
+export type ILinkGetAllRequest = {
   session: User;
   sort: 'id' | '-id' | 'order' | '-order' | 'count' | '-count';
   size: number;

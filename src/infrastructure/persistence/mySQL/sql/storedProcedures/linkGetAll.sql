@@ -1,8 +1,8 @@
-DROP PROCEDURE IF EXISTS link_get_all_public;
+DROP PROCEDURE IF EXISTS link_get_all;
 
 /* DELIMITER $$ */
 
-CREATE PROCEDURE link_get_all_public(
+CREATE PROCEDURE link_get_all(
   IN $SESSION_ID VARCHAR(40),
   IN $SORT VARCHAR(40),
   IN $SIZE INT,
@@ -73,4 +73,4 @@ END
 
 /* DELIMITER ; */
 
-/* CALL link_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", "-bookmarks", NULL, NULL); */
+/* CALL link_get_all("e4e2bb46-c210-4a47-9e84-f45c789fcec1", "-bookmarks", NULL, NULL); */

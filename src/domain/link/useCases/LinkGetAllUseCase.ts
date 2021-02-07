@@ -1,13 +1,13 @@
 import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
-import { ILinkGetAllPublicRequest } from './interfaces/ILinkGetAllPublicRequest';
-import { ILinkGetAllPublicResponse } from './interfaces/ILinkGetAllPublicResponse';
+import { ILinkGetAllRequest } from './interfaces/ILinkGetAllRequest';
+import { ILinkGetAllResponse } from './interfaces/ILinkGetAllResponse';
 import { ILinkGetStatisticsUseCase } from './LinkGetStatistics';
 
-export interface ILinkGetAllPublicUseCase {
-  execute: (linkGetAllPublicRequest: ILinkGetAllPublicRequest) => Promise<ILinkGetAllPublicResponse>;
+export interface ILinkGetAllUseCase {
+  execute: (linkGetAllRequest: ILinkGetAllRequest) => Promise<ILinkGetAllResponse>;
 }
 
-export class LinkGetAllPublicUseCase implements ILinkGetAllPublicUseCase {
+export class LinkGetAllUseCase implements ILinkGetAllUseCase {
   private linkRepo: ILinkRepo;
   private linkGetStatisticsUseCase: ILinkGetStatisticsUseCase;
 
@@ -16,9 +16,9 @@ export class LinkGetAllPublicUseCase implements ILinkGetAllPublicUseCase {
     this.linkGetStatisticsUseCase = linkGetStatisticsUseCase;
   }
 
-  public async execute(linkGetAllPublicRequest: ILinkGetAllPublicRequest): Promise<ILinkGetAllPublicResponse> {
-    const { session, sort, size, offset } = linkGetAllPublicRequest;
-    const response = await this.linkRepo.linkGetAllPublic({ sessionId: session?.id, sort, size, offset });
+  public async execute(linkGetAllRequest: ILinkGetAllRequest): Promise<ILinkGetAllResponse> {
+    const { session, sort, size, offset } = linkGetAllRequest;
+    const response = await this.linkRepo.linkGetAll({ sessionId: session?.id, sort, size, offset });
 
     const responseWithVotesPromises = response.map(async (item) => {
       const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.id, session });

@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
 
-import { ILinkGetAllPublicRequest } from '@domain/link/useCases/interfaces/ILinkGetAllPublicRequest';
-import { ILinkGetAllPublicUseCase } from '@domain/link/useCases/LinkGetAllPublicUseCase';
+import { ILinkGetAllRequest } from '@domain/link/useCases/interfaces/ILinkGetAllRequest';
+import { ILinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-type LinkGetAllPublicControllerQueryType = {
+type LinkGetAllControllerQueryType = {
   sort: 'id' | '-id' | 'order' | '-order' | 'count' | '-count';
   page: {
     size: string;
@@ -16,29 +16,29 @@ type LinkGetAllPublicControllerQueryType = {
   };
 };
 
-export class LinkGetAllPublicController extends BaseController {
-  useCase: ILinkGetAllPublicUseCase;
+export class LinkGetAllController extends BaseController {
+  useCase: ILinkGetAllUseCase;
 
-  constructor(useCase: ILinkGetAllPublicUseCase) {
+  constructor(useCase: ILinkGetAllUseCase) {
     super();
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {} } = req.query as LinkGetAllPublicControllerQueryType;
+    const { sort, page: { size, offset } = {} } = req.query as LinkGetAllControllerQueryType;
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
-    const linkGetAllPublicRequest: ILinkGetAllPublicRequest = {
+    const linkGetAllRequest: ILinkGetAllRequest = {
       session,
       sort,
       size: castedSize,
       offset: castedOffset,
     };
 
-    const response = await this.useCase.execute(linkGetAllPublicRequest);
+    const response = await this.useCase.execute(linkGetAllRequest);
 
     const formattedLinks = response.map((item) => {
       const urlWrapper = new URLWrapper(item.url);
