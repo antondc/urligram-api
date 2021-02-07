@@ -14,11 +14,10 @@ export class UserTagsGetAllUseCase implements IUserTagsGetAllUseCase {
   }
 
   public async execute(UserTagsGetAllRequest: IUserTagsGetAllRequest): Promise<IUserTagsGetAllResponse> {
-    const { userId, session } = UserTagsGetAllRequest;
+    const { userId, session, sort, size, offset } = UserTagsGetAllRequest;
 
-    const tags = await this.userRepo.userTagsGetAll({ userId, sessionId: session?.id });
-    const sortedTags = tags.sort((curr, next) => curr.id - next.id);
+    const tags = await this.userRepo.userTagsGetAll({ userId, sessionId: session?.id, sort, size, offset });
 
-    return sortedTags;
+    return tags;
   }
 }

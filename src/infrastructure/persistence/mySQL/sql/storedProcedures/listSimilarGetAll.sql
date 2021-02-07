@@ -31,16 +31,7 @@ SELECT DISTINCT
     ) AS bookmarksIds,
     (
       SELECT
-        IF(
-          COUNT(`user`.id) = 0,
-          NULL,
-          JSON_ARRAYAGG(
-            JSON_OBJECT(
-              'id', `user`.`id`,
-              'userRole', `user_list`.`userRole`
-            )
-          )
-        )
+        JSON_ARRAYAGG(`user`.`id`)
       FROM user_list
       INNER JOIN `user` ON `user`.`id` = user_list.user_id
       WHERE user_list.list_id = list.id

@@ -1,3 +1,6 @@
 export type ILinkGetAllPublicRequest = {
-  userId: string;
+  sessionId: string;
+  sort: 'id' | '-id' | 'order' | '-order' | 'count' | '-count';
+  size: number;
+  offset: number;
 };

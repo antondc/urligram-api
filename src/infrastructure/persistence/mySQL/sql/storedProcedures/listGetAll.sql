@@ -24,17 +24,12 @@ SELECT
         IF(
           COUNT(`user`.id) = 0,
           NULL,
-          JSON_ARRAYAGG(
-            JSON_OBJECT(
-              'id', `user`.`id`,
-              'userRole', `user_list`.`userRole`
-            )
-          )
+          JSON_ARRAYAGG(`user`.`id`)
         )
       FROM user_list
       INNER JOIN `user` ON `user`.`id` = user_list.user_id
       WHERE user_list.list_id = list.id
-    ) AS members,
+    ) AS membersIds,
     (
       SELECT
       JSON_ARRAYAGG(bookmark_list.bookmark_id)
@@ -49,8 +44,8 @@ SELECT
       OR `user_list`.`user_id` = $SESSION_ID
     GROUP BY list.id
       ORDER BY
-      CASE WHEN $SORT = "members"     THEN count(members) 	ELSE NULL END ASC,
-      CASE WHEN $SORT = "-members"    THEN count(members) 	ELSE NULL END DESC,
+      CASE WHEN $SORT = "members"     THEN count(membersIds) 	ELSE NULL END ASC,
+      CASE WHEN $SORT = "-members"    THEN count(membersIds) 	ELSE NULL END DESC,
       CASE WHEN $SORT = 'id'          THEN `list`.id      	ELSE NULL END ASC,
       CASE WHEN $SORT = '-id'         THEN `list`.id      	ELSE NULL END DESC,
       CASE WHEN $SORT = 'createdAt'   THEN `list`.createdAt	ELSE NULL END ASC,

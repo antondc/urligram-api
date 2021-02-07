@@ -7,6 +7,14 @@ import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
+type UserTagsGetAllControllerQueryType = {
+  sort: 'id' | '-id' | 'name' | '-name' | 'count' | '-count';
+  page: {
+    size: string;
+    offset: string;
+  };
+};
+
 export class UserTagsGetAllController extends BaseController {
   useCase: IUserTagsGetAllUseCase;
 
@@ -16,14 +24,19 @@ export class UserTagsGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
+    const { sort, page: { size, offset } = {} } = req.query as UserTagsGetAllControllerQueryType;
     const { userId } = req.params;
-
+    const castedSize = Number(size) || null;
+    const castedOffset = Number(offset) || null;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const userUpdateRequest: IUserTagsGetAllRequest = {
       session,
       userId,
+      sort,
+      size: castedSize,
+      offset: castedOffset,
     };
 
     const response = await this.useCase.execute(userUpdateRequest);

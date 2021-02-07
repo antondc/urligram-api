@@ -22,7 +22,7 @@ export class UserGetByIdsUseCase implements IUserGetByIdsUseCase {
     const users = await this.userRepo.userGetByIds({ sessionId: session?.id, userIds, sort, size, offset });
 
     const usersWithTagsPromises = users.map(async (user) => {
-      const tags = await this.userTagsGetAllUseCase.execute({ userId: user.id, session });
+      const tags = await this.userTagsGetAllUseCase.execute({ userId: user.id, session, sort: '-count', size: null, offset: null });
 
       return {
         ...user,

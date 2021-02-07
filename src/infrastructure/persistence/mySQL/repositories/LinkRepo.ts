@@ -19,13 +19,13 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkGetAllPublic() {
+  public async linkGetAllPublic({ sessionId, sort, size, offset }) {
     const mySQL = new MySQL();
 
     try {
-      const linkGetAllPublicQuery = 'CALL link_get_all_public()';
+      const linkGetAllPublicQuery = 'CALL link_get_all_public(?, ?, ?, ?)';
 
-      const [link] = await mySQL.query(linkGetAllPublicQuery);
+      const [link] = await mySQL.query(linkGetAllPublicQuery, [sessionId, sort, size, offset]);
 
       return link;
     } catch (err) {

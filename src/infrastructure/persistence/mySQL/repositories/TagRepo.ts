@@ -3,13 +3,13 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class TagRepo implements ITagRepo {
-  public async tagGetAll() {
+  public async tagGetAll({ sessionId, sort, size, offset }) {
     const mySQL = new MySQL();
 
     try {
-      const tagGetAllQuery = 'CALL tag_get_all()';
+      const tagGetAllQuery = 'CALL tags_get_all(?, ?, ?, ?)';
 
-      const [tags] = await mySQL.query(tagGetAllQuery);
+      const [tags] = await mySQL.query(tagGetAllQuery, [sessionId, sort, size, offset]);
 
       return tags;
     } catch (err) {

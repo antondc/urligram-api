@@ -8,6 +8,14 @@ import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
+type LinkGetAllPublicControllerQueryType = {
+  sort: 'id' | '-id' | 'order' | '-order' | 'count' | '-count';
+  page: {
+    size: string;
+    offset: string;
+  };
+};
+
 export class LinkGetAllPublicController extends BaseController {
   useCase: ILinkGetAllPublicUseCase;
 
@@ -17,11 +25,17 @@ export class LinkGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
+    const { sort, page: { size, offset } = {} } = req.query as LinkGetAllPublicControllerQueryType;
+    const castedSize = Number(size) || null;
+    const castedOffset = Number(offset) || null;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const linkGetAllPublicRequest: ILinkGetAllPublicRequest = {
       session,
+      sort,
+      size: castedSize,
+      offset: castedOffset,
     };
 
     const response = await this.useCase.execute(linkGetAllPublicRequest);

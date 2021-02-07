@@ -20,7 +20,7 @@ export class ListSimilarGetAllUseCase implements IListSimilarGetAllUseCase {
     const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not found' });
     const bookmarksIds = list?.bookmarksIds;
-    const tagsIds = list?.tags.map((item) => item.id);
+    const tagsIds = list?.tags?.map((item) => item.id);
     const lists = await this.listRepo.listSimilarGetAll({ sessionId: session?.id, listId, bookmarksIds, tagsIds, sort, size, offset });
 
     const listsWithTagsPromises = lists.map(async (item) => {

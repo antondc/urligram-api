@@ -113,7 +113,7 @@ BEGIN
       CASE WHEN $SORT = 'lists'       THEN JSON_LENGTH(lists)             ELSE NULL END ASC,
       CASE WHEN $SORT = '-lists'      THEN JSON_LENGTH(lists)             ELSE NULL END DESC,
       CASE WHEN $SORT != 'order' AND $SORT != '-order'      THEN `user`.order        ELSE NULL END ASC
-    LIMIT 0 , 5
+    LIMIT $OFFSET , $SIZE
   ;
 
 END

@@ -17,8 +17,8 @@ export class LinkGetAllPublicUseCase implements ILinkGetAllPublicUseCase {
   }
 
   public async execute(linkGetAllPublicRequest: ILinkGetAllPublicRequest): Promise<ILinkGetAllPublicResponse> {
-    const { session } = linkGetAllPublicRequest;
-    const response = await this.linkRepo.linkGetAllPublic({ userId: session?.id });
+    const { session, sort, size, offset } = linkGetAllPublicRequest;
+    const response = await this.linkRepo.linkGetAllPublic({ sessionId: session?.id, sort, size, offset });
 
     const responseWithVotesPromises = response.map(async (item) => {
       const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.id, session });

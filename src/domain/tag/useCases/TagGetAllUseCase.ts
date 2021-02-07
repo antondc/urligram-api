@@ -1,8 +1,9 @@
 import { ITagRepo } from '@domain/tag/repositories/ITagRepo';
+import { ITagGetAllRequest } from './interfaces/ITagGetAllRequest';
 import { ITagGetAllResponse } from './interfaces/ITagGetAllResponse';
 
 export interface ITagGetAllUseCase {
-  execute: () => Promise<ITagGetAllResponse>;
+  execute: (tagGetAllRequest: ITagGetAllRequest) => Promise<ITagGetAllResponse>;
 }
 
 export class TagGetAllUseCase implements ITagGetAllUseCase {
@@ -12,8 +13,15 @@ export class TagGetAllUseCase implements ITagGetAllUseCase {
     this.tagRepo = tagRepo;
   }
 
-  public async execute(): Promise<ITagGetAllResponse> {
-    const response = await this.tagRepo.tagGetAll();
+  public async execute(tagGetAllRequest: ITagGetAllRequest): Promise<ITagGetAllResponse> {
+    const { session, sort, size, offset } = tagGetAllRequest;
+
+    const response = await this.tagRepo.tagGetAll({
+      sessionId: session?.id,
+      sort,
+      size,
+      offset,
+    });
 
     return response;
   }

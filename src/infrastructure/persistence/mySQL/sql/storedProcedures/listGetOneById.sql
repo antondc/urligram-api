@@ -17,12 +17,7 @@ BEGIN
     `list`.`isPrivate`,
     `list`.`createdAt`,
     `list`.`updatedAt`,
-    JSON_ARRAYAGG(
-      JSON_OBJECT(
-        'id', user_list.user_id,
-        'name', user_list.userRole
-      )
-    ) as members,
+    JSON_ARRAYAGG(user_list.user_id) as membersIds,
     (
       SELECT
         JSON_ARRAYAGG(

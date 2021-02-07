@@ -320,13 +320,13 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userTagsGetAll({ userId, sessionId }) {
+  public async userTagsGetAll({ userId, sessionId, sort, size, offset }) {
     const mySQL = new MySQL();
 
     try {
-      const userTagsGetAllQuery = 'CALL user_tags_get_all(?, ?)';
+      const userTagsGetAllQuery = 'CALL user_tags_get_all(?, ?, ?, ?, ?)';
 
-      const [results] = await mySQL.query(userTagsGetAllQuery, [userId, sessionId]);
+      const [results] = await mySQL.query(userTagsGetAllQuery, [userId, sessionId, sort, size, offset]);
 
       return results;
     } catch (err) {

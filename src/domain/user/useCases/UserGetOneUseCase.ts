@@ -18,7 +18,7 @@ export class UserGetOneUseCase implements IUserGetOneUseCase {
 
   public async execute(userGetOneRequest: IUserGetOneRequest): Promise<IUserGetOneResponse> {
     const { session, userId, email, name } = userGetOneRequest;
-    const tags = await this.userTagsGetAllUseCase.execute({ userId, session });
+    const tags = await this.userTagsGetAllUseCase.execute({ userId, session, sort: '-count', size: null, offset: null });
 
     const user = await this.userRepo.userGetOne({ sessionId: session?.id, userId, name, email });
 

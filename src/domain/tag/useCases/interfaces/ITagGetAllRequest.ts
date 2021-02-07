@@ -1,8 +1,8 @@
 import { User } from '@domain/user/entities/User';
 
-export type ILinkGetAllPublicRequest = {
+export type ITagGetAllRequest = {
   session: User;
-  sort: 'id' | '-id' | 'order' | '-order' | 'count' | '-count';
+  sort: 'id' | '-id' | 'name' | '-name' | 'count' | '-count';
   size: number;
   offset: number;
 };
