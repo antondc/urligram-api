@@ -14,6 +14,9 @@ type LinkGetAllControllerQueryType = {
     size: string;
     offset: string;
   };
+  filter?: {
+    tags?: string;
+  };
 };
 
 export class LinkGetAllController extends BaseController {
@@ -25,10 +28,12 @@ export class LinkGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {} } = req.query as LinkGetAllControllerQueryType;
+    const { sort, page: { size, offset } = {}, filter: { tags } = {} } = req.query as LinkGetAllControllerQueryType;
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
+    const parsedTags = tags?.split(',') || null;
     const tokenService = new TokenService();
+
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const linkGetAllRequest: ILinkGetAllRequest = {
@@ -36,6 +41,9 @@ export class LinkGetAllController extends BaseController {
       sort,
       size: castedSize,
       offset: castedOffset,
+      filter: {
+        tags: parsedTags,
+      },
     };
 
     const response = await this.useCase.execute(linkGetAllRequest);
