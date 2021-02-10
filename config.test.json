@@ -18,10 +18,11 @@
   },
   "staging": {
     "database": {
-      "host": "mysql-5704.dinaserver.com",
+      "host": "lab.antoniodiaz.me",
       "database": "linking_stage",
       "user": "w_9aIfE2XpoYz",
-      "password": "UrStkX_oihbDWEaz7Gr"
+      "password": "UrStkX_oihbDWEaz7Gr",
+      "port": 4952
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "linking-api-staging.antoniodiaz.me",
