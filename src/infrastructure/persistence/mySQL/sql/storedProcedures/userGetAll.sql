@@ -14,6 +14,7 @@ BEGIN
   -- Select user
 
   SELECT
+    count(*) OVER() as totalRows,
     `user`.`id`,
     `user`.`order`,
     `user`.`name`,

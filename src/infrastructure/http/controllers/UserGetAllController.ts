@@ -46,7 +46,7 @@ export class UserGetAllController extends BaseController {
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
 
-    const users = await this.useCase.execute({ session, sort: castedSort, size: castedSize, offset: castedOffset });
+    const { users, totalRows } = await this.useCase.execute({ session, sort: castedSort, size: castedSize, offset: castedOffset });
 
     const formattedUsers = users.map((item) => {
       return {
@@ -62,6 +62,9 @@ export class UserGetAllController extends BaseController {
     });
 
     const formattedResponse = {
+      meta: {
+        totalRows,
+      },
       links: {
         self: URL_SERVER + '/users',
       },

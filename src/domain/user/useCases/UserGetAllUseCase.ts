@@ -19,7 +19,7 @@ export class UserGetAllUseCase implements IUserGetAllUseCase {
   public async execute(userGetAllRequest: IUserGetAllRequest): Promise<IUserGetAllResponse> {
     const { session, sort, size, offset } = userGetAllRequest;
 
-    const users = await this.userRepo.userGetAll({ sessionId: session?.id, sort, size, offset });
+    const { users, totalRows } = await this.userRepo.userGetAll({ sessionId: session?.id, sort, size, offset });
 
     const usersWithTagsPromises = users.map(async (user) => {
       const tags = await this.userTagsGetAllUseCase.execute({ userId: user.id, session, sort: '-count', size: null, offset: null });
@@ -32,6 +32,9 @@ export class UserGetAllUseCase implements IUserGetAllUseCase {
 
     const usersWithTags = await Promise.all(usersWithTagsPromises);
 
-    return usersWithTags;
+    return {
+      users: usersWithTags,
+      totalRows,
+    };
   }
 }
