@@ -42,11 +42,11 @@ export class UserGetAllController extends BaseController {
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
-    const castedSort = sort;
-    const castedSize = Number(size) || null;
-    const castedOffset = Number(offset) || null;
+    const castedSort = sort || undefined;
+    const castedSize = Number(size) || undefined;
+    const castedOffset = Number(offset) || undefined;
 
-    const { users, totalRows } = await this.useCase.execute({ session, sort: castedSort, size: castedSize, offset: castedOffset });
+    const { users, meta } = await this.useCase.execute({ session, sort: castedSort, size: castedSize, offset: castedOffset });
 
     const formattedUsers = users.map((item) => {
       return {
@@ -62,9 +62,7 @@ export class UserGetAllController extends BaseController {
     });
 
     const formattedResponse = {
-      meta: {
-        totalRows,
-      },
+      meta,
       links: {
         self: URL_SERVER + '/users',
       },

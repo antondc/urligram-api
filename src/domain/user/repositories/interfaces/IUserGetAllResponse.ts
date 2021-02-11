@@ -1,6 +1,11 @@
 import { User } from '@domain/user/entities/User';
 
 export type IUserGetAllResponse = {
-  totalRows: number;
+  meta: {
+    totalRows: number;
+    offset: number;
+    size: number;
+    sort: string;
+  };
   users: User[];
 };

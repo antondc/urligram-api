@@ -12,7 +12,12 @@ export class UserRepo implements IUserRepo {
       const resultsWithoutTotal = results.map((item) => ({ ...item, totalRows: undefined }));
 
       return {
-        totalRows: results[0].totalRows,
+        meta: {
+          totalRows: results[0].totalRows,
+          size,
+          offset,
+          sort,
+        },
         users: resultsWithoutTotal,
       };
     } catch (err) {
