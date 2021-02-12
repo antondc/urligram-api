@@ -13,7 +13,7 @@ export class UserRepo implements IUserRepo {
 
       return {
         meta: {
-          totalRows: results[0].totalRows,
+          totalRows: results[0]?.totalRows || 0, 
           size,
           offset,
           sort,

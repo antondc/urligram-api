@@ -25,7 +25,7 @@ export class ListUserGetOneController extends BaseController {
     const listUserGetOne: IListUserGetOneRequest = {
       listId: Number(listId),
       userId: userOrSession,
-      session
+      session,
     };
 
     const response = await this.useCase.execute(listUserGetOne);

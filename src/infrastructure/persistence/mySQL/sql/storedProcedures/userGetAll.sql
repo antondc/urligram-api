@@ -11,8 +11,6 @@ BEGIN
 
   SET $SIZE = IFNULL($SIZE, -1);
 
-  -- Select user
-
   SELECT
     count(*) OVER() as totalRows,
     `user`.`id`,
@@ -95,25 +93,24 @@ BEGIN
       FROM user_user
       WHERE user_user.user_id1 = user.id
     ) AS following
-
     FROM `user`
     GROUP BY `user`.`id`
     ORDER BY
-      CASE WHEN $SORT = 'order'          THEN `user`.order      	        ELSE NULL END ASC,
-      CASE WHEN $SORT = '-order'         THEN `user`.order      	        ELSE NULL END DESC,
-      CASE WHEN $SORT = 'createdAt'   THEN `user`.createdAt	        ELSE NULL END ASC,
-      CASE WHEN $SORT = '-createdAt'  THEN `user`.createdAt         ELSE NULL END DESC,
-      CASE WHEN $SORT = 'updatedAt'   THEN `user`.updatedAt         ELSE NULL END ASC,
-      CASE WHEN $SORT = '-updatedAt'  THEN `user`.updatedAt         ELSE NULL END DESC,
-      CASE WHEN $SORT = 'followers'   THEN JSON_LENGTH(followers)         ELSE NULL END ASC,
-      CASE WHEN $SORT = '-followers'  THEN JSON_LENGTH(followers)         ELSE NULL END DESC,
-      CASE WHEN $SORT = 'following'   THEN JSON_LENGTH(following)         ELSE NULL END ASC,
-      CASE WHEN $SORT = '-following'  THEN JSON_LENGTH(following)         ELSE NULL END DESC,
-      CASE WHEN $SORT = 'bookmarks'   THEN JSON_LENGTH(bookmarksIds)         ELSE NULL END ASC,
-      CASE WHEN $SORT = '-bookmarks'  THEN JSON_LENGTH(bookmarksIds)         ELSE NULL END DESC,
-      CASE WHEN $SORT = 'lists'       THEN JSON_LENGTH(lists)             ELSE NULL END ASC,
-      CASE WHEN $SORT = '-lists'      THEN JSON_LENGTH(lists)             ELSE NULL END DESC,
-      CASE WHEN $SORT != 'order' AND $SORT != '-order'      THEN `user`.order        ELSE NULL END ASC
+      CASE WHEN $SORT = 'order'          THEN `user`.order      	                ELSE NULL END ASC,
+      CASE WHEN $SORT = '-order'         THEN `user`.order      	                ELSE NULL END DESC,
+      CASE WHEN $SORT = 'createdAt'      THEN `user`.createdAt	                  ELSE NULL END ASC,
+      CASE WHEN $SORT = '-createdAt'     THEN `user`.createdAt                    ELSE NULL END DESC,
+      CASE WHEN $SORT = 'updatedAt'      THEN `user`.updatedAt                    ELSE NULL END ASC,
+      CASE WHEN $SORT = '-updatedAt'     THEN `user`.updatedAt                    ELSE NULL END DESC,
+      CASE WHEN $SORT = 'followers'      THEN JSON_LENGTH(followers)              ELSE NULL END ASC,
+      CASE WHEN $SORT = '-followers'     THEN JSON_LENGTH(followers)              ELSE NULL END DESC,
+      CASE WHEN $SORT = 'following'      THEN JSON_LENGTH(following)              ELSE NULL END ASC,
+      CASE WHEN $SORT = '-following'     THEN JSON_LENGTH(following)              ELSE NULL END DESC,
+      CASE WHEN $SORT = 'bookmarks'      THEN JSON_LENGTH(bookmarksIds)           ELSE NULL END ASC,
+      CASE WHEN $SORT = '-bookmarks'     THEN JSON_LENGTH(bookmarksIds)           ELSE NULL END DESC,
+      CASE WHEN $SORT = 'lists'          THEN JSON_LENGTH(lists)                  ELSE NULL END ASC,
+      CASE WHEN $SORT = '-lists'         THEN JSON_LENGTH(lists)                  ELSE NULL END DESC,
+      CASE WHEN $SORT != 'order' AND $SORT != '-order'      THEN `user`.order     ELSE NULL END ASC
     LIMIT $OFFSET , $SIZE
   ;
 

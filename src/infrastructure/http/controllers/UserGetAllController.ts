@@ -64,7 +64,7 @@ export class UserGetAllController extends BaseController {
     const formattedResponse = {
       meta,
       links: {
-        self: URL_SERVER + '/users',
+        self: URL_SERVER + req.originalUrl,
       },
       data: formattedUsers,
       included: [],
