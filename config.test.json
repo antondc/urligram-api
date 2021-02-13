@@ -1,11 +1,10 @@
 {
   "development": {
     "database": {
-      "host": "lab.antoniodiaz.me",
-      "database": "linking_stage",
+      "host": "api.linking.me",
+      "database": "linking_stage_local",
       "user": "w_9aIfE2XpoYz",
-      "password": "UrStkX_oihbDWEaz7Gr",
-      "port": 4952
+      "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "dev.linking.me",
