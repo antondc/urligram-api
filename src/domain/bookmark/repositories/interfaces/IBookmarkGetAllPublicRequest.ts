@@ -1,7 +1,6 @@
-import { NumericLiteral } from 'typescript';
-
 export type IBookmarkGetAllPublicRequest = {
+  sessionId: string;
   sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   size: number;
-  after: number;
+  offset: number;
 };

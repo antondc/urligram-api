@@ -35,15 +35,28 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkGetAllPublic({ sort, size = 30, after }) {
+  public async bookmarkGetAllPublic({ sessionId, sort, size = 30, offset }) {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkGetAllPublicQuery = 'CALL bookmark_get_all_public(?, ?, ?)';
+      const bookmarkGetAllPublicQuery = 'CALL bookmark_get_all_public(?, ?, ?, ?)';
 
-      const [bookmark] = await mySQL.query(bookmarkGetAllPublicQuery, [sort, size, after]);
+      const [bookmarks] = await mySQL.query(bookmarkGetAllPublicQuery, [sessionId, sort, size, offset]);
 
-      return bookmark;
+      const resultsWithoutTotal = bookmarks.map((item) => ({
+        ...item,
+        totalRows: undefined,
+      }));
+
+      return {
+        meta: {
+          totalRows: bookmarks[0]?.totalRows || 0,
+          size,
+          offset,
+          sort,
+        },
+        bookmarks: resultsWithoutTotal,
+      };
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {

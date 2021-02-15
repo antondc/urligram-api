@@ -4,4 +4,12 @@ interface BookmarkWithUrl extends Bookmark {
   url: string;
 }
 
-export type IBookmarkGetAllPublicResponse = BookmarkWithUrl[];
+export type IBookmarkGetAllPublicResponse = {
+  meta: {
+    totalRows: number;
+    offset: number;
+    size: number;
+    sort: string;
+  };
+  bookmarks: BookmarkWithUrl[];
+};

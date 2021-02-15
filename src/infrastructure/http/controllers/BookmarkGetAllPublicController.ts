@@ -11,7 +11,7 @@ type BookmarkGetAllPublicControllerQueryType = {
   sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   page: {
     size: string;
-    after: string;
+    offset: string;
   };
 };
 
@@ -24,23 +24,23 @@ export class BookmarkGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, after } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
+    const { sort, page: { size, offset } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
     const checkedSize = Number(size) || undefined;
-    const checkedAfter = Number(after) || undefined;
+    const checkedAfter = Number(offset) || undefined;
 
     const bookmarkGetAllPublicRequest: IBookmarkGetAllPublicRequest = {
       session,
       sort,
       size: checkedSize,
-      after: checkedAfter,
+      offset: checkedAfter,
     };
 
-    const response = await this.useCase.execute(bookmarkGetAllPublicRequest);
+    const { bookmarks, meta } = await this.useCase.execute(bookmarkGetAllPublicRequest);
 
-    const formattedBookmarks = response.map((item) => {
+    const formattedBookmarks = bookmarks.map((item) => {
       return {
         type: 'bookmark',
         id: item.id,
@@ -52,6 +52,7 @@ export class BookmarkGetAllPublicController extends BaseController {
     });
 
     const formattedResponse = {
+      meta,
       Bookmarks: {
         self: URL_SERVER + '/bookmarks',
       },

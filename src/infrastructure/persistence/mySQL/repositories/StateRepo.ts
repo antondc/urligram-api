@@ -425,7 +425,7 @@ export class StateRepo {
   public async healthCheck() {
     const mySQL = new MySQL();
 
-    const response = await mySQL.query('SELECT version() UNION SELECT @@sql_mode');
+    const response = await mySQL.query('SELECT version() AS version, @@sql_mode AS SQLMode');
     await mySQL.close();
 
     return response;

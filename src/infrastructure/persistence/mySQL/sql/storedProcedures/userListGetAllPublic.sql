@@ -70,22 +70,22 @@ BEGIN
       CASE WHEN @filterRole IS NOT NULL AND JSON_CONTAINS(@filterRole, JSON_QUOTE("admin")) THEN list.userId = $USER_ID END
       OR
       CASE WHEN @filterRole IS NOT NULL THEN JSON_CONTAINS(@filterRole, JSON_QUOTE(user_list.userRole)) AND user_list.user_id = $USER_ID END
-      OR CASE WHEN @filterRole IS NULL THEN TRUE END
+      OR CASE WHEN @filterRole = "null" THEN TRUE END
     )
   GROUP BY list.id
   ORDER BY
-    CASE WHEN $SORT = 'id'                              THEN `list`.id      	          ELSE NULL END ASC,
-    CASE WHEN $SORT = '-id'                             THEN `list`.id      	          ELSE NULL END DESC,
-    CASE WHEN $SORT = 'order'                           THEN `list`.order      	        ELSE NULL END ASC,
-    CASE WHEN $SORT = '-order'                          THEN `list`.order      	        ELSE NULL END DESC,
-    CASE WHEN $SORT = 'createdAt'                       THEN `list`.createdAt	          ELSE NULL END ASC,
-    CASE WHEN $SORT = '-createdAt'                      THEN `list`.createdAt           ELSE NULL END DESC,
-    CASE WHEN $SORT = 'updatedAt'                       THEN `list`.updatedAt           ELSE NULL END ASC,
-    CASE WHEN $SORT = '-updatedAt'                      THEN `list`.updatedAt           ELSE NULL END DESC,
-    CASE WHEN $SORT = 'bookmarks'                       THEN JSON_LENGTH(bookmarksIds)     ELSE NULL END ASC,
-    CASE WHEN $SORT = '-bookmarks'                      THEN JSON_LENGTH(bookmarksIds)     ELSE NULL END DESC,
-    CASE WHEN $SORT = 'members'                       THEN JSON_LENGTH(membersIds)         ELSE NULL END ASC,
-    CASE WHEN $SORT = '-members'                      THEN JSON_LENGTH(membersIds)         ELSE NULL END DESC,
+    CASE WHEN $SORT = 'id'          THEN `list`.id      	          ELSE NULL END ASC,
+    CASE WHEN $SORT = '-id'         THEN `list`.id      	          ELSE NULL END DESC,
+    CASE WHEN $SORT = 'order'       THEN `list`.order      	        ELSE NULL END ASC,
+    CASE WHEN $SORT = '-order'      THEN `list`.order      	        ELSE NULL END DESC,
+    CASE WHEN $SORT = 'createdAt'   THEN `list`.createdAt	          ELSE NULL END ASC,
+    CASE WHEN $SORT = '-createdAt'  THEN `list`.createdAt           ELSE NULL END DESC,
+    CASE WHEN $SORT = 'updatedAt'   THEN `list`.updatedAt           ELSE NULL END ASC,
+    CASE WHEN $SORT = '-updatedAt'  THEN `list`.updatedAt           ELSE NULL END DESC,
+    CASE WHEN $SORT = 'bookmarks'   THEN JSON_LENGTH(bookmarksIds)  ELSE NULL END ASC,
+    CASE WHEN $SORT = '-bookmarks'  THEN JSON_LENGTH(bookmarksIds)  ELSE NULL END DESC,
+    CASE WHEN $SORT = 'members'     THEN JSON_LENGTH(membersIds)    ELSE NULL END ASC,
+    CASE WHEN $SORT = '-members'    THEN JSON_LENGTH(membersIds)    ELSE NULL END DESC,
     CASE WHEN $SORT != 'order' AND $SORT != '-order'    THEN `list`.order               ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
   ;

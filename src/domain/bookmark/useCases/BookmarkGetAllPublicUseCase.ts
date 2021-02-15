@@ -17,13 +17,11 @@ export class BookmarkGetAllPublicUseCase implements IBookmarkGetAllPublicUseCase
   }
 
   public async execute(bookmarkGetAllPublicRequest: IBookmarkGetAllPublicRequest): Promise<IBookmarkGetAllPublicResponse> {
-    const { session, sort, size, after } = bookmarkGetAllPublicRequest;
+    const { session, sort, size, offset } = bookmarkGetAllPublicRequest;
 
-    const bookmarks = await this.bookmarkRepo.bookmarkGetAllPublic({ sort, size, after });
+    const { bookmarks, meta } = await this.bookmarkRepo.bookmarkGetAllPublic({ sessionId: session?.id, sort, size, offset });
 
-    const filteredBookmarks = bookmarks.filter((bookmark) => !bookmark.isPrivate); // (1)
-
-    const responseWithVotesPromises = filteredBookmarks.map(async (item) => {
+    const bookmarksWithVotesPromises = bookmarks.map(async (item) => {
       const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.linkId, session });
 
       return {
@@ -31,9 +29,12 @@ export class BookmarkGetAllPublicUseCase implements IBookmarkGetAllPublicUseCase
         statistics,
       };
     });
-    const responseWithVotes = await Promise.all(responseWithVotesPromises);
+    const bookmarksWithVotes = await Promise.all(bookmarksWithVotesPromises);
 
-    return responseWithVotes;
+    return {
+      bookmarks: bookmarksWithVotes,
+      meta,
+    };
   }
 }
 /* --- DOC ---
