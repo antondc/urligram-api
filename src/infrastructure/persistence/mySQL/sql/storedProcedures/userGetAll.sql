@@ -12,7 +12,7 @@ BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
 
   SELECT
-    count(*) OVER() as totalRows,
+    count(*) OVER() as totalItems,
     `user`.`id`,
     `user`.`order`,
     `user`.`name`,

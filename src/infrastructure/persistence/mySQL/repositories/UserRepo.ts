@@ -9,11 +9,11 @@ export class UserRepo implements IUserRepo {
     try {
       const userGetAllQuery = 'CALL user_get_all(?, ?, ?, ?)';
       const [results] = await mySQL.query(userGetAllQuery, [sessionId, sort, size, offset]);
-      const resultsWithoutTotal = results.map((item) => ({ ...item, totalRows: undefined }));
+      const resultsWithoutTotal = results.map((item) => ({ ...item, totalItems: undefined }));
 
       return {
         meta: {
-          totalRows: results[0]?.totalRows || 0,
+          totalItems: results[0]?.totalItems || 0,
           size,
           offset,
           sort,

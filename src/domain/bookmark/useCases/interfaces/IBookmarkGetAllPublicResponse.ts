@@ -6,7 +6,7 @@ interface BookmarkWithUrl extends Bookmark {
 
 export type IBookmarkGetAllPublicResponse = {
   meta: {
-    totalRows: number;
+    totalItems: number;
     offset: number;
     size: number;
     sort: string;

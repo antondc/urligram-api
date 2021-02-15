@@ -45,12 +45,12 @@ export class BookmarkRepo implements IBookmarkRepo {
 
       const resultsWithoutTotal = bookmarks.map((item) => ({
         ...item,
-        totalRows: undefined,
+        totalItems: undefined,
       }));
 
       return {
         meta: {
-          totalRows: bookmarks[0]?.totalRows || 0,
+          totalItems: bookmarks[0]?.totalItems || 0,
           size,
           offset,
           sort,
