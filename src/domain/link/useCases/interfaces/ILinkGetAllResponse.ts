@@ -17,7 +17,9 @@ export type ILinkGetAllResponse = {
     offset: number;
     size: number;
     sort: string;
-    filter: string[];
+    filter: {
+      tags?: string[];
+    };
   };
   links: Array<Link & ExtendedTypes>;
 };

@@ -1,4 +1,6 @@
 import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
+import { ILinkGetAllRequest } from '@domain/link/repositories/interfaces/ILinkGetAllRequest';
+import { ILinkGetAllResponse } from '@domain/link/repositories/interfaces/ILinkGetAllResponse';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
@@ -19,7 +21,7 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkGetAll({ sessionId, sort, size, offset, filter }) {
+  public async linkGetAll({ sessionId, sort, size, offset, filter }: ILinkGetAllRequest): Promise<ILinkGetAllResponse> {
     const mySQL = new MySQL();
 
     try {

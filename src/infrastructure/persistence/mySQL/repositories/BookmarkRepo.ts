@@ -35,12 +35,11 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkGetAllPublic({ sessionId, sort, size = 30, offset }) {
+  public async bookmarkGetAllPublic({ sessionId, sort, size = 10, offset }) {
     const mySQL = new MySQL();
 
     try {
       const bookmarkGetAllPublicQuery = 'CALL bookmark_get_all_public(?, ?, ?, ?)';
-
       const [bookmarks] = await mySQL.query(bookmarkGetAllPublicQuery, [sessionId, sort, size, offset]);
 
       const resultsWithoutTotal = bookmarks.map((item) => ({
