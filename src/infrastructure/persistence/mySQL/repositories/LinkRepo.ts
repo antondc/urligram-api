@@ -23,11 +23,25 @@ export class LinkRepo implements ILinkRepo {
     const mySQL = new MySQL();
 
     try {
-      const linkGetAllPublicQuery = 'CALL link_get_all(?, ?, ?, ?, ?)';
+      const linkGetAllQuery = 'CALL link_get_all(?, ?, ?, ?, ?)';
 
-      const [link] = await mySQL.query(linkGetAllPublicQuery, [sessionId, sort, size, offset, JSON.stringify(filter)]);
+      const [links] = await mySQL.query(linkGetAllQuery, [sessionId, sort, size, offset, JSON.stringify(filter)]);
 
-      return link;
+      const resultsWithoutTotal = links.map((item) => ({
+        ...item,
+        totalItems: undefined,
+      }));
+
+      return {
+        meta: {
+          totalItems: links[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+          filter,
+        },
+        links: resultsWithoutTotal,
+      };
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {

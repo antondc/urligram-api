@@ -19,9 +19,9 @@ export class LinkGetAllUseCase implements ILinkGetAllUseCase {
   public async execute(linkGetAllRequest: ILinkGetAllRequest): Promise<ILinkGetAllResponse> {
     const { session, sort, size, offset, filter } = linkGetAllRequest;
 
-    const response = await this.linkRepo.linkGetAll({ sessionId: session?.id, sort, size, offset, filter });
+    const { links, meta } = await this.linkRepo.linkGetAll({ sessionId: session?.id, sort, size, offset, filter });
 
-    const responseWithVotesPromises = response.map(async (item) => {
+    const linksWithVotesPromises = links.map(async (item) => {
       const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.id, session });
 
       return {
@@ -29,9 +29,12 @@ export class LinkGetAllUseCase implements ILinkGetAllUseCase {
         statistics,
       };
     });
-    const responseWithVotes = await Promise.all(responseWithVotesPromises);
+    const linksWithVotes = await Promise.all(linksWithVotesPromises);
 
-    return responseWithVotes;
+    return {
+      meta,
+      links: linksWithVotes,
+    };
   }
 }
 

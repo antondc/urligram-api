@@ -11,4 +11,13 @@ type ExtendedTypes = {
   }[];
 };
 
-export type ILinkGetAllResponse = Array<Link & ExtendedTypes>;
+export type ILinkGetAllResponse = {
+  meta: {
+    totalItems: number;
+    offset: number;
+    size: number;
+    sort: string;
+    filter: string[];
+  };
+  links: Array<Link & ExtendedTypes>;
+};

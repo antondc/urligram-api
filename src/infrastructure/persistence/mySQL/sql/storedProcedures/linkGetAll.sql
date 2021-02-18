@@ -68,13 +68,13 @@ BEGIN
     )
   GROUP BY link.id
   ORDER BY
-    CASE WHEN $SORT = 'id'         THEN link.id      	    ELSE NULL END ASC,
-    CASE WHEN $SORT = '-id'        THEN link.id      	    ELSE NULL END DESC,
-    CASE WHEN $SORT = 'order'      THEN link.order	      ELSE NULL END ASC,
-    CASE WHEN $SORT = '-order'     THEN link.order        ELSE NULL END DESC,
+    CASE WHEN $SORT = 'id'         THEN link.id      	      ELSE NULL END ASC,
+    CASE WHEN $SORT = '-id'        THEN link.id      	      ELSE NULL END DESC,
+    CASE WHEN $SORT = 'order'      THEN link.order	        ELSE NULL END ASC,
+    CASE WHEN $SORT = '-order'     THEN link.order          ELSE NULL END DESC,
     CASE WHEN $SORT = 'bookmarks'  THEN COUNT(bookmark.id)  ELSE NULL END ASC,
     CASE WHEN $SORT = '-bookmarks' THEN COUNT(bookmark.id)  ELSE NULL END DESC,
-    CASE WHEN $SORT IS NULL        THEN COUNT(link.id)    ELSE NULL END DESC
+    CASE WHEN $SORT IS NULL        THEN link.id             ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
  ;
 
@@ -82,4 +82,4 @@ END
 
 /* DELIMITER ; */
 
-/* CALL link_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-bookmarks', NULL, NULL, '{"tags": [ "asd"]}'); */
+/* CALL link_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'id', NULL, NULL, '{"tags": ["foo"]}'); */

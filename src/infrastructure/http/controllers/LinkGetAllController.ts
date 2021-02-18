@@ -46,9 +46,9 @@ export class LinkGetAllController extends BaseController {
       },
     };
 
-    const response = await this.useCase.execute(linkGetAllRequest);
+    const { links, meta } = await this.useCase.execute(linkGetAllRequest);
 
-    const formattedLinks = response.map((item) => {
+    const formattedLinks = links.map((item) => {
       const urlWrapper = new URLWrapper(item.url);
       const url = urlWrapper.getUrl();
 
@@ -66,6 +66,7 @@ export class LinkGetAllController extends BaseController {
     });
 
     const formattedResponse = {
+      meta,
       Links: {
         self: URL_SERVER + '/links',
       },
