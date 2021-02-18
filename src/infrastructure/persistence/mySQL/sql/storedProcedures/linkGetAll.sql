@@ -16,6 +16,7 @@ BEGIN
   SET @filterTags  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
 
   SELECT
+    count(*) OVER() as totalItems,
     link.id,
     link.title,
     link.image as img,
