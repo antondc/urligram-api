@@ -18,6 +18,7 @@ BEGIN
   SET @filterRole  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.role'));
 
  SELECT
+    count(*) OVER() as totalItems,
     list.id,
     list.order,
     list.name,
@@ -86,7 +87,7 @@ BEGIN
     CASE WHEN $SORT = '-bookmarks'  THEN JSON_LENGTH(bookmarksIds)  ELSE NULL END DESC,
     CASE WHEN $SORT = 'members'     THEN JSON_LENGTH(membersIds)    ELSE NULL END ASC,
     CASE WHEN $SORT = '-members'    THEN JSON_LENGTH(membersIds)    ELSE NULL END DESC,
-    CASE WHEN $SORT != 'order' AND $SORT != '-order'    THEN `list`.order               ELSE NULL END ASC
+    CASE WHEN $SORT IS NULL         THEN `list`.id                  ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
   ;
 

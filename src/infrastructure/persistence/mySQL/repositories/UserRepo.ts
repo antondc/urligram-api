@@ -329,9 +329,20 @@ export class UserRepo implements IUserRepo {
     const mySQL = new MySQL();
     try {
       const userListGetAllPublicQuery = 'CALL user_list_get_all(?, ?, ?, ?, ?, ?)';
-      const [results] = await mySQL.query(userListGetAllPublicQuery, [userId, sessionId, sort, size, offset, JSON.stringify(filter)]);
+      const [lists] = await mySQL.query(userListGetAllPublicQuery, [userId, sessionId, sort, size, offset, JSON.stringify(filter)]);
 
-      return results;
+      const listsWithTotal = lists.map((item) => ({ ...item, totalItems: undefined }));
+
+      return {
+        meta: {
+          totalItems: lists[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+          filter,
+        },
+        lists: listsWithTotal,
+      };
     } catch (err) {
       throw new RequestError('Something failed', 500, err);
     } finally {
