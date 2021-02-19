@@ -120,7 +120,8 @@ UsersRoute.put('/me/password', async (req: Request, res: Response, next: NextFun
 
 UsersRoute.get('/:userId/following', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userFollowingGetAllUserCase = new UserFollowingGetAllUseCase(userRepo);
+  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
+  const userFollowingGetAllUserCase = new UserFollowingGetAllUseCase(userRepo, userTagsGetAllUseCase);
   const userFollowingGetAllController = new UserFollowingGetAllController(userFollowingGetAllUserCase);
 
   const response = await userFollowingGetAllController.execute(req, res, next);

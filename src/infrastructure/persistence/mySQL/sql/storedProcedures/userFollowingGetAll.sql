@@ -13,11 +13,13 @@ BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
 
   SELECT
+    count(*) OVER() as totalItems,
     `user_user`.`order`,
     `user_user`.`createdAt`,
     `user_user`.`updatedAt`,
     `user2`.`id`,
     `user2`.`name`,
+    `user2`.`image`,
     `user2`.`level`,
     `user2`.`email`,
     `user2`.`status`,

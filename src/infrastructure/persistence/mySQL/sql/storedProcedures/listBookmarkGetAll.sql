@@ -13,7 +13,7 @@ CREATE PROCEDURE list_bookmark_get_all(
 BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
 
-  SELECT DISTINCT
+  SELECT
     count(*) OVER() as totalItems,
     bookmark.id,
     bookmark.order,
@@ -48,9 +48,14 @@ BEGIN
   WHERE
     list.id                                   = $LIST_ID
     AND
-      `list`.`isPrivate` IS NOT TRUE
-      OR `list`.`userId`       = $SESSION_ID
-      OR `user_list`.`user_id` = $SESSION_ID
+      (
+        `list`.`isPrivate` IS NOT TRUE
+        OR
+        `list`.`userId`       = $SESSION_ID
+         OR
+        `user_list`.`user_id` = $SESSION_ID
+      )
+  GROUP BY bookmark.id
   ORDER BY
     CASE WHEN $SORT = 'id'          THEN `bookmark`.id      	ELSE NULL END ASC,
     CASE WHEN $SORT = '-id'         THEN `bookmark`.id      	ELSE NULL END DESC,
@@ -62,9 +67,8 @@ BEGIN
   LIMIT $OFFSET , $SIZE
   ;
 
-
 END
 
 -- DELIMITER ;
 
--- CALL list_bookmark_get_all(1, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", "id", NULL, NULL);
+-- CALL list_bookmark_get_all(3, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, 5, 3);

@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserFollowingGetAllUseCase } from '@domain/user/useCases/UserFollowingGetAllUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
+import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -26,14 +27,14 @@ export class UserFollowingGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { sort, page: { size, offset } = {} } = req.query as UserFollowingGetAllControllerQueryType;
     const { userId } = req.params;
-    const castedSize = Number(size) || undefined;
+    const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || undefined;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
-    const response = await this.useCase.execute({ session, userId, sort, size: castedSize, offset: castedOffset });
+    const { users, meta } = await this.useCase.execute({ session, userId, sort, size: castedSize, offset: castedOffset });
 
-    const formattedItems = response.map((item) => {
+    const formattedItems = users.map((item) => {
       return {
         type: 'user',
         id: item.id,
@@ -50,6 +51,7 @@ export class UserFollowingGetAllController extends BaseController {
       links: {
         self: URL_SERVER + '/users/' + userId + '/following',
       },
+      meta,
       data: formattedItems,
       included: [],
     };
