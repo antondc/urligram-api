@@ -1,3 +1,11 @@
 import { User } from '@domain/user/entities/User';
 
-export type IUserFollowerGetAllResponse = User[];
+export type IUserFollowerGetAllResponse = {
+  meta: {
+    totalItems: number;
+    offset: number;
+    size: number;
+    sort: string;
+  };
+  users: User[];
+};

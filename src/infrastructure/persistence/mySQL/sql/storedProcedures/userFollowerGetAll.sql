@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_follower_get_all;
 
+-- DELIMITER $$
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_follower_get_all(
   IN $SESSION_ID VARCHAR(40),
@@ -13,11 +15,13 @@ BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
 
   SELECT
+    count(*) OVER() as totalItems,
     `user_user`.`order`,
     `user_user`.`createdAt`,
     `user_user`.`updatedAt`,
     `user`.`id`,
     `user`.`name`,
+    `user`.`image`,
     `user`.`level`,
     `user`.`email`,
     `user`.`status`,
@@ -82,7 +86,7 @@ BEGIN
           user_user.user_id1
         )
       FROM user_user
-      WHERE user_user.user_id = user2.id
+      WHERE user_user.user_id = user.id
     ) AS followers,
     (
       SELECT
@@ -90,7 +94,7 @@ BEGIN
           user_user.user_id
         )
       FROM user_user
-      WHERE user_user.user_id1 = user2.id
+      WHERE user_user.user_id1 = user.id
     ) AS following
   FROM `user`
   INNER JOIN `user_user` ON `user`.id = `user_user`.`user_id`
@@ -108,5 +112,5 @@ BEGIN
 
 END
 
--- Example CALL
--- CALL user_follower_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL);
+-- DELIMITER ;
+-- CALL user_follower_get_all('11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', NULL, NULL, NULL);

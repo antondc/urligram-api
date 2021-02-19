@@ -161,7 +161,8 @@ UsersRoute.delete('/me/following/:followedId', async (req: Request, res: Respons
 
 UsersRoute.get('/:userId/followers', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userFollowerGetAllUseCase = new UserFollowerGetAllUseCase(userRepo);
+  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
+  const userFollowerGetAllUseCase = new UserFollowerGetAllUseCase(userRepo, userTagsGetAllUseCase);
   const userFollowerGetAllController = new UserFollowerGetAllController(userFollowerGetAllUseCase);
 
   const response = await userFollowerGetAllController.execute(req, res, next);

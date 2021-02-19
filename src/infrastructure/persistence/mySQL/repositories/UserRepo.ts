@@ -211,9 +211,19 @@ export class UserRepo implements IUserRepo {
     const mySQL = new MySQL();
     try {
       const userFollowerGetAllQuery = 'CALL user_follower_get_all(?, ?, ?, ?, ?)';
-      const [results] = await mySQL.query(userFollowerGetAllQuery, [sessionId, userId, sort, size, offset]);
+      const [users] = await mySQL.query(userFollowerGetAllQuery, [sessionId, userId, sort, size, offset]);
+      
+      const usersWithoutTotal = users.map((item) => ({ ...item, totalItems: undefined }));
 
-      return results;
+      return {
+        meta: {
+          totalItems: users[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+        },
+        users: usersWithoutTotal,
+      };
     } catch (err) {
       throw new RequestError('Something failed', 500, err);
     } finally {

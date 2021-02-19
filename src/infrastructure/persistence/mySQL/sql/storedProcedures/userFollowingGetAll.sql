@@ -84,7 +84,7 @@ BEGIN
           user_user.user_id1
         )
       FROM user_user
-      WHERE user_user.user_id = user2.id
+      WHERE user_user.user_id = user.id
     ) AS followers,
     (
       SELECT
@@ -92,7 +92,7 @@ BEGIN
           user_user.user_id
         )
       FROM user_user
-      WHERE user_user.user_id1 = user2.id
+      WHERE user_user.user_id1 = user.id
     ) AS following
   FROM `user`
   LEFT JOIN `user_user` ON `user`.id = `user_user`.`user_id`
