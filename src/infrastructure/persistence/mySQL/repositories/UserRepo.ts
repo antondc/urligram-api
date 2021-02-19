@@ -215,9 +215,19 @@ export class UserRepo implements IUserRepo {
     const mySQL = new MySQL();
     try {
       const userBookmarkGetAllQuery = 'CALL user_bookmark_get_all(?, ?, ?, ?, ?)';
-      const [results] = await mySQL.query(userBookmarkGetAllQuery, [sessionId, userId, sort, size, offset]);
+      const [bookmarks] = await mySQL.query(userBookmarkGetAllQuery, [sessionId, userId, sort, size, offset]);
 
-      return results;
+      const bookmarksWithTotal = bookmarks.map((item) => ({ ...item, totalItems: undefined }));
+
+      return {
+        meta: {
+          totalItems: bookmarks[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+        },
+        bookmarks: bookmarksWithTotal,
+      };
     } catch (err) {
       throw new RequestError('Something failed', 500, err);
     } finally {

@@ -29,7 +29,7 @@ export class UserBookmarkGetAllController extends BaseController {
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
-    const checkedSize = Number(size) || undefined;
+    const checkedSize = Number(size) || 10;
     const castedOffset = Number(offset) || undefined;
 
     const userBookmarkGetAllRequest: IUserBookmarkGetAllRequest = {
@@ -40,9 +40,9 @@ export class UserBookmarkGetAllController extends BaseController {
       offset: castedOffset,
     };
 
-    const response = await this.useCase.execute(userBookmarkGetAllRequest);
+    const { bookmarks, meta } = await this.useCase.execute(userBookmarkGetAllRequest);
 
-    const formattedLinks = response.map((item) => {
+    const formattedLinks = bookmarks.map((item) => {
       return {
         type: 'link',
         id: item.id,
@@ -59,6 +59,7 @@ export class UserBookmarkGetAllController extends BaseController {
       links: {
         self: URL_SERVER + '/links',
       },
+      meta,
       data: formattedLinks,
       included: [],
     };
