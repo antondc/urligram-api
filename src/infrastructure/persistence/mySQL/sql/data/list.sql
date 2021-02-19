@@ -1,7 +1,7 @@
 INSERT INTO `list` (
   `id`, `order`, `name`, `description`, `isPrivate`, `userId`, `createdAt`, `updatedAt`
 ) VALUES
-  (1, 0, 'First list', 'First list', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2012-12-19 19:47:48', '2021-01-19 19:47:48'),
+  (1, 1, 'First list', 'First list', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2012-12-19 19:47:48', '2021-01-19 19:47:48'),
   (2, 2, 'Second list', 'Second list', true, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '2020-01-19 19:47:48', '2021-01-24 19:47:48'),
   (3, 3, 'Third list', 'Third list', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2020-04-19 19:47:48', '2021-07-19 19:47:48'),
   (4, 4, 'Fourth list', 'Fourth list', false, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', '2013-11-19 19:47:48', '2021-03-19 19:47:48'),
@@ -12,4 +12,12 @@ INSERT INTO `list` (
   (9, 9, 'Ninth list', 'Ninthlist', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2018-11-19 19:47:48', '2021-01-19 19:47:48'),
   (10, 10, 'Tenth list', 'Tenth list', false, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', '2018-11-19 19:47:48', '2021-01-19 19:47:48'),
   (11, 11, 'Eleventh list', 'Eleventh list', true, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', '2010-11-19 19:47:48', '2021-01-19 19:47:48'),
-  (12, 12, 'Twelfth list', 'Sixth Twelfthst', false, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', '2021-01-19 19:47:48', '2021-01-19 19:47:48');
+  (12, 12, 'Twelfth list', 'Twelfth Twelfthst', false, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', '2021-01-19 19:47:48', '2021-01-19 19:47:48'),
+  (13, 13, 'Thirteenth list', 'Thirteenth Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2021-01-19 19:47:48', '2021-01-19 19:47:48'),
+  (14, 14, 'Fourteenth list', 'Fourteenth Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2021-01-19 19:47:48', '2021-01-19 19:47:48'),
+  (15, 15, 'Fifteen list', 'Fifteen Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2021-01-19 19:47:48', '2021-01-19 19:47:48'),
+  (16, 16, 'Sixteen list', 'Sixteen Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2021-01-19 19:47:48', '2021-01-19 19:47:48'),
+  (17, 17, 'Seventeen list', 'Seventeen Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2021-01-19 19:47:48', '2021-01-19 19:47:48'),
+  (18, 18, 'Eighteen list', 'Eighteen Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2021-01-19 19:47:48', '2021-01-19 19:47:48'),
+  (19, 19, 'Nineteen list', 'Nineteenh Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2021-01-19 19:47:48', '2021-01-19 19:47:48'),
+  (20, 20, 'Twentieth list', 'Twentiethh Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', '2021-01-19 19:47:48', '2021-01-19 19:47:48');

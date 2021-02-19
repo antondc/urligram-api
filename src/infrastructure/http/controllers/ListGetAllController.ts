@@ -10,6 +10,7 @@ type ListGetAllControllerQueryType = {
   sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'members' | '-members';
   page: {
     size: string;
+    offset: string;
   };
 };
 
@@ -22,15 +23,16 @@ export class ListGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size } = {} } = req.query as ListGetAllControllerQueryType;
+    const { sort, page: { size, offset } = {} } = req.query as ListGetAllControllerQueryType;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
-    const checkedSize = Number(size) || undefined;
+    const checkedSize = Number(size) || 10;
     const checkedSort = sort || undefined;
+    const castedOffset = Number(offset) || undefined;
 
-    const response = await this.useCase.execute({ session, size: checkedSize, sort: checkedSort });
+    const { lists, meta } = await this.useCase.execute({ session, size: checkedSize, sort: checkedSort, offset: castedOffset });
 
-    const formattedLists = response.map((item) => {
+    const formattedLists = lists.map((item) => {
       return {
         type: 'list',
         id: item.id,
@@ -44,6 +46,7 @@ export class ListGetAllController extends BaseController {
     });
 
     const formattedResponse = {
+      meta,
       lists: {
         self: URL_SERVER + '/lists',
       },

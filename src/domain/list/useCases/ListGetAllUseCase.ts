@@ -14,9 +14,9 @@ export class ListGetAllUseCase implements IListGetAllUseCase {
   }
 
   public async execute(listGetAllRequest: IListGetAllRequest): Promise<IListGetAllResponse> {
-    const { session, sort, size } = listGetAllRequest;
+    const { session, sort, size, offset } = listGetAllRequest;
 
-    const lists = await this.listRepo.listGetAll({ userId: session?.id, size, sort });
+    const { lists, meta } = await this.listRepo.listGetAll({ userId: session?.id, size, sort, offset });
 
     const listsWithTagsPromises = lists.map(async (item) => {
       const tags = await this.listRepo.listTagsGetAll({ listId: item.id, sessionId: session?.id });
@@ -29,6 +29,9 @@ export class ListGetAllUseCase implements IListGetAllUseCase {
 
     const listsWithTags = await Promise.all(listsWithTagsPromises);
 
-    return listsWithTags;
+    return {
+      lists: listsWithTags,
+      meta,
+    };
   }
 }

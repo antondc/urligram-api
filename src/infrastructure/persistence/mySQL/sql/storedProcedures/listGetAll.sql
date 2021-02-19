@@ -4,7 +4,8 @@ DROP PROCEDURE IF EXISTS list_get_all;
 CREATE PROCEDURE list_get_all(
   IN $SESSION_ID TEXT,
   IN $SORT TEXT,
-  IN $SIZE INT
+  IN $SIZE INT,
+  IN $OFFSET INT
 )
 
 BEGIN
@@ -12,6 +13,7 @@ BEGIN
 
   -- Returns a collection of public lists or those where user is member, along with the number of users in each list
 SELECT
+    count(*) OVER() as totalItems,
     `list`.`id`,
     `list`.`name`,
     `list`.`description`,
@@ -44,15 +46,17 @@ SELECT
       OR `user_list`.`user_id` = $SESSION_ID
     GROUP BY list.id
       ORDER BY
-      CASE WHEN $SORT = "members"     THEN count(membersIds) 	ELSE NULL END ASC,
-      CASE WHEN $SORT = "-members"    THEN count(membersIds) 	ELSE NULL END DESC,
-      CASE WHEN $SORT = 'id'          THEN `list`.id      	ELSE NULL END ASC,
-      CASE WHEN $SORT = '-id'         THEN `list`.id      	ELSE NULL END DESC,
-      CASE WHEN $SORT = 'createdAt'   THEN `list`.createdAt	ELSE NULL END ASC,
-      CASE WHEN $SORT = '-createdAt'  THEN `list`.createdAt ELSE NULL END DESC,
-      CASE WHEN $SORT = 'updatedAt'   THEN `list`.updatedAt ELSE NULL END ASC,
-      CASE WHEN $SORT = '-updatedAt'  THEN `list`.updatedAt ELSE NULL END DESC
-    LIMIT $SIZE
+      CASE WHEN $SORT = "members"     THEN count(membersIds) 	 ELSE NULL END ASC,
+      CASE WHEN $SORT = "-members"    THEN count(membersIds) 	 ELSE NULL END DESC,
+      CASE WHEN $SORT = 'id'          THEN `list`.id      	   ELSE NULL END ASC,
+      CASE WHEN $SORT = '-id'         THEN `list`.id      	   ELSE NULL END DESC,
+      CASE WHEN $SORT = 'createdAt'   THEN `list`.createdAt	   ELSE NULL END ASC,
+      CASE WHEN $SORT = '-createdAt'  THEN `list`.createdAt    ELSE NULL END DESC,
+      CASE WHEN $SORT = 'updatedAt'   THEN `list`.updatedAt    ELSE NULL END ASC,
+      CASE WHEN $SORT = '-updatedAt'  THEN `list`.updatedAt    ELSE NULL END DESC,
+      CASE WHEN $SORT IS NULL         THEN `list`.id           ELSE NULL END ASC
+
+    LIMIT $OFFSET , $SIZE
   ;
 
 END
