@@ -46,7 +46,6 @@ export interface IListRepo {
   listUserCreateOne: (listUserGetOneRequest: IListUserCreateOneRequest) => Promise<IListUserCreateOneResponse>;
   listUserUpdateOne: (listUserGetOneRequest: IListUserUpdateOneRequest) => Promise<IListUserUpdateOneResponse>;
   listUserDeleteOne: (listUserGetOneRequest: IListUserDeleteOneRequest) => Promise<IListUserDeleteOneResponse>;
-
   listBookmarkGetAll: (listBookmarkGetAllRequest: IListBookmarkGetAllRequest) => Promise<IListBookmarkGetAllResponse>;
   listBookmarkCreateOne: (listBookmarkCreateOneRequest: IListBookmarkCreateOneRequest) => Promise<IListBookmarkCreateOneResponse>;
   listBookmarkDeleteOne: (listBookmarkDeleteOneRequest: IListBookmarkDeleteOneRequest) => Promise<IListBookmarkDeleteOneResponse>;

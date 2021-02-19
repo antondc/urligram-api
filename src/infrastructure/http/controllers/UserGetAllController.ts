@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
+import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -43,7 +44,7 @@ export class UserGetAllController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
     const castedSort = sort || undefined;
-    const castedSize = Number(size) || 10;
+    const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || undefined;
 
     const { users, meta } = await this.useCase.execute({ session, sort: castedSort, size: castedSize, offset: castedOffset });

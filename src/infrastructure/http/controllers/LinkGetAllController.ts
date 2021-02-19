@@ -5,6 +5,7 @@ import { ILinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URLWrapper } from '@infrastructure/services/UrlWrapper';
+import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -29,7 +30,7 @@ export class LinkGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { sort, page: { size, offset } = {}, filter: { tags } = {} } = req.query as LinkGetAllControllerQueryType;
-    const castedSize = Number(size) || 10;
+    const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || null;
     const parsedTags = tags?.split(',') || null;
     const tokenService = new TokenService();

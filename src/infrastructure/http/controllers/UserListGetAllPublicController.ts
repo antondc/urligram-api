@@ -4,6 +4,7 @@ import { User } from '@domain/user/entities/User';
 import { IUserListGetAllPublicRequest } from '@domain/user/useCases/interfaces/IUserListGetAllPublicRequest';
 import { IUserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
 import { TokenService } from '@infrastructure/services/TokenService';
+import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
@@ -28,7 +29,7 @@ export class UserListGetAllPublicController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { sort, page: { size, offset } = {}, filter: { role } = {} } = req.query as UserListGetAllPublicControllerQueryType;
-    const checkedSize = Number(size) || 10;
+    const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedOffset = Number(offset) || undefined;
     const parsedRole = role?.split(',') || null;
     const { userId } = req.params;

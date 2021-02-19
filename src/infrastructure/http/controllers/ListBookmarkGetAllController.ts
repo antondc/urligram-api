@@ -6,8 +6,17 @@ import { IListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGe
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URLWrapper } from '@infrastructure/services/UrlWrapper';
+import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
+
+type ListBookmarkGetAllControllerQueryType = {
+  sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
+  page: {
+    size: string;
+    offset: string;
+  };
+};
 
 export class ListBookmarkGetAllController extends BaseController {
   useCase: IListBookmarkGetAllUseCase;
@@ -19,6 +28,9 @@ export class ListBookmarkGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
+    const { sort, page: { size, offset } = {} } = req.query as ListBookmarkGetAllControllerQueryType;
+    const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
+    const checkedAfter = Number(offset) || undefined;
     const { listId } = req.params;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
@@ -26,11 +38,14 @@ export class ListBookmarkGetAllController extends BaseController {
     const listBookmarkGetAllRequest: IListBookmarkGetAllRequest = {
       listId: Number(listId),
       session,
+      sort,
+      size: checkedSize,
+      offset: checkedAfter,
     };
 
-    const response: IListBookmarkGetAllResponse = await this.useCase.execute(listBookmarkGetAllRequest);
+    const { bookmarks, meta }: IListBookmarkGetAllResponse = await this.useCase.execute(listBookmarkGetAllRequest);
 
-    const formattedBookmarks = response.map((item) => {
+    const formattedBookmarks = bookmarks.map((item) => {
       const urlWrapper = new URLWrapper(item.url);
       const url = urlWrapper.getUrl();
 
@@ -51,6 +66,7 @@ export class ListBookmarkGetAllController extends BaseController {
       links: {
         self: URL_SERVER + '/lists/' + listId + '/bookmarks/',
       },
+      meta,
       data: formattedBookmarks,
       included: [],
     };

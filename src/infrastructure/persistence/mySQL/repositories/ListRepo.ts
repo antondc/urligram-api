@@ -22,8 +22,6 @@ export class ListRepo implements IListRepo {
         },
         lists: resultsWithoutTotal,
       };
-
-      return list;
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {
@@ -207,15 +205,25 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listBookmarkGetAll({ listId }) {
+  public async listBookmarkGetAll({ listId, sessionId, sort, size, offset }) {
     const mySQL = new MySQL();
 
     try {
-      const listBookmarkGetAllQuery = 'CALL list_bookmark_get_all(?)';
+      const listBookmarkGetAllQuery = 'CALL list_bookmark_get_all(?, ?, ?, ?, ?)';
 
-      const [results] = await mySQL.query(listBookmarkGetAllQuery, [listId]);
+      const [bookmarks] = await mySQL.query(listBookmarkGetAllQuery, [listId, sessionId, sort, size, offset]);
 
-      return results;
+      const resultsWithoutTotal = bookmarks.map((item) => ({ ...item, totalItems: undefined }));
+
+      return {
+        meta: {
+          totalItems: bookmarks[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+        },
+        bookmarks: resultsWithoutTotal,
+      };
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {
