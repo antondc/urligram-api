@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_get_one;
 
+/* DELIMITER $$ */
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_get_one(
   IN $SESSION_ID VARCHAR(40),
@@ -24,7 +26,7 @@ SELECT
   `user`.`updatedAt`,
   (
     SELECT
-      JSON_ARRAYAGG(bookmark.id)
+      IF(COUNT(bookmark.id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(bookmark.id))
     FROM bookmark
     WHERE user.id = bookmark.user_id
       AND
@@ -37,10 +39,14 @@ SELECT
   JSON_MERGE(
     (
       SELECT
-        JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'id', list.id,
-            'userRole', "admin"
+        IF(
+          COUNT(list.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', list.id,
+              'userRole', "admin"
+            )
           )
         )
       FROM `list`
@@ -55,10 +61,14 @@ SELECT
     ),
     (
       SELECT
-        JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'id', `user_list`.list_id,
-            'userRole', `user_list`.userRole
+        IF(
+          COUNT(`user_list`.list_id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', `user_list`.list_id,
+              'userRole', `user_list`.userRole
+            )
           )
         )
       FROM `user_list`
@@ -75,13 +85,13 @@ SELECT
   ) AS lists,
   (
     SELECT
-      JSON_ARRAYAGG(user_user.user_id1)
+      IF(COUNT(user_user.user_id1) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id1))
     FROM user_user
     WHERE user_user.user_id = user.id
   ) AS followers,
   (
     SELECT
-      JSON_ARRAYAGG(user_user.user_id)
+      IF(COUNT(user_user.user_id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id))
     FROM user_user
     WHERE user_user.user_id1 = user.id
   ) AS following
@@ -94,3 +104,7 @@ SELECT
 ;
 
 END
+
+/* DELIMITER ; */
+
+/* CALL user_get_one("9b360676-5b69-11eb-ae93-0242ac130002", "9b360676-5b69-11eb-ae93-0242ac130002", NULL, NULL); */

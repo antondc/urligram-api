@@ -1,5 +1,6 @@
 DROP PROCEDURE IF EXISTS user_get_by_ids;
 
+/* DELIMITER $$ */
 
 CREATE PROCEDURE user_get_by_ids(
   IN $SESSION_ID VARCHAR(40),
@@ -27,9 +28,7 @@ BEGIN
     `user`.`updatedAt`,
     (
       SELECT
-        JSON_ARRAYAGG(
-          bookmark.id
-        )
+        IF(COUNT(bookmark.id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(bookmark.id))
       FROM bookmark
       WHERE user.id = bookmark.user_id
         AND
@@ -42,10 +41,14 @@ BEGIN
     JSON_MERGE(
       (
         SELECT
-          JSON_ARRAYAGG(
-            JSON_OBJECT(
-              'id', list.id,
-              'userRole', "admin"
+          IF(
+            COUNT(list.id) = 0,
+            JSON_ARRAY(),
+            JSON_ARRAYAGG(
+              JSON_OBJECT(
+                'id', list.id,
+                'userRole', "admin"
+              )
             )
           )
         FROM `list`
@@ -60,10 +63,14 @@ BEGIN
       ),
       (
         SELECT
-          JSON_ARRAYAGG(
-            JSON_OBJECT(
-              'id', `user_list`.list_id,
-              'userRole', `user_list`.userRole
+          IF(
+            COUNT(`user_list`.list_id) = 0,
+            JSON_ARRAY(),
+            JSON_ARRAYAGG(
+              JSON_OBJECT(
+                'id', `user_list`.list_id,
+                'userRole', `user_list`.userRole
+              )
             )
           )
         FROM `user_list`
@@ -80,17 +87,13 @@ BEGIN
     ) AS lists,
     (
       SELECT
-        JSON_ARRAYAGG(
-          user_user.user_id1
-        )
+        IF(COUNT(user_user.user_id1) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id1))
       FROM user_user
       WHERE user_user.user_id = user.id
     ) AS followers,
     (
       SELECT
-        JSON_ARRAYAGG(
-          user_user.user_id
-        )
+        IF(COUNT(user_user.user_id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id))
       FROM user_user
       WHERE user_user.user_id1 = user.id
     ) AS following
@@ -119,5 +122,5 @@ BEGIN
 
 END
 
-
+/* DELIMITER ; */
 /* CALL user_get_by_ids("e4e2bb46-c210-4a47-9e84-f45c789fcec1", '["e4e2bb46-c210-4a47-9e84-f45c789fcec1", "92fac4aa-5b6a-11eb-ae93-0242ac130002"]', NULL, NULL, NULL); */

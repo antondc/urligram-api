@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_bookmark_get_all;
 
+/* DELIMITER $$ */
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_get_all(
   IN $SESSION_ID VARCHAR(40),
@@ -27,10 +29,14 @@ BEGIN
     bookmark.updatedAt,
     (
       SELECT
-        JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'id', tag.id,
-            'name', tag.name
+        IF(
+          COUNT(tag.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', tag.id,
+              'name', tag.name
+            )
           )
         )
       FROM tag
@@ -40,8 +46,8 @@ BEGIN
   FROM bookmark
   INNER JOIN link ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id
-  INNER JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
-  INNER JOIN tag ON bookmark_tag.tag_id = tag.id
+  LEFT JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
+  LEFT JOIN tag ON bookmark_tag.tag_id = tag.id
   WHERE bookmark.user_id = $USER_ID
   AND
     (
@@ -62,3 +68,6 @@ BEGIN
   ;
 
 END
+
+/* DELIMITER ; */
+/* CALL user_bookmark_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', NULL, NULL, NULL); */

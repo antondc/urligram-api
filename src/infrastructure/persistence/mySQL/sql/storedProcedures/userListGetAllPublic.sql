@@ -1,7 +1,6 @@
--- Example CALL
--- CALL user_list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1',"e4e2bb46-c210-4a47-9e84-f45c789fcec1","id",NULL,NULL,'{"role": ["admin","reader","editor"]}');
-
 DROP PROCEDURE IF EXISTS user_list_get_all;
+
+/* DELIMITER $$ */
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_list_get_all(
@@ -37,13 +36,13 @@ BEGIN
     ) userRole,
     (
       SELECT
-        JSON_ARRAYAGG(bookmark_list.bookmark_id)
+        IF(COUNT(bookmark_list.bookmark_id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(bookmark_list.bookmark_id))
       FROM bookmark_list
       WHERE bookmark_list.list_id = list.id
     ) AS bookmarksIds,
     (
       SELECT
-        JSON_ARRAYAGG(user.id)
+        IF(COUNT(user.id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user.id))
       FROM user_list
       JOIN `user` ON user.id = user_list.user_id
       WHERE list.id = user_list.list_id
@@ -92,3 +91,7 @@ BEGIN
   ;
 
 END
+
+/* DELIMITER ; */
+
+/* CALL user_list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', "e4e2bb46-c210-4a47-9e84-f45c789fcec1", "id", NULL,  NULL, '{"role": ["admin","reader","editor"]}'); */

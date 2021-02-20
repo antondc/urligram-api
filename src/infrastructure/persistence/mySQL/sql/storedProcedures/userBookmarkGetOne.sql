@@ -25,10 +25,14 @@ BEGIN
     `bookmark`.`updatedAt`,
     (
       SELECT
-        JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'id', tag.id,
-            'name', tag.name
+        IF(
+          COUNT(tag.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', tag.id,
+              'name', tag.name
+            )
           )
         )
       FROM `bookmark_tag`
