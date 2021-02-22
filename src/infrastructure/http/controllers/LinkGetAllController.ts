@@ -29,7 +29,7 @@ export class LinkGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {}, filter: { tags } = {} } = req.query as LinkGetAllControllerQueryType;
+    const { sort = 'id', page: { size, offset } = {}, filter: { tags } = {} } = req.query as LinkGetAllControllerQueryType;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || null;
     const parsedTags = tags?.split(',') || null;
