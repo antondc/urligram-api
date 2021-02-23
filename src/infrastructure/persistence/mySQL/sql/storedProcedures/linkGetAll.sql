@@ -4,7 +4,7 @@ DROP PROCEDURE IF EXISTS link_get_all;
 
 CREATE PROCEDURE link_get_all(
   IN $SESSION_ID VARCHAR(40),
-  IN $SORT VARCHAR(40),
+  IN $SORT TEXT,
   IN $SIZE INT,
   IN $OFFSET INT,
   IN $FILTER JSON
@@ -18,10 +18,25 @@ BEGIN
   SELECT
     count(*) OVER() as totalItems,
     link.id,
+    link.order,
     link.title,
     link.image as img,
-    link.order,
+    link.createdAt,
+    link.updatedAt,
     CONCAT(domain.domain, link.path) AS url,
+    (
+      SELECT
+        JSON_ARRAYAGG(user_link.vote)
+      FROM user_link
+      WHERE user_link.link_id = link.id
+    ) AS allVotes,
+    (
+      SELECT
+        SUM(IF(user_link.vote IS NULL, 0, IF(user_link.vote = 0, -1, 1))) AS aaa
+      FROM user_link
+      WHERE user_link.link_id = link.id
+    ) AS totalVote,
+    MAX(bookmark.createdAt) AS lastBookmarked,
     (
       -- Perform a select with custom array to remove repetitions
       SELECT
@@ -46,17 +61,23 @@ BEGIN
     ) AS tags,
     (
       SELECT
-        JSON_ARRAYAGG(user.id)
+        IF(COUNT(user.id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user.id))
       FROM bookmark
       JOIN `user` ON bookmark.user_id = user.id
       WHERE bookmark.link_id = link.id
     ) AS users,
-    JSON_ARRAYAGG(bookmark.id) AS bookmarksIds
+    (
+      SELECT
+        IF(COUNT(bookmark.id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(bookmark.id)) AS bookmarksIds
+      FROM bookmark
+      WHERE bookmark.link_id = link.id
+    ) AS bookmarksIds
   FROM link
   INNER JOIN bookmark ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id
   LEFT JOIN bookmark_tag ON bookmark.id = bookmark_tag.bookmark_id
   LEFT JOIN tag ON tag.id = bookmark_tag.tag_id
+  LEFT JOIN user_link ON user_link.link_id = link.id
   WHERE
     CASE WHEN @filterTags != "null" AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
     OR
@@ -68,13 +89,21 @@ BEGIN
     )
   GROUP BY link.id
   ORDER BY
-    CASE WHEN $SORT = 'id'         THEN link.id      	      ELSE NULL END ASC,
-    CASE WHEN $SORT = '-id'        THEN link.id      	      ELSE NULL END DESC,
-    CASE WHEN $SORT = 'order'      THEN link.order	        ELSE NULL END ASC,
-    CASE WHEN $SORT = '-order'     THEN link.order          ELSE NULL END DESC,
-    CASE WHEN $SORT = 'bookmarks'  THEN COUNT(bookmark.id)  ELSE NULL END ASC,
-    CASE WHEN $SORT = '-bookmarks' THEN COUNT(bookmark.id)  ELSE NULL END DESC,
-    CASE WHEN $SORT IS NULL        THEN link.id             ELSE NULL END ASC
+    CASE WHEN $SORT = 'id'                THEN link.id      	          ELSE NULL END ASC,
+    CASE WHEN $SORT = '-id'               THEN link.id      	          ELSE NULL END DESC,
+    CASE WHEN $SORT = 'order'             THEN link.order	              ELSE NULL END ASC,
+    CASE WHEN $SORT = '-order'            THEN link.order               ELSE NULL END DESC,
+    CASE WHEN $SORT = 'most-bookmarked'   THEN COUNT(bookmark.id)       ELSE NULL END ASC,
+    CASE WHEN $SORT = '-most-bookmarked'  THEN COUNT(bookmark.id)       ELSE NULL END DESC,
+    CASE WHEN $SORT = 'updated'           THEN link.updatedAt           ELSE NULL END ASC,
+    CASE WHEN $SORT = '-updated'          THEN link.updatedAt           ELSE NULL END DESC,
+    CASE WHEN $SORT = 'created'           THEN link.createdAt           ELSE NULL END ASC,
+    CASE WHEN $SORT = '-created'          THEN link.createdAt           ELSE NULL END DESC,
+    CASE WHEN $SORT = 'last-bookmarked'   THEN MAX(bookmark.updatedAt)  ELSE NULL END ASC,
+    CASE WHEN $SORT = '-last-bookmarked'  THEN MAX(bookmark.updatedAt)  ELSE NULL END DESC,
+    CASE WHEN $SORT = 'vote'              THEN totalVote                ELSE NULL END ASC,
+    CASE WHEN $SORT = '-vote'             THEN totalVote                ELSE NULL END DESC,
+    CASE WHEN $SORT IS NULL               THEN link.id                  ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
  ;
 
@@ -82,4 +111,4 @@ END
 
 /* DELIMITER ; */
 
-/* CALL link_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'id', NULL, NULL, '{"tags": ["foo"]}'); */
+/* CALL link_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-vote', NULL, NULL, '{"tags": ["foo"]}'); */

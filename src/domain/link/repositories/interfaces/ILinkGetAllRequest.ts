@@ -1,6 +1,6 @@
 export type ILinkGetAllRequest = {
   sessionId: string;
-  sort: 'id' | '-id' | 'order' | '-order' | 'count' | '-count';
+  sort: 'order' | '-order' | 'most-bookmarked' | '-most-bookmarked' | 'created' | '-created' | 'vote' | '-vote' | 'last-bookmarked' | '-last-bookmarked';
   size: number;
   offset: number;
   filter?: {

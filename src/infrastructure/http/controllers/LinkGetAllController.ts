@@ -5,12 +5,14 @@ import { ILinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { TokenService } from '@infrastructure/services/TokenService';
 import { URLWrapper } from '@infrastructure/services/UrlWrapper';
-import { DEFAULT_PAGE_SIZE, DEFAULT_SORT_FIELD } from '@shared/constants/constants';
+import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
+const DEFAULT_LINK_GET_ALL_SORT = 'last-bookmarked';
+
 type LinkGetAllControllerQueryType = {
-  sort: 'id' | '-id' | 'order' | '-order' | 'count' | '-count';
+  sort: 'order' | '-order' | 'most-bookmarked' | '-most-bookmarked' | 'created' | '-created' | 'vote' | '-vote' | 'last-bookmarked' | '-last-bookmarked';
   page: {
     size: string;
     offset: string;
@@ -29,7 +31,7 @@ export class LinkGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort = DEFAULT_SORT_FIELD, page: { size, offset } = {}, filter: { tags } = {} } = req.query as LinkGetAllControllerQueryType;
+    const { sort = DEFAULT_LINK_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as LinkGetAllControllerQueryType;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || null;
     const parsedTags = tags?.split(',') || null;

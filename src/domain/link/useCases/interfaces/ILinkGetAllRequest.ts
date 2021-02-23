@@ -2,7 +2,7 @@ import { User } from '@domain/user/entities/User';
 
 export type ILinkGetAllRequest = {
   session: User;
-  sort: 'id' | '-id' | 'order' | '-order' | 'count' | '-count';
+  sort: 'order' | '-order' | 'most-bookmarked' | '-most-bookmarked' | 'created' | '-created' | 'vote' | '-vote' | 'last-bookmarked' | '-last-bookmarked';
   size: number;
   offset: number;
   filter?: {
