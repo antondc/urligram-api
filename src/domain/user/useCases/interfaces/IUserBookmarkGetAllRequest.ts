@@ -3,7 +3,7 @@ import { User } from '@domain/user/entities/User';
 export interface IUserBookmarkGetAllRequest {
   session: User;
   userId: string;
-  sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
+  sort: 'id' | '-id' | 'createdat' | '-createdat' | 'updatedat' | '-updatedat';
   size: number;
   offset: number;
 }

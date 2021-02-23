@@ -8,8 +8,10 @@ import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
+const DEFAULT_USER_BOOKMARK_GET_ALL_SORT = '-createdat';
+
 type BookmarkGetAllPublicControllerQueryType = {
-  sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
+  sort: 'id' | '-id' | 'createdat' | '-createdat' | 'updatedat' | '-updatedat';
   page: {
     size: string;
     offset: string;
@@ -26,7 +28,7 @@ export class UserBookmarkGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { userId } = req.params;
-    const { sort, page: { size, offset } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
+    const { sort = DEFAULT_USER_BOOKMARK_GET_ALL_SORT, page: { size, offset } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;

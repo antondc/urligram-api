@@ -9,7 +9,7 @@ import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
-const DEFAULT_LINK_GET_ALL_SORT = 'last-bookmarked';
+const DEFAULT_LINK_GET_ALL_SORT = '-last-bookmarked';
 
 type LinkGetAllControllerQueryType = {
   sort: 'order' | '-order' | 'most-bookmarked' | '-most-bookmarked' | 'created' | '-created' | 'vote' | '-vote' | 'last-bookmarked' | '-last-bookmarked';
