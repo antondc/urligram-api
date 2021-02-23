@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_bookmark_get_all;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_get_all(
@@ -27,6 +27,18 @@ BEGIN
     bookmark.user_id AS userId,
     bookmark.createdAt,
     bookmark.updatedAt,
+    (
+      SELECT
+        COUNT(bookmark.id)
+      FROM bookmark
+      WHERE bookmark.link_id = link.id
+    ) AS timesBookmarked,
+    (
+      SELECT
+        SUM(IF(user_link.vote IS NULL, 0, IF(user_link.vote = 0, -1, 1)))
+      FROM user_link
+      WHERE user_link.link_id = link.id
+    ) AS totalVote,
     (
       SELECT
         IF(
@@ -57,17 +69,21 @@ BEGIN
     )
   GROUP BY bookmark.id
   ORDER BY
-    CASE WHEN $SORT = 'id'          THEN `bookmark`.id      	ELSE NULL END ASC,
-    CASE WHEN $SORT = '-id'         THEN `bookmark`.id      	ELSE NULL END DESC,
-    CASE WHEN $SORT = 'createdAt'   THEN `bookmark`.createdAt	ELSE NULL END ASC,
-    CASE WHEN $SORT = '-createdAt'  THEN `bookmark`.createdAt ELSE NULL END DESC,
-    CASE WHEN $SORT = 'updatedAt'   THEN `bookmark`.updatedAt ELSE NULL END ASC,
-    CASE WHEN $SORT = '-updatedAt'  THEN `bookmark`.updatedAt ELSE NULL END DESC,
-    CASE WHEN $SORT IS NULL         THEN `bookmark`.id            ELSE NULL END ASC
+    CASE WHEN $SORT = 'id'                THEN `bookmark`.id      	ELSE NULL END ASC,
+    CASE WHEN $SORT = '-id'               THEN `bookmark`.id      	ELSE NULL END DESC,
+    CASE WHEN $SORT = 'createdAt'         THEN `bookmark`.createdAt	ELSE NULL END ASC,
+    CASE WHEN $SORT = '-createdAt'        THEN `bookmark`.createdAt ELSE NULL END DESC,
+    CASE WHEN $SORT = 'updatedAt'         THEN `bookmark`.updatedAt ELSE NULL END ASC,
+    CASE WHEN $SORT = '-updatedAt'        THEN `bookmark`.updatedAt ELSE NULL END DESC,
+    CASE WHEN $SORT = 'vote'              THEN totalVote            ELSE NULL END ASC,
+    CASE WHEN $SORT = '-vote'             THEN totalVote            ELSE NULL END DESC,
+    CASE WHEN $SORT = 'timesbookmarked'   THEN timesbookmarked      ELSE NULL END ASC,
+    CASE WHEN $SORT = '-timesbookmarked'  THEN timesbookmarked      ELSE NULL END DESC,
+    CASE WHEN $SORT IS NULL               THEN `bookmark`.id        ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
   ;
 
 END
 
-/* DELIMITER ; */
-/* CALL user_bookmark_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', NULL, NULL, NULL); */
+-- DELIMITER ;
+-- CALL user_bookmark_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', "-timesbookmarked", NULL, NULL);

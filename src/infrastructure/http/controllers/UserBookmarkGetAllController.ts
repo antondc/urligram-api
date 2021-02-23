@@ -11,7 +11,7 @@ import { BaseController } from './BaseController';
 const DEFAULT_USER_BOOKMARK_GET_ALL_SORT = '-createdat';
 
 type BookmarkGetAllPublicControllerQueryType = {
-  sort: 'id' | '-id' | 'createdat' | '-createdat' | 'updatedat' | '-updatedat';
+  sort: 'id' | '-id' | 'createdat' | '-createdat' | 'updatedat' | '-updatedat' | 'vote' | '-vote' | 'timesbookmarked' | '-timesbookmarked';
   page: {
     size: string;
     offset: string;
