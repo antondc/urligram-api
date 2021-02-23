@@ -5,18 +5,16 @@ export type IUserGetAllRequest = {
   sort?:
     | 'order'
     | '-order'
+    | 'name'
+    | '-name'
     | 'createdAt'
     | '-createdAt'
-    | 'updatedAt'
-    | '-updatedAt'
     | 'followers'
     | '-followers'
     | 'following'
     | '-following'
     | 'bookmarks'
-    | '-bookmarks'
-    | 'lists'
-    | '-lists';
+    | '-bookmarks';
   size?: number;
   offset?: number;
 };

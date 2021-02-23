@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_get_all;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 CREATE PROCEDURE user_get_all(
   IN $SESSION_ID VARCHAR(40),
@@ -102,24 +102,23 @@ BEGIN
     ORDER BY
       CASE WHEN $SORT = 'order'          THEN `user`.order      	                ELSE NULL END ASC,
       CASE WHEN $SORT = '-order'         THEN `user`.order      	                ELSE NULL END DESC,
+      CASE WHEN $SORT = 'name'           THEN `user`.name      	                  ELSE NULL END ASC,
+      CASE WHEN $SORT = '-name'          THEN `user`.name      	                  ELSE NULL END DESC,
       CASE WHEN $SORT = 'createdAt'      THEN `user`.createdAt	                  ELSE NULL END ASC,
       CASE WHEN $SORT = '-createdAt'     THEN `user`.createdAt                    ELSE NULL END DESC,
-      CASE WHEN $SORT = 'updatedAt'      THEN `user`.updatedAt                    ELSE NULL END ASC,
-      CASE WHEN $SORT = '-updatedAt'     THEN `user`.updatedAt                    ELSE NULL END DESC,
       CASE WHEN $SORT = 'followers'      THEN JSON_LENGTH(followers)              ELSE NULL END ASC,
       CASE WHEN $SORT = '-followers'     THEN JSON_LENGTH(followers)              ELSE NULL END DESC,
       CASE WHEN $SORT = 'following'      THEN JSON_LENGTH(following)              ELSE NULL END ASC,
       CASE WHEN $SORT = '-following'     THEN JSON_LENGTH(following)              ELSE NULL END DESC,
       CASE WHEN $SORT = 'bookmarks'      THEN JSON_LENGTH(bookmarksIds)           ELSE NULL END ASC,
       CASE WHEN $SORT = '-bookmarks'     THEN JSON_LENGTH(bookmarksIds)           ELSE NULL END DESC,
-      CASE WHEN $SORT = 'lists'          THEN JSON_LENGTH(lists)                  ELSE NULL END ASC,
-      CASE WHEN $SORT = '-lists'         THEN JSON_LENGTH(lists)                  ELSE NULL END DESC,
+
       CASE WHEN $SORT != 'order' AND $SORT != '-order'      THEN `user`.order     ELSE NULL END ASC
     LIMIT $OFFSET , $SIZE
   ;
 
 END
 
-/* DELIMITER ; */
+-- DELIMITER ;
 
-/* CALL user_following_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL); */
+-- CALL user_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-following', NULL, NULL);

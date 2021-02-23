@@ -7,22 +7,22 @@ import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
+const DEFAULT_LINK_GET_ALL_SORT = '-createdat';
+
 type UserGetAllControllerQueryType = {
   sort:
     | 'order'
     | '-order'
+    | 'name'
+    | '-name'
     | 'createdAt'
     | '-createdAt'
-    | 'updatedAt'
-    | '-updatedAt'
     | 'followers'
     | '-followers'
     | 'following'
     | '-following'
     | 'bookmarks'
-    | '-bookmarks'
-    | 'lists'
-    | '-lists';
+    | '-bookmarks';
   page: {
     size: string;
     offset: string;
@@ -39,7 +39,7 @@ export class UserGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {} } = req.query as UserGetAllControllerQueryType;
+    const { sort = DEFAULT_LINK_GET_ALL_SORT, page: { size, offset } = {} } = req.query as UserGetAllControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
