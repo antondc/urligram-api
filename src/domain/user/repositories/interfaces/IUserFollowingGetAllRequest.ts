@@ -1,7 +1,7 @@
 export interface IUserFollowingGetAllRequest {
   sessionId: string;
   userId: string;
-  sort?: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
+  sort?: 'order' | '-order' | 'name' | '-name' | 'login' | '-login' | 'bookmarks' | '-bookmarks';
   size: number;
   offset: number;
 }

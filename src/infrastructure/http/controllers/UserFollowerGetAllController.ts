@@ -7,8 +7,10 @@ import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
+const DEFAULT_FOLLOWERS_GET_ALL_SORT = 'name';
+
 type UserFollowerGetAllControllerQueryType = {
-  sort?: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
+  sort?: 'order' | '-order' | 'name' | '-name' | 'login' | '-login' | 'bookmarks' | '-bookmarks';
   page: {
     size: string;
     offset: string;
@@ -25,7 +27,7 @@ export class UserFollowerGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {} } = req.query as UserFollowerGetAllControllerQueryType;
+    const { sort = DEFAULT_FOLLOWERS_GET_ALL_SORT, page: { size, offset } = {} } = req.query as UserFollowerGetAllControllerQueryType;
     const { userId } = req.params;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || undefined;

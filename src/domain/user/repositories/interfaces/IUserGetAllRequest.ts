@@ -1,12 +1,12 @@
 export type IUserGetAllRequest = {
   sessionId: string;
-  sort:
+  sort?:
     | 'order'
     | '-order'
     | 'name'
     | '-name'
-    | 'createdAt'
-    | '-createdAt'
+    | 'createdat'
+    | '-createdat'
     | 'followers'
     | '-followers'
     | 'following'
