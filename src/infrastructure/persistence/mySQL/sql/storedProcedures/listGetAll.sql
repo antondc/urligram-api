@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS list_get_all;
 
+/* DELIMITER $$ */
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_get_all(
   IN $SESSION_ID TEXT,
@@ -60,3 +62,7 @@ SELECT
   ;
 
 END
+/*
+DELIMITER ;
+
+CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-vote', NULL, NULL); */

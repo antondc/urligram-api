@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_bookmark_get_all;
 
--- DELIMITER $$
+/* DELIMITER $$ */
 
 CREATE PROCEDURE list_bookmark_get_all(
   IN $LIST_ID INT,
@@ -26,6 +26,24 @@ BEGIN
     bookmark.saved,
     bookmark.createdAt,
     bookmark.updatedAt,
+    (
+      SELECT
+        COUNT(bookmark.id)
+      FROM bookmark
+      WHERE bookmark.link_id = link.id
+    ) AS timesBookmarked,
+    (
+      SELECT
+        JSON_ARRAYAGG(user_link.vote)
+      FROM user_link
+      WHERE user_link.link_id = bookmark.link_id
+    ) AS allVotes,
+    (
+      SELECT
+        SUM(IF(user_link.vote IS NULL, 0, IF(user_link.vote = 0, -1, 1)))
+      FROM user_link
+      WHERE user_link.link_id = bookmark.link_id
+    ) AS totalVote,
     (
       SELECT
         JSON_ARRAYAGG(
@@ -57,18 +75,22 @@ BEGIN
       )
   GROUP BY bookmark.id
   ORDER BY
-    CASE WHEN $SORT = 'id'          THEN `bookmark`.id      	ELSE NULL END ASC,
-    CASE WHEN $SORT = '-id'         THEN `bookmark`.id      	ELSE NULL END DESC,
-    CASE WHEN $SORT = 'createdAt'   THEN `bookmark`.createdAt	ELSE NULL END ASC,
-    CASE WHEN $SORT = '-createdAt'  THEN `bookmark`.createdAt ELSE NULL END DESC,
-    CASE WHEN $SORT = 'updatedAt'   THEN `bookmark`.updatedAt ELSE NULL END ASC,
-    CASE WHEN $SORT = '-updatedAt'  THEN `bookmark`.updatedAt ELSE NULL END DESC,
-    CASE WHEN $SORT IS NULL         THEN `bookmark`.id            ELSE NULL END ASC
+    CASE WHEN $SORT = 'id'                THEN `bookmark`.id      	  ELSE NULL END ASC,
+    CASE WHEN $SORT = '-id'               THEN `bookmark`.id      	  ELSE NULL END DESC,
+    CASE WHEN $SORT = 'createdAt'         THEN `bookmark`.createdAt	  ELSE NULL END ASC,
+    CASE WHEN $SORT = '-createdAt'        THEN `bookmark`.createdAt   ELSE NULL END DESC,
+    CASE WHEN $SORT = 'updatedAt'         THEN `bookmark`.updatedAt   ELSE NULL END ASC,
+    CASE WHEN $SORT = '-updatedAt'        THEN `bookmark`.updatedAt   ELSE NULL END DESC,
+    CASE WHEN $SORT = 'vote'              THEN totalVote              ELSE NULL END ASC,
+    CASE WHEN $SORT = '-vote'             THEN totalVote              ELSE NULL END DESC,
+    CASE WHEN $SORT = 'timesbookmarked'   THEN timesBookmarked        ELSE NULL END ASC,
+    CASE WHEN $SORT = '-timesbookmarked'  THEN timesBookmarked        ELSE NULL END DESC,
+    CASE WHEN $SORT IS NULL               THEN `bookmark`.id          ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
   ;
 
 END
 
--- DELIMITER ;
+/* DELIMITER ;
 
--- CALL list_bookmark_get_all(3, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, 5, 3);
+CALL list_bookmark_get_all(1, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", "-vote", NULL, NULL); */

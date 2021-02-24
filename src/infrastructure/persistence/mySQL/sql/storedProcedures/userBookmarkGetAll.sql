@@ -77,8 +77,8 @@ BEGIN
     CASE WHEN $SORT = '-updatedAt'        THEN `bookmark`.updatedAt ELSE NULL END DESC,
     CASE WHEN $SORT = 'vote'              THEN totalVote            ELSE NULL END ASC,
     CASE WHEN $SORT = '-vote'             THEN totalVote            ELSE NULL END DESC,
-    CASE WHEN $SORT = 'timesbookmarked'   THEN timesbookmarked      ELSE NULL END ASC,
-    CASE WHEN $SORT = '-timesbookmarked'  THEN timesbookmarked      ELSE NULL END DESC,
+    CASE WHEN $SORT = 'timesbookmarked'   THEN timesBookmarked      ELSE NULL END ASC,
+    CASE WHEN $SORT = '-timesbookmarked'  THEN timesBookmarked      ELSE NULL END DESC,
     CASE WHEN $SORT IS NULL               THEN `bookmark`.id        ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
   ;
