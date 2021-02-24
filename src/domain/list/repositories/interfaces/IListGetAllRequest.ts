@@ -1,6 +1,6 @@
 export type IListGetAllRequest = {
   userId?: string;
-  sort?: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'members' | '-members';
+  sort?: 'id' | '-id' | 'createdat' | '-createdat' | 'updatedat' | '-updatedat' | 'members' | '-members' | 'bookmarks' | '-bookmarks';
   size?: number;
   offset?: number;
 };

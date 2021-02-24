@@ -48,21 +48,23 @@ SELECT
       OR `user_list`.`user_id` = $SESSION_ID
     GROUP BY list.id
       ORDER BY
-      CASE WHEN $SORT = "members"     THEN count(membersIds) 	 ELSE NULL END ASC,
-      CASE WHEN $SORT = "-members"    THEN count(membersIds) 	 ELSE NULL END DESC,
-      CASE WHEN $SORT = 'id'          THEN `list`.id      	   ELSE NULL END ASC,
-      CASE WHEN $SORT = '-id'         THEN `list`.id      	   ELSE NULL END DESC,
-      CASE WHEN $SORT = 'createdAt'   THEN `list`.createdAt	   ELSE NULL END ASC,
-      CASE WHEN $SORT = '-createdAt'  THEN `list`.createdAt    ELSE NULL END DESC,
-      CASE WHEN $SORT = 'updatedAt'   THEN `list`.updatedAt    ELSE NULL END ASC,
-      CASE WHEN $SORT = '-updatedAt'  THEN `list`.updatedAt    ELSE NULL END DESC,
-      CASE WHEN $SORT IS NULL         THEN `list`.id           ELSE NULL END ASC
+      CASE WHEN $SORT = 'id'          THEN `list`.id      	         ELSE NULL END ASC,
+      CASE WHEN $SORT = '-id'         THEN `list`.id      	         ELSE NULL END DESC,
+      CASE WHEN $SORT = 'createdat'   THEN `list`.createdAt	         ELSE NULL END ASC,
+      CASE WHEN $SORT = '-createdat'  THEN `list`.createdAt          ELSE NULL END DESC,
+      CASE WHEN $SORT = 'updatedat'   THEN `list`.updatedAt          ELSE NULL END ASC,
+      CASE WHEN $SORT = '-updatedat'  THEN `list`.updatedAt          ELSE NULL END DESC,
+      CASE WHEN $SORT = "members"     THEN JSON_LENGTH(membersIds) 	 ELSE NULL END ASC,
+      CASE WHEN $SORT = "-members"    THEN JSON_LENGTH(membersIds) 	 ELSE NULL END DESC,
+      CASE WHEN $SORT = "bookmarks"   THEN JSON_LENGTH(bookmarksIds) ELSE NULL END ASC,
+      CASE WHEN $SORT = "-bookmarks"  THEN JSON_LENGTH(bookmarksIds) ELSE NULL END DESC,
+      CASE WHEN $SORT IS NULL         THEN `list`.id                 ELSE NULL END ASC
 
     LIMIT $OFFSET , $SIZE
   ;
 
 END
-/*
-DELIMITER ;
 
-CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-vote', NULL, NULL); */
+/* DELIMITER ;
+
+CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-members', NULL, NULL); */
