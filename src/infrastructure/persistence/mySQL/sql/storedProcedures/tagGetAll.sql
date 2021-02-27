@@ -1,15 +1,19 @@
 DROP PROCEDURE IF EXISTS tags_get_all;
 
+DELIMITER $$
+
 CREATE PROCEDURE tags_get_all(
   IN $SESSION_ID VARCHAR(40),
   IN $SORT VARCHAR(40),
   IN $SIZE INT,
-  IN $OFFSET INT
+  IN $OFFSET INT,
+  IN $FILTER JSON
 )
 
 BEGIN
 
   SET $SIZE = IFNULL($SIZE, -1);
+  SET @filterName  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.name'));
 
   -- Return tags used by users
   SELECT
@@ -40,6 +44,8 @@ BEGIN
     LIMIT $OFFSET , $SIZE
   ;
 
-END
+END $$
 
-/* CALL  tags_get_all("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL); */
+DELMITER ;
+
+CALL  tags_get_all("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{ "name": "pol" }');

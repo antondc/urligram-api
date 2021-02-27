@@ -5,4 +5,7 @@ export type ITagGetAllRequest = {
   sort: 'id' | '-id' | 'name' | '-name' | 'count' | '-count';
   size: number;
   offset: number;
+  filter?: {
+    name?: string;
+  };
 };
