@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS tags_get_all;
 
-DELIMITER $$
+-- DELIMITER $$
 
 CREATE PROCEDURE tags_get_all(
   IN $SESSION_ID VARCHAR(40),
@@ -13,24 +13,39 @@ CREATE PROCEDURE tags_get_all(
 BEGIN
 
   SET $SIZE = IFNULL($SIZE, -1);
-  SET @filterName  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.name'));
 
-  -- Return tags used by users
+  SET @filterName = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
+
   SELECT
     T.id,
     T.name,
+    T.createdAt,
+    T.updatedAt,
     COUNT(T.id) AS count
     FROM (
       SELECT
         tag.id,
-        tag.name
+        tag.name,
+        tag.createdAt,
+        tag.updatedAt
       FROM tag
-      JOIN bookmark_tag ON bookmark_tag.tag_id = tag.id
-      JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
+      LEFT JOIN bookmark_tag ON bookmark_tag.tag_id = tag.id
+      LEFT JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
       WHERE
-          bookmark.isPrivate IS NOT TRUE
-          OR
-          bookmark.user_id = $SESSION_ID
+        (
+         -- Case for only one name string, useful to search from partial strings with LIKE
+         -- Convert(x USING uft8 removes the tildes)
+         CASE WHEN @filterName != "null" THEN UPPER(tag.name) LIKE UPPER(CONCAT('%', CONVERT(JSON_UNQUOTE(JSON_EXTRACT(@filterName, '$[0]')) USING utf8), '%')) END
+         -- Case for many tags, useful to serach for full tag names/
+          OR CASE WHEN @filterName != "null" AND JSON_CONTAINS(@filterName, JSON_QUOTE(tag.name)) THEN TRUE END
+          OR CASE WHEN @filterName = "null" THEN TRUE END
+        )
+        AND
+          (
+            bookmark.isPrivate IS NOT TRUE
+            OR
+            bookmark.user_id = $SESSION_ID
+          )
     ) AS T
     GROUP BY T.id
       ORDER BY
@@ -44,8 +59,8 @@ BEGIN
     LIMIT $OFFSET , $SIZE
   ;
 
-END $$
+END
 
-DELMITER ;
+-- DELIMITER ;
 
-CALL  tags_get_all("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{ "name": "pol" }');
+-- CALL tags_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', NULL, NULL, NULL, '{"tags": ["foo" , "sociedad"]}');

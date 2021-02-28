@@ -14,13 +14,14 @@ export class TagGetAllUseCase implements ITagGetAllUseCase {
   }
 
   public async execute(tagGetAllRequest: ITagGetAllRequest): Promise<ITagGetAllResponse> {
-    const { session, sort, size, offset } = tagGetAllRequest;
+    const { session, sort, size, offset, filter } = tagGetAllRequest;
 
     const response = await this.tagRepo.tagGetAll({
       sessionId: session?.id,
       sort,
       size,
       offset,
+      filter,
     });
 
     return response;

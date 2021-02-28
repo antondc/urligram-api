@@ -14,7 +14,7 @@ type TagsGetAllControllerQueryType = {
     offset: string;
   };
   filter?: {
-    name?: string;
+    tags?: string[];
   };
 };
 
@@ -27,12 +27,11 @@ export class TagGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {}, filter: { name } = {} } = req.query as TagsGetAllControllerQueryType;
+    const { sort, page: { size, offset } = {}, filter: { tags } = {} } = req.query as TagsGetAllControllerQueryType;
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
-    const castedName = name || null;
 
     const userUpdateRequest: ITagGetAllRequest = {
       session,
@@ -40,7 +39,7 @@ export class TagGetAllController extends BaseController {
       size: castedSize,
       offset: castedOffset,
       filter: {
-        name: castedName,
+        tags,
       },
     };
 

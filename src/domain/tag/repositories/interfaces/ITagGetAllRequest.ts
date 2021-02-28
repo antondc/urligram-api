@@ -4,6 +4,6 @@ export type ITagGetAllRequest = {
   size: number;
   offset: number;
   filter?: {
-    name?: string;
+    tags?: string[];
   };
 };

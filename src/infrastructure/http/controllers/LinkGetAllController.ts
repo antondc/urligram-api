@@ -18,7 +18,7 @@ type LinkGetAllControllerQueryType = {
     offset: string;
   };
   filter?: {
-    tags?: string;
+    tags?: string[];
   };
 };
 
@@ -34,7 +34,6 @@ export class LinkGetAllController extends BaseController {
     const { sort = DEFAULT_LINK_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as LinkGetAllControllerQueryType;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || null;
-    const parsedTags = tags?.split(',') || null;
     const tokenService = new TokenService();
 
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
@@ -45,7 +44,7 @@ export class LinkGetAllController extends BaseController {
       size: castedSize,
       offset: castedOffset,
       filter: {
-        tags: parsedTags,
+        tags,
       },
     };
 
