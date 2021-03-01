@@ -79,9 +79,9 @@ BEGIN
   LEFT JOIN tag ON tag.id = bookmark_tag.tag_id
   LEFT JOIN user_link ON user_link.link_id = link.id
   WHERE
-    CASE WHEN @filterTags != "null" AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
+    CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
     OR
-    CASE WHEN @filterTags = "null" THEN TRUE END
+    CASE WHEN @filterTags IS NULL THEN TRUE END
     AND (
       bookmark.isPrivate IS NOT TRUE
       OR
