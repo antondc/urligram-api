@@ -35,10 +35,10 @@ BEGIN
         (
          -- Case for only one name string, useful to search from partial strings with LIKE
          -- Convert(x USING uft8 removes the tildes)
-         CASE WHEN @filterName != "null" THEN UPPER(tag.name) LIKE UPPER(CONCAT('%', CONVERT(JSON_UNQUOTE(JSON_EXTRACT(@filterName, '$[0]')) USING utf8), '%')) END
+         CASE WHEN @filterName IS NOT NULL THEN UPPER(tag.name) LIKE UPPER(CONCAT('%', CONVERT(JSON_UNQUOTE(JSON_EXTRACT(@filterName, '$[0]')) USING utf8), '%')) END
          -- Case for many tags, useful to serach for full tag names/
-          OR CASE WHEN @filterName != "null" AND JSON_CONTAINS(@filterName, JSON_QUOTE(tag.name)) THEN TRUE END
-          OR CASE WHEN @filterName = "null" THEN TRUE END
+          OR CASE WHEN @filterName IS NOT NULL AND JSON_CONTAINS(@filterName, JSON_QUOTE(tag.name)) THEN TRUE END
+          OR CASE WHEN @filterName IS NULL THEN TRUE END
         )
         AND
           (
