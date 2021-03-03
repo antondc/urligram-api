@@ -1,11 +1,11 @@
 {
   "development": {
     "database": {
-      "host": "lab.antoniodiaz.me",
+      "host": "ec2-3-124-187-180.eu-central-1.compute.amazonaws.com",
       "database": "linking_stage",
       "user": "w_9aIfE2XpoYz",
       "password": "UrStkX_oihbDWEaz7Gr",
-      "port": 4952
+      "port": 3306
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "dev.linking.me",
@@ -17,11 +17,11 @@
   },
   "staging": {
     "database": {
-      "host": "lab.antoniodiaz.me",
+      "host": "ec2-3-124-187-180.eu-central-1.compute.amazonaws.com",
       "database": "linking_stage",
       "user": "w_9aIfE2XpoYz",
       "password": "UrStkX_oihbDWEaz7Gr",
-      "port": 4952
+      "port": 3306
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "linking-api-staging.antoniodiaz.me",
