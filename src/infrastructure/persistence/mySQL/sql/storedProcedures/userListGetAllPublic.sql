@@ -70,7 +70,7 @@ BEGIN
       CASE WHEN @filterRole IS NOT NULL AND JSON_CONTAINS(@filterRole, JSON_QUOTE("admin")) THEN list.userId = $USER_ID END
       OR
       CASE WHEN @filterRole IS NOT NULL THEN JSON_CONTAINS(@filterRole, JSON_QUOTE(user_list.userRole)) AND user_list.user_id = $USER_ID END
-      OR CASE WHEN @filterRole = "null" THEN TRUE END
+      OR CASE WHEN @filterRole IS NULL THEN TRUE END
     )
   GROUP BY list.id
   ORDER BY
