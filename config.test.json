@@ -33,7 +33,7 @@
   },
   "production": {
     "database": {
-      "host": "mysql-5704.dinaserver.com",
+      "host": "ec2-3-124-187-180.eu-central-1.compute.amazonaws.com",
       "database": "linking_prod",
       "user": "v_9uRshudbX",
       "password": "w_9aIjH3vfE2XpoYz"
