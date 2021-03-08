@@ -12,6 +12,7 @@ export class User {
   followersIds: number[];
   followingIds: number[];
   order: number;
+  activationToken?: string;
   createdAt: Date;
   updatedAt: Date;
 
@@ -28,6 +29,7 @@ export class User {
     this.followersIds = user?.followersIds;
     this.followingIds = user?.followingIds;
     this.password = user?.password;
+    this.activationToken = user?.activationToken;
     this.order = user?.order;
     this.createdAt = user?.createdAt;
     this.updatedAt = user?.updatedAt;

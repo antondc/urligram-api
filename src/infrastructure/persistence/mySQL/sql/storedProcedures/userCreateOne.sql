@@ -9,19 +9,22 @@ CREATE PROCEDURE user_create(
 
 BEGIN
 
-  SET @uuid = uuid();
+  SET @id = uuid();
+  SET @activationToken = uuid();
 
   -- Insert user
   INSERT INTO user (
     `id`,
     `name`,
     `email`,
-    `password`
+    `password`,
+    `activationToken`
   ) VALUES (
-    @uuid,
+    @id,
     $NAME,
     $EMAIL,
-    $PASSWORD_
+    $PASSWORD_,
+    @activationToken
   );
 
   -- Retrieve user
@@ -30,8 +33,9 @@ BEGIN
     `name`,
     `email`,
     `status`,
-    `createdAt`
+    `createdAt`,
+    `activationToken`
   FROM user
-  WHERE id = @uuid;
+  WHERE id = @id;
 
 END

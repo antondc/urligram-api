@@ -29,17 +29,15 @@ export class UserCreateOneController extends BaseController {
       links: {
         self: URL_SERVER + '/users/me',
       },
-      data: [
-        {
-          type: 'user',
-          id: response.id,
-          session: {
-            self: URL_SERVER + '/users/me',
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'user',
+        id: response.id,
+        session: {
+          self: URL_SERVER + '/users/me',
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 

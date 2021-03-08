@@ -1,6 +1,8 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCreateOneResponse';
+import { MailService } from '@infrastructure/services/MailService';
+import { ENDPOINT_CLIENTS } from '@shared/constants/env';
 import { UserError } from '@shared/errors/UserError';
 import { StringValidator } from '@shared/services/StringValidator';
 
@@ -18,6 +20,8 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
   public async execute(userCreateOneRequest: IUserCreateOneRequest): Promise<IUserCreateOneResponse> {
     const { name, email, password, password_repeated } = userCreateOneRequest;
 
+    if (!name) throw new UserError('User name incorrect', 409);
+
     if (password !== password_repeated) throw new UserError('Passwords are not equal', 409);
 
     const isEmail = StringValidator.validateEmailAddress(email);
@@ -26,7 +30,18 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     const userAlreadyExists = await this.userRepo.userGetOne({ name, email });
     if (!!userAlreadyExists) throw new UserError('User already exist', 409);
 
-    const response = await this.userRepo.userCreateOne({ name, email, password });
+    const { activationToken, ...response } = await this.userRepo.userCreateOne({ name, email, password });
+    if (!response.id) throw new UserError('User creation failed', 409);
+
+    const connectionOptions = { host: 'antoniodiaz-me.correoseguro.dinaserver.com', port: 587, user: 'hello@antoniodiaz.me', pass: 'G9khusC96RmK8fRm' };
+    const emailService = new MailService(connectionOptions);
+    const emailOptions = {
+      from: 'hello@antoniodiaz.me',
+      to: response?.email,
+      subject: `Hello ${response?.name}`,
+      text: `Welcome ${response?.name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/confirm-account/${activationToken}`,
+    };
+    emailService.sendMail(emailOptions);
 
     return response;
   }
