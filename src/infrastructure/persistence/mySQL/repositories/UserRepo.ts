@@ -4,11 +4,11 @@ import { BaseError } from '@shared/errors/BaseError';
 import { RequestError } from '@shared/errors/RequestError';
 
 export class UserRepo implements IUserRepo {
-  public async userGetAll({ sessionId, sort, size, offset }) {
+  public async userGetAll({ sessionId, sort, size, offset, filter }) {
     const mySQL = new MySQL();
     try {
-      const userGetAllQuery = 'CALL user_get_all(?, ?, ?, ?)';
-      const [users] = await mySQL.query(userGetAllQuery, [sessionId, sort, size, offset]);
+      const userGetAllQuery = 'CALL user_get_all(?, ?, ?, ?, ?)';
+      const [users] = await mySQL.query(userGetAllQuery, [sessionId, sort, size, offset, JSON.stringify(filter)]);
       const usersWithoutTotal = users.map((item) => ({ ...item, totalItems: undefined }));
 
       return {
@@ -212,7 +212,7 @@ export class UserRepo implements IUserRepo {
     try {
       const userFollowerGetAllQuery = 'CALL user_follower_get_all(?, ?, ?, ?, ?)';
       const [users] = await mySQL.query(userFollowerGetAllQuery, [sessionId, userId, sort, size, offset]);
-      
+
       const usersWithoutTotal = users.map((item) => ({ ...item, totalItems: undefined }));
 
       return {

@@ -1,17 +1,19 @@
 DROP PROCEDURE IF EXISTS user_get_all;
 
--- DELIMITER $$
+/* DELIMITER $$ */
 
 CREATE PROCEDURE user_get_all(
   IN $SESSION_ID VARCHAR(40),
   IN $SORT VARCHAR(40),
   IN $SIZE INT,
-  IN $OFFSET INT
+  IN $OFFSET INT,
+  IN $FILTER JSON
 )
 
 BEGIN
 
   SET $SIZE = IFNULL($SIZE, -1);
+  SET @filterName  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.name'));
 
   SELECT
     count(*) OVER() as totalItems,
@@ -98,6 +100,10 @@ BEGIN
       WHERE user_user.user_id1 = user.id
     ) AS following
     FROM `user`
+    WHERE
+      CASE WHEN @filterName IS NOT NULL THEN CONVERT(UPPER(`user`.name) USING utf8) = CONVERT(UPPER(@filterName) USING utf8) END
+      OR
+      CASE WHEN @filterName IS NULL THEN TRUE END
     GROUP BY `user`.`id`
     ORDER BY
       CASE WHEN $SORT = 'order'          THEN `user`.order      	                ELSE NULL END ASC,
@@ -119,6 +125,6 @@ BEGIN
 
 END
 
--- DELIMITER ;
+/* DELIMITER ; */
 
--- CALL user_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-following', NULL, NULL);
+/* CALL user_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-following', NULL, NULL, '{"name": "antonio"}'); */

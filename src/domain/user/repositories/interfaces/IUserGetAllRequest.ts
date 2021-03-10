@@ -15,4 +15,7 @@ export type IUserGetAllRequest = {
     | '-bookmarks';
   size?: number;
   offset?: number;
+  filter?: {
+    name?: string;
+  };
 };
