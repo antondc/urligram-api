@@ -12,11 +12,11 @@ export const ErrorHandlerMiddleware = (err, req, res, next) => {
     return res
       .clearCookie('sessionToken', { path: '/' })
       .status(err.statusCode)
-      .send(LOGGING ? { Errors: err } : err.message)
+      .send(LOGGING ? { error: err } : err.message)
       .end();
 
-  if (err && isCustomError) return res.status(err.statusCode).send({ Errors: err });
-  if (err && LOGGING) return res.status(err.statusCode || 500).send({ Errors: err });
+  if (err && isCustomError) return res.status(err.statusCode).send({ error: err });
+  if (err && LOGGING) return res.status(err.statusCode || 500).send({ error: err });
   if (err) return res.status(500).send('500 Internal Server Error');
 
   return next();
