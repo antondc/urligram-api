@@ -20,18 +20,18 @@ export class UserPasswordUpdateUseCase implements IUserPasswordUpdateUseCase {
 
     const userAuthenticated = await this.userRepo.userLogin({
       password,
-      name: session.name,
+      nameOrEmail: session.name,
     });
-    if (!userAuthenticated) throw new AuthenticationError('Username or password not correct', 403);
+    if (!userAuthenticated) throw new AuthenticationError('Username or password not correct', 403, 'password');
 
     const userFound = await this.userRepo.userGetOne({
       sessionId: session?.id,
       userId: userAuthenticated?.id,
     });
-    if (!userFound) throw new AuthenticationError('User not found', 404);
+    if (!userFound) throw new AuthenticationError('User not found', 404, 'nameOrEmail');
 
-    if (!newPassword || !newPasswordRepeated) throw new UserError('One of the passwords is missing', 409);
-    if (newPassword !== newPasswordRepeated) throw new UserError('Passwords are not equal', 409);
+    if (!newPassword || !newPasswordRepeated) throw new UserError('One of the passwords is missing', 409, 'password');
+    if (newPassword !== newPasswordRepeated) throw new UserError('Passwords are not equal', 409, 'password');
 
     await this.userRepo.userPasswordUpdate({ userId: session?.id, newPassword });
 

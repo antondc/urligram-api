@@ -55,11 +55,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userCreateOne({ name, email, password }) {
+  public async userCreateOne({ name, email, password, activationToken }) {
     const mySQL = new MySQL();
     try {
-      const userCreateQuery = 'CALL user_create(?, ?, ?)';
-      const [[results]] = await mySQL.query(userCreateQuery, [name, email, password]);
+      const userCreateQuery = 'CALL user_create(?, ?, ?, ?)';
+      const [[results]] = await mySQL.query(userCreateQuery, [name, email, password, activationToken]);
 
       return results;
     } catch (err) {
@@ -97,12 +97,12 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userLogin({ name, password, userId = null }) {
+  public async userLogin({ nameOrEmail, password, userId = null }) {
     const mySQL = new MySQL();
     try {
       const userLoginQuery = 'CALL user_login(?, ?, ?)';
 
-      const [[user]] = await mySQL.query(userLoginQuery, [name, password, userId]);
+      const [[user]] = await mySQL.query(userLoginQuery, [nameOrEmail, password, userId]);
 
       return user;
     } catch (err) {

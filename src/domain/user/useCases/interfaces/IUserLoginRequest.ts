@@ -1,4 +1,4 @@
 export interface IUserLoginRequest {
-  name: string;
+  nameOrEmail: string;
   password: string;
 }

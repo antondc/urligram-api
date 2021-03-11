@@ -16,9 +16,13 @@ export class UserLoginUseCase implements IUserLoginUseCase {
   }
 
   public async execute(userLogin: IUserLoginRequest): Promise<IUserLoginResponse> {
-    const userAuthenticated = await this.userRepo.userLogin(userLogin);
+    const { nameOrEmail, password } = userLogin;
 
-    if (!userAuthenticated) throw new AuthenticationError('Username or password not correct', 500);
+    const user = await this.userRepo.userGetOne({ name: nameOrEmail, email: nameOrEmail });
+    if (!user) throw new AuthenticationError('User doesn’t exist', 500, 'nameOrEmail');
+
+    const userAuthenticated = await this.userRepo.userLogin({ nameOrEmail, password });
+    if (!userAuthenticated) throw new AuthenticationError('Password not correct', 500, 'password');
 
     const sessionLogData = {
       result: 'success',

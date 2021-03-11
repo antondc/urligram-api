@@ -2,7 +2,8 @@ import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCreateOneResponse';
 import { MailService } from '@infrastructure/services/MailService';
-import { ENDPOINT_CLIENTS } from '@shared/constants/env';
+import { TokenService } from '@infrastructure/services/TokenService';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
 import { UserError } from '@shared/errors/UserError';
 import { StringValidator } from '@shared/services/StringValidator';
 
@@ -20,29 +21,33 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
   public async execute(userCreateOneRequest: IUserCreateOneRequest): Promise<IUserCreateOneResponse> {
     const { name, email, password, password_repeated } = userCreateOneRequest;
 
-    if (!name) throw new UserError('User name incorrect', 409);
+    if (!name) throw new UserError('User name incorrect', 409, 'name');
 
-    if (password !== password_repeated) throw new UserError('Passwords are not equal', 409);
+    if (password !== password_repeated) throw new UserError('Passwords are not equal', 409, 'password');
 
     const isEmail = StringValidator.validateEmailAddress(email);
-    if (!isEmail) throw new UserError('Email incorrect', 409);
+    if (!isEmail) throw new UserError('Email incorrect', 409, 'email');
 
     const userAlreadyExists = await this.userRepo.userGetOne({ name, email });
-    if (!!userAlreadyExists) throw new UserError('User already exist', 409);
+    if (!!userAlreadyExists) throw new UserError('User already exist', 409, 'name');
 
-    const { activationToken, ...response } = await this.userRepo.userCreateOne({ name, email, password });
-    if (!response.id) throw new UserError('User creation failed', 409);
+    const tokenService = new TokenService();
+    const activationToken = tokenService.createToken(name);
 
-    const connectionOptions = { host: 'antoniodiaz-me.correoseguro.dinaserver.com', port: 587, user: 'hello@antoniodiaz.me', pass: 'G9khusC96RmK8fRm' };
+    const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
     const emailService = new MailService(connectionOptions);
     const emailOptions = {
-      from: 'hello@antoniodiaz.me',
-      to: response?.email,
-      subject: `Hello ${response?.name}`,
-      text: `Welcome ${response?.name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/confirm-account/${activationToken}`,
+      from: EMAIL_USER,
+      to: email,
+      subject: `Hello ${name}`,
+      text: `Welcome ${name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/confirm-account/${activationToken}`,
     };
-    emailService.sendMail(emailOptions);
+    const { success } = await emailService.sendMail(emailOptions);
+    if (!success) throw new UserError('Email incorrect', 409, 'email');
 
-    return response;
+    const user = await this.userRepo.userCreateOne({ name, email, password, activationToken });
+    if (!user.id) throw new UserError('User creation failed', 409);
+
+    return user;
   }
 }

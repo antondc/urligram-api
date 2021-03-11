@@ -13,7 +13,11 @@
     "PORT_SERVER_HTTPS": "3000",
     "ENDPOINT_CLIENTS": ["http://dev.linking.me", "https://dev.linking.me"],
     "SECRET": "superSecret",
-    "LOGGING": true
+    "LOGGING": true,
+    "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
+    "EMAIL_PORT": 587,
+    "EMAIL_USER": "hello@antoniodiaz.me",
+    "EMAIL_PASSWORD": "G9khusC96RmK8fRm"
   },
   "staging": {
     "database": {
@@ -29,7 +33,11 @@
     "PORT_SERVER_HTTPS": "0",
     "ENDPOINT_CLIENTS": ["https://linking-staging.antoniodiaz.me", "http://0.0.0.0:4000", "http://dev.linking.me:4000"],
     "SECRET": "superSecret",
-    "LOGGING": true
+    "LOGGING": true,
+    "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
+    "EMAIL_PORT": 587,
+    "EMAIL_USER": "hello@antoniodiaz.me",
+    "EMAIL_PASSWORD": "G9khusC96RmK8fRm"
   },
   "production": {
     "database": {
@@ -44,7 +52,11 @@
     "PORT_SERVER_HTTPS": "0",
     "ENDPOINT_CLIENTS": ["https://linking-production.antoniodiaz.me"],
     "SECRET": "superSecret",
-    "LOGGING": false
+    "LOGGING": false,
+    "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
+    "EMAIL_PORT": 587,
+    "EMAIL_USER": "hello@antoniodiaz.me",
+    "EMAIL_PASSWORD": "G9khusC96RmK8fRm"
   },
   "SESSION_DURATION": 3600,
   "MEDIA": "media",

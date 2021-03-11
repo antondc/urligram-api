@@ -4,13 +4,13 @@ DROP PROCEDURE IF EXISTS user_create;
 CREATE PROCEDURE user_create(
   IN $NAME VARCHAR(40),
   IN $EMAIL VARCHAR(40),
-  IN $PASSWORD_ VARCHAR(40)
+  IN $PASSWORD_ VARCHAR(40),
+  IN $ACTIVATION_TOKEN TEXT
 )
 
 BEGIN
 
   SET @id = uuid();
-  SET @activationToken = uuid();
 
   -- Insert user
   INSERT INTO user (
@@ -24,7 +24,7 @@ BEGIN
     $NAME,
     $EMAIL,
     $PASSWORD_,
-    @activationToken
+    $ACTIVATION_TOKEN
   );
 
   -- Retrieve user

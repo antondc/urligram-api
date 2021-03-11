@@ -28,7 +28,14 @@ export class MailService {
     });
   }
 
-  sendMail(mailOptions: MailOptions) {
-    this.transporter.sendMail(mailOptions);
+  sendMail(mailOptions: MailOptions): Promise<{ success: boolean; payload: unknown }> {
+    return this.transporter
+      .sendMail(mailOptions)
+      .then((payload) => {
+        return { success: true, payload };
+      })
+      .catch((payload) => {
+        return { success: false, payload };
+      });
   }
 }

@@ -16,10 +16,10 @@ export class UserLoginController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { name, password } = req.body;
+    const { nameOrEmail, password } = req.body;
 
     const userLoginRequest: IUserLoginRequest = {
-      name,
+      nameOrEmail,
       password,
     };
     const response = await this.useCase.execute(userLoginRequest);

@@ -2,7 +2,7 @@ DROP PROCEDURE IF EXISTS user_login;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_login(
-  IN $NAME VARCHAR(40),
+  IN $NAME_OR_EMAIL VARCHAR(40),
   IN $PASS VARCHAR(40),
   IN $USER_ID VARCHAR(40)
 )
@@ -22,11 +22,13 @@ BEGIN
     `user`.`updatedAt`
   FROM `user`
   WHERE
-    `password` = $PASS
+    `password`      = $PASS
   AND (
-    `name` = $NAME
+    `name`          = $NAME_OR_EMAIL
     OR
-    `id` = $USER_ID
+    `user`.`email`  = $NAME_OR_EMAIL
+    OR
+    `id`            = $USER_ID
   );
 
 END
