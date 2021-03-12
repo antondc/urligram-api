@@ -55,11 +55,25 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userCreateOne({ name, email, password, activationToken }) {
+  public async userCreateOne({ name, email, password, token }) {
     const mySQL = new MySQL();
     try {
       const userCreateQuery = 'CALL user_create(?, ?, ?, ?)';
-      const [[results]] = await mySQL.query(userCreateQuery, [name, email, password, activationToken]);
+      const [[results]] = await mySQL.query(userCreateQuery, [name, email, password, token]);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('User creation failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userCreateConfirmation({ token }) {
+    const mySQL = new MySQL();
+    try {
+      const userCreateQuery = 'CALL user_create_confirmation(?)';
+      const [[results]] = await mySQL.query(userCreateQuery, [token]);
 
       return results;
     } catch (err) {

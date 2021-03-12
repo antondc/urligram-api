@@ -33,6 +33,7 @@ export class StateRepo {
   private userGetByIdsProcedure: string;
   private userGetOneProcedure: string;
   private userCreateOneProcedure: string;
+  private userCreateConfirmationProcedure: string;
   private userUpdateOneProcedure: string;
   private userDeleteOneProcedure: string;
   private userLoginProcedure: string;
@@ -131,6 +132,7 @@ export class StateRepo {
     this.userGetByIdsProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetByIds.sql')).toString();
     this.userGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetOne.sql')).toString();
     this.userCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateOne.sql')).toString();
+    this.userCreateConfirmationProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateConfirmation.sql')).toString();
     this.userUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userUpdateOne.sql')).toString();
     this.userDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userDeleteOne.sql')).toString();
     this.userLoginProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogin.sql')).toString();
@@ -242,6 +244,7 @@ export class StateRepo {
       const createUserGetByIdsProcedure = await mySQL.query(this.userGetByIdsProcedure);
       const createUserGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
       const createUserCreateOneProcedure = await mySQL.query(this.userCreateOneProcedure);
+      const createUserCreateConfirmationProcedure = await mySQL.query(this.userCreateConfirmationProcedure);
       const createUserUpdateOneProcedure = await mySQL.query(this.userUpdateOneProcedure);
       const createUserDeleteOneProcedure = await mySQL.query(this.userDeleteOneProcedure);
       const createUserLoginProcedure = await mySQL.query(this.userLoginProcedure);
@@ -345,6 +348,7 @@ export class StateRepo {
         ...createUserGetByIdsProcedure,
         ...createUserGetOneProcedure,
         ...createUserCreateOneProcedure,
+        ...createUserCreateConfirmationProcedure,
         ...createUserUpdateOneProcedure,
         ...createUserDeleteOneProcedure,
         ...createUserLoginProcedure,

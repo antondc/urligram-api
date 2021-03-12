@@ -12,6 +12,8 @@ import { IUserBookmarkGetOneByUserIdPathDomainRequest } from './interfaces/IUser
 import { IUserBookmarkGetOneByUserIdPathDomainResponse } from './interfaces/IUserBookmarkGetOneByUserIdPathDomainResponse';
 import { IUserBookmarkUpdateRequest } from './interfaces/IUserBookmarkUpdateRequest';
 import { IUserBookmarkUpdateResponse } from './interfaces/IUserBookmarkUpdateResponse';
+import { IUserCreateConfirmationRequest } from './interfaces/IUserCreateConfirmationRequest';
+import { IUserCreateConfirmationResponse } from './interfaces/IUserCreateConfirmationResponse';
 import { IUserCreateOneRequest } from './interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from './interfaces/IUserCreateOneResponse';
 import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
@@ -50,6 +52,7 @@ export interface IUserRepo {
   userGetAll: (userGetAllRequest: IUserGetAllRequest) => Promise<IUserGetAllResponse>;
   userGetByIds: (userGetByIdsRequest: IUserGetByIdsRequest) => Promise<IUserGetByIdsResponse>;
   userCreateOne: (userCreateOneRequest: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;
+  userCreateConfirmation: (userCreateConfirmationRequest: IUserCreateConfirmationRequest) => Promise<IUserCreateConfirmationResponse>;
   userUpdateOne: (userUpdateOneRequest: IUserUpdateOneRequest) => Promise<IUserUpdateOneResponse>;
   userDeleteOne: (userDeleteOneRequest: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;
   userLogin: (userLoginRequest: IUserLoginRequest) => Promise<IUserLoginResponse>;

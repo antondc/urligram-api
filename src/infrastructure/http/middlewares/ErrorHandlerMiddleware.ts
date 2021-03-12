@@ -16,7 +16,7 @@ export const ErrorHandlerMiddleware = (err, req, res, next) => {
       .end();
 
   if (err && isCustomError) return res.status(err.statusCode).send({ error: err });
-  if (err && LOGGING) return res.status(err.statusCode || 500).send({ error: err });
+  if (err && LOGGING) return res.status(err.statusCode || 500).send({ error: { message: err?.message, stack: err?.stack } });
   if (err) return res.status(500).send('500 Internal Server Error');
 
   return next();

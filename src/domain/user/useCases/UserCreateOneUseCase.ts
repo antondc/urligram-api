@@ -32,7 +32,7 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     if (!!userAlreadyExists) throw new UserError('User already exist', 409, 'name');
 
     const tokenService = new TokenService();
-    const activationToken = tokenService.createToken(name);
+    const token = tokenService.createToken({ name });
 
     const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
     const emailService = new MailService(connectionOptions);
@@ -40,12 +40,12 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
       from: EMAIL_USER,
       to: email,
       subject: `Hello ${name}`,
-      text: `Welcome ${name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/confirm-account/${activationToken}`,
+      text: `Welcome ${name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/sign-up-confirmation?name=${name}&token=${token}`,
     };
     const { success } = await emailService.sendMail(emailOptions);
     if (!success) throw new UserError('Email incorrect', 409, 'email');
 
-    const user = await this.userRepo.userCreateOne({ name, email, password, activationToken });
+    const user = await this.userRepo.userCreateOne({ name, email, password, token });
     if (!user.id) throw new UserError('User creation failed', 409);
 
     return user;

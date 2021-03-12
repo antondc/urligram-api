@@ -6,6 +6,7 @@ import { UserBookmarkDeleteOneUseCase } from '@domain/user/useCases/UserBookmark
 import { UserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
 import { UserBookmarkGetOneUseCase } from '@domain/user/useCases/UserBookmarkGetOneUseCase';
 import { UserBookmarkUpdateUseCase } from '@domain/user/useCases/UserBookmarkUpdateUseCase';
+import { UserCreateConfirmationUseCase } from '@domain/user/useCases/UserCreateConfirmationUseCase';
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
 import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
 import { UserFollowerGetAllUseCase } from '@domain/user/useCases/UserFollowerGetAllUseCase';
@@ -42,6 +43,7 @@ import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUp
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
+import { UserCreateConfirmationController } from '../controllers/UserCreateConfirmationController';
 
 const UsersRoute = express.Router();
 
@@ -84,6 +86,16 @@ UsersRoute.post('/', async (req: Request, res: Response, next: NextFunction) => 
   const userCreateOneController = new UserCreateOneController(userCreateOneUseCase);
 
   const response = await userCreateOneController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.post('/sign-up-confirmation', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userCreateConfirmationUseCase = new UserCreateConfirmationUseCase(userRepo);
+  const userCreateConfirmatioController = new UserCreateConfirmationController(userCreateConfirmationUseCase);
+
+  const response = await userCreateConfirmatioController.execute(req, res, next);
 
   return response;
 });
