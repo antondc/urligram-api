@@ -25,7 +25,11 @@ export class UserLogOutUseCase implements IUserLogOutUseCase {
       userId: session?.id,
     };
 
-    await this.userRepo.userLogSession(sessionLogData);
+    try {
+      await this.userRepo.userLogSession(sessionLogData);
+    } catch (err) {
+      // TODO: log to DB with a service
+    }
 
     const result = {
       session,
