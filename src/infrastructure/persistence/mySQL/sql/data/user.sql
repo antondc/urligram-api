@@ -15,7 +15,7 @@ INSERT INTO `user` (
   'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
   'Antonio',
   'admin',
-  'hello+1@antoniodiaz.me',
+  'hello@antoniodiaz.me',
   'https://loremflickr.com/300/300/portrait',
   'password123',
   'active',

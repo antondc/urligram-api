@@ -34,6 +34,7 @@ export class StateRepo {
   private userGetOneProcedure: string;
   private userCreateOneProcedure: string;
   private userCreateConfirmationProcedure: string;
+  private userForgotPasswordProcedure: string;
   private userUpdateOneProcedure: string;
   private userDeleteOneProcedure: string;
   private userLoginProcedure: string;
@@ -133,6 +134,7 @@ export class StateRepo {
     this.userGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetOne.sql')).toString();
     this.userCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateOne.sql')).toString();
     this.userCreateConfirmationProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateConfirmation.sql')).toString();
+    this.userForgotPasswordProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userForgotPassword.sql')).toString();
     this.userUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userUpdateOne.sql')).toString();
     this.userDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userDeleteOne.sql')).toString();
     this.userLoginProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogin.sql')).toString();
@@ -245,6 +247,7 @@ export class StateRepo {
       const createUserGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
       const createUserCreateOneProcedure = await mySQL.query(this.userCreateOneProcedure);
       const createUserCreateConfirmationProcedure = await mySQL.query(this.userCreateConfirmationProcedure);
+      const createUserForgotPasswordProcedure = await mySQL.query(this.userForgotPasswordProcedure);
       const createUserUpdateOneProcedure = await mySQL.query(this.userUpdateOneProcedure);
       const createUserDeleteOneProcedure = await mySQL.query(this.userDeleteOneProcedure);
       const createUserLoginProcedure = await mySQL.query(this.userLoginProcedure);
@@ -349,6 +352,7 @@ export class StateRepo {
         ...createUserGetOneProcedure,
         ...createUserCreateOneProcedure,
         ...createUserCreateConfirmationProcedure,
+        ...createUserForgotPasswordProcedure,
         ...createUserUpdateOneProcedure,
         ...createUserDeleteOneProcedure,
         ...createUserLoginProcedure,

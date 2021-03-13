@@ -399,4 +399,20 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userForgotPassword({ userId, token }) {
+    const mySQL = new MySQL();
+
+    try {
+      const userTagsGetAllQuery = 'CALL user_forgot_password(?, ?)';
+
+      const [[results]] = await mySQL.query(userTagsGetAllQuery, [userId, token]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

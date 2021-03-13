@@ -1,10 +1,12 @@
 import express, { NextFunction, Request, Response } from 'express'; // eslint-disable-line @typescript-eslint/no-unused-vars
 
+import { UserForgotPasswordUseCase } from '@domain/user/useCases/UserForgotPasswordUseCase';
 import { UserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
 import { UserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
 import { UserLoginController } from '@infrastructure/http/controllers/UserLoginController';
 import { UserLogOutController } from '@infrastructure/http/controllers/UserLogOutController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
+import { UserForgotPasswordController } from '../controllers/UserForgotPasswordController';
 
 const LoginRoute = express.Router();
 
@@ -24,6 +26,16 @@ LoginRoute.delete('/', async (req: Request, res: Response, next: NextFunction) =
   const userLogOutController = new UserLogOutController(userLogOutUseCase);
 
   const response = await userLogOutController.execute(req, res, next);
+
+  return response;
+});
+
+LoginRoute.put('/', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userForgotPasswordUseCase = new UserForgotPasswordUseCase(userRepo);
+  const userForgotPasswordController = new UserForgotPasswordController(userForgotPasswordUseCase);
+
+  const response = await userForgotPasswordController.execute(req, res, next);
 
   return response;
 });

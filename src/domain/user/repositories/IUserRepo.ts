@@ -28,6 +28,8 @@ import { IUserFollowingGetAllRequest } from './interfaces/IUserFollowingGetAllRe
 import { IUserFollowingGetAllResponse } from './interfaces/IUserFollowingGetAllResponse';
 import { IUserFollowingGetOneRequest } from './interfaces/IUserFollowingGetOneRequest';
 import { IUserFollowingGetOneResponse } from './interfaces/IUserFollowingGetOneResponse';
+import { IUserForgotPasswordRequest } from './interfaces/IUserForgotPasswordRequest';
+import { IUserForgotPasswordResponse } from './interfaces/IUserForgotPasswordResponse';
 import { IUserGetAllRequest } from './interfaces/IUserGetAllRequest';
 import { IUserGetAllResponse } from './interfaces/IUserGetAllResponse';
 import { IUserGetByIdsRequest } from './interfaces/IUserGetByIdsRequest';
@@ -78,4 +80,5 @@ export interface IUserRepo {
   userBookmarkDeleteOne: (userBookmarkDeleteOne: IUserBookmarkDeleteOneRequest) => Promise<IUserBookmarkDeleteOneResponse>;
   userListGetAllPublic: (userListGetAllPublic: IUserListGetAllPublicRequest) => Promise<IUserListGetAllPublicResponse>;
   userTagsGetAll: (userTagsGetAll: IUserTagsGetAllRequest) => Promise<IUserTagsGetAllResponse>;
+  userForgotPassword: (userTagsGetAll: IUserForgotPasswordRequest) => Promise<IUserForgotPasswordResponse>;
 }
