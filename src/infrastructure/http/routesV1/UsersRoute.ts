@@ -18,7 +18,6 @@ import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetByIdsUseCase } from '@domain/user/useCases/UserGetByIdsUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
-import { UserPasswordUpdateUseCase } from '@domain/user/useCases/UserPasswordUpdateUseCase';
 import { UserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
 import { UserBookmarkCreateController } from '@infrastructure/http/controllers/UserBookmarkCreateController';
@@ -37,7 +36,6 @@ import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAl
 import { UserGetByIdsController } from '@infrastructure/http/controllers/UserGetByIdsController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserListGetAllPublicController } from '@infrastructure/http/controllers/UserListGetAllPublicController';
-import { UserPasswordUpdateController } from '@infrastructure/http/controllers/UserPasswordUpdateController';
 import { UserTagsGetAllController } from '@infrastructure/http/controllers/UserTagsGetAllController';
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
@@ -116,16 +114,6 @@ UsersRoute.delete('/me', async (req: Request, res: Response, next: NextFunction)
   const userDeleteOneController = new UserDeleteOneController(userDeleteOneUseCase);
 
   const response = await userDeleteOneController.execute(req, res, next);
-
-  return response;
-});
-
-UsersRoute.put('/me/password', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new UserRepo();
-  const userPasswordUpdateUseCase = new UserPasswordUpdateUseCase(userRepo);
-  const userPasswordUpdateController = new UserPasswordUpdateController(userPasswordUpdateUseCase);
-
-  const response = await userPasswordUpdateController.execute(req, res, next);
 
   return response;
 });

@@ -39,7 +39,7 @@ export class StateRepo {
   private userDeleteOneProcedure: string;
   private userLoginProcedure: string;
   private userLogSessionProcedure: string;
-  private userPasswordUpdateProcedure: string;
+  private userResetPasswordProcedure: string;
   private userFollowingGetAllProcedure: string;
   private userFollowingGetOneProcedure: string;
   private userFollowingCreateProcedure: string;
@@ -139,7 +139,7 @@ export class StateRepo {
     this.userDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userDeleteOne.sql')).toString();
     this.userLoginProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogin.sql')).toString();
     this.userLogSessionProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userLogSession.sql')).toString();
-    this.userPasswordUpdateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userPasswordUpdate.sql')).toString();
+    this.userResetPasswordProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userResetPassword.sql')).toString();
     this.userFollowingGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingGetAll.sql')).toString();
     this.userFollowingGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingGetOne.sql')).toString();
     this.userFollowingCreateProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingCreate.sql')).toString();
@@ -252,7 +252,7 @@ export class StateRepo {
       const createUserDeleteOneProcedure = await mySQL.query(this.userDeleteOneProcedure);
       const createUserLoginProcedure = await mySQL.query(this.userLoginProcedure);
       const createUserLogSessionProcedure = await mySQL.query(this.userLogSessionProcedure);
-      const createUserPasswordUpdateProcedure = await mySQL.query(this.userPasswordUpdateProcedure);
+      const createUserResetPasswordProcedure = await mySQL.query(this.userResetPasswordProcedure);
       const createUserFollowingGetAllProcedure = await mySQL.query(this.userFollowingGetAllProcedure);
       const createUserFollowingGetOneProcedure = await mySQL.query(this.userFollowingGetOneProcedure);
       const createUserFollowingCreateProcedure = await mySQL.query(this.userFollowingCreateProcedure);
@@ -357,7 +357,7 @@ export class StateRepo {
         ...createUserDeleteOneProcedure,
         ...createUserLoginProcedure,
         ...createUserLogSessionProcedure,
-        ...createUserPasswordUpdateProcedure,
+        ...createUserResetPasswordProcedure,
         ...createUserFollowingGetAllProcedure,
         ...createUserFollowingGetOneProcedure,
         ...createUserFollowingCreateProcedure,

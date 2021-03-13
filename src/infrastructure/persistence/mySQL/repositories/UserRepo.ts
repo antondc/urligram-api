@@ -141,11 +141,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userPasswordUpdate({ userId, newPassword }) {
+  public async userResetPassword({ name, token, newPassword }) {
     const mySQL = new MySQL();
     try {
-      const userPasswordUpdateQuery = 'CALL user_password_update(?, ?)';
-      const [[results]] = await mySQL.query(userPasswordUpdateQuery, [userId, newPassword]);
+      const userResetPasswordQuery = 'CALL user_reset_password(?, ?, ?)';
+      const [[results]] = await mySQL.query(userResetPasswordQuery, [name, token, newPassword]);
 
       return results;
     } catch (err) {
