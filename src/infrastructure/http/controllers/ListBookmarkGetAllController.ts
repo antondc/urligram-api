@@ -49,7 +49,7 @@ export class ListBookmarkGetAllController extends BaseController {
 
     const formattedBookmarks = bookmarks.map((item) => {
       const urlWrapper = new URLWrapper(item.url);
-      const url = urlWrapper.getUrl();
+      const url = urlWrapper.getHref();
 
       return {
         type: 'bookmark',

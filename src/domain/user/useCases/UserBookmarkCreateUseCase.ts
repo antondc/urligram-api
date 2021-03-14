@@ -19,7 +19,7 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
     const { url, session, title, saved, isPrivate, tags } = bookmarkCreateRequest;
     const parsedUrl = new URLWrapper(url);
     const domain = parsedUrl.getDomain();
-    const path = parsedUrl.getPath() + parsedUrl.getSearch();
+    const path = parsedUrl.getPathAndSearch();
 
     const bookmarkExist = await this.userRepo.userBookmarkGetOneByUserIdPathDomain({
       path,

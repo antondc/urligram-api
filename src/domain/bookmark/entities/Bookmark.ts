@@ -3,7 +3,6 @@ import { ILinkStatistics } from '@domain/link/entities/LinkStatistics';
 export class Bookmark {
   id: number;
   title: string;
-  image: string;
   vote: boolean;
   isPrivate: boolean;
   createdAt: Date;

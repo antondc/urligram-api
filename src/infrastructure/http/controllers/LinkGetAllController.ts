@@ -52,7 +52,7 @@ export class LinkGetAllController extends BaseController {
 
     const formattedLinks = links.map((item) => {
       const urlWrapper = new URLWrapper(item.url);
-      const url = urlWrapper.getUrl();
+      const url = urlWrapper.getHref();
 
       return {
         type: 'link',

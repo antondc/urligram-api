@@ -19,7 +19,7 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
     const { session, bookmarkId, order, title, url, saved, isPrivate, tags } = userBookmarkUpdateRequest;
     const parsedUrl = new URLWrapper(url);
     const domain = parsedUrl.getDomain();
-    const path = parsedUrl.getPath() + parsedUrl.getSearch();
+    const path = parsedUrl.getPathAndSearch();
 
     const bookmarkExists = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
       bookmarkId,
