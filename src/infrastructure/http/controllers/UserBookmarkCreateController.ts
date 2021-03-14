@@ -35,17 +35,15 @@ export class UserBookmarkCreateController extends BaseController {
       links: {
         self: URL_SERVER + '/user/me/bookmarks/' + response.id,
       },
-      data: [
-        {
-          type: 'bookmark',
-          id: response?.id,
-          session: {
-            self: URL_SERVER + '/user/me/bookmarks/' + response.id,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'bookmark',
+        id: response?.id,
+        session: {
+          self: URL_SERVER + '/user/me/bookmarks/' + response.id,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 
