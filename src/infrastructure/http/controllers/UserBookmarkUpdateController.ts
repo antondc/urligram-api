@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserBookmarkUpdateRequest } from '@domain/user/useCases/interfaces/IUserBookmarkUpdateRequest';
 import { IUserBookmarkUpdateUseCase } from '@domain/user/useCases/UserBookmarkUpdateUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class UserBookmarkUpdateController extends BaseController {

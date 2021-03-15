@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { IListBookmarkDeleteOneRequest } from '@domain/list/useCases/interfaces/IListBookmarkDeleteOneRequest';
 import { IListBookmarkDeleteOneUseCase } from '@domain/list/useCases/ListBookmarkDeleteOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class ListBookmarkDeleteOneController extends BaseController {

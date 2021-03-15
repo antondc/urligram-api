@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 
 import { IListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 const DEFAULT_LIST_GET_ALL_SORT = '-createdat';

@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserFollowingGetOneRequest } from '@domain/user/useCases/interfaces/IUserFollowingGetOneRequest';
 import { IUserFollowingGetOneUseCase } from '@domain/user/useCases/UserFollowingGetOneUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class UserFollowingGetOneController extends BaseController {

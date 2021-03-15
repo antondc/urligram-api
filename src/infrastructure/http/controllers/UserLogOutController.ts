@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserLogoutRequest } from '@domain/user/useCases/interfaces/UserLogOutRequest';
 import { IUserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
-import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { ENDPOINT_CLIENTS, URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
+import { URLWrapper } from '@shared/services/UrlWrapper';
 import { BaseController } from './BaseController';
 
 export class UserLogOutController extends BaseController {
@@ -46,7 +46,7 @@ export class UserLogOutController extends BaseController {
     };
 
     const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.headers.origin)); // Identify the client
-    const urlWrapper = new URLWrapper(req.hostname);
+    const urlWrapper = new URLWrapper(`${req.protocol}://${req.hostname}`);
     const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
     const domainForCookie = clientFound ? '.' + domainWithoutSubdomain : null; // Return domain only for recognized clients
 

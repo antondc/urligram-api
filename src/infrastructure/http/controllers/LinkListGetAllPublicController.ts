@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { ILinkListGetAllPublicRequest } from '@domain/link/useCases/interfaces/ILinkListGetAllPublicRequest';
 import { ILinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAllPublicUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class LinkListGetAllPublicController extends BaseController {

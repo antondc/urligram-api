@@ -1,9 +1,9 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateConfirmationRequest } from '@domain/user/useCases/interfaces/IUserCreateConfirmationRequest';
 import { IUserCreateConfirmationResponse } from '@domain/user/useCases/interfaces/IUserCreateConfirmationResponse';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
+import { TokenService } from '@shared/services/TokenService';
 
 export interface IUserCreateConfirmationUseCase {
   execute: (userCreateConfirmationRequest: IUserCreateConfirmationRequest) => Promise<IUserCreateConfirmationResponse>;

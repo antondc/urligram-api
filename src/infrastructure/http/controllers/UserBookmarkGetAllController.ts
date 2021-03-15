@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserBookmarkGetAllRequest } from '@domain/user/useCases/interfaces/IUserBookmarkGetAllRequest';
 import { IUserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 const DEFAULT_USER_BOOKMARK_GET_ALL_SORT = '-createdat';

@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserGetByIdsUseCase } from '@domain/user/useCases/UserGetByIdsUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 type UserGetByIdsControllerQueryType = {

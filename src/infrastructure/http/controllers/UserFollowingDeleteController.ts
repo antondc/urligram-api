@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserFollowingDeleteRequest } from '@domain/user/useCases/interfaces/IUserFollowingDeleteRequest';
 import { IUserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingDeleteUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class UserFollowingDeleteController extends BaseController {

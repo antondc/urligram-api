@@ -1,9 +1,9 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { MailService } from '@infrastructure/services/MailService';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
+import { MailService } from '@shared/services/MailService';
+import { TokenService } from '@shared/services/TokenService';
 import { IUserForgotPasswordRequest } from './interfaces/IUserForgotPasswordRequest';
 import { IUserForgotPasswordResponse } from './interfaces/IUserForgotPasswordResponse';
 

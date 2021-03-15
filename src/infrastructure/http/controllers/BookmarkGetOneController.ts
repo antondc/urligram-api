@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { IBookmarkGetOneUseCase } from '@domain/bookmark/useCases/BookmarkGetOneUseCase';
 import { IBookmarkGetOneRequest } from '@domain/bookmark/useCases/interfaces/IBookmarkGetOneRequest';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class BookmarkGetOneController extends BaseController {

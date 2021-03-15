@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 
 import { IUserForgotPasswordRequest } from '@domain/user/useCases/interfaces/IUserForgotPasswordRequest';
 import { IUserForgotPasswordUseCase } from '@domain/user/useCases/UserForgotPasswordUseCase';
-import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { ENDPOINT_CLIENTS, URL_SERVER } from '@shared/constants/env';
+import { URLWrapper } from '@shared/services/UrlWrapper';
 import { BaseController } from './BaseController';
 
 export class UserForgotPasswordController extends BaseController {
@@ -40,7 +40,7 @@ export class UserForgotPasswordController extends BaseController {
     };
 
     const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.headers.origin)); // Identify the client
-    const urlWrapper = new URLWrapper(req.hostname);
+    const urlWrapper = new URLWrapper(`${req.protocol}://${req.hostname}`);
     const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
     const domainForCookie = clientFound ? '.' + domainWithoutSubdomain : null; // Return domain only for recognized clients
 

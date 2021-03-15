@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { IListUserDeleteOneRequest } from '@domain/list/useCases/interfaces/IListUserDeleteOneRequest';
 import { IListUserDeleteOneUseCase } from '@domain/list/useCases/ListUserDeleteOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class ListUserDeleteOneController extends BaseController {

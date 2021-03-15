@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 
 import { IListSimilarGetAllUseCase } from '@domain/list/useCases/ListSimilarGetAllUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 type ListSimilarGetAllControllerQueryType = {

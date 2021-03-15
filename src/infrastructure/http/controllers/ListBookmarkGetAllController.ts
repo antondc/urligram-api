@@ -4,10 +4,9 @@ import { IListBookmarkGetAllRequest } from '@domain/list/useCases/interfaces/ILi
 import { IListBookmarkGetAllResponse } from '@domain/list/useCases/interfaces/IListBookmarkGetAllResponse';
 import { IListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGetAllUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
-import { URLWrapper } from '@infrastructure/services/UrlWrapper';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 const DEFAULT_LIST_BOOKMARK_GET_ALL_SORT = '-vote';
@@ -48,9 +47,6 @@ export class ListBookmarkGetAllController extends BaseController {
     const { bookmarks, meta }: IListBookmarkGetAllResponse = await this.useCase.execute(listBookmarkGetAllRequest);
 
     const formattedBookmarks = bookmarks.map((item) => {
-      const urlWrapper = new URLWrapper(item.url);
-      const url = urlWrapper.getHref();
-
       return {
         type: 'bookmark',
         id: item.id,
@@ -59,7 +55,6 @@ export class ListBookmarkGetAllController extends BaseController {
         },
         attributes: {
           ...item,
-          url,
         },
       };
     });

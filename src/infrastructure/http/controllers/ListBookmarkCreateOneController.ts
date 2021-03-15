@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { IListBookmarkCreateOneRequest } from '@domain/list/useCases/interfaces/IListBookmarkCreateOneRequest';
 import { IListBookmarkCreateOneUseCase } from '@domain/list/useCases/ListBookmarkCreateOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class ListBookmarkCreateOneController extends BaseController {

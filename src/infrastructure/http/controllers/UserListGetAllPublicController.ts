@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserListGetAllPublicRequest } from '@domain/user/useCases/interfaces/IUserListGetAllPublicRequest';
 import { IUserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 type UserListGetAllPublicControllerQueryType = {

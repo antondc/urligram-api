@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { TokenService } from '@infrastructure/services/TokenService';
 import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';
+import { TokenService } from '@shared/services/TokenService';
 
 export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (

@@ -1,7 +1,7 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
+import { TokenService } from '@shared/services/TokenService';
 import { IUserResetPasswordRequest } from './interfaces/IUserResetPasswordRequest';
 import { IUserResetPasswordResponse } from './interfaces/IUserResetPasswordResponse';
 

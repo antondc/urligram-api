@@ -1,11 +1,11 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCreateOneResponse';
-import { MailService } from '@infrastructure/services/MailService';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
 import { UserError } from '@shared/errors/UserError';
+import { MailService } from '@shared/services/MailService';
 import { StringValidator } from '@shared/services/StringValidator';
+import { TokenService } from '@shared/services/TokenService';
 
 export interface IUserCreateOneUseCase {
   execute: (userCreateOneRequest: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;

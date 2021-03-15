@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IStateResetContentUseCaseRequest } from '@domain/state/useCases/interfaces/IStateResetContentUseCaseRequest';
 import { IStateResetContentUseCase } from '@domain/state/useCases/StateResetContentUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class StateResetContentController extends BaseController {

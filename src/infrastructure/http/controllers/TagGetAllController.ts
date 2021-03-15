@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { ITagGetAllRequest } from '@domain/tag/useCases/interfaces/ITagGetAllRequest';
 import { ITagGetAllUseCase } from '@domain/tag/useCases/TagGetAllUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 type TagsGetAllControllerQueryType = {

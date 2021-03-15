@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserUpdateOneRequest } from '@domain/user/useCases/interfaces/IUserUpdateOneRequest';
 import { IUserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class UserUpdateOneController extends BaseController {

@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { IBookmarkTagGetAllUseCase } from '@domain/bookmark/useCases/BookmarkTagGetAllUseCase';
 import { IBookmarkTagGetAllRequest } from '@domain/bookmark/useCases/interfaces/IBookmarkTagGetAllRequest';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 export class BookmarkTagGetAllController extends BaseController {

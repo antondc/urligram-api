@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserFollowerGetAllUseCase } from '@domain/user/useCases/UserFollowerGetAllUseCase';
-import { TokenService } from '@infrastructure/services/TokenService';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 const DEFAULT_FOLLOWERS_GET_ALL_SORT = 'name';
