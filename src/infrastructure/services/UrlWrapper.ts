@@ -3,7 +3,7 @@ import psl from 'psl';
 import { getNested } from '@tools/helpers/object/getNested';
 import { mergeDeep } from '@tools/helpers/object/mergeDeep';
 import { omit } from '@tools/helpers/object/omit';
-import { addDefaultHttps } from '@tools/helpers/url/AddDefaultHttps';
+import { addDefaultHttps } from '@tools/helpers/url/addDefaultHttps';
 import { QueryStringWrapper } from './QueryStringWrapper';
 
 const DEFAULT_URL = 'example.com';
