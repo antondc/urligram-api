@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
+import { LinkUpsertOneUseCase } from '@domain/link/useCases/LinkUpsertOneUseCase';
 import { UserBookmarkCreateUseCase } from '@domain/user/useCases/UserBookmarkCreateUseCase';
 import { UserBookmarkDeleteOneUseCase } from '@domain/user/useCases/UserBookmarkDeleteOneUseCase';
 import { UserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
@@ -198,7 +199,9 @@ UsersRoute.get('/me/bookmarks/:bookmarkId', async (req: Request, res: Response, 
 
 UsersRoute.post('/me/bookmarks', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userLinkCreateUseCase = new UserBookmarkCreateUseCase(userRepo);
+  const linkRepo = new LinkRepo();
+  const linkUpsertOneUseCase = new LinkUpsertOneUseCase(linkRepo);
+  const userLinkCreateUseCase = new UserBookmarkCreateUseCase(userRepo, linkUpsertOneUseCase);
   const userLinkCreateController = new UserBookmarkCreateController(userLinkCreateUseCase);
 
   const response = await userLinkCreateController.execute(req, res, next);

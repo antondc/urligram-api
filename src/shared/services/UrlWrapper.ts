@@ -4,6 +4,7 @@ import { QueryStringWrapper } from './QueryStringWrapper';
 
 export class URLWrapper {
   private url: URL;
+  private origin: string;
   private host: string;
   private path: string;
   private search: string;
@@ -17,6 +18,7 @@ export class URLWrapper {
       const url = new URL(rawURL);
 
       this.url = url;
+      this.origin = url.origin;
       this.host = url.hostname;
       this.path = url.pathname;
       this.search = this.url.search;
@@ -35,6 +37,10 @@ export class URLWrapper {
 
   getPath(): string | undefined {
     return this.path;
+  }
+
+  getOrigin(): string | undefined {
+    return this.origin;
   }
 
   getDomain(): string | undefined {

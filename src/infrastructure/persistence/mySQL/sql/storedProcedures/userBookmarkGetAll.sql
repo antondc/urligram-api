@@ -22,6 +22,7 @@ BEGIN
     bookmark.order,
     CONCAT(domain.domain, link.path) AS url,
     bookmark.link_id AS linkId,
+    `link`.`favicon`,
     bookmark.isPrivate,
     bookmark.saved,
     bookmark.user_id AS userId,

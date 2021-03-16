@@ -113,4 +113,20 @@ export class LinkRepo implements ILinkRepo {
       await mySQL.close();
     }
   }
+
+  public async linkUpsertOne({ path, domain, title, description, image, favicon, language }) {
+    const mySQL = new MySQL();
+
+    try {
+      const linkUpsertOneQuery = 'CALL link_upsert_one(?, ?, ?, ?, ?, ?, ?)';
+
+      const [[results]] = await mySQL.query(linkUpsertOneQuery, [path, domain, title, description, image, favicon, language]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }

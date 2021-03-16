@@ -13,6 +13,7 @@ BEGIN
     CONCAT(domain.domain, link.path) AS url,
     link.id AS linkId,
     link.image as img,
+    `link`.`favicon`,
     bookmark.user_id AS userId,
     bookmark.isPrivate,
     bookmark.saved,

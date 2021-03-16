@@ -1,8 +1,8 @@
+import { ILinkUpsertOneUseCase } from '@domain/link/useCases/LinkUpsertOneUseCase';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserBookmarkCreateRequest } from '@domain/user/useCases/interfaces/IUserBookmarkCreateRequest';
 import { IUserBookmarkCreateResponse } from '@domain/user/useCases/interfaces/IUserBookmarkCreateResponse';
 import { RequestError } from '@shared/errors/RequestError';
-import HttpClient from '@shared/services/HttpClient';
 import { URLWrapper } from '@shared/services/UrlWrapper';
 import { testStringIsValidUrl } from '@tools/helpers/url/testStringIsValidUrl';
 
@@ -12,13 +12,15 @@ export interface IUserBookmarkCreateUseCase {
 
 export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
   private userRepo: IUserRepo;
+  private linkUpsertOneUseCase: ILinkUpsertOneUseCase;
 
-  constructor(userRepo: IUserRepo) {
+  constructor(userRepo: IUserRepo, linkUpsertOneUseCase: ILinkUpsertOneUseCase) {
     this.userRepo = userRepo;
+    this.linkUpsertOneUseCase = linkUpsertOneUseCase;
   }
 
   public async execute(bookmarkCreateRequest: IUserBookmarkCreateRequest): Promise<IUserBookmarkCreateResponse> {
-    const { url, session, title, saved, isPrivate, tags } = bookmarkCreateRequest;
+    const { session, url, title, isPrivate, tags } = bookmarkCreateRequest;
 
     const stringIsValidUrl = testStringIsValidUrl(url);
     if (!stringIsValidUrl) throw new RequestError('Url is not valid', 409, { message: '409 Conflict' });
@@ -27,40 +29,29 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
     const domain = parsedUrl.getDomain();
     const path = parsedUrl.getPathAndSearch();
 
-    try {
-      await HttpClient.get(url);
-    } catch {
-      throw new RequestError('Url not found', 404);
-    }
-
     const bookmarkExist = await this.userRepo.userBookmarkGetOneByUserIdPathDomain({
       path,
       domain,
       userId: session?.id,
     });
-    if (!!bookmarkExist) throw new RequestError('Bookmark already exists', 409, { message: '409 Conflict' }); // (1)
+    if (!!bookmarkExist) throw new RequestError('Bookmark already exists', 409, { message: '409 Conflict' });
+
+    const link = await this.linkUpsertOneUseCase.execute({ session, url, alternativeTitle: title });
 
     const result = await this.userRepo.userBookmarkCreate({
-      userId: session.id,
-      saved,
+      userId: session?.id,
+      linkId: link?.id,
+      title,
       isPrivate,
       tags,
-      path,
-      domain,
-      title: title ? title : domain + path,
     });
+    if (!result?.id) throw new RequestError('Bookmark creation failed', 500, { message: '500 Server Error' });
 
     const response = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
-      bookmarkId: result.bookmarkId,
+      bookmarkId: result?.id,
       userId: session?.id,
     });
 
     return response;
   }
 }
-
-/* --- DOC ---
-  Creates a a bookmark
-  Exeptions
-    (1) Bookmark don't exist for this user
-*/

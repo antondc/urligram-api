@@ -12,6 +12,7 @@ BEGIN
     bookmark.title AS bookmarkTitle,
     bookmark.user_id AS userId,
     CONCAT(domain.domain, link.path) AS url,
+    `link`.`favicon`,
     bookmark.isPrivate,
     bookmark.saved
   FROM bookmark_list

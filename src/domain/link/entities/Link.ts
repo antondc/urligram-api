@@ -6,6 +6,9 @@ export class Link {
   url: string;
   title: string;
   img: string;
+  favicon: string;
+  description: string;
+  language: string;
   bookmarks: Bookmark[];
   statistics: ILinkStatistics;
 

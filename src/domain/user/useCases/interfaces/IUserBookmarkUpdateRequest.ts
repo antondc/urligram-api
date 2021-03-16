@@ -10,7 +10,6 @@ export interface IUserBookmarkUpdateRequest {
   title: string;
   saved: boolean;
   isPrivate: boolean;
-  url: string;
   tags: Tag[];
   session: User;
 }

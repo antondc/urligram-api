@@ -3,11 +3,9 @@ DROP PROCEDURE IF EXISTS user_bookmark_create;
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_create(
   IN $USER_ID VARCHAR(40),
-  IN $TITLE VARCHAR(40),
-  IN $SAVED BOOLEAN,
+  IN $LINK_ID INT,
+  IN $TITLE VARCHAR(255),
   IN $IS_PRIVATE BOOLEAN,
-  IN $DOMAIN VARCHAR(40),
-  IN $_PATH TEXT,
   IN $TAGS JSON
 )
 
@@ -16,75 +14,44 @@ BEGIN
   -- Declare iterator variable to use it later on in the loop
   DECLARE i INT DEFAULT 0;
 
-  -- Upsert into domain
-  INSERT INTO domain (
-    `domain`
-  ) VALUES (
-    $DOMAIN
-  ) ON DUPLICATE KEY UPDATE
-    domain    = $DOMAIN,
-    updatedAt = CURRENT_TIMESTAMP;
-
-  -- Retrieve the upserted id
-  SET @domain_id = (
-    SELECT domain.id
-    FROM domain
-    WHERE domain.domain = $DOMAIN
-  );
-
-  -- Upsert into link
-  INSERT INTO link (
-    `path`,
-    `domain_id`
-  ) VALUES (
-    $_PATH,
-    @domain_id
-  ) ON DUPLICATE KEY UPDATE
-    path      = $_PATH,
-    domain_id = @domain_id,
-    updatedAt = CURRENT_TIMESTAMP;
-
-  -- Retrieve the upserted link_id
-  SET @link_id = (
-    SELECT link.id
-    FROM link
-    WHERE link.path = $_PATH AND link.domain_id = @domain_id
-  );
-
   -- Upsert into bookmark
   INSERT INTO bookmark (
     `bookmark`.`title`,
     `bookmark`.`isPrivate`,
-    `bookmark`.`saved`,
     `bookmark`.`user_id`,
     `bookmark`.`link_id`
   ) VALUES (
     $TITLE,
     $IS_PRIVATE,
-    $SAVED,
     $USER_ID,
-    @link_id
+    $LINK_ID
   ) ON DUPLICATE KEY UPDATE
     isPrivate   = $IS_PRIVATE,
-    saved       = $SAVED,
-    user_id     = $USER_ID,
-    link_id     = @link_id,
-    updatedAt   = CURRENT_TIMESTAMP;
+    title       = $TITLE,
+    updatedAt   = CURRENT_TIMESTAMP
+  ;
 
   -- Retrieve the last upserted id
   SET @bookmark_id = (
-    SELECT bookmark.id
-    FROM bookmark
-    WHERE bookmark.user_id = $USER_ID AND bookmark.link_id = @link_id
+    SELECT
+      bookmark.id
+    FROM
+      bookmark
+    WHERE
+      bookmark.user_id = $USER_ID
+      AND
+      bookmark.link_id = $LINK_ID
   );
 
   -- Get tags length for the loop
   SET @tags_length = JSON_LENGTH($TAGS);
 
   -- Clear intermediate table for bookmark_tag
-  DELETE FROM bookmark_tag
+  DELETE FROM
+    bookmark_tag
   WHERE
-  bookmark_id = @bookmark_id;
+    bookmark_id = @bookmark_id
+  ;
 
   -- Execute loop over tags length
   WHILE i < @tags_length DO
@@ -122,5 +89,5 @@ BEGIN
     SELECT i + 1 INTO i;
   END WHILE;
 
-  SELECT @bookmark_id AS bookmarkId;
+  SELECT @bookmark_id AS id;
 END

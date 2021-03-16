@@ -1,6 +1,4 @@
 import { RequestError } from '@shared/errors/RequestError';
-import { URLWrapper } from '@shared/services/UrlWrapper';
-import { testStringIsValidUrl } from '@tools/helpers/url/testStringIsValidUrl';
 import { IUserRepo } from '../repositories/IUserRepo';
 import { IUserBookmarkUpdateRequest } from './interfaces/IUserBookmarkUpdateRequest';
 import { IUserBookmarkUpdateResponse } from './interfaces/IUserBookmarkUpdateResponse';
@@ -17,30 +15,19 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
   }
 
   public async execute(userBookmarkUpdateRequest: IUserBookmarkUpdateRequest): Promise<IUserBookmarkUpdateResponse> {
-    const { session, bookmarkId, order, title, url, saved, isPrivate, tags } = userBookmarkUpdateRequest;
-
-    const stringIsValidUrl = testStringIsValidUrl(url);
-    if (!stringIsValidUrl) throw new RequestError('Url is not valid', 409, { message: '409 Conflict' });
-
-    const parsedUrl = new URLWrapper(url);
-    const domain = parsedUrl.getDomain();
-    const path = parsedUrl.getPathAndSearch();
+    const { session, bookmarkId, order, title, isPrivate, tags } = userBookmarkUpdateRequest;
 
     const bookmarkExists = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
       bookmarkId,
       userId: session?.id,
     });
-    if (!bookmarkExists) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' }); // (1)(2)
+    if (!bookmarkExists) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
     const result = await this.userRepo.userBookmarkUpdate({
-      userId: session?.id,
       bookmarkId,
       order,
       title,
-      saved,
       isPrivate,
-      domain,
-      path,
       tags,
     });
 
@@ -52,8 +39,3 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
     return response;
   }
 }
-/* --- DOC ---
-  Deletes a bookmark
-  Exceptions
-    (1) Bookmark is not owned by user
-*/

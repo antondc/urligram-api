@@ -1,3 +1,3 @@
 export type IUserBookmarkCreateResponse = {
-  bookmarkId: number;
+  id: number;
 };

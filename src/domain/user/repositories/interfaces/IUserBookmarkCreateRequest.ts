@@ -4,10 +4,8 @@ type Tag = {
 
 export interface IUserBookmarkCreateRequest {
   userId: string;
+  linkId: number;
   title: string;
-  saved: boolean;
   isPrivate: boolean;
-  domain: string;
-  path: string;
   tags?: Tag[];
 }

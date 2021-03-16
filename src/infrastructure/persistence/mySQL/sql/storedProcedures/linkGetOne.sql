@@ -15,6 +15,9 @@ BEGIN
     link.id,
     link.title,
     link.image as img,
+    link.description,
+    link.language,
+    link.favicon,
     link.order,
     CONCAT(domain.domain, link.path) AS url,
     (
