@@ -1,6 +1,7 @@
 import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
 import { ILinkUpsertOneRequest } from '@domain/link/useCases/interfaces/ILinkUpsertOneRequest';
 import { ILinkUpsertOneResponse } from '@domain/link/useCases/interfaces/ILinkUpsertOneResponse';
+import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
 import { RequestError } from '@shared/errors/RequestError';
 import HtmlScrapper from '@shared/services/HtmlScrapper';
 import HttpClient from '@shared/services/HttpClient';
@@ -51,14 +52,18 @@ export class LinkUpsertOneUseCase implements ILinkUpsertOneUseCase {
 
       return link;
     } catch (err) {
+      const htmlScraper = new HtmlScrapper('');
+      const favicon = htmlScraper.getDefaultFavicon(origin);
+      const defaultLanguage = DEFAULT_LANGUAGE;
+
       const upsertedLink = await this.linkRepo.linkUpsertOne({
         path,
         domain: origin,
         title: alternativeTitle,
         description: '',
         image: '',
-        favicon: '',
-        language: '',
+        favicon: favicon,
+        language: defaultLanguage,
       });
       const link = await this.linkRepo.linkGetOne({ linkId: upsertedLink?.id, userId: session?.id });
       if (!link?.id) throw new RequestError('Link creation failed', 500, { message: '500 Server Error' });

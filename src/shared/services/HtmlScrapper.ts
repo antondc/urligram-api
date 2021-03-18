@@ -89,19 +89,24 @@ class HtmlScrapper {
   }
 
   getFavicon(domain: string): string {
-    const htmlFaviconTag = this.document.querySelector("link[rel*='icon']");
-    const htmlFaviconUrl = htmlFaviconTag?.href;
-    const isOnlyFavicon = htmlFaviconUrl === 'favicon.ico'; // TODO: Need a proper regex here. Also remove leading slash
-    const htmlFaviconIsAbsolute = htmlFaviconUrl.startsWith('/');
-    const htmlFaviconTagWithDomain =
-      (isOnlyFavicon && `${domain}/${htmlFaviconUrl}`) || (htmlFaviconIsAbsolute && `${domain}${htmlFaviconUrl}`) || htmlFaviconUrl;
-    const htmlFaviconContent = htmlFaviconTag?.content && `${domain}${htmlFaviconTag.content}`;
+    // TODO: develop logic
+    // const htmlFaviconTag = this.document.querySelector("link[rel*='icon']");
+    // const htmlFaviconUrl = htmlFaviconTag?.href;
+    // const isOnlyFavicon = htmlFaviconUrl === 'favicon.ico'; // TODO: Need a proper regex here. Also remove leading slash
+    // const htmlFaviconIsAbsolute = htmlFaviconUrl.startsWith('/');
+    // const htmlFaviconTagWithDomain =
+    //   (isOnlyFavicon && `${domain}/${htmlFaviconUrl}`) || (htmlFaviconIsAbsolute && `${domain}${htmlFaviconUrl}`) || htmlFaviconUrl;
+    // const htmlFaviconContent = htmlFaviconTag?.content && `${domain}${htmlFaviconTag.content}`;
     // Google S2 favicon service
     const googleFavicon = `https://www.google.com/s2/favicons?domain=${domain}`;
 
-    const returnedFavicon = htmlFaviconTagWithDomain || htmlFaviconContent || googleFavicon;
+    const returnedFavicon = googleFavicon;
 
     return returnedFavicon;
+  }
+
+  getDefaultFavicon(domain: string): string {
+    return `https://www.google.com/s2/favicons?domain=${domain}`;
   }
 }
 

@@ -6,8 +6,9 @@ import { omit } from '@tools/helpers/object/omit';
 
 export class QueryStringWrapper {
   static extractQueryString(string: string): string {
-    return string.split('?')[1];
+    return string.split('?')[1] || '';
   }
+
   static decoder(str: string, defaultDecoder: defaultDecoder, b: unknown, type: string): string | number | ParsedQs {
     if (type === 'value' && !isNaN(Number(str))) return Number(str);
 
