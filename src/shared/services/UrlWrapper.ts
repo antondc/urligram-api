@@ -61,7 +61,6 @@ export class URLWrapper {
 
   upsertSearchParams(params: Record<string, unknown>): string {
     const updatedQueryString = QueryStringWrapper.upsertSearchParams(this.url.search, params);
-
     const hrefWithoutSearchParams = this.getHref().split('?')[0];
     const updatedURL = `${hrefWithoutSearchParams}?${updatedQueryString}`;
 

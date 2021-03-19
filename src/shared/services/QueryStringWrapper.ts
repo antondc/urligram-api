@@ -6,7 +6,10 @@ import { omit } from '@tools/helpers/object/omit';
 
 export class QueryStringWrapper {
   static extractQueryString(string: string): string {
-    return string.split('?')[1] || '';
+    if (string.includes('?')) return string.split('?')[1];
+    if (string.includes('=')) return string; // Every query string must have "="
+
+    return '';
   }
 
   static decoder(str: string, defaultDecoder: defaultDecoder, b: unknown, type: string): string | number | ParsedQs {
@@ -16,7 +19,8 @@ export class QueryStringWrapper {
   }
 
   static parseQueryString(string = ''): Record<string, unknown> {
-    const queryParams = parse(string.replace(/^\?/, ''), {
+    const queryString = QueryStringWrapper.extractQueryString(string);
+    const queryParams = parse(queryString, {
       decoder: QueryStringWrapper.decoder,
     });
 
@@ -32,7 +36,8 @@ export class QueryStringWrapper {
   }
 
   static upsertSearchParams(string: string, newParams: Record<string, unknown>): string {
-    const alreadyParams = QueryStringWrapper.parseQueryString(string);
+    const queryString = QueryStringWrapper.extractQueryString(string);
+    const alreadyParams = QueryStringWrapper.parseQueryString(queryString);
 
     const paramsEnhanced = mergeDeep<Record<string, unknown>>(alreadyParams, newParams);
     const stringifiedParams = QueryStringWrapper.stringifyQueryParams(paramsEnhanced);
@@ -40,7 +45,18 @@ export class QueryStringWrapper {
     return stringifiedParams;
   }
 
-  static deleteSearchParam(queryString: string, path: string): string {
+  static addSearchParamsNoReplace(string: string, newParams: Record<string, unknown>): string {
+    const queryString = QueryStringWrapper.extractQueryString(string);
+    const alreadyParams = QueryStringWrapper.parseQueryString(queryString);
+
+    const paramsEnhanced = mergeDeep<Record<string, unknown>>(newParams, alreadyParams);
+    const stringifiedParams = QueryStringWrapper.stringifyQueryParams(paramsEnhanced);
+
+    return stringifiedParams;
+  }
+
+  static deleteSearchParam(string: string, path: string): string {
+    const queryString = QueryStringWrapper.extractQueryString(string);
     const params = QueryStringWrapper.parseQueryString(queryString);
     const paramsWithoutOmmitedValue = omit(params, [path]);
     const stringifiedParams = QueryStringWrapper.stringifyQueryParams(paramsWithoutOmmitedValue);
@@ -48,7 +64,8 @@ export class QueryStringWrapper {
     return stringifiedParams;
   }
 
-  static getOneSearchParam(queryString: string, path: string): any {
+  static getOneSearchParam(string: string, path: string): any {
+    const queryString = QueryStringWrapper.extractQueryString(string);
     const params = QueryStringWrapper.parseQueryString(queryString);
 
     return getNested(params, path);
