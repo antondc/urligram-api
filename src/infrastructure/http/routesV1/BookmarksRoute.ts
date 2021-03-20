@@ -7,10 +7,10 @@ import { BookmarkTagGetAllUseCase } from '@domain/bookmark/useCases/BookmarkTagG
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { BookmarkGetAllPublicController } from '@infrastructure/http/controllers/BookmarkGetAllPublicController';
 import { BookmarkGetOneController } from '@infrastructure/http/controllers/BookmarkGetOneController';
+import { BookmarkListGetAllController } from '@infrastructure/http/controllers/BookmarkListGetAllController';
+import { BookmarkTagGetAllController } from '@infrastructure/http/controllers/BookmarkTagGetAllController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
-import { BookmarkListGetAllController } from '../controllers/BookmarkListGetAllController';
-import { BookmarkTagGetAllController } from '../controllers/BookmarkTagGetAllController';
 
 const BookmarksRoute = express.Router();
 

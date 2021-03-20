@@ -4,11 +4,11 @@ import { TagBookmarkGetAllPublicUseCase } from '@domain/tag/useCases/TagBookmark
 import { TagGetAllUseCase } from '@domain/tag/useCases/TagGetAllUseCase';
 import { TagListGetAllPublicUseCase } from '@domain/tag/useCases/TagListGetAllPublicUseCase';
 import { TagUserGetAllPublicUseCase } from '@domain/tag/useCases/TagUserGetAllPublicUseCase';
+import { TagBookmarkGetAllPublicController } from '@infrastructure/http/controllers/TagBookmarkGetAllPublicController';
 import { TagGetAllController } from '@infrastructure/http/controllers/TagGetAllController';
 import { TagListGetAllPublicController } from '@infrastructure/http/controllers/TagListGetAllPublicController';
+import { TagUserGetAllPublicController } from '@infrastructure/http/controllers/TagUserGetAllPublicController';
 import { TagRepo } from '@infrastructure/persistence/mySQL/repositories/TagRepo';
-import { TagBookmarkGetAllPublicController } from '../controllers/TagBookmarkGetAllPublicController';
-import { TagUserGetAllPublicController } from '../controllers/TagUserGetAllPublicController';
 
 const TagsRoute = express.Router();
 

@@ -1,5 +1,5 @@
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { IUserRepo } from '../repositories/IUserRepo';
 import { IUserBookmarkUpdateRequest } from './interfaces/IUserBookmarkUpdateRequest';
 import { IUserBookmarkUpdateResponse } from './interfaces/IUserBookmarkUpdateResponse';
 

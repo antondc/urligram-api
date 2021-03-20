@@ -1,12 +1,11 @@
 import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
 import { ILinkUpsertOneRequest } from '@domain/link/useCases/interfaces/ILinkUpsertOneRequest';
 import { ILinkUpsertOneResponse } from '@domain/link/useCases/interfaces/ILinkUpsertOneResponse';
-import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
 import { RequestError } from '@shared/errors/RequestError';
-import HtmlScrapper from '@shared/services/HtmlScrapper';
-import HttpClient from '@shared/services/HttpClient';
 import { URLWrapper } from '@shared/services/UrlWrapper';
+import { addDefaultHttps } from '@tools/helpers/url/addDefaultHttps';
 import { testStringIsValidUrl } from '@tools/helpers/url/testStringIsValidUrl';
+import { ILinkRequestInfoUseCase } from './LinkRequestInfoUseCase';
 
 export interface ILinkUpsertOneUseCase {
   execute: (bookmarkUpsertOneRequest: ILinkUpsertOneRequest) => Promise<ILinkUpsertOneResponse>;
@@ -14,61 +13,38 @@ export interface ILinkUpsertOneUseCase {
 
 export class LinkUpsertOneUseCase implements ILinkUpsertOneUseCase {
   private linkRepo: ILinkRepo;
+  private linkRequestInfoUseCase: ILinkRequestInfoUseCase;
 
-  constructor(linkRepo: ILinkRepo) {
+  constructor(linkRepo: ILinkRepo, linkRequestInfoUseCase: ILinkRequestInfoUseCase) {
     this.linkRepo = linkRepo;
+    this.linkRequestInfoUseCase = linkRequestInfoUseCase;
   }
 
   public async execute(bookmarkUpsertOneRequest: ILinkUpsertOneRequest): Promise<ILinkUpsertOneResponse> {
     const { session, url, alternativeTitle } = bookmarkUpsertOneRequest;
 
-    const stringIsValidUrl = testStringIsValidUrl(url);
+    const urlWithDefaultProtocol = addDefaultHttps(url);
+    const stringIsValidUrl = testStringIsValidUrl(urlWithDefaultProtocol);
     if (!stringIsValidUrl) throw new RequestError('Url is not valid', 409, { message: '409 Conflict' });
 
     const parsedUrl = new URLWrapper(url);
     const origin = parsedUrl.getOrigin();
     const path = parsedUrl.getPathAndSearch();
 
-    try {
-      const html: string = await HttpClient.get(url);
-      const htmlScraper = new HtmlScrapper(html);
-      const title = htmlScraper.getTitle();
-      const description = htmlScraper.getDescription();
-      const language = htmlScraper.getLanguage();
-      const image = htmlScraper.getImage();
-      const favicon = htmlScraper.getFavicon(origin);
+    const { title = alternativeTitle, description = '', image = '', favicon, language } = await this.linkRequestInfoUseCase.execute({ url });
 
-      const upsertedLink = await this.linkRepo.linkUpsertOne({
-        path,
-        domain: origin,
-        title,
-        description,
-        image,
-        favicon,
-        language,
-      });
-      const link = await this.linkRepo.linkGetOne({ linkId: upsertedLink?.id, userId: session?.id });
-      if (!link?.id) throw new RequestError('Link creation failed', 500, { message: '500 Server Error' });
+    const upsertedLink = await this.linkRepo.linkUpsertOne({
+      path,
+      domain: origin,
+      title: title,
+      description: description,
+      image: image,
+      favicon: favicon,
+      language: language,
+    });
+    const link = await this.linkRepo.linkGetOne({ linkId: upsertedLink?.id, userId: session?.id });
+    if (!link?.id) throw new RequestError('Link creation failed', 500, { message: '500 Server Error' });
 
-      return link;
-    } catch (err) {
-      const htmlScraper = new HtmlScrapper('');
-      const favicon = htmlScraper.getDefaultFavicon(origin);
-      const defaultLanguage = DEFAULT_LANGUAGE;
-
-      const upsertedLink = await this.linkRepo.linkUpsertOne({
-        path,
-        domain: origin,
-        title: alternativeTitle,
-        description: '',
-        image: '',
-        favicon: favicon,
-        language: defaultLanguage,
-      });
-      const link = await this.linkRepo.linkGetOne({ linkId: upsertedLink?.id, userId: session?.id });
-      if (!link?.id) throw new RequestError('Link creation failed', 500, { message: '500 Server Error' });
-
-      return link;
-    }
+    return link;
   }
 }

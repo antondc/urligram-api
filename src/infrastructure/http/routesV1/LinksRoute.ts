@@ -4,17 +4,28 @@ import { LinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { LinkGetOneUseCase } from '@domain/link/useCases/LinkGetOneUseCase';
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { LinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAllPublicUseCase';
+import { LinkRequestInfoUseCase } from '@domain/link/useCases/LinkRequestInfoUseCase';
 import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllPublicUseCase';
 import { LinkVoteOneUseCase } from '@domain/link/useCases/LinkVoteOneUseCase';
+import { LinkGetAllController } from '@infrastructure/http/controllers/LinkGetAllController';
+import { LinkGetOneController } from '@infrastructure/http/controllers/LinkGetOneController';
+import { LinkListGetAllPublicController } from '@infrastructure/http/controllers/LinkListGetAllPublicController';
+import { LinkRequestInfoController } from '@infrastructure/http/controllers/LinkRequestInfoController';
+import { LinkTagGetAllController } from '@infrastructure/http/controllers/LinkTagGetAllController';
+import { LinkVoteOneController } from '@infrastructure/http/controllers/LinkVoteOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
-import { LinkGetAllController } from '../controllers/LinkGetAllController';
-import { LinkGetOneController } from '../controllers/LinkGetOneController';
-import { LinkListGetAllPublicController } from '../controllers/LinkListGetAllPublicController';
-import { LinkTagGetAllController } from '../controllers/LinkTagGetAllController';
-import { LinkVoteOneController } from '../controllers/LinkVoteOneController';
 
 const LinksRoute = express.Router();
+
+LinksRoute.get('/url', async (req: Request, res: Response, next: NextFunction) => {
+  const linkRequestInfoUseCase = new LinkRequestInfoUseCase();
+  const linkRequestInfoController = new LinkRequestInfoController(linkRequestInfoUseCase);
+
+  const response = await linkRequestInfoController.execute(req, res, next);
+
+  return response;
+});
 
 LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();

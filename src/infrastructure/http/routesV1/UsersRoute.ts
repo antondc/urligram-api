@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
+import { LinkRequestInfoUseCase } from '@domain/link/useCases/LinkRequestInfoUseCase';
 import { LinkUpsertOneUseCase } from '@domain/link/useCases/LinkUpsertOneUseCase';
 import { UserBookmarkCreateUseCase } from '@domain/user/useCases/UserBookmarkCreateUseCase';
 import { UserBookmarkDeleteOneUseCase } from '@domain/user/useCases/UserBookmarkDeleteOneUseCase';
@@ -26,6 +27,7 @@ import { UserBookmarkDeleteOneController } from '@infrastructure/http/controller
 import { UserBookmarkGetAllController } from '@infrastructure/http/controllers/UserBookmarkGetAllController';
 import { UserBookmarkGetOneController } from '@infrastructure/http/controllers/UserBookmarkGetOneController';
 import { UserBookmarkUpdateController } from '@infrastructure/http/controllers/UserBookmarkUpdateController';
+import { UserCreateConfirmationController } from '@infrastructure/http/controllers/UserCreateConfirmationController';
 import { UserCreateOneController } from '@infrastructure/http/controllers/UserCreateOneController';
 import { UserDeleteOneController } from '@infrastructure/http/controllers/UserDeleteOneController';
 import { UserFollowerGetAllController } from '@infrastructure/http/controllers/UserFollowerGetAllController';
@@ -42,7 +44,6 @@ import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUp
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { UserCreateConfirmationController } from '../controllers/UserCreateConfirmationController';
 
 const UsersRoute = express.Router();
 
@@ -200,7 +201,8 @@ UsersRoute.get('/me/bookmarks/:bookmarkId', async (req: Request, res: Response, 
 UsersRoute.post('/me/bookmarks', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
   const linkRepo = new LinkRepo();
-  const linkUpsertOneUseCase = new LinkUpsertOneUseCase(linkRepo);
+  const linkRequestInfoUseCase = new LinkRequestInfoUseCase();
+  const linkUpsertOneUseCase = new LinkUpsertOneUseCase(linkRepo, linkRequestInfoUseCase);
   const userLinkCreateUseCase = new UserBookmarkCreateUseCase(userRepo, linkUpsertOneUseCase);
   const userLinkCreateController = new UserBookmarkCreateController(userLinkCreateUseCase);
 
