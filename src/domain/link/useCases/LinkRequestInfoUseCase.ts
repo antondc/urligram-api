@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
 import { RequestError } from '@shared/errors/RequestError';
 import HtmlScrapper from '@shared/services/HtmlScrapper';
@@ -16,6 +18,8 @@ export class LinkRequestInfoUseCase implements ILinkRequestInfoUseCase {
   public async execute(linkRequestInfoRequest: ILinkRequestInfoRequest): Promise<ILinkRequestInfoResponse> {
     const { url } = linkRequestInfoRequest;
 
+    if (!url) throw new RequestError('Url missing', 400, { message: '400 Bad request' });
+    
     const urlWithDefaultProtocol = addDefaultHttps(url);
     const stringIsValidUrl = testStringIsValidUrl(urlWithDefaultProtocol);
     if (!stringIsValidUrl) throw new RequestError('Url is not valid', 409, { message: '409 Conflict' });

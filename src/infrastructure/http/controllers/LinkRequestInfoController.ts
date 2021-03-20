@@ -30,12 +30,10 @@ export class LinkRequestInfoController extends BaseController {
       links: {
         self: URL_SERVER + '/links',
       },
-      data: [
-        {
-          type: 'link',
-          attributes: response,
-        },
-      ],
+      data: {
+        type: 'link',
+        attributes: response,
+      },
     };
 
     return res.status(200).send(formattedResponse);
