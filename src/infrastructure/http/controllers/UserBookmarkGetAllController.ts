@@ -16,6 +16,9 @@ type BookmarkGetAllPublicControllerQueryType = {
     size: string;
     offset: string;
   };
+  filter?: {
+    tags?: string[];
+  };
 };
 
 export class UserBookmarkGetAllController extends BaseController {
@@ -28,12 +31,16 @@ export class UserBookmarkGetAllController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { userId } = req.params;
-    const { sort = DEFAULT_USER_BOOKMARK_GET_ALL_SORT, page: { size, offset } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
+    const {
+      sort = DEFAULT_USER_BOOKMARK_GET_ALL_SORT,
+      page: { size, offset = null } = {},
+      filter: { tags } = {},
+    } = req.query as BookmarkGetAllPublicControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
-    const castedOffset = Number(offset) || undefined;
+    const castedOffset = Number(offset) || null;
 
     const userBookmarkGetAllRequest: IUserBookmarkGetAllRequest = {
       userId,
@@ -41,6 +48,9 @@ export class UserBookmarkGetAllController extends BaseController {
       sort,
       size: checkedSize,
       offset: castedOffset,
+      filter: {
+        tags,
+      },
     };
 
     const { bookmarks, meta } = await this.useCase.execute(userBookmarkGetAllRequest);

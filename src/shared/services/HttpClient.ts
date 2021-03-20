@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import https from 'https';
-import { stringify } from 'qs';
+
+import { QueryStringWrapper } from './QueryStringWrapper';
 
 interface Options {
   timeout: number;
@@ -38,13 +39,13 @@ export class HttpClient {
     this.publicInstance = axiosInstance;
   }
 
-  public static getInstance = (options?: Options) => {
-    if (!HttpClient.staticInstance) new HttpClient(options);
+  public static getInstance = (): AxiosInstance => {
+    if (!HttpClient.staticInstance) new HttpClient();
 
     return HttpClient.staticInstance;
   };
 
-  private paramsSerializer = (params) => stringify(params, { arrayFormat: 'comma' });
+  private paramsSerializer = (params) => QueryStringWrapper.stringifyQueryParams(params);
 }
 
 export default HttpClient.getInstance();

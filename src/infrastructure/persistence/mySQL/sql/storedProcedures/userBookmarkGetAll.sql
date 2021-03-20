@@ -2,18 +2,19 @@ DROP PROCEDURE IF EXISTS user_bookmark_get_all;
 
 -- DELIMITER $$
 
--- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_get_all(
   IN $SESSION_ID VARCHAR(40),
   IN $USER_ID VARCHAR(40),
   IN $SORT VARCHAR(40),
   IN $SIZE INT,
-  IN $OFFSET INT
+  IN $OFFSET INT,
+  IN $FILTER JSON
 )
 
 BEGIN
 
   SET $SIZE = IFNULL($SIZE, -1);
+  SET @filterTags  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
 
   SELECT DISTINCT
     count(*) OVER() as totalItems,
@@ -67,13 +68,15 @@ BEGIN
   INNER JOIN domain ON link.domain_id = domain.id
   LEFT JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
   LEFT JOIN tag ON bookmark_tag.tag_id = tag.id
-  WHERE bookmark.user_id = $USER_ID
-  AND
-    (
-      bookmark.isPrivate IS NOT TRUE
-      OR
-      bookmark.user_id = $SESSION_ID
-    )
+  WHERE
+      bookmark.`user_id` = $SESSION_ID
+      AND
+      (
+        CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
+        OR
+        CASE WHEN @filterTags IS NULL THEN TRUE END
+      )
+
   GROUP BY bookmark.id
   ORDER BY
     CASE WHEN $SORT = 'id'                THEN `bookmark`.id      	ELSE NULL END ASC,
@@ -93,4 +96,4 @@ BEGIN
 END
 
 -- DELIMITER ;
--- CALL user_bookmark_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', "-timesbookmarked", NULL, NULL);
+-- CALL user_bookmark_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', "-timesbookmarked", NULL, NULL, '{"tags": ["foo"]}');

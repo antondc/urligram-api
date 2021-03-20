@@ -17,7 +17,7 @@ export class UserBookmarkGetAllUseCase implements IUserBookmarkGetAllUseCase {
   }
 
   public async execute(userBookmarkGetAllRequest: IUserBookmarkGetAllRequest): Promise<IUserBookmarkGetAllResponse> {
-    const { userId, session, sort, size, offset } = userBookmarkGetAllRequest;
+    const { userId, session, sort, size, offset, filter } = userBookmarkGetAllRequest;
 
     const { bookmarks, meta } = await this.userRepo.userBookmarkGetAll({
       userId,
@@ -25,6 +25,7 @@ export class UserBookmarkGetAllUseCase implements IUserBookmarkGetAllUseCase {
       sort,
       size,
       offset,
+      filter
     }); // (1)(2)
 
     const bookmarksWithVotesPromises = bookmarks.map(async (item) => {
