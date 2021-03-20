@@ -33,8 +33,13 @@ BEGIN
       JOIN tag
       ON bookmark_tag.tag_id = tag.id
       WHERE bookmark.id = bookmark_tag.bookmark_id
-    ) AS tags
-
+    ) AS tags,
+    (
+      SELECT
+        IF(COUNT(bookmark.user_id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(bookmark.user_id))
+      FROM bookmark
+      WHERE bookmark.link_id = link.id
+    ) AS users
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id

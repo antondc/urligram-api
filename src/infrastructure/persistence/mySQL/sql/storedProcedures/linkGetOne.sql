@@ -19,6 +19,8 @@ BEGIN
     link.language,
     link.favicon,
     link.order,
+    link.createdAt,
+    link.updatedAt,
     CONCAT(domain.domain, link.path) AS url,
     (
       SELECT
@@ -47,17 +49,7 @@ BEGIN
       ) AS tags,
     (
       SELECT
-      IF(
-        COUNT(user.id) = 0,
-        JSON_ARRAY(),
-        JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'id', `user`.`id`,
-            'name', `user`.`name`,
-            'isPrivate', `bookmark`.`isPrivate`
-          )
-        )
-      )
+        IF(COUNT(user.id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user.id))
       FROM `bookmark`
       JOIN user ON bookmark.user_id = user.id
       WHERE bookmark.link_id = link.id

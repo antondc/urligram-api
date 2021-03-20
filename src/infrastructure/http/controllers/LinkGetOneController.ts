@@ -31,18 +31,15 @@ export class LinkGetOneController extends BaseController {
       links: {
         self: URL_SERVER + '/links',
       },
-      data: [
-        {
-          type: 'link',
-          id: response.id,
-          session: {
-            self: URL_SERVER + '/links/' + response.id,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'link',
+        id: response.id,
+        session: {
+          self: URL_SERVER + '/links/' + response.id,
         },
-      ],
-      included: [],
+        attributes: response,
+        relationships: {},
+      },
     };
 
     return res.status(200).send(formattedResponse);

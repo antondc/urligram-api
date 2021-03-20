@@ -1,9 +1,8 @@
-import axios from 'axios';
-
 import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
+import { DEFAULT_REQUEST_TIMEOUT } from '@shared/constants/constants';
 import { RequestError } from '@shared/errors/RequestError';
 import HtmlScrapper from '@shared/services/HtmlScrapper';
-import HttpClient from '@shared/services/HttpClient';
+import { HttpClient } from '@shared/services/HttpClient';
 import { URLWrapper } from '@shared/services/UrlWrapper';
 import { addDefaultHttps } from '@tools/helpers/url/addDefaultHttps';
 import { testStringIsValidUrl } from '@tools/helpers/url/testStringIsValidUrl';
@@ -19,7 +18,7 @@ export class LinkRequestInfoUseCase implements ILinkRequestInfoUseCase {
     const { url } = linkRequestInfoRequest;
 
     if (!url) throw new RequestError('Url missing', 400, { message: '400 Bad request' });
-    
+
     const urlWithDefaultProtocol = addDefaultHttps(url);
     const stringIsValidUrl = testStringIsValidUrl(urlWithDefaultProtocol);
     if (!stringIsValidUrl) throw new RequestError('Url is not valid', 409, { message: '409 Conflict' });
@@ -28,7 +27,8 @@ export class LinkRequestInfoUseCase implements ILinkRequestInfoUseCase {
     const origin = parsedUrl.getOrigin();
 
     try {
-      const html: string = await HttpClient.get(urlWithDefaultProtocol);
+      const httpClient = new HttpClient({ timeout: DEFAULT_REQUEST_TIMEOUT });
+      const html: string = await httpClient.publicInstance.get(urlWithDefaultProtocol);
       const htmlScraper = new HtmlScrapper(html);
       const title = htmlScraper.getTitle();
       const description = htmlScraper.getDescription();
