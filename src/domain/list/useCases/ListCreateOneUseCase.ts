@@ -17,8 +17,8 @@ export class ListCreateOneUseCase implements IListCreateOneUseCase {
   public async execute(listCreateOneRequest: IListCreateOneRequest): Promise<IListCreateOneResponse> {
     const { session, listName, listDescription, listIsPrivate } = listCreateOneRequest;
 
-    const listExists = await this.listRepo.listUserGetOneByListName({ listName, userId: session?.id }); // (1)
-    if (!!listExists || listExists?.userRole === 'admin') throw new RequestError('List already exists', 409, { message: '409 Conflict' });
+    const userInList = await this.listRepo.listUserGetOneByListName({ listName, userId: session?.id });
+    if (!!userInList && userInList?.userRole === 'admin') throw new RequestError('List already exists', 409, { message: '409 Conflict' });
 
     const createList = await this.listRepo.listCreateOne({
       listName,
@@ -36,9 +36,3 @@ export class ListCreateOneUseCase implements IListCreateOneUseCase {
     return createdList;
   }
 }
-
-/* --- DOC ---
-  Creates a list
-  Exceptions
-    (1) List doesn't exist
-*/

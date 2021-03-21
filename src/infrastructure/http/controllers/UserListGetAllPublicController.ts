@@ -8,6 +8,8 @@ import { URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
+const DEFAULT_LIST_GET_ALL_SORT = '-createdAt';
+
 type UserListGetAllPublicControllerQueryType = {
   sort?: 'id' | '-id' | 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'members' | '-members' | 'bookmarks' | '-bookmarks';
   page: {
@@ -28,7 +30,7 @@ export class UserListGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {}, filter: { role } = {} } = req.query as UserListGetAllPublicControllerQueryType;
+    const { sort = DEFAULT_LIST_GET_ALL_SORT, page: { size, offset } = {}, filter: { role } = {} } = req.query as UserListGetAllPublicControllerQueryType;
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedOffset = Number(offset) || undefined;
     const { userId } = req.params;

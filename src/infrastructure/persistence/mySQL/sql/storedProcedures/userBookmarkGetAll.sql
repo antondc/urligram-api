@@ -69,7 +69,14 @@ BEGIN
   LEFT JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
   LEFT JOIN tag ON bookmark_tag.tag_id = tag.id
   WHERE
-      bookmark.`user_id` = $SESSION_ID
+      (
+        (
+          bookmark.`user_id` = $USER_ID
+          AND
+          bookmark.isPrivate IS NOT TRUE
+        )
+        OR bookmark.`user_id` = $SESSION_ID
+      )
       AND
       (
         CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END

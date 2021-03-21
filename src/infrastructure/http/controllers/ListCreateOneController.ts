@@ -34,17 +34,15 @@ export class ListCreateOneController extends BaseController {
       lists: {
         self: URL_SERVER + '/lists/',
       },
-      data: [
-        {
-          type: 'list',
-          id: response?.id,
-          session: {
-            self: URL_SERVER + '/lists/' + response?.id,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'list',
+        id: response?.id,
+        session: {
+          self: URL_SERVER + '/lists/' + response?.id,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 
