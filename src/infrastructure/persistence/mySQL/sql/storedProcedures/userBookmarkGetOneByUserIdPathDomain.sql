@@ -15,6 +15,7 @@ BEGIN
     CONCAT(domain.domain, link.path) AS url,
     `bookmark`.`link_id` AS linkId,
     `bookmark`.`title`,
+    `bookmark`.`user_id` AS userId,
     `link`.`favicon`,
     `bookmark`.`isPrivate`,
     `bookmark`.`saved`,
