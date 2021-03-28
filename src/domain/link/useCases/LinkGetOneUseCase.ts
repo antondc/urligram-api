@@ -19,7 +19,7 @@ export class LinkGetOneUseCase implements ILinkGetOneUseCase {
 
   public async execute(linkGetOneRequest: ILinkGetOneRequest): Promise<ILinkGetOneResponse> {
     const { session, linkId } = linkGetOneRequest;
-    const response = await this.linkRepo.linkGetOne({ linkId, userId: session?.id });
+    const response = await this.linkRepo.linkGetOne({ linkId, sessionId: session?.id });
 
     if (!response) throw new RequestError('Link not found', 404, { message: '404 Not found' });
 

@@ -213,7 +213,10 @@ UsersRoute.post('/me/bookmarks', async (req: Request, res: Response, next: NextF
 
 UsersRoute.put('/me/bookmarks/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userLinkUpdateUseCase = new UserBookmarkUpdateUseCase(userRepo);
+  const linkRepo = new LinkRepo();
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
+  const userLinkUpdateUseCase = new UserBookmarkUpdateUseCase(userRepo, linkGetStatisticsUseCase);
   const userLinkUpdateController = new UserBookmarkUpdateController(userLinkUpdateUseCase);
 
   const response = await userLinkUpdateController.execute(req, res, next);

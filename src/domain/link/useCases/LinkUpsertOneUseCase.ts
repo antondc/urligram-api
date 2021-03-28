@@ -42,7 +42,7 @@ export class LinkUpsertOneUseCase implements ILinkUpsertOneUseCase {
       favicon: favicon,
       language: language,
     });
-    const link = await this.linkRepo.linkGetOne({ linkId: upsertedLink?.id, userId: session?.id });
+    const link = await this.linkRepo.linkGetOne({ linkId: upsertedLink?.id, sessionId: session?.id });
     if (!link?.id) throw new RequestError('Link creation failed', 500, { message: '500 Server Error' });
 
     return link;

@@ -5,13 +5,13 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class LinkRepo implements ILinkRepo {
-  public async linkGetOne({ linkId = null, userId, path = null, domain = null }) {
+  public async linkGetOne({ sessionId, linkId = null, path = null, domain = null }) {
     const mySQL = new MySQL();
 
     try {
       const linkGetOneQuery = 'CALL link_get_one(?, ?, ?, ?)';
 
-      const [[link]] = await mySQL.query(linkGetOneQuery, [linkId, userId, path, domain]);
+      const [[link]] = await mySQL.query(linkGetOneQuery, [sessionId, linkId, path, domain]);
 
       return link;
     } catch (err) {

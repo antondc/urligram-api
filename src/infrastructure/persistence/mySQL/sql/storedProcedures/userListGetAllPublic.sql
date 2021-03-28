@@ -60,9 +60,9 @@ BEGIN
       list.isPrivate IS NOT TRUE
       OR
       (
-        list.userId = $SESSION_ID
+        list.userId = $SESSION_ID AND $SESSION_ID = $USER_ID
         OR
-        user_list.user_id = $SESSION_ID
+        user_list.user_id = $SESSION_ID AND $SESSION_ID = $USER_ID
       )
     )
     AND

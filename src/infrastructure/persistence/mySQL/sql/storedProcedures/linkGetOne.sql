@@ -2,8 +2,8 @@ DROP PROCEDURE IF EXISTS link_get_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE link_get_one(
+  IN $SESSION_ID VARCHAR(40),
   IN $LINK_ID INT,
-  IN $USER_ID VARCHAR(40),
   IN $URL_PATH TEXT,
   IN $URL_DOMAIN TEXT
 )
@@ -44,7 +44,7 @@ BEGIN
         WHERE bookmark.link_id = link.id
         AND (
           bookmark.isPrivate != TRUE
-          OR bookmark.user_id = $USER_ID
+          OR bookmark.user_id = $SESSION_ID
         )
       ) AS tags,
     (
@@ -55,7 +55,7 @@ BEGIN
       WHERE bookmark.link_id = link.id
       AND (
         bookmark.isPrivate != TRUE
-        OR bookmark.user_id = $USER_ID
+        OR bookmark.user_id = $SESSION_ID
       )
     ) AS users,
     (
@@ -65,7 +65,10 @@ BEGIN
           JSON_ARRAY(),
           JSON_ARRAYAGG(
             JSON_OBJECT(
-              'id', `bookmark`.`id`
+              'id', `bookmark`.`id`,
+              'title', `bookmark`.`title`,
+              'userId', `bookmark`.`user_id`,
+              'isPrivate', `bookmark`.`isPrivate`
             )
           )
         )
@@ -73,7 +76,7 @@ BEGIN
       WHERE bookmark.link_id = link.id
       AND (
         bookmark.isPrivate != TRUE
-        OR bookmark.user_id = $USER_ID
+        OR bookmark.user_id = $SESSION_ID
       )
     ) AS bookmarks
   FROM link

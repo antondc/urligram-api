@@ -1,3 +1,4 @@
+import { ILinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IUserBookmarkUpdateRequest } from './interfaces/IUserBookmarkUpdateRequest';
@@ -9,9 +10,11 @@ export interface IUserBookmarkUpdateUseCase {
 
 export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
   private userRepo: IUserRepo;
+  private linkGetStatisticsUseCase: ILinkGetStatisticsUseCase;
 
-  constructor(userRepo: IUserRepo) {
+  constructor(userRepo: IUserRepo, linkGetStatisticsUseCase: ILinkGetStatisticsUseCase) {
     this.userRepo = userRepo;
+    this.linkGetStatisticsUseCase = linkGetStatisticsUseCase;
   }
 
   public async execute(userBookmarkUpdateRequest: IUserBookmarkUpdateRequest): Promise<IUserBookmarkUpdateResponse> {
@@ -31,11 +34,18 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
       tags,
     });
 
-    const response = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+    const bookmark = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
       bookmarkId: result.bookmarkId,
       userId: session?.id,
     });
 
-    return response;
+    const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: bookmark.linkId, session });
+
+    const bookmarkWithStatistics = {
+      ...bookmark,
+      statistics,
+    };
+
+    return bookmarkWithStatistics;
   }
 }

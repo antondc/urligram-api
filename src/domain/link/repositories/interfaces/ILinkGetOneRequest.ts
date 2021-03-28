@@ -1,12 +1,12 @@
-export type byUserIdPathAndDomain = {
-  userId: string;
+export type byPathAndDomain = {
+  sessionId: string;
   path: string;
   domain: string;
 };
 
 export type byLinkId = {
+  sessionId: string;
   linkId: number;
-  userId: string;
 };
 
-export type ILinkGetOneRequest = byLinkId | byUserIdPathAndDomain;
+export type ILinkGetOneRequest = byLinkId | byPathAndDomain;

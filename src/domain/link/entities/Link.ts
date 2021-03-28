@@ -1,4 +1,3 @@
-import { Bookmark } from '@domain/bookmark/entities/Bookmark';
 import { ILinkStatistics } from './LinkStatistics';
 
 export class Link {
@@ -9,7 +8,12 @@ export class Link {
   favicon: string;
   description: string;
   language: string;
-  bookmarks: Bookmark[];
+  bookmarks: {
+    id: number;
+    title: string;
+    userId: string;
+    isPrivate: boolean;
+  }[];
   statistics: ILinkStatistics;
 
   constructor(options) {

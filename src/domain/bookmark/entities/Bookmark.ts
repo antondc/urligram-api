@@ -10,7 +10,10 @@ export class Bookmark {
   userId: string;
   linkId: number;
   statistics: ILinkStatistics;
-
+  link: {
+    id: number;
+    title: string;
+  };
   constructor(options) {
     this.id = options.id;
     this.title = options.title;

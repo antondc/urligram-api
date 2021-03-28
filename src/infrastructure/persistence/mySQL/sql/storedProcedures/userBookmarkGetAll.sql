@@ -75,7 +75,12 @@ BEGIN
           AND
           bookmark.isPrivate IS NOT TRUE
         )
-        OR bookmark.`user_id` = $SESSION_ID
+        OR
+        (
+          bookmark.`user_id` = $USER_ID
+          AND
+          $USER_ID = $SESSION_ID
+        )
       )
       AND
       (
@@ -103,4 +108,4 @@ BEGIN
 END
 
 -- DELIMITER ;
--- CALL user_bookmark_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', "-timesbookmarked", NULL, NULL, '{"tags": ["foo"]}');
+-- CALL user_bookmark_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', "-timesbookmarked", NULL, NULL, '{"tags": ["foo"]}');
