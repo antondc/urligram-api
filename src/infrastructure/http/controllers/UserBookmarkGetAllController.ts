@@ -8,10 +8,10 @@ import { URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-const DEFAULT_USER_BOOKMARK_GET_ALL_SORT = '-createdat';
+const DEFAULT_USER_BOOKMARK_GET_ALL_SORT = '-createdAt';
 
 type BookmarkGetAllPublicControllerQueryType = {
-  sort: 'id' | '-id' | 'createdat' | '-createdat' | 'updatedat' | '-updatedat' | 'vote' | '-vote' | 'timesbookmarked' | '-timesbookmarked';
+  sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'vote' | '-vote' | 'timesbookmarked' | '-timesbookmarked';
   page: {
     size: string;
     offset: string;

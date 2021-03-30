@@ -7,7 +7,7 @@ import { URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-const DEFAULT_USER_GET_ALL_SORT = '-createdat';
+const DEFAULT_USER_GET_ALL_SORT = '-createdAt';
 
 type UserGetAllControllerQueryType = {
   sort:
@@ -15,8 +15,8 @@ type UserGetAllControllerQueryType = {
     | '-order'
     | 'name'
     | '-name'
-    | 'createdat'
-    | '-createdat'
+    | 'createdAt'
+    | '-createdAt'
     | 'followers'
     | '-followers'
     | 'following'

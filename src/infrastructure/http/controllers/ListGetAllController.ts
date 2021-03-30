@@ -7,10 +7,10 @@ import { URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-const DEFAULT_LIST_GET_ALL_SORT = '-createdat';
+const DEFAULT_LIST_GET_ALL_SORT = '-createdAt';
 
 type ListGetAllControllerQueryType = {
-  sort: 'id' | '-id' | 'createdat' | '-createdat' | 'updatedat' | '-updatedat' | 'members' | '-members' | 'bookmarks' | '-bookmarks';
+  sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'members' | '-members' | 'bookmarks' | '-bookmarks';
   page: {
     size: string;
     offset: string;
