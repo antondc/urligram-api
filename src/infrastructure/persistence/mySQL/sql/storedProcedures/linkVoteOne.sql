@@ -20,7 +20,7 @@ BEGIN
     link_id      = $LINK_ID,
     user_id      = $USER_ID,
     vote         = $VOTE,
-    updatedAt    = CURRENT_TIMESTAMP
+    updatedAt    = UNIX_TIMESTAMP()
   ;
 
   SELECT

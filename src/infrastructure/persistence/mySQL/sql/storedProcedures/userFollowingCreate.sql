@@ -19,7 +19,7 @@ BEGIN
   ON DUPLICATE KEY UPDATE
     user_id   = $USER_ID,
     user_id1  = $FOLLOWED_ID,
-    updatedAt = CURRENT_TIMESTAMP
+    updatedAt = UNIX_TIMESTAMP()
   ;
 
   SELECT $USER_ID AS userId, $FOLLOWED_ID AS followedId;

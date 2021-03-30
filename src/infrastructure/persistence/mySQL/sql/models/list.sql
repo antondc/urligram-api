@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS `list` (
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `isPrivate` TINYINT(1) NULL DEFAULT '0',
   `userId` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
-  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` int(11) DEFAULT NULL,
+  `updatedAt` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE `unique_index`(`name`, `userId`),
   CONSTRAINT `fk_list_user1`

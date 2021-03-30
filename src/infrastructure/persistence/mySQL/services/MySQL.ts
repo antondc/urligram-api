@@ -3,15 +3,25 @@ import { promisify } from 'util';
 
 import { DATABASE_SETTINGS } from '@shared/constants/env';
 
+type Options = {
+  multipleStatements?: boolean;
+  timezone?: string;
+};
+
 export class MySQL {
   private mySQL;
 
-  constructor(options: { multipleStatements?: boolean } = { multipleStatements: false }) {
-    const { multipleStatements } = options;
+  constructor(options?: Options) {
+    const defaultOptions = {
+      multipleStatements: false,
+      // Interpret all received timestamps as UTC. Otherwise local timezone is assumed.
+      timezone: 'Z',
+    };
 
     this.mySQL = mysql.createConnection({
       ...DATABASE_SETTINGS,
-      multipleStatements,
+      ...defaultOptions,
+      ...options,
       typeCast: this.typeCast,
     });
   }

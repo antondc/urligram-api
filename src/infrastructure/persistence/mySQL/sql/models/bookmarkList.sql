@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `bookmark_list` (
   `order` INT(11) NULL DEFAULT '10000',
-  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` int(11) DEFAULT NULL,
+  `updatedAt` int(11) DEFAULT NULL,
   `list_id` INT(11) NOT NULL,
   `bookmark_id` INT(11) NOT NULL,
   PRIMARY KEY (`list_id`, `bookmark_id`),

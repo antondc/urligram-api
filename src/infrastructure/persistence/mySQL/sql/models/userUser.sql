@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `user_user` (
   `order` INT(11) NULL DEFAULT '10000',
-  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` int(11) DEFAULT NULL,
+  `updatedAt` int(11) DEFAULT NULL,
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   `user_id1` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   PRIMARY KEY (`user_id`, `user_id1`),

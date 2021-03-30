@@ -22,8 +22,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Mars',
   1,
-  '2018-11-19 19:47:48',
-  '2021-01-19 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   'b95274c9-3d26-4ce3-98b2-77dce5bd7aae',
@@ -36,8 +36,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Saturn',
   2,
-  '2020-01-19 19:47:48',
-  '2021-01-15 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000',
@@ -50,8 +50,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Moon',
   3,
-  '2015-03-19 19:47:48',
-  '2021-01-10 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '75442486-0878-440c-9db1-a7006c25a39f',
@@ -64,8 +64,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   4,
-  '2020-10-07 19:47:48',
-  '2021-01-06 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '609c8f1c-5b69-11eb-ae93-0242ac130002',
@@ -78,8 +78,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   4,
-  '2015-09-07 19:47:48',
-  '2021-10-06 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '9b360ebe-5b69-11eb-ae93-0242ac130002',
@@ -92,8 +92,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   5,
-  '2017-02-07 19:47:48',
-  '2021-11-02 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '9b360518-5b69-11eb-ae93-0242ac130002',
@@ -106,8 +106,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   6,
-  '2019-07-07 19:47:48',
-  '2021-10-01 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '9b360676-5b69-11eb-ae93-0242ac130002',
@@ -120,8 +120,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   7,
-  '2010-07-07 19:47:48',
-  '2020-05-10 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '9b36072a-5b69-11eb-ae93-0242ac130002',
@@ -134,8 +134,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   8,
-  '2014-07-17 19:47:48',
-  '2021-01-10 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '9b360892-5b69-11eb-ae93-0242ac130002',
@@ -148,8 +148,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   9,
-  '2013-07-17 19:47:48',
-  '2021-01-20 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '9b361026-5b69-11eb-ae93-0242ac130002',
@@ -162,8 +162,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   10,
-  '2013-07-17 19:47:48',
-  '2021-01-20 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '9b361396-5b69-11eb-ae93-0242ac130002',
@@ -176,8 +176,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   11,
-  '2013-07-17 19:47:48',
-  '2021-01-20 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '92fac4aa-5b6a-11eb-ae93-0242ac130002',
@@ -190,8 +190,8 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   12,
-  '2013-07-17 19:47:48',
-  '2021-01-20 19:47:48'
+  1617143194,
+  1617143194
 ),
 (
   '92fac6d0-5b6a-11eb-ae93-0242ac130002',
@@ -204,6 +204,6 @@ INSERT INTO `user` (
   'The quick brown fox jumps over the lazy dog',
   'Jupiter',
   13,
-  '2013-07-17 19:47:48',
-  '2021-01-20 19:47:48'
+  1617143194,
+  1617143194
 );

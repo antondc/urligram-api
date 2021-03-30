@@ -18,7 +18,7 @@ BEGIN
    `email`      = $EMAIL,
    `statement`  = $STATEMENT,
    `location`   = $LOCATION,
-   `createdAt`  = CURRENT_TIMESTAMP
+   `createdAt`  = UNIX_TIMESTAMP()
   WHERE id      = $USER_ID;
 
   SELECT $USER_ID AS userId;

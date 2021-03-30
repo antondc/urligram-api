@@ -26,7 +26,7 @@ BEGIN
   SET
    `user`.`password`            = $NEW_PASSWORD,
    `user`.`resetPasswordToken`  = NULL,
-   `user`.`updatedAt`           = CURRENT_TIMESTAMP
+   `user`.`updatedAt`           = UNIX_TIMESTAMP()
   WHERE
     `user`.name                 = $USER_NAME
     AND

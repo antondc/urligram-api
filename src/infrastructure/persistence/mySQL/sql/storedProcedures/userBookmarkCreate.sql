@@ -19,16 +19,20 @@ BEGIN
     `bookmark`.`title`,
     `bookmark`.`isPrivate`,
     `bookmark`.`user_id`,
-    `bookmark`.`link_id`
+    `bookmark`.`link_id`,
+    createdAt,
+    updatedAt
   ) VALUES (
     $TITLE,
     $IS_PRIVATE,
     $USER_ID,
-    $LINK_ID
+    $LINK_ID,
+    UNIX_TIMESTAMP(),
+    UNIX_TIMESTAMP()
   ) ON DUPLICATE KEY UPDATE
     isPrivate   = $IS_PRIVATE,
     title       = $TITLE,
-    updatedAt   = CURRENT_TIMESTAMP
+    updatedAt   = UNIX_TIMESTAMP()
   ;
 
   -- Retrieve the last upserted id
@@ -66,7 +70,7 @@ BEGIN
       JSON_UNQUOTE(@tag)
     ) ON DUPLICATE KEY UPDATE
       name        = JSON_UNQUOTE(@tag),
-      updatedAt   = CURRENT_TIMESTAMP;
+      updatedAt   = UNIX_TIMESTAMP();
 
     -- Retrieve tag id
     SELECT id INTO @last_tag
@@ -83,7 +87,7 @@ BEGIN
     ) ON DUPLICATE KEY UPDATE
       bookmark_id   = @bookmark_id,
       tag_id        = @last_tag,
-      updatedAt     = CURRENT_TIMESTAMP;
+      updatedAt     = UNIX_TIMESTAMP();
 
     -- Add step to iterator
     SELECT i + 1 INTO i;

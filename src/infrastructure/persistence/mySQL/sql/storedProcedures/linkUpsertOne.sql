@@ -21,7 +21,7 @@ BEGIN
     $DOMAIN
   ) ON DUPLICATE KEY UPDATE
     domain    = $DOMAIN,
-    updatedAt = CURRENT_TIMESTAMP
+    updatedAt = UNIX_TIMESTAMP()
   ;
 
   -- Retrieve the upserted id
@@ -56,7 +56,7 @@ BEGIN
     favicon      = $FAVICON,
     language     = $LANGUAGE,
     domain_id = @domain_id,
-    updatedAt = CURRENT_TIMESTAMP
+    updatedAt = UNIX_TIMESTAMP()
   ;
 
 

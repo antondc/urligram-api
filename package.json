@@ -41,7 +41,7 @@
     "languagedetect": "^2.0.0",
     "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
-    "mysql2": "^2.1.0",
+    "mysql2": "^2.2.5",
     "nodemailer": "^6.5.0",
     "nodemon": "^2.0.4",
     "prompts": "^2.3.2",

@@ -35,8 +35,8 @@ INSERT INTO `glossary` (
   "Following",
   "Since",
   "Server Error",
-  DEFAULT,
-  DEFAULT
+  1617143194,
+  1617143194
 ), (
   2,
   "Casa",
@@ -54,6 +54,6 @@ INSERT INTO `glossary` (
   "Siguiendo",
   "Desde",
   "Error de servidor",
-  DEFAULT,
-  DEFAULT
+  1617143194,
+  1617143194
 );

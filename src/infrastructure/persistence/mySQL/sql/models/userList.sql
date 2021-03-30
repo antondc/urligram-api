@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS `user_list` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `order` INT(11) NULL DEFAULT '10000',
-  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` int(11) DEFAULT NULL,
+  `updatedAt` int(11) DEFAULT NULL,
   `list_id` INT(11) NOT NULL,
   `userRole` ENUM('editor', 'reader') NOT NULL,
   `userListStatus` ENUM('pending', 'active') NOT NULL DEFAULT 'pending',

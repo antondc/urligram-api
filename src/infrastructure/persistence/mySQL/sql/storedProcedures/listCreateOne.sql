@@ -25,7 +25,7 @@ BEGIN
     description = $LIST_DESCRIPTION,
     isPrivate   = $LIST_IS_PRIVATE,
     userId      = $LIST_USER_ID,
-    updatedAt   = CURRENT_TIMESTAMP;
+    updatedAt   = UNIX_TIMESTAMP();
 
   -- Retrieve the upserted id
   SET @list_id = LAST_INSERT_ID();

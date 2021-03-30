@@ -1,11 +1,11 @@
 INSERT INTO `language` (
   `id`, `order`, `name`, `isDefault`, `slug`, `createdAt`, `updatedAt`
 ) VALUES (
-  1, 1, 'English', 1, 'en', DEFAULT, DEFAULT
+  1, 1, 'English', 1, 'en', 1617143194, 1617143194
 );
 
 INSERT INTO `language` (
   `id`, `order`, `name`, `isDefault`, `slug`, `createdAt`, `updatedAt`
 ) VALUES (
-  2, 2, 'Español', 0, 'es', DEFAULT, DEFAULT
+  2, 2, 'Español', 0, 'es', 1617143194, 1617143194
 );

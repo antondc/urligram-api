@@ -1,13 +1,13 @@
 INSERT INTO `domain`
   (`id`, `domain`, `createdAt`, `updatedAt`)
 VALUES
-	(1, 'https://google.es', DEFAULT, DEFAULT),
-	(2, 'https://google.com', DEFAULT, DEFAULT),
-	(3, 'https://amazon.com', DEFAULT, DEFAULT),
-	(4, 'https://wikipedia.org', DEFAULT, DEFAULT),
-	(5, 'https://twitter.com', DEFAULT, DEFAULT),
-	(6, 'https://antoniodiaz.me', DEFAULT, DEFAULT),
-	(7, 'https://ozon.ru', DEFAULT, DEFAULT),
-	(8, 'https://yahoo.com', DEFAULT, DEFAULT),
-	(9, 'https://verizon.com', DEFAULT, DEFAULT),
-	(10,'https://boeing.com', DEFAULT, DEFAULT);
+	(1, 'https://google.es', 1617143194, 1617143194),
+	(2, 'https://google.com', 1617143194, 1617143194),
+	(3, 'https://amazon.com', 1617143194, 1617143194),
+	(4, 'https://wikipedia.org', 1617143194, 1617143194),
+	(5, 'https://twitter.com', 1617143194, 1617143194),
+	(6, 'https://antoniodiaz.me', 1617143194, 1617143194),
+	(7, 'https://ozon.ru', 1617143194, 1617143194),
+	(8, 'https://yahoo.com', 1617143194, 1617143194),
+	(9, 'https://verizon.com', 1617143194, 1617143194),
+	(10,'https://boeing.com', 1617143194, 1617143194);

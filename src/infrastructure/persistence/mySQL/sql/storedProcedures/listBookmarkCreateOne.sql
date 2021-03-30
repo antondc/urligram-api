@@ -17,7 +17,7 @@ BEGIN
   ) ON DUPLICATE KEY UPDATE
     list_id      = $LIST_ID,
     bookmark_id  = $BOOKMARK_ID,
-    updatedAt    = CURRENT_TIMESTAMP;
+    updatedAt    = UNIX_TIMESTAMP();
 
 
   SELECT $LIST_ID AS listId, $BOOKMARK_ID AS bookmarkId;

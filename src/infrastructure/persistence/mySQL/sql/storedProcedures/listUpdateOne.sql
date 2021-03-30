@@ -16,7 +16,7 @@ BEGIN
     `name`          = $NAME,
     `description`   = $DESCRIPTION,
     `isPrivate`     = $IS_PRIVATE,
-    `updatedAt`     = CURRENT_TIMESTAMP
+    `updatedAt`     = UNIX_TIMESTAMP()
   WHERE `list`.`id` = $LIST_ID
   ;
 

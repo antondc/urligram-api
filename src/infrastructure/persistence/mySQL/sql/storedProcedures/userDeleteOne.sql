@@ -11,7 +11,7 @@ BEGIN
   UPDATE user
   SET
    `status`     = 'disabled',
-   `createdAt`  = CURRENT_TIMESTAMP
+   `createdAt`  = UNIX_TIMESTAMP()
   WHERE id      = $USER_ID;
 
   SELECT $USER_ID AS userId;

@@ -44,7 +44,7 @@ BEGIN
       JSON_UNQUOTE(@tag)
     ) ON DUPLICATE KEY UPDATE
       NAME        = JSON_UNQUOTE(@tag),
-      updatedAt   = CURRENT_TIMESTAMP;
+      updatedAt   = UNIX_TIMESTAMP();
 
     -- Retrieve tag id
     SELECT id INTO @last_tag
@@ -61,7 +61,7 @@ BEGIN
     ) ON DUPLICATE KEY UPDATE
       bookmark_id   = $BOOKMARK_ID,
       tag_id        = @last_tag,
-      updatedAt     = CURRENT_TIMESTAMP;
+      updatedAt     = UNIX_TIMESTAMP();
 
     -- Add step to iterator
     SELECT i + 1 INTO i;
