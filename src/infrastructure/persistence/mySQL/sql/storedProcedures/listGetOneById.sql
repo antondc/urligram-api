@@ -17,7 +17,22 @@ BEGIN
     `list`.`isPrivate`,
     `list`.`createdAt`,
     `list`.`updatedAt`,
-    JSON_ARRAYAGG(user_list.user_id) as membersIds,
+    (
+      SELECT
+        IF(
+          COUNT(`user`.id) = 0,
+          NULL,
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', `user`.`id`,
+              'userRole', `user_list`.`userRole`
+            )
+          )
+        )
+      FROM user_list
+      INNER JOIN `user` ON `user`.`id` = user_list.user_id
+      WHERE user_list.list_id = list.id
+    ) AS members,
     (
       SELECT
         JSON_ARRAYAGG(
@@ -58,7 +73,5 @@ BEGIN
       )
     GROUP BY list.id
   ;
-
-
 
 END

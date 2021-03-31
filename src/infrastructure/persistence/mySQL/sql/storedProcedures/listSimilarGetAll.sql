@@ -31,11 +31,20 @@ SELECT DISTINCT
     ) AS bookmarksIds,
     (
       SELECT
-        JSON_ARRAYAGG(`user`.`id`)
+        IF(
+          COUNT(`user`.id) = 0,
+          NULL,
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', `user`.`id`,
+              'userRole', `user_list`.`userRole`
+            )
+          )
+        )
       FROM user_list
       INNER JOIN `user` ON `user`.`id` = user_list.user_id
       WHERE user_list.list_id = list.id
-    ) AS membersIds
+    ) AS members
     FROM `list`
     INNER JOIN bookmark_list ON bookmark_list.list_id = list.id
     INNER JOIN user_list ON user_list.list_id = list.id
@@ -69,8 +78,8 @@ SELECT DISTINCT
       CASE WHEN $SORT = '-updatedAt'   THEN `list`.updatedAt           ELSE NULL END DESC,
       CASE WHEN $SORT = 'bookmarks'    THEN JSON_LENGTH(bookmarksIds)  ELSE NULL END ASC,
       CASE WHEN $SORT = '-bookmarks'   THEN JSON_LENGTH(bookmarksIds)  ELSE NULL END DESC,
-      CASE WHEN $SORT = 'members'      THEN JSON_LENGTH(membersIds)    ELSE NULL END ASC,
-      CASE WHEN $SORT = '-members'     THEN JSON_LENGTH(membersIds)    ELSE NULL END DESC
+      CASE WHEN $SORT = 'members'      THEN JSON_LENGTH(members)    ELSE NULL END ASC,
+      CASE WHEN $SORT = '-members'     THEN JSON_LENGTH(members)    ELSE NULL END DESC
     LIMIT $OFFSET , $SIZE
 ;
 

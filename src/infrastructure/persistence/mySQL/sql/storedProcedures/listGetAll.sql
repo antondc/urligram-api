@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_get_all;
 
-DELIMITER $$
+/* DELIMITER $$ */
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_get_all(
@@ -28,12 +28,17 @@ SELECT
         IF(
           COUNT(`user`.id) = 0,
           NULL,
-          JSON_ARRAYAGG(`user`.`id`)
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', `user`.`id`,
+              'userRole', `user_list`.`userRole`
+            )
+          )
         )
       FROM user_list
       INNER JOIN `user` ON `user`.`id` = user_list.user_id
       WHERE user_list.list_id = list.id
-    ) AS membersIds,
+    ) AS members,
     (
       SELECT
       JSON_ARRAYAGG(bookmark_list.bookmark_id)
@@ -54,8 +59,8 @@ SELECT
       CASE WHEN $SORT = '-createdAt'  THEN `list`.createdAt          ELSE NULL END DESC,
       CASE WHEN $SORT = 'updatedAt'   THEN `list`.updatedAt          ELSE NULL END ASC,
       CASE WHEN $SORT = '-updatedAt'  THEN `list`.updatedAt          ELSE NULL END DESC,
-      CASE WHEN $SORT = "members"     THEN JSON_LENGTH(membersIds) 	 ELSE NULL END ASC,
-      CASE WHEN $SORT = "-members"    THEN JSON_LENGTH(membersIds) 	 ELSE NULL END DESC,
+      CASE WHEN $SORT = "members"     THEN JSON_LENGTH(members) 	 ELSE NULL END ASC,
+      CASE WHEN $SORT = "-members"    THEN JSON_LENGTH(members) 	 ELSE NULL END DESC,
       CASE WHEN $SORT = "bookmarks"   THEN JSON_LENGTH(bookmarksIds) ELSE NULL END ASC,
       CASE WHEN $SORT = "-bookmarks"  THEN JSON_LENGTH(bookmarksIds) ELSE NULL END DESC,
       CASE WHEN $SORT IS NULL         THEN `list`.id                 ELSE NULL END ASC
@@ -63,8 +68,8 @@ SELECT
     LIMIT $OFFSET , $SIZE
   ;
 
-END $$
+END
 
-DELIMITER ;
+/* DELIMITER ; */
 
-CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-members', NULL, NULL);
+/* CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-members', NULL, NULL); */
