@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_get_all;
 
-/* DELIMITER $$ */
+DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_get_all(
@@ -63,8 +63,8 @@ SELECT
     LIMIT $OFFSET , $SIZE
   ;
 
-END
+END $$
 
-/* DELIMITER ;
+DELIMITER ;
 
-CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-members', NULL, NULL); */
+CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-members', NULL, NULL);

@@ -43,6 +43,7 @@ import { UserTagsGetAllController } from '@infrastructure/http/controllers/UserT
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
+import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
 const UsersRoute = express.Router();
@@ -236,7 +237,8 @@ UsersRoute.delete('/me/bookmarks/:bookmarkId', async (req: Request, res: Respons
 
 UsersRoute.get('/:userId/lists', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userListGetAllPublicUseCase = new UserListGetAllPublicUseCase(userRepo);
+  const listRepo = new ListRepo();
+  const userListGetAllPublicUseCase = new UserListGetAllPublicUseCase(userRepo, listRepo);
   const userListGetAllPublicController = new UserListGetAllPublicController(userListGetAllPublicUseCase);
 
   const response = await userListGetAllPublicController.execute(req, res, next);

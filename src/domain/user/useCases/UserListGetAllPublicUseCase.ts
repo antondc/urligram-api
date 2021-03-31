@@ -1,3 +1,4 @@
+import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IUserListGetAllPublicRequest } from './interfaces/IUserListGetAllPublicRequest';
@@ -9,9 +10,11 @@ export interface IUserListGetAllPublicUseCase {
 
 export class UserListGetAllPublicUseCase implements IUserListGetAllPublicUseCase {
   private userRepo: IUserRepo;
+  private listRepo: IListRepo;
 
-  constructor(userRepo: IUserRepo) {
+  constructor(userRepo: IUserRepo, listRepo: IListRepo) {
     this.userRepo = userRepo;
+    this.listRepo = listRepo;
   }
 
   public async execute(userListGetAllPublicRequest: IUserListGetAllPublicRequest): Promise<IUserListGetAllPublicResponse> {
@@ -22,7 +25,21 @@ export class UserListGetAllPublicUseCase implements IUserListGetAllPublicUseCase
 
     const { lists, meta } = await this.userRepo.userListGetAllPublic({ userId, sessionId: session?.id, sort, size, offset, filter });
 
-    return { lists, meta };
+    const listsWithTagsPromises = lists.map(async (item) => {
+      const tags = await this.listRepo.listTagsGetAll({ listId: item.id, sessionId: session?.id });
+
+      return {
+        ...item,
+        tags,
+      };
+    });
+
+    const listsWithTags = await Promise.all(listsWithTagsPromises);
+
+    return {
+      lists: listsWithTags,
+      meta,
+    };
   }
 }
 

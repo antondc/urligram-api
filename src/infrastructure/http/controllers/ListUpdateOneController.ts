@@ -36,17 +36,15 @@ export class ListUpdateOneController extends BaseController {
       lists: {
         self: URL_SERVER + '/list',
       },
-      data: [
-        {
-          type: 'list',
-          id: response?.id,
-          session: {
-            self: URL_SERVER + '/list',
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'list',
+        id: response?.id,
+        session: {
+          self: URL_SERVER + '/list',
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 

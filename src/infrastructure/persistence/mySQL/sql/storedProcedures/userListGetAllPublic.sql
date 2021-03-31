@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_list_get_all;
 
-/* DELIMITER $$ */
+DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_list_get_all(
@@ -23,7 +23,7 @@ BEGIN
     list.name,
     list.description,
     list.name,
-    user_list.user_id AS userId,
+    list.userId,
     list.createdAt,
     list.isPrivate,
     IFNULL(
@@ -90,8 +90,8 @@ BEGIN
   LIMIT $OFFSET , $SIZE
   ;
 
-END
+END $$
 
-/* DELIMITER ; */
+DELIMITER ;
 
-/* CALL user_list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', "e4e2bb46-c210-4a47-9e84-f45c789fcec1", "id", NULL,  NULL, '{"role": ["admin","reader","editor"]}'); */
+CALL user_list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', "e4e2bb46-c210-4a47-9e84-f45c789fcec1", "id", NULL,  NULL, '{"role": ["admin","reader","editor"]}');
