@@ -26,7 +26,7 @@ BEGIN
     FROM `list`
   LEFT JOIN `user` ON user.id = list.userId AND list.userId = $USER_ID
   LEFT JOIN `user_list` ON list.id = user_list.list_id AND user_list.list_id = $LIST_ID AND user_list.user_id = $USER_ID
-  INNER JOIN `user` user2 ON user_list.user_id = user2.id
+  LEFT JOIN `user` user2 ON user_list.user_id = user2.id
   WHERE
     (
       list.id = $LIST_ID

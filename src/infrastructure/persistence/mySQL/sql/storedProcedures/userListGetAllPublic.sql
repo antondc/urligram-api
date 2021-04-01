@@ -22,7 +22,6 @@ BEGIN
     list.order,
     list.name,
     list.description,
-    list.image,
     list.name,
     list.userId,
     list.createdAt,
