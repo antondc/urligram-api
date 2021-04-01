@@ -33,16 +33,14 @@ export class ListUserCreateOneController extends BaseController {
       links: {
         self: URL_SERVER + '/lists/' + listId + '/users/' + userId,
       },
-      data: [
-        {
-          type: 'user',
-          session: {
-            self: URL_SERVER + '/users/' + userId,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'user',
+        session: {
+          self: URL_SERVER + '/users/' + userId,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 

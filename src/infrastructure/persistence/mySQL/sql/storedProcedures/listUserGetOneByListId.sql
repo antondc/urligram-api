@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_user_get_one_by_list_id;
 
--- DELIMITER $$
+/* DELIMITER $$ */
 
 CREATE PROCEDURE list_user_get_one_by_list_id(
   IN $USER_ID TEXT,
@@ -10,6 +10,7 @@ CREATE PROCEDURE list_user_get_one_by_list_id(
 BEGIN
 
  SELECT
+
   IFNULL(user.id, user2.id) AS `id`,
   IFNULL(user.name, user2.name) AS `name`,
   IFNULL(user.level, user2.level) AS `level`,
@@ -22,11 +23,10 @@ BEGIN
   IFNULL(user.updatedAt, user2.updatedAt) AS `updatedAt`,
   IF(user.id IS NULL, user_list.userRole, "admin") AS `userRole`,
   user_list.userListStatus AS userListStatus
-  FROM `list`
+    FROM `list`
   LEFT JOIN `user` ON user.id = list.userId AND list.userId = $USER_ID
-  LEFT JOIN user_list ON user_list.list_id = `list`.id AND user_list.user_id = $USER_ID
-  LEFT JOIN `list` list2 ON list2.id = user_list.list_id
-  LEFT JOIN `user` user2 ON list2.userId = user2.id
+  LEFT JOIN `user_list` ON list.id = user_list.list_id AND user_list.list_id = $LIST_ID AND user_list.user_id = $USER_ID
+  INNER JOIN `user` user2 ON user_list.user_id = user2.id
   WHERE
     (
       list.id = $LIST_ID
@@ -35,7 +35,7 @@ BEGIN
     )
     OR
     (
-      list2.id = $LIST_ID
+      list.id = $LIST_ID
       AND
       user_list.user_id = $USER_ID
     )
@@ -43,6 +43,6 @@ BEGIN
 
 END
 
--- DELIMITER ;
+/* DELIMITER ; */
 
--- CALL list_user_get_one_by_list_id("e4e2bb46-c210-4a47-9e84-f45c789fcec1", 4)
+/* CALL list_user_get_one_by_list_id("e4e2bb46-c210-4a47-9e84-f45c789fcec1", 8) */

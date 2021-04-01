@@ -15,6 +15,7 @@ BEGIN
     `user`.`level`,
     `user`.`email`,
     `user`.`status`,
+    `user`.`image`,
     `user`.`statement`,
     `user`.`location`,
     `user`.`order`,
