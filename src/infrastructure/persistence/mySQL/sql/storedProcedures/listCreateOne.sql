@@ -14,12 +14,16 @@ BEGIN
     `name`,
     `description`,
     `isPrivate`,
-    `userId`
+    `userId`,
+    `createdAt`,
+    `updatedAt`
   ) VALUES (
     $LIST_NAME,
     $LIST_DESCRIPTION,
     $LIST_IS_PRIVATE,
-    $LIST_USER_ID
+    $LIST_USER_ID,
+    UNIX_TIMESTAMP(),
+    UNIX_TIMESTAMP()
   ) ON DUPLICATE KEY UPDATE
     name        = $LIST_NAME,
     description = $LIST_DESCRIPTION,

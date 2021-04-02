@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_bookmark_get_all;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 CREATE PROCEDURE list_bookmark_get_all(
   IN $LIST_ID INT,
@@ -14,7 +14,7 @@ BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
 
   SELECT
-    count(*) OVER() as totalItems,
+    count(*) OVER() AS totalItems,
     bookmark.id,
     bookmark.order,
     link.image AS img,
@@ -57,7 +57,13 @@ BEGIN
       JOIN tag
       ON bookmark_tag.tag_id = tag.id
       WHERE bookmark.id = bookmark_tag.bookmark_id
-    ) AS tags
+    ) AS tags,
+    (
+      SELECT
+        IF(COUNT(bookmark.user_id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(bookmark.user_id))
+      FROM bookmark
+      WHERE bookmark.link_id = link.id
+    ) AS users
   FROM bookmark_list
   JOIN bookmark ON bookmark_list.bookmark_id  = bookmark.id
   JOIN link ON bookmark.link_id               = link.id
@@ -90,8 +96,9 @@ BEGIN
   LIMIT $OFFSET , $SIZE
   ;
 
+
 END
 
-/* DELIMITER ;
+-- DELIMITER ;
 
-CALL list_bookmark_get_all(1, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", "-vote", NULL, NULL); */
+-- CALL list_bookmark_get_all(1, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL);
