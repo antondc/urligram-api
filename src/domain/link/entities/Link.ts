@@ -8,11 +8,10 @@ export class Link {
   favicon: string;
   description: string;
   language: string;
-  bookmarks: {
+  bookmarksRelated: {
     id: number;
     title: string;
     userId: string;
-    isPrivate: boolean;
   }[];
   statistics: ILinkStatistics;
 
@@ -21,7 +20,7 @@ export class Link {
     this.url = options.url;
     this.title = options.title;
     this.img = options.img;
-    this.bookmarks = options.bookmarks;
+    this.bookmarksRelated = options.bookmarksRelated;
     this.statistics = options.statistics;
   }
 }

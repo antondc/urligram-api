@@ -84,8 +84,7 @@ BEGIN
             JSON_OBJECT(
               'id', `bookmark`.`id`,
               'title', `bookmark`.`title`,
-              'userId', `bookmark`.`user_id`,
-              'isPrivate', `bookmark`.`isPrivate`
+              'userId', `bookmark`.`user_id`
             )
           )
         )
@@ -95,7 +94,7 @@ BEGIN
         bookmark.isPrivate != TRUE
         OR bookmark.user_id = $SESSION_ID
       )
-    ) AS bookmarks
+    ) AS bookmarksRelated
   FROM link
   INNER JOIN bookmark ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id

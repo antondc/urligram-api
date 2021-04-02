@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS bookmark_get_all_public;
 
+-- DELIMITER $$
+
 CREATE PROCEDURE bookmark_get_all_public(
   IN $SESSION_ID VARCHAR(40),
   IN $SORT VARCHAR(20),
@@ -68,7 +70,27 @@ BEGIN
           'id', link.id,
           'title', link.title
         )
-    ) AS link
+    ) AS link,
+    (
+      SELECT
+        IF(
+          COUNT(bookmark.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', `bookmark`.`id`,
+              'title', `bookmark`.`title`,
+              'userId', `bookmark`.`user_id`
+            )
+          )
+        )
+      FROM `bookmark`
+      WHERE bookmark.link_id = link.id
+      AND (
+        bookmark.isPrivate IS NOT TRUE
+        OR bookmark.user_id = $SESSION_ID
+      )
+    ) AS bookmarksRelated
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id
@@ -89,3 +111,8 @@ BEGIN
   ;
 
 END
+
+
+-- DELIMITER ;
+
+-- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL);

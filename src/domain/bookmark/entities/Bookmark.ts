@@ -14,6 +14,11 @@ export class Bookmark {
     id: number;
     title: string;
   };
+  bookmarksRelated: {
+    id: number;
+    title: string;
+    userId: string;
+  }[];
   constructor(options) {
     this.id = options.id;
     this.title = options.title;
@@ -24,5 +29,6 @@ export class Bookmark {
     this.userId = options.userId;
     this.linkId = options.linkId;
     this.statistics = options.statistics;
+    this.bookmarksRelated = options.bookmarksRelated;
   }
 }
