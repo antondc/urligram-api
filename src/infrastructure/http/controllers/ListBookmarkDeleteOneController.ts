@@ -33,16 +33,14 @@ export class ListBookmarkDeleteOneController extends BaseController {
       links: {
         self: URL_SERVER + '/lists/' + listId + '/bookmarks/' + response.bookmarkId,
       },
-      data: [
-        {
-          type: 'bookmark',
-          session: {
-            self: URL_SERVER + '/bookmarks/' + response.bookmarkId,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'bookmark',
+        session: {
+          self: URL_SERVER + '/bookmarks/' + response.bookmarkId,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 

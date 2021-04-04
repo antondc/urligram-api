@@ -33,16 +33,14 @@ export class ListBookmarkCreateOneController extends BaseController {
       links: {
         self: URL_SERVER + '/lists/' + listId + '/bookmarks/' + response.id,
       },
-      data: [
-        {
-          type: 'bookmark',
-          session: {
-            self: URL_SERVER + '/bookmarks/' + response.id,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'bookmark',
+        session: {
+          self: URL_SERVER + '/bookmarks/' + response.id,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 
