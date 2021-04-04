@@ -63,6 +63,14 @@ BEGIN
       tag_id        = @last_tag,
       updatedAt     = UNIX_TIMESTAMP();
 
+    UPDATE
+      bookmark
+    SET
+      updatedAt   = UNIX_TIMESTAMP()
+    WHERE
+      bookmark.id = $BOOKMARK_ID
+    ;
+
     -- Add step to iterator
     SELECT i + 1 INTO i;
   END WHILE;

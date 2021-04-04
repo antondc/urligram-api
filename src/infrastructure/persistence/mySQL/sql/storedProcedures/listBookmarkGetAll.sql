@@ -63,7 +63,27 @@ BEGIN
         IF(COUNT(bookmark.user_id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(bookmark.user_id))
       FROM bookmark
       WHERE bookmark.link_id = link.id
-    ) AS users
+    ) AS users,
+    (
+      SELECT
+        IF(
+          COUNT(bookmark.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', `bookmark`.`id`,
+              'title', `bookmark`.`title`,
+              'userId', `bookmark`.`user_id`
+            )
+          )
+        )
+      FROM `bookmark`
+      WHERE bookmark.link_id = link.id
+      AND (
+        bookmark.isPrivate IS NOT TRUE
+        OR bookmark.user_id = $SESSION_ID
+      )
+    ) AS bookmarksRelated
   FROM bookmark_list
   JOIN bookmark ON bookmark_list.bookmark_id  = bookmark.id
   JOIN link ON bookmark.link_id               = link.id

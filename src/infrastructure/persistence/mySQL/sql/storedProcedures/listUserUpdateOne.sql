@@ -18,6 +18,14 @@ BEGIN
     AND user_list.list_id = $LIST_ID
   ;
 
+  UPDATE
+    list
+  SET
+    updatedAt  = UNIX_TIMESTAMP()
+  WHERE
+    list.id    = $LIST_ID
+  ;
+
   SELECT $LIST_ID AS listId, $USER_ID AS userId;
 
 END

@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS list_bookmark_get_one;
 
+-- DELIMITER $$
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_bookmark_get_one(
   IN $LIST_ID INT,
@@ -14,7 +16,23 @@ BEGIN
     CONCAT(domain.domain, link.path) AS url,
     `link`.`favicon`,
     bookmark.isPrivate,
-    bookmark.saved
+    bookmark.saved,
+    (
+      SELECT
+        IF(
+          COUNT(bookmark.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', `bookmark`.`id`,
+              'title', `bookmark`.`title`,
+              'userId', `bookmark`.`user_id`
+            )
+          )
+        )
+      FROM `bookmark`
+      WHERE bookmark.link_id = link.id
+    ) AS bookmarksRelated
   FROM bookmark_list
   JOIN bookmark ON bookmark_list.bookmark_id  = bookmark.id
   JOIN link ON bookmark.link_id               = link.id
@@ -24,6 +42,11 @@ BEGIN
   WHERE
     `bookmark_list`.`list_id`                 = $LIST_ID
     AND `bookmark_list`.`bookmark_id`         = $BOOKMARK_ID
+  GROUP BY bookmark.id
   ;
 
 END
+
+-- DELIMITER ;
+
+-- CALL list_bookmark_get_one(1, 1);

@@ -12,11 +12,15 @@ BEGIN
   INSERT INTO user_session_log (
     `result`,
     `type`,
-    `user_id`
+    `user_id`,
+    createdAt,
+    updatedAt
   ) VALUES(
     $RESULT,
     $TYPE,
-    $USER_ID
+    $USER_ID,
+    UNIX_TIMESTAMP(),
+    UNIX_TIMESTAMP()
   );
 
 END

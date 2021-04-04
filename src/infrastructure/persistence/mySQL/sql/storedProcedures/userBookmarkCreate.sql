@@ -65,9 +65,13 @@ BEGIN
 
     -- Insert tag
     INSERT INTO tag (
-      name
+      name,
+      createdAt,
+      updatedAt
     ) VALUES (
-      JSON_UNQUOTE(@tag)
+      JSON_UNQUOTE(@tag),
+      UNIX_TIMESTAMP(),
+      UNIX_TIMESTAMP()
     ) ON DUPLICATE KEY UPDATE
       name        = JSON_UNQUOTE(@tag),
       updatedAt   = UNIX_TIMESTAMP();

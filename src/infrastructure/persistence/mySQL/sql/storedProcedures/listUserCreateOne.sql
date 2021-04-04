@@ -22,6 +22,13 @@ BEGIN
     "reader"
   );
 
+  UPDATE
+    list
+  SET
+    updatedAt  = UNIX_TIMESTAMP()
+  WHERE
+    list.id    = $LIST_ID
+  ;
 
   SELECT $LIST_ID AS listId, $USER_ID AS userId;
 

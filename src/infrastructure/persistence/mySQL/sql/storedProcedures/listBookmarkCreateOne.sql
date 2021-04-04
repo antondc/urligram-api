@@ -19,6 +19,13 @@ BEGIN
     bookmark_id  = $BOOKMARK_ID,
     updatedAt    = UNIX_TIMESTAMP();
 
+  UPDATE
+    bookmark
+  SET
+    updatedAt   = UNIX_TIMESTAMP()
+  WHERE
+    bookmark.id = $BOOKMARK_ID
+  ;
 
   SELECT $LIST_ID AS listId, $BOOKMARK_ID AS bookmarkId;
 
