@@ -39,7 +39,7 @@ install:
 build:
   stage: build
   script:
-    - npm build
+    - npm run build
 
 deploy_staging:
   stage: deploy_staging
