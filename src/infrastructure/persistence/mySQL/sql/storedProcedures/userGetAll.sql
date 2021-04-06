@@ -89,15 +89,15 @@ BEGIN
     ) AS lists,
     (
       SELECT
-        IF(COUNT(user_user.user_id1) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id1))
-      FROM user_user
-      WHERE user_user.user_id = user.id
-    ) AS followers,
-    (
-      SELECT
         IF(COUNT(user_user.user_id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id))
       FROM user_user
       WHERE user_user.user_id1 = user.id
+    ) AS followers,
+    (
+      SELECT
+        IF(COUNT(user_user.user_id1) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id1))
+      FROM user_user
+      WHERE user_user.user_id = user.id
     ) AS following
     FROM `user`
     WHERE

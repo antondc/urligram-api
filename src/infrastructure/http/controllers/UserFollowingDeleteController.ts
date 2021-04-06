@@ -33,8 +33,9 @@ export class UserFollowingDeleteController extends BaseController {
       links: {
         self: URL_SERVER + '/users/following/' + response.userId,
       },
-      data: null,
-      included: [],
+      data: {
+        success: true,
+      },
     };
 
     return res.status(200).send(formattedResponse);
