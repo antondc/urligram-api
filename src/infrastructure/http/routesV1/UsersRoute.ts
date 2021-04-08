@@ -20,6 +20,7 @@ import { UserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { UserGetByIdsUseCase } from '@domain/user/useCases/UserGetByIdsUseCase';
 import { UserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
 import { UserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
+import { UserRecommendedGetAllUseCase } from '@domain/user/useCases/UserRecommendedGetAllUseCase';
 import { UserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
 import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
 import { UserBookmarkCreateController } from '@infrastructure/http/controllers/UserBookmarkCreateController';
@@ -39,6 +40,7 @@ import { UserGetAllController } from '@infrastructure/http/controllers/UserGetAl
 import { UserGetByIdsController } from '@infrastructure/http/controllers/UserGetByIdsController';
 import { UserGetOneController } from '@infrastructure/http/controllers/UserGetOneController';
 import { UserListGetAllPublicController } from '@infrastructure/http/controllers/UserListGetAllPublicController';
+import { UserRecommendedGetAllController } from '@infrastructure/http/controllers/UserRecommendedGetAllController';
 import { UserTagsGetAllController } from '@infrastructure/http/controllers/UserTagsGetAllController';
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
@@ -252,6 +254,16 @@ UsersRoute.get('/:userId/tags', async (req: Request, res: Response, next: NextFu
   const userTagsGetAllController = new UserTagsGetAllController(userTagsGetAllUseCase);
 
   const response = await userTagsGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/me/recommended', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const userRecommendedGetAllUseCase = new UserRecommendedGetAllUseCase(userRepo);
+  const userRecommendedGetAllController = new UserRecommendedGetAllController(userRecommendedGetAllUseCase);
+
+  const response = await userRecommendedGetAllController.execute(req, res, next);
 
   return response;
 });

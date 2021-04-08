@@ -42,6 +42,8 @@ import { IUserLoginRequest } from './interfaces/IUserLoginRequest';
 import { IUserLoginResponse } from './interfaces/IUserLoginResponse';
 import { IUserLogSessionRequest } from './interfaces/IUserLogSessionRequest';
 import { IUserLogSessionResponse } from './interfaces/IUserLogSessionResponse';
+import { IUserRecommendedRequest } from './interfaces/IUserRecommendedRequest';
+import { IUserRecommendedResponse } from './interfaces/IUserRecommendedResponse';
 import { IUserResetPasswordRequest } from './interfaces/IUserResetPasswordRequest';
 import { IUserResetPasswordResponse } from './interfaces/IUserResetPasswordResponse';
 import { IUserTagsGetAllRequest } from './interfaces/IUserTagsGetAllRequest';
@@ -79,6 +81,7 @@ export interface IUserRepo {
   userBookmarkUpdate: (userBookmarkUpdate: IUserBookmarkUpdateRequest) => Promise<IUserBookmarkUpdateResponse>;
   userBookmarkDeleteOne: (userBookmarkDeleteOne: IUserBookmarkDeleteOneRequest) => Promise<IUserBookmarkDeleteOneResponse>;
   userListGetAllPublic: (userListGetAllPublic: IUserListGetAllPublicRequest) => Promise<IUserListGetAllPublicResponse>;
-  userTagsGetAll: (userTagsGetAll: IUserTagsGetAllRequest) => Promise<IUserTagsGetAllResponse>;
-  userForgotPassword: (userTagsGetAll: IUserForgotPasswordRequest) => Promise<IUserForgotPasswordResponse>;
+  userTagsGetAll: (userTagsGetAllRequest: IUserTagsGetAllRequest) => Promise<IUserTagsGetAllResponse>;
+  userForgotPassword: (userForgotPasswordRequest: IUserForgotPasswordRequest) => Promise<IUserForgotPasswordResponse>;
+  userRecommended: (userRecommendedRequest: IUserRecommendedRequest) => Promise<IUserRecommendedResponse>;
 }

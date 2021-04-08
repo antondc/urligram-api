@@ -221,6 +221,29 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userRecommended({ userId, size, offset, sort }) {
+    const mySQL = new MySQL();
+    try {
+      const userRecommendedQuery = 'CALL user_recommended(?, ?, ?, ?)';
+      const [links] = await mySQL.query(userRecommendedQuery, [userId, size, offset, sort]);
+      const linksWithoutTotal = links.map((item) => ({ ...item, totalItems: undefined }));
+
+      return {
+        meta: {
+          totalItems: links[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+        },
+        links: linksWithoutTotal,
+      };
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async userFollowerGetAll({ sessionId, userId, sort, size, offset }) {
     const mySQL = new MySQL();
     try {
