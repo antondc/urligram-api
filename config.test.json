@@ -1,8 +1,8 @@
 {
   "development": {
     "database": {
-      "host": "ec2-3-124-187-180.eu-central-1.compute.amazonaws.com",
-      "database": "linking_stage",
+      "host": "dev.linking.me",
+      "database": "linking_stage_local",
       "user": "w_9aIfE2XpoYz",
       "password": "UrStkX_oihbDWEaz7Gr",
       "port": 3306

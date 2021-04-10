@@ -5,4 +5,7 @@ export type IBookmarkGetAllPublicRequest = {
   sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   size: number;
   offset: number;
+  filter?: {
+    tags?: string[];
+  };
 };

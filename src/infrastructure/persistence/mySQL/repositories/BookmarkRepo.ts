@@ -1,4 +1,5 @@
 import { IBookmarkRepo } from '@domain/bookmark/repositories/IBookmarkRepo';
+import { IBookmarkGetAllPublicRequest } from '@domain/bookmark/repositories/interfaces/IBookmarkGetAllPublicRequest';
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
@@ -35,12 +36,12 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkGetAllPublic({ sessionId, sort, size = 10, offset }) {
+  public async bookmarkGetAllPublic({ sessionId, sort, size = 10, offset, filter }: IBookmarkGetAllPublicRequest) {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkGetAllPublicQuery = 'CALL bookmark_get_all_public(?, ?, ?, ?)';
-      const [bookmarks] = await mySQL.query(bookmarkGetAllPublicQuery, [sessionId, sort, size, offset]);
+      const bookmarkGetAllPublicQuery = 'CALL bookmark_get_all_public(?, ?, ?, ?, ?)';
+      const [bookmarks] = await mySQL.query(bookmarkGetAllPublicQuery, [sessionId, sort, size, offset, JSON.stringify(filter)]);
 
       const resultsWithoutTotal = bookmarks.map((item) => ({
         ...item,
@@ -53,6 +54,7 @@ export class BookmarkRepo implements IBookmarkRepo {
           size,
           offset,
           sort,
+          filter,
         },
         bookmarks: resultsWithoutTotal,
       };

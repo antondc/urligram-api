@@ -6,11 +6,13 @@ CREATE PROCEDURE bookmark_get_all_public(
   IN $SESSION_ID VARCHAR(40),
   IN $SORT VARCHAR(20),
   IN $SIZE INT,
-  IN $OFFSET INT
+  IN $OFFSET INT,
+  IN $FILTER JSON
 )
 
 BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
+  SET @filterTags  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
 
   SELECT
     count(*) OVER() as totalItems,
@@ -93,11 +95,22 @@ BEGIN
     ) AS bookmarksRelated
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id
+  LEFT JOIN bookmark_tag ON bookmark.id = bookmark_tag.bookmark_id
+  LEFT JOIN tag ON tag.id = bookmark_tag.tag_id
   INNER JOIN domain ON link.domain_id = domain.id
   WHERE
-    bookmark.isPrivate IS NOT TRUE
-    OR
-    bookmark.`user_id` = $SESSION_ID
+    (
+      CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
+      OR
+      CASE WHEN @filterTags IS NULL THEN TRUE END
+    )
+    AND
+    (
+      bookmark.isPrivate IS NOT TRUE
+      OR
+      bookmark.`user_id` = $SESSION_ID
+    )
+  GROUP BY link.id
   ORDER BY
     CASE WHEN $SORT = 'id'          THEN `bookmark`.id      	ELSE NULL END ASC,
     CASE WHEN $SORT = '-id'         THEN `bookmark`.id      	ELSE NULL END DESC,
@@ -106,13 +119,11 @@ BEGIN
     CASE WHEN $SORT = 'updatedAt'   THEN `bookmark`.updatedAt ELSE NULL END ASC,
     CASE WHEN $SORT = '-updatedAt'  THEN `bookmark`.updatedAt ELSE NULL END DESC,
     CASE WHEN $SORT IS NULL         THEN `bookmark`.id        ELSE NULL END ASC
-
   LIMIT $OFFSET , $SIZE
   ;
 
 END
 
-
 -- DELIMITER ;
 
--- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL);
+-- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{"tags": ["baz"]}');
