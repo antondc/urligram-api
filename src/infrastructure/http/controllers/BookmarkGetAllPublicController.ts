@@ -7,6 +7,8 @@ import { URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
+const DEFAULT_SORT = '-createdAt';
+
 type BookmarkGetAllPublicControllerQueryType = {
   sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   page: {
@@ -27,7 +29,7 @@ export class BookmarkGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {}, filter: { tags } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
+    const { sort = DEFAULT_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;

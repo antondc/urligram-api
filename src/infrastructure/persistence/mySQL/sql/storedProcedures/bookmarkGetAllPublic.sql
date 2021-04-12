@@ -30,6 +30,12 @@ BEGIN
     bookmark.updatedAt,
     (
       SELECT
+        SUM(IF(user_link.vote IS NULL, 0, IF(user_link.vote = 0, -1, 1))) AS aaa
+      FROM user_link
+      WHERE user_link.link_id = link.id
+    ) AS totalVote,
+    (
+      SELECT
         JSON_ARRAYAGG(
           JSON_OBJECT(
             'id', tag.id,
@@ -118,7 +124,9 @@ BEGIN
     CASE WHEN $SORT = '-createdAt'  THEN `bookmark`.createdAt ELSE NULL END DESC,
     CASE WHEN $SORT = 'updatedAt'   THEN `bookmark`.updatedAt ELSE NULL END ASC,
     CASE WHEN $SORT = '-updatedAt'  THEN `bookmark`.updatedAt ELSE NULL END DESC,
-    CASE WHEN $SORT IS NULL         THEN `bookmark`.id        ELSE NULL END ASC
+    CASE WHEN $SORT IS NULL         THEN `bookmark`.id        ELSE NULL END ASC,
+    CASE WHEN $SORT = 'vote'        THEN totalVote            ELSE NULL END ASC,
+    CASE WHEN $SORT = '-vote'       THEN totalVote            ELSE NULL END DESC
   LIMIT $OFFSET , $SIZE
   ;
 
