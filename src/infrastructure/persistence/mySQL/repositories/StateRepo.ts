@@ -3,6 +3,7 @@ import path from 'path';
 
 import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { NetWorkError } from '@root/src/shared/errors/NetworkError';
+import { RESTORE_DATA, RESTORE_MODELS, RESTORE_PROCEDURES } from '@shared/constants/env';
 
 export class StateRepo {
   // Operation tables
@@ -219,216 +220,108 @@ export class StateRepo {
     const mySQL = new MySQL({ multipleStatements: true });
 
     try {
-      mySQL.beginTransaction();
-
-      // Drop all tables
-      const createDropAllTables = await mySQL.query(this.dropAllTables);
-      const dropAllTables = await mySQL.query(`CALL drop_all_tables()`);
-
-      // Create tables
-      const createDebuggerTable = await mySQL.query(this.debugMessages);
-      const createLanguageTable = await mySQL.query(this.language);
-      const createGlossaryTable = await mySQL.query(this.glossary);
-      const createDomainTable = await mySQL.query(this.domain);
-      const createLinkTable = await mySQL.query(this.link);
-      const createUserTable = await mySQL.query(this.user);
-      const createLinkUserTable = await mySQL.query(this.bookmark);
-      const createListTable = await mySQL.query(this.list);
-      const createLinkUserListTable = await mySQL.query(this.bookmarkList);
-      const createTagTable = await mySQL.query(this.tag);
-      const createLinkUserTagTable = await mySQL.query(this.bookmarkTag);
-      const createUserLinkTable = await mySQL.query(this.userLink);
-      const createUserListTable = await mySQL.query(this.userList);
-      const createUserLoginsTable = await mySQL.query(this.userLogins);
-      const createUserUserTable = await mySQL.query(this.userUser);
-
-      // Create procedures
-      const createDebuggerProcedure = await mySQL.query(this.debuggerProcedure);
-      const createLanguageGetOneProcedure = await mySQL.query(this.languageGetOneProcedure);
-      const createLanguageGetAllProcedure = await mySQL.query(this.languageGetAllProcedure);
-      const createUserGetAllProcedure = await mySQL.query(this.userGetAllProcedure);
-      const createUserGetByIdsProcedure = await mySQL.query(this.userGetByIdsProcedure);
-      const createUserGetOneProcedure = await mySQL.query(this.userGetOneProcedure);
-      const createUserCreateOneProcedure = await mySQL.query(this.userCreateOneProcedure);
-      const createUserCreateConfirmationProcedure = await mySQL.query(this.userCreateConfirmationProcedure);
-      const createUserForgotPasswordProcedure = await mySQL.query(this.userForgotPasswordProcedure);
-      const createUserUpdateOneProcedure = await mySQL.query(this.userUpdateOneProcedure);
-      const createUserDeleteOneProcedure = await mySQL.query(this.userDeleteOneProcedure);
-      const createUserLoginProcedure = await mySQL.query(this.userLoginProcedure);
-      const createUserLogSessionProcedure = await mySQL.query(this.userLogSessionProcedure);
-      const createUserResetPasswordProcedure = await mySQL.query(this.userResetPasswordProcedure);
-      const createUserFollowingGetAllProcedure = await mySQL.query(this.userFollowingGetAllProcedure);
-      const createUserFollowingGetOneProcedure = await mySQL.query(this.userFollowingGetOneProcedure);
-      const createUserFollowingCreateProcedure = await mySQL.query(this.userFollowingCreateProcedure);
-      const createUserFollowingDeleteProcedure = await mySQL.query(this.userFollowingDeleteProcedure);
-      const createUserFollowerGetAllProcedure = await mySQL.query(this.userFollowerGetAllProcedure);
-      const createUserBookmarkGetAllProcedure = await mySQL.query(this.userBookmarkGetAllProcedure);
-      const createUserBookmarkGetOneProcedure = await mySQL.query(this.userBookmarkGetOneProcedure);
-      const createUserBookmarkGetOneByBookmarkIdUserIdProcedure = await mySQL.query(this.userBookmarkGetOneByBookmarkIdUserIdProcedure);
-      const createUserBookmarkGetOneByLinkIdUserIdProcedure = await mySQL.query(this.userBookmarkGetOneByLinkIdUserIdProcedure);
-      const createUserBookmarkGetOneByUserIdPathDomainProcedure = await mySQL.query(this.userBookmarkGetOneByUserIdPathDomainProcedure);
-      const createUserBookmarkCreateProcedure = await mySQL.query(this.userBookmarkCreateProcedure);
-      const createUserBookmarkUpdateProcedure = await mySQL.query(this.userBookmarkUpdateProcedure);
-      const createUserBookmarkDeleteOneProcedure = await mySQL.query(this.userBookmarkDeleteOneProcedure);
-      const createUserListGetAllPublicProcedure = await mySQL.query(this.userListGetAllPublicProcedure);
-      const createUserTagsGetAllProcedure = await mySQL.query(this.userTagsGetAllProcedure);
-      const createUserRecommendedProcedure = await mySQL.query(this.userRecommendedProcedure);
-      const createBookmarkGetOneProcedure = await mySQL.query(this.bookmarkGetOneProcedure);
-      const createBookmarkGetAllPublicProcedure = await mySQL.query(this.bookmarkGetAllPublicProcedure);
-      const createBookmarkGetAllByLinkIdProcedure = await mySQL.query(this.bookmarkGetAllByLinkIdProcedure);
-      const createBookmarkTagGetAllProcedure = await mySQL.query(this.bookmarkTagGetAllProcedure);
-      const createBookmarkListGetAllProcedure = await mySQL.query(this.bookmarkListGetAllProcedure);
-      const createLinkGetOneProcedure = await mySQL.query(this.linkGetOneProcedure);
-      const createLinkGetAllProcedure = await mySQL.query(this.linkGetAllProcedure);
-      const createLinkUpsertOneProcedure = await mySQL.query(this.linkUpsertOneProcedure);
-      const createLinkVoteOneProcedure = await mySQL.query(this.linkVoteOneProcedure);
-      const createLinkListGetAllPublicProcedure = await mySQL.query(this.linkListGetAllPublicProcedure);
-      const createLinkTagGetAllProcedure = await mySQL.query(this.linkTagGetAllProcedure);
-      const createListGetOneByIdProcedure = await mySQL.query(this.listGetOneByIdProcedure);
-      const createListGetAllProcedure = await mySQL.query(this.listGetAllProcedure);
-      const createListCreateOneProcedure = await mySQL.query(this.listCreateOneProcedure);
-      const createListUpdateOneProcedure = await mySQL.query(this.listUpdateOneProcedure);
-      const createListDeleteOneProcedure = await mySQL.query(this.listDeleteOneProcedure);
-      const createLinkGetVotesProcedure = await mySQL.query(this.linkGetVotesProcedure);
-      const createListBookmarkGetOneProcedure = await mySQL.query(this.listBookmarkGetOneProcedure);
-      const createListBookmarkGetAllProcedure = await mySQL.query(this.listBookmarkGetAllProcedure);
-      const createListBookmarkCreateOneProcedure = await mySQL.query(this.listBookmarkCreateOneProcedure);
-      const createListBookmarkDeleteOneProcedure = await mySQL.query(this.listBookmarkDeleteOneProcedure);
-      const createListUserGetOneByListNameProcedure = await mySQL.query(this.listUserGetOneByListNameProcedure);
-      const createListUserGetOneByListIdProcedure = await mySQL.query(this.listUserGetOneByListIdProcedure);
-      const createListUserGetAllProcedure = await mySQL.query(this.listUserGetAllProcedure);
-      const createListUserCreateOneProcedure = await mySQL.query(this.listUserCreateOneProcedure);
-      const createListUserUpdateOneProcedure = await mySQL.query(this.listUserUpdateOneProcedure);
-      const createListUserDeleteOneProcedure = await mySQL.query(this.listUserDeleteOneProcedure);
-      const createListTagsGetAllProcedure = await mySQL.query(this.listTagsGetAllProcedure);
-      const createListSimilarGetAllProcedure = await mySQL.query(this.listSimilarGetAllProcedure);
-      const createTagGetAllProcedure = await mySQL.query(this.tagGetAllProcedure);
-      const createTagListGetAllPublicProcedure = await mySQL.query(this.tagListGetAllPublicProcedure);
-      const createTagBookmarkGetAllPublicProcedure = await mySQL.query(this.tagBookmarkGetAllPublicProcedure);
-      const createTagUserGetAllPublicProcedure = await mySQL.query(this.tagUserGetAllPublicProcedure);
-
-      // Insert data
-      const insertDomainData = await mySQL.query(this.domainData);
-      const insertLanguageData = await mySQL.query(this.languageData);
-      const insertGlossaryData = await mySQL.query(this.glossaryData);
-      const insertLinkData = await mySQL.query(this.linkData);
-      const insertUserData = await mySQL.query(this.userData);
-      const insertLinkUserData = await mySQL.query(this.bookmarkData);
-      const insertListData = await mySQL.query(this.listData);
-      const insertLinkUserListData = await mySQL.query(this.bookmarkListData);
-      const insertTagData = await mySQL.query(this.tagData);
-      const insertLinkUserTagData = await mySQL.query(this.bookmarkTagData);
-      const insertUserLinkData = await mySQL.query(this.userLinkData);
-      const insertUserListData = await mySQL.query(this.userListData);
-      const insertUserLoginData = await mySQL.query(this.userLoginData);
-      const insertUserUserData = await mySQL.query(this.userUserData);
-
-      mySQL.commit();
-
       return {
-        // Drop tables
-        ...createDropAllTables,
-        ...dropAllTables,
-
-        // Debugger table
-        ...createDebuggerTable,
+        // Drop all tables
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.dropAllTables))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(`CALL drop_all_tables()`))),
 
         // Create tables
-        ...createLanguageTable,
-        ...createGlossaryTable,
-        ...createDomainTable,
-        ...createLinkTable,
-        ...createUserTable,
-        ...createLinkUserTable,
-        ...createListTable,
-        ...createLinkUserListTable,
-        ...createTagTable,
-        ...createLinkUserTagTable,
-        ...createUserLinkTable,
-        ...createUserListTable,
-        ...createUserLoginsTable,
-        ...createUserUserTable,
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.debugMessages))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.language))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.glossary))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.domain))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.link))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.user))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.bookmark))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.list))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.bookmarkList))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.tag))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.bookmarkTag))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.userLink))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.userList))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.userLogins))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.userUser))),
 
         // Create procedures
-        ...createDebuggerProcedure,
-        ...createLanguageGetOneProcedure,
-        ...createLanguageGetAllProcedure,
-        ...createUserGetAllProcedure,
-        ...createUserGetByIdsProcedure,
-        ...createUserGetOneProcedure,
-        ...createUserCreateOneProcedure,
-        ...createUserCreateConfirmationProcedure,
-        ...createUserForgotPasswordProcedure,
-        ...createUserUpdateOneProcedure,
-        ...createUserDeleteOneProcedure,
-        ...createUserLoginProcedure,
-        ...createUserLogSessionProcedure,
-        ...createUserResetPasswordProcedure,
-        ...createUserFollowingGetAllProcedure,
-        ...createUserFollowingGetOneProcedure,
-        ...createUserFollowingCreateProcedure,
-        ...createUserFollowingDeleteProcedure,
-        ...createUserFollowerGetAllProcedure,
-        ...createUserBookmarkGetAllProcedure,
-        ...createUserBookmarkGetOneProcedure,
-        ...createUserBookmarkGetOneByBookmarkIdUserIdProcedure,
-        ...createUserBookmarkGetOneByLinkIdUserIdProcedure,
-        ...createUserBookmarkGetOneByUserIdPathDomainProcedure,
-        ...createUserBookmarkCreateProcedure,
-        ...createUserBookmarkUpdateProcedure,
-        ...createUserBookmarkDeleteOneProcedure,
-        ...createUserListGetAllPublicProcedure,
-        ...createUserTagsGetAllProcedure,
-        ...createUserRecommendedProcedure,
-        ...createBookmarkGetOneProcedure,
-        ...createBookmarkGetAllPublicProcedure,
-        ...createBookmarkGetAllByLinkIdProcedure,
-        ...createBookmarkTagGetAllProcedure,
-        ...createBookmarkListGetAllProcedure,
-        ...createLinkGetOneProcedure,
-        ...createLinkGetAllProcedure,
-        ...createLinkUpsertOneProcedure,
-        ...createLinkVoteOneProcedure,
-        ...createLinkListGetAllPublicProcedure,
-        ...createLinkTagGetAllProcedure,
-        ...createListGetOneByIdProcedure,
-        ...createListGetAllProcedure,
-        ...createListCreateOneProcedure,
-        ...createListUpdateOneProcedure,
-        ...createListDeleteOneProcedure,
-        ...createLinkGetVotesProcedure,
-        ...createListBookmarkGetOneProcedure,
-        ...createListBookmarkGetAllProcedure,
-        ...createListBookmarkCreateOneProcedure,
-        ...createListBookmarkDeleteOneProcedure,
-        ...createListUserGetOneByListNameProcedure,
-        ...createListUserGetOneByListIdProcedure,
-        ...createListUserGetAllProcedure,
-        ...createListUserCreateOneProcedure,
-        ...createListUserUpdateOneProcedure,
-        ...createListUserDeleteOneProcedure,
-        ...createListTagsGetAllProcedure,
-        ...createListSimilarGetAllProcedure,
-        ...createTagGetAllProcedure,
-        ...createTagListGetAllPublicProcedure,
-        ...createTagBookmarkGetAllPublicProcedure,
-        ...createTagUserGetAllPublicProcedure,
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.debuggerProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetByIdsProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userCreateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userCreateConfirmationProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userForgotPasswordProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userUpdateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userDeleteOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userLoginProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userLogSessionProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userResetPasswordProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userFollowingGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userFollowingGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userFollowingCreateProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userFollowingDeleteProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userFollowerGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetOneByBookmarkIdUserIdProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetOneByLinkIdUserIdProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetOneByUserIdPathDomainProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkCreateProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkUpdateProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkDeleteOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userListGetAllPublicProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userTagsGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userRecommendedProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetAllPublicProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetAllByLinkIdProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkTagGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkListGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkUpsertOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkVoteOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkListGetAllPublicProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkTagGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listGetOneByIdProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listCreateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listUpdateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listDeleteOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkGetVotesProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listBookmarkGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listBookmarkGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listBookmarkCreateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listBookmarkDeleteOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listUserGetOneByListNameProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listUserGetOneByListIdProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listUserGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listUserCreateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listUserUpdateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listUserDeleteOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listTagsGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listSimilarGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagListGetAllPublicProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagBookmarkGetAllPublicProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagUserGetAllPublicProcedure))),
 
         // Insert data
-        ...insertDomainData,
-        ...insertLanguageData,
-        ...insertGlossaryData,
-        ...insertLinkData,
-        ...insertUserData,
-        ...insertLinkUserData,
-        ...insertListData,
-        ...insertLinkUserListData,
-        ...insertTagData,
-        ...insertLinkUserTagData,
-        ...insertUserLinkData,
-        ...insertUserListData,
-        ...insertUserLoginData,
-        ...insertUserUserData,
+        ...(!!RESTORE_DATA && (await mySQL.query(this.domainData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.languageData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.glossaryData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.linkData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.userData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.bookmarkData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.listData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.bookmarkListData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.tagData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.bookmarkTagData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.userLinkData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.userListData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.userLoginData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.userUserData))),
       };
     } catch (err) {
       mySQL.rollback();

@@ -17,7 +17,10 @@
     "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
     "EMAIL_PORT": 587,
     "EMAIL_USER": "hello@antoniodiaz.me",
-    "EMAIL_PASSWORD": "G9khusC96RmK8fRm"
+    "EMAIL_PASSWORD": "G9khusC96RmK8fRm",
+    "RESTORE_MODELS": true,
+    "RESTORE_DATA": true,
+    "RESTORE_PROCEDURES": true
   },
   "staging": {
     "database": {
@@ -37,7 +40,10 @@
     "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
     "EMAIL_PORT": 587,
     "EMAIL_USER": "hello@antoniodiaz.me",
-    "EMAIL_PASSWORD": "G9khusC96RmK8fRm"
+    "EMAIL_PASSWORD": "G9khusC96RmK8fRm",
+    "RESTORE_MODELS": false,
+    "RESTORE_DATA": false,
+    "RESTORE_PROCEDURES": true
   },
   "production": {
     "database": {
@@ -63,5 +69,8 @@
   "MEDIA_FOLDER": "media",
   "MEDIA_IMAGES": "media/images",
   "TEMP_FILES": "media/temp_files",
-  "DEFAULT_IMAGE": "/img/default-image.png"
+  "DEFAULT_IMAGE": "/img/default-image.png",
+  "RESTORE_MODELS": false,
+  "RESTORE_DATA": false,
+  "RESTORE_PROCEDURES": true
 }

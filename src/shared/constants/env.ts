@@ -19,3 +19,6 @@ export const EMAIL_PORT = config[process.env.NODE_ENV].EMAIL_PORT;
 export const EMAIL_USER = config[process.env.NODE_ENV].EMAIL_USER;
 export const EMAIL_PASSWORD = config[process.env.NODE_ENV].EMAIL_PASSWORD;
 export const EMAIL_ADDRESS_SENT = config[process.env.NODE_ENV].EMAIL_ADDRESS_SENT;
+export const RESTORE_MODELS = config[process.env.NODE_ENV].RESTORE_MODELS;
+export const RESTORE_DATA = config[process.env.NODE_ENV].RESTORE_DATA;
+export const RESTORE_PROCEDURES = config[process.env.NODE_ENV].RESTORE_PROCEDURES;
