@@ -31,18 +31,15 @@ export class BookmarkGetOneController extends BaseController {
       links: {
         self: URL_SERVER + '/bookmarks',
       },
-      data: [
-        {
-          type: 'bookmark',
-          id: response.id,
-          session: {
-            self: URL_SERVER + '/bookmarks/' + response.id,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'bookmark',
+        id: response.id,
+        session: {
+          self: URL_SERVER + '/bookmarks/' + response.id,
         },
-      ],
-      included: [],
+        attributes: response,
+        relationships: {},
+      },
     };
 
     return res.status(200).send(formattedResponse);

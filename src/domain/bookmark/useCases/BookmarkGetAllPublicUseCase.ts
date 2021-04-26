@@ -21,7 +21,18 @@ export class BookmarkGetAllPublicUseCase implements IBookmarkGetAllPublicUseCase
 
     const { bookmarks, meta } = await this.bookmarkRepo.bookmarkGetAllPublic({ sessionId: session?.id, sort, size, offset, filter });
 
-    const bookmarksWithVotesPromises = bookmarks.map(async (item) => {
+    // If the user has bookmarked this bookmark, retrieve it and replace
+    const bookmarksWithUserBookmarkPromises = bookmarks.map(async (item) => {
+      const sessionUserPartialBookmark = item?.bookmarksRelated?.find((item) => item?.userId === session?.id);
+      const sessionUserBookmarked = !!sessionUserPartialBookmark?.id;
+      const sessionUserBookmarkTemporary = !!sessionUserBookmarked && (await this.bookmarkRepo.bookmarkGetOne({ bookmarkId: sessionUserPartialBookmark?.id }));
+      const sessionUserBookmark = sessionUserBookmarked ? sessionUserBookmarkTemporary : item;
+
+      return sessionUserBookmark;
+    });
+    const bookmarksWithUserBookmark = await Promise.all(bookmarksWithUserBookmarkPromises);
+
+    const bookmarksWithVotesPromises = bookmarksWithUserBookmark.map(async (item) => {
       const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.linkId, session });
 
       return {
