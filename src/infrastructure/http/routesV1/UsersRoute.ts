@@ -260,7 +260,10 @@ UsersRoute.get('/:userId/tags', async (req: Request, res: Response, next: NextFu
 
 UsersRoute.get('/me/recommended', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userRecommendedGetAllUseCase = new UserRecommendedGetAllUseCase(userRepo);
+  const linkRepo = new LinkRepo();
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
+  const userRecommendedGetAllUseCase = new UserRecommendedGetAllUseCase(userRepo, linkGetStatisticsUseCase);
   const userRecommendedGetAllController = new UserRecommendedGetAllController(userRecommendedGetAllUseCase);
 
   const response = await userRecommendedGetAllController.execute(req, res, next);

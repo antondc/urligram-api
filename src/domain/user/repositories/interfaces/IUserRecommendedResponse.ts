@@ -1,4 +1,8 @@
-import { Link } from '@domain/link/entities/Link';
+import { Bookmark } from '@domain/bookmark/entities/Bookmark';
+
+interface BookmarkWithUrl extends Bookmark {
+  url: string;
+}
 
 export interface IUserRecommendedResponse {
   meta: {
@@ -7,5 +11,5 @@ export interface IUserRecommendedResponse {
     size: number;
     sort: string;
   };
-  links: Link[];
+  bookmarks: BookmarkWithUrl[];
 }

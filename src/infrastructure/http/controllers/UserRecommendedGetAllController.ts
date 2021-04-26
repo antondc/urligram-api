@@ -34,9 +34,9 @@ export class UserRecommendedGetAllController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
-    const { links, meta } = await this.useCase.execute({ session, sort, size: castedSize, offset: castedOffset });
+    const { bookmarks, meta } = await this.useCase.execute({ session, sort, size: castedSize, offset: castedOffset });
 
-    const formattedItems = links.map((item) => {
+    const formattedItems = bookmarks.map((item) => {
       return {
         type: 'user',
         id: item.id,

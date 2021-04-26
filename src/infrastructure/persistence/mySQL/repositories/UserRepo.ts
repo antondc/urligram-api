@@ -225,17 +225,17 @@ export class UserRepo implements IUserRepo {
     const mySQL = new MySQL();
     try {
       const userRecommendedQuery = 'CALL user_recommended(?, ?, ?, ?)';
-      const [links] = await mySQL.query(userRecommendedQuery, [userId, size, offset, sort]);
-      const linksWithoutTotal = links.map((item) => ({ ...item, totalItems: undefined }));
+      const [bookmarks] = await mySQL.query(userRecommendedQuery, [userId, size, offset, sort]);
+      const linksWithoutTotal = bookmarks.map((item) => ({ ...item, totalItems: undefined }));
 
       return {
         meta: {
-          totalItems: links[0]?.totalItems || 0,
+          totalItems: bookmarks[0]?.totalItems || 0,
           size,
           offset,
           sort,
         },
-        links: linksWithoutTotal,
+        bookmarks: linksWithoutTotal,
       };
     } catch (err) {
       throw new RequestError('Something failed', 500, err);

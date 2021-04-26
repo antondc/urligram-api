@@ -1,7 +1,11 @@
-import { Link } from '@domain/link/entities/Link';
+import { Bookmark } from '@domain/bookmark/entities/Bookmark';
+
+interface BookmarkWithUrl extends Bookmark {
+  url: string;
+}
 
 export type IUserRecommendedGetAllResponse = {
-  links: Link[];
+  bookmarks: BookmarkWithUrl[];
   meta: {
     totalItems: number;
     offset: number;
