@@ -24,6 +24,7 @@ app.use(cors({ credentials: true, origin: ENDPOINT_CLIENTS }));
 // Serving static files
 app.use(express.static('media/docs'));
 app.use(express.static('media/images'));
+app.use(express.static('media/temp_files'));
 app.use('/media', express.static('media'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
