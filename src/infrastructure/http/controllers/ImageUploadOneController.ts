@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { IImageUploadOneUseCase } from '@domain/images/useCases/ImageUploadOneUseCase';
 import { URL_SERVER } from '@shared/constants/env';
+import { FormDataParser } from '@shared/services/FormDataParser';
 import { BaseController } from './BaseController';
 export class ImageUploadOneController extends BaseController {
   useCase: IImageUploadOneUseCase;
@@ -12,16 +13,17 @@ export class ImageUploadOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { file } = req;
+    const formDataParser = new FormDataParser(req);
+    const { image } = await formDataParser.getSingleImage();
 
-    const response = await this.useCase.execute(file);
+    const response = await this.useCase.execute({ image });
 
     const formattedResponse = {
       links: {
         self: URL_SERVER + '/images/upload/single',
       },
       data: {
-        image: URL_SERVER + response?.image,
+        image: `${URL_SERVER}/${response?.image?.path}`,
       },
       included: [],
     };

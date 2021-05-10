@@ -1,3 +1,5 @@
-import { ImageUploaded } from '@infrastructure/http/middlewares/ImagesUploadMiddleware';
+import { Image } from '@domain/images/entities/Image';
 
-export type IImageUploadOneRequest = ImageUploaded;
+export type IImageUploadOneRequest = {
+  image: Image;
+};
