@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { IImageUploadOneUseCase } from '@domain/images/useCases/ImageUploadOneUseCase';
+import { IImageUploadOneUseCase } from '@domain/image/useCases/ImageUploadOneUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { FormDataParser } from '@shared/services/FormDataParser';
 import { BaseController } from './BaseController';

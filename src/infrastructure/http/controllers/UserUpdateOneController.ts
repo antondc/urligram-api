@@ -16,7 +16,7 @@ export class UserUpdateOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { name, email, statement, location } = req.body;
+    const { name, email, statement, location, image } = req.body;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
@@ -27,6 +27,7 @@ export class UserUpdateOneController extends BaseController {
       email,
       statement,
       location,
+      image,
     };
 
     const response = await this.useCase.execute(userUpdateRequest);

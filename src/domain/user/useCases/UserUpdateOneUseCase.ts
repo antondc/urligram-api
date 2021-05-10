@@ -1,3 +1,5 @@
+import { Image } from '@domain/image/entities/Image';
+import { imageFormat } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { UserError } from '@shared/errors/UserError';
@@ -17,7 +19,7 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
   }
 
   public async execute(userUpdateRequest: IUserUpdateOneRequest): Promise<IUserUpdateOneResponse> {
-    const { email, name, session } = userUpdateRequest;
+    const { email, name, session, image } = userUpdateRequest;
 
     const isEmail = StringValidator.validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409);
@@ -25,7 +27,10 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
     const userExists = await this.userRepo.userGetOne({ sessionId: session?.id, email, name });
     if (!userExists) throw new RequestError('User does not exist', 404);
 
-    await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id });
+    const imageProcessor = new Image(imageFormat);
+    const { path } = await imageProcessor.saveImage(image);
+
+    await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id, image: path });
 
     const response = await this.userRepo.userGetOne({ sessionId: session?.id, userId: session?.id });
 

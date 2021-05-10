@@ -4,4 +4,5 @@ export interface IUserUpdateOneRequest {
   email: string;
   statement: string;
   location: string;
+  image: string;
 }

@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import { ImageUploadOneUseCase } from '@domain/images/useCases/ImageUploadOneUseCase';
+import { ImageUploadOneUseCase } from '@domain/image/useCases/ImageUploadOneUseCase';
 import { ImageUploadOneController } from '@infrastructure/http/controllers/ImageUploadOneController';
 
 const ImagesRoute = express.Router();

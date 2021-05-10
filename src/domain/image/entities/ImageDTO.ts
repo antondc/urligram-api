@@ -1,4 +1,4 @@
-export class Image {
+export class ImageDTO {
   size: number;
   path: string;
   name: string;

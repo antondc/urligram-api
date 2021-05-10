@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import Formidable from 'formidable';
 
-import { Image } from '@domain/images/entities/Image';
+import { ImageDTO } from '@domain/image/entities/ImageDTO';
 import config from '@root/config.test.json';
 
 export type Fields = {
@@ -9,7 +9,7 @@ export type Fields = {
 };
 
 export type Files = {
-  [key: string]: Image | Image[];
+  [key: string]: ImageDTO | ImageDTO[];
 };
 
 export class FormDataParser {
@@ -27,7 +27,7 @@ export class FormDataParser {
   async getFormData(): Promise<{
     fields: Fields;
     files: {
-      [key: string]: Image | Image[];
+      [key: string]: ImageDTO | ImageDTO[];
     };
   }> {
     const formData: { fields: Fields; files: Files } = await new Promise((resolve, reject) => {
@@ -48,10 +48,10 @@ export class FormDataParser {
     };
   }
 
-  async getSingleImage(): Promise<{ [key: string]: Image }> {
+  async getSingleImage(): Promise<{ [key: string]: ImageDTO }> {
     const formData: {
       files: {
-        [key: string]: Image;
+        [key: string]: ImageDTO;
       };
     } = await new Promise((resolve, reject) => {
       this.formidable.parse(this.request, (err, _, files) => {

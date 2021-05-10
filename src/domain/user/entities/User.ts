@@ -1,3 +1,21 @@
+import { ImageFormatOptions } from '@domain/image/entities/Image';
+
+export const imageFormat: ImageFormatOptions = {
+  extension: 'png',
+  sizes: [
+    {
+      h: 200,
+      w: 200,
+    },
+    {
+      h: 500,
+      w: 500,
+    },
+  ],
+  crop: 'center',
+  folderName: 'user',
+};
+
 export class User {
   id: string;
   name: string;
