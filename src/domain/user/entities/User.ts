@@ -1,6 +1,6 @@
 import { ImageFormatOptions } from '@domain/image/entities/Image';
 
-export const imageFormat: ImageFormatOptions = {
+export const userImageFormat: ImageFormatOptions = {
   extension: 'png',
   sizes: [
     {
@@ -13,7 +13,7 @@ export const imageFormat: ImageFormatOptions = {
     },
   ],
   crop: 'center',
-  folderName: 'user',
+  destinationFolder: 'users/image',
 };
 
 export class User {

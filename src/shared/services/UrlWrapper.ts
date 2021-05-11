@@ -1,5 +1,6 @@
 import psl from 'psl';
 
+import { ServerError } from '@shared/errors/ServerError';
 import { QueryStringWrapper } from './QueryStringWrapper';
 
 export class URLWrapper {
@@ -23,7 +24,7 @@ export class URLWrapper {
       this.path = url.pathname;
       this.search = this.url.search;
     } catch (err) {
-      console.error('Un-parsable URL', err);
+      throw new ServerError('Un-parsable url', 500);
     }
   }
 
@@ -33,6 +34,14 @@ export class URLWrapper {
 
   getPathName(): string | undefined {
     return this.url.pathname;
+  }
+
+  getFilename(): string | undefined {
+    if (!this.url?.pathname.includes('.')) return undefined;
+
+    const filename = this.url?.pathname.substring(this.url?.pathname.lastIndexOf('/') + 1);
+
+    return filename;
   }
 
   getPath(): string | undefined {

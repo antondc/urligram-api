@@ -83,11 +83,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userUpdateOne({ userId, name, email, statement, location }) {
+  public async userUpdateOne({ userId, name, email, image, statement, location }) {
     const mySQL = new MySQL();
     try {
-      const userUpdateQuery = 'CALL user_update(?, ?, ?, ?, ?)';
-      const [[results]] = await mySQL.query(userUpdateQuery, [userId, name, email, statement, location]);
+      const userUpdateQuery = 'CALL user_update(?, ?, ?, ?, ?, ?)';
+      const [[results]] = await mySQL.query(userUpdateQuery, [userId, name, email, image, statement, location]);
 
       return results;
     } catch (err) {

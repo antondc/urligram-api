@@ -5,6 +5,7 @@ CREATE PROCEDURE user_update(
   IN $USER_ID VARCHAR(40),
   IN $NAME VARCHAR(40),
   IN $EMAIL VARCHAR(40),
+  IN $IMAGE VARCHAR(255),
   IN $STATEMENT VARCHAR(40),
   IN $LOCATION VARCHAR(40)
 )
@@ -17,6 +18,7 @@ BEGIN
    `name`       = $NAME,
    `email`      = $EMAIL,
    `statement`  = $STATEMENT,
+   `image`      = $IMAGE,
    `location`   = $LOCATION,
    `updatedAt`  = UNIX_TIMESTAMP()
   WHERE id      = $USER_ID;

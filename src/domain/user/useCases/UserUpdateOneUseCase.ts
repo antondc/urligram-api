@@ -1,5 +1,5 @@
 import { Image } from '@domain/image/entities/Image';
-import { imageFormat } from '@domain/user/entities/User';
+import { userImageFormat } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { UserError } from '@shared/errors/UserError';
@@ -27,10 +27,10 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
     const userExists = await this.userRepo.userGetOne({ sessionId: session?.id, email, name });
     if (!userExists) throw new RequestError('User does not exist', 404);
 
-    const imageProcessor = new Image(imageFormat);
-    const { path } = await imageProcessor.saveImage(image);
+    const imageProcessor = new Image(userImageFormat);
+    const savedImage = await imageProcessor.saveImage({ fileUrl: image });
 
-    await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id, image: path });
+    await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id, image: savedImage?.path });
 
     const response = await this.userRepo.userGetOne({ sessionId: session?.id, userId: session?.id });
 
