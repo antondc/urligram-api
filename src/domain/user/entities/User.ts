@@ -4,12 +4,12 @@ export const userImageFormat: ImageFormatOptions = {
   extension: 'png',
   sizes: [
     {
-      h: 200,
-      w: 200,
+      height: 200,
+      width: 200,
     },
     {
-      h: 500,
-      w: 500,
+      height: 500,
+      width: 500,
     },
   ],
   crop: 'center',

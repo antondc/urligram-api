@@ -1,5 +1,7 @@
 import { Request } from 'express';
 import Formidable from 'formidable';
+import fs from 'fs';
+import mkdirp from 'mkdirp';
 
 import { ImageDTO } from '@domain/image/entities/ImageDTO';
 import config from '@root/config.test.json';
@@ -22,6 +24,12 @@ export class FormDataParser {
       uploadDir: config.TEMP_FILES,
       keepExtensions: true,
     });
+
+    const mediaImagesFolderExists = fs.existsSync(config.MEDIA_IMAGES);
+    if (!mediaImagesFolderExists) mkdirp.sync(config.MEDIA_IMAGES);
+
+    const tempFilesFolderExists = fs.existsSync(config.TEMP_FILES);
+    if (!tempFilesFolderExists) mkdirp.sync(config.TEMP_FILES);
   }
 
   async getFormData(): Promise<{

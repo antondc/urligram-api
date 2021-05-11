@@ -11,8 +11,8 @@ import { ImageDTO } from './ImageDTO';
 export type ImageFormatOptions = {
   extension: 'png' | 'jpg';
   sizes: {
-    h: number;
-    w: number;
+    height: number;
+    width: number;
   }[];
   crop: 'crop' | 'center';
   destinationFolder: string;
@@ -51,7 +51,7 @@ export class Image extends ImageDTO {
 
     file.pipe(outStream);
 
-    await this.resizeImageAndSave(originPath, filename);
+    await this.saveAndResize(originPath, filename);
 
     fs.unlinkSync(originPath); // Remove original temp image
 
@@ -60,7 +60,7 @@ export class Image extends ImageDTO {
     };
   };
 
-  resizeImageAndSave = async (originPath, filename): Promise<void> => {
+  saveAndResize = async (originPath, filename): Promise<void> => {
     if (!this.formatOptions?.sizes) return;
 
     await this.formatOptions.sizes.forEach(async (item) => {
@@ -77,15 +77,13 @@ export class Image extends ImageDTO {
           mime = Jimp.MIME_JPEG;
           break;
       }
-      const destinationPath = path.join(config.MEDIA_IMAGES, this.formatOptions?.destinationFolder, 'w' + item.w);
+      const destinationPath = path.join(config.MEDIA_IMAGES, this.formatOptions?.destinationFolder, 'w' + item.width);
       const destinationPathExists = fs.existsSync(destinationPath);
       if (!destinationPathExists) mkdirp.sync(destinationPath);
-      const finalPath = path.join(destinationPath, filename);
 
-      // Currently scale to fit on format
-      image.scaleToFit(item.w, item.h).getBuffer(mime, (err, buff) => {
-        fs.writeFileSync(finalPath, buff);
-      });
+      const finalPath = path.join(destinationPath, filename);
+      await image.scaleToFit(item.width, item.height);
+      await image.getBuffer(mime, (err, buff) => fs.writeFileSync(finalPath, buff));
     });
 
     return;
