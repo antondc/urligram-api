@@ -1,4 +1,4 @@
-import { ImageFormatOptions } from '@domain/image/entities/Image';
+import { ImageFormatOptions } from '@domain/image/entities/protocols/FormatOptions';
 
 export const userImageFormat: ImageFormatOptions = {
   extension: 'png',
