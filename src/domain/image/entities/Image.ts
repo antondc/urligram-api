@@ -1,9 +1,9 @@
 import { IImageRepo } from '@domain/image/repositories/IImageRepo';
 import { IImageSaveOneRequest } from '@domain/image/useCases/interfaces/IImageSaveOneRequest';
 import { IImageSaveOneResponse } from '@domain/image/useCases/interfaces/IImageSaveOneResponse';
-import { ImageDTO } from './ImageDTO';
+import { FileDTO } from './FileDTO';
 
-export class Image extends ImageDTO {
+export class Image extends FileDTO {
   imageRepo: IImageRepo;
 
   constructor(imageRepo: IImageRepo) {

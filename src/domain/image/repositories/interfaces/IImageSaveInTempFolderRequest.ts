@@ -1,5 +1,5 @@
 import { FileDTO } from '@domain/image/entities/FileDTO';
 
-export type IImageUploadOneRequest = {
+export type IImageSaveInTempFolderRequest = {
   file: FileDTO;
 };

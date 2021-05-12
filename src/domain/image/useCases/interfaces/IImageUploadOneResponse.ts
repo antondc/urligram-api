@@ -1,5 +1,5 @@
-import { ImageDTO } from '@domain/image/entities/ImageDTO';
+import { FileDTO } from '@domain/image/entities/FileDTO';
 
-export type IImageUploadOneResponse = {
-  image: ImageDTO;
-};
+export interface IImageUploadOneResponse extends FileDTO {
+  path: string;
+}
