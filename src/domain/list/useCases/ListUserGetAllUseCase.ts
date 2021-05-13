@@ -1,6 +1,7 @@
 import { Session } from 'inspector';
 
 import { IListRepo } from '@domain/list/repositories/IListRepo';
+import { User } from '@domain/user/entities/User';
 import { RequestError } from '@shared/errors/RequestError';
 import { IListUserGetAllRequest } from './interfaces/IListUserGetAllRequest';
 import { IListUserGetAllResponse } from './interfaces/IListUserGetAllResponse';
@@ -25,7 +26,13 @@ export class ListUserGetAllUseCase implements IListUserGetAllUseCase {
     const listUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id });
     if (!!list.isPrivate && !listUser) throw new RequestError('This list is private', 403, { message: '403 Forbidden' });
 
-    const listUsers = await this.listRepo.listUserGetAll({ listId });
+    const listUsersData = await this.listRepo.listUserGetAll({ listId });
+
+    const listUsers = listUsersData.map((listUserData) => {
+      const user = new User(listUserData);
+
+      return user;
+    });
 
     return listUsers;
   }

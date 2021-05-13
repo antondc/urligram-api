@@ -19,18 +19,17 @@ export class TagUserGetAllPublicController extends BaseController {
     const tagUserGetAllPublic: ITagUserGetAllPublicRequest = {
       tagId: Number(tagId),
     };
-
     const response = await this.useCase.execute(tagUserGetAllPublic);
 
-    const formattedUsers = response.map((item) => {
+    const formattedUsers = response.map((user) => {
       return {
         type: 'user',
-        id: item.id,
+        id: user.id,
         session: {
-          self: URL_SERVER + '/users/' + item.id,
+          self: URL_SERVER + '/users/' + user.id,
         },
         attributes: {
-          ...item,
+          ...user,
         },
       };
     });

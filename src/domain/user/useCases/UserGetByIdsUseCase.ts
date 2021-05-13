@@ -1,5 +1,6 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
+import { User } from '../entities/User';
 import { IUserGetByIdsRequest } from './interfaces/IUserGetByIdsRequest';
 import { IUserGetByIdsResponse } from './interfaces/IUserGetByIdsResponse';
 
@@ -19,9 +20,10 @@ export class UserGetByIdsUseCase implements IUserGetByIdsUseCase {
   public async execute(userGetByIdsRequest: IUserGetByIdsRequest): Promise<IUserGetByIdsResponse> {
     const { session, userIds, sort, size, offset } = userGetByIdsRequest;
 
-    const users = await this.userRepo.userGetByIds({ sessionId: session?.id, userIds, sort, size, offset });
+    const { usersData } = await this.userRepo.userGetByIds({ sessionId: session?.id, userIds, sort, size, offset });
 
-    const usersWithTagsPromises = users.map(async (user) => {
+    const usersWithTagsPromises = usersData.map(async (userData) => {
+      const user = new User(userData);
       const tags = await this.userTagsGetAllUseCase.execute({ userId: user.id, session, sort: '-count', size: null, offset: null });
 
       return {

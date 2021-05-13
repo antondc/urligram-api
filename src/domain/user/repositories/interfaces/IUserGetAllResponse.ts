@@ -7,5 +7,5 @@ export type IUserGetAllResponse = {
     size: number;
     sort: string;
   };
-  users: User[];
+  usersData: User[];
 };

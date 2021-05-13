@@ -7,5 +7,5 @@ export type IUserFollowerGetAllResponse = {
     size: number;
     sort: string;
   };
-  users: User[];
+  usersData: User[];
 };

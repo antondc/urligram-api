@@ -1,5 +1,6 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
+import { User } from '../entities/User';
 import { IUserGetOneRequest } from './interfaces/IUserGetOneRequest';
 import { IUserGetOneResponse } from './interfaces/IUserGetOneResponse';
 
@@ -20,7 +21,8 @@ export class UserGetOneUseCase implements IUserGetOneUseCase {
     const { session, userId, email, name } = userGetOneRequest;
     const tags = await this.userTagsGetAllUseCase.execute({ userId, session, sort: '-count', size: null, offset: null });
 
-    const user = await this.userRepo.userGetOne({ sessionId: session?.id, userId, name, email });
+    const userData = await this.userRepo.userGetOne({ sessionId: session?.id, userId, name, email });
+    const user = new User(userData);
 
     const userWithTags = {
       ...user,

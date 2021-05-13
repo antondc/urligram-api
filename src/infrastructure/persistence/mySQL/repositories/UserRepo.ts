@@ -18,7 +18,7 @@ export class UserRepo implements IUserRepo {
           offset,
           sort,
         },
-        users: usersWithoutTotal,
+        usersData: usersWithoutTotal,
       };
     } catch (err) {
       throw new RequestError('Something failed', 500, err);
@@ -31,9 +31,18 @@ export class UserRepo implements IUserRepo {
     const mySQL = new MySQL();
     try {
       const userGetByIdsQuery = 'CALL user_get_by_ids(?, ?, ?, ?, ?)';
-      const [results] = await mySQL.query(userGetByIdsQuery, [sessionId, JSON.stringify(userIds), sort, size, offset]);
+      const [usersData] = await mySQL.query(userGetByIdsQuery, [sessionId, JSON.stringify(userIds), sort, size, offset]);
+      const usersWithoutTotal = usersData.map((item) => ({ ...item, totalItems: undefined }));
 
-      return results;
+      return {
+        meta: {
+          totalItems: usersData[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+        },
+        usersData: usersWithoutTotal,
+      };
     } catch (err) {
       throw new RequestError('Something failed', 500, err);
     } finally {
@@ -159,18 +168,18 @@ export class UserRepo implements IUserRepo {
     const mySQL = new MySQL();
     try {
       const userFollowingGetAllQuery = 'CALL user_following_get_all(?, ?, ?, ?, ?)';
-      const [users] = await mySQL.query(userFollowingGetAllQuery, [sessionId, userId, sort, size, offset]);
+      const [usersData] = await mySQL.query(userFollowingGetAllQuery, [sessionId, userId, sort, size, offset]);
 
-      const usersWithoutTotal = users.map((item) => ({ ...item, totalItems: undefined }));
+      const usersWithoutTotal = usersData.map((item) => ({ ...item, totalItems: undefined }));
 
       return {
         meta: {
-          totalItems: users[0]?.totalItems || 0,
+          totalItems: usersData[0]?.totalItems || 0,
           size,
           offset,
           sort,
         },
-        users: usersWithoutTotal,
+        usersData: usersWithoutTotal,
       };
     } catch (err) {
       throw new RequestError('Something failed', 500, err);
@@ -183,9 +192,9 @@ export class UserRepo implements IUserRepo {
     const mySQL = new MySQL();
     try {
       const userFollowingGetOneQuery = 'CALL user_following_get_one(?, ?)';
-      const [[results]] = await mySQL.query(userFollowingGetOneQuery, [userId, followedId]);
+      const [[userData]] = await mySQL.query(userFollowingGetOneQuery, [userId, followedId]);
 
-      return results;
+      return userData;
     } catch (err) {
       throw new RequestError('Something failed', 500, err);
     } finally {
@@ -248,18 +257,18 @@ export class UserRepo implements IUserRepo {
     const mySQL = new MySQL();
     try {
       const userFollowerGetAllQuery = 'CALL user_follower_get_all(?, ?, ?, ?, ?)';
-      const [users] = await mySQL.query(userFollowerGetAllQuery, [sessionId, userId, sort, size, offset]);
+      const [usersData] = await mySQL.query(userFollowerGetAllQuery, [sessionId, userId, sort, size, offset]);
 
-      const usersWithoutTotal = users.map((item) => ({ ...item, totalItems: undefined }));
+      const usersWithoutTotal = usersData.map((item) => ({ ...item, totalItems: undefined }));
 
       return {
         meta: {
-          totalItems: users[0]?.totalItems || 0,
+          totalItems: usersData[0]?.totalItems || 0,
           size,
           offset,
           sort,
         },
-        users: usersWithoutTotal,
+        usersData: usersWithoutTotal,
       };
     } catch (err) {
       throw new RequestError('Something failed', 500, err);

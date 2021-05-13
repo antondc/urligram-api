@@ -1,4 +1,5 @@
 import { IListRepo } from '@domain/list/repositories/IListRepo';
+import { User } from '@domain/user/entities/User';
 import { RequestError } from '@shared/errors/RequestError';
 import { IListUserGetOneRequest } from './interfaces/IListUserGetOneRequest';
 import { IListUserGetOneResponse } from './interfaces/IListUserGetOneResponse';
@@ -20,11 +21,13 @@ export class ListUserGetOneUseCase implements IListUserGetOneUseCase {
     const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
-    const listUser = await this.listRepo.listUserGetOneByListId({
+    const listUserData = await this.listRepo.listUserGetOneByListId({
       listId,
       userId,
     });
-    if (!listUser) throw new RequestError('User not found', 404, { message: '404 Not Found' });
+    if (!listUserData) throw new RequestError('User not found', 404, { message: '404 Not Found' });
+
+    const listUser = new User(listUserData);
 
     return listUser;
   }

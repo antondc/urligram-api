@@ -1,4 +1,5 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
+import { User } from '../entities/User';
 import { IUserFollowingGetAllRequest } from './interfaces/IUserFollowingGetAllRequest';
 import { IUserFollowingGetAllResponse } from './interfaces/IUserFollowingGetAllResponse';
 import { IUserTagsGetAllUseCase } from './UserTagsGetAllUseCase';
@@ -18,9 +19,10 @@ export class UserFollowingGetAllUseCase implements IUserFollowingGetAllUseCase {
 
   public async execute(getFollowing: IUserFollowingGetAllRequest): Promise<IUserFollowingGetAllResponse> {
     const { session, userId, sort, size, offset } = getFollowing;
-    const { users, meta } = await this.userRepo.userFollowingGetAll({ sessionId: session?.id, userId, sort, size, offset });
+    const { usersData, meta } = await this.userRepo.userFollowingGetAll({ sessionId: session?.id, userId, sort, size, offset });
 
-    const usersWithTagsPromises = users.map(async (user) => {
+    const usersWithTagsPromises = usersData.map(async (userData) => {
+      const user = new User(userData);
       const tags = await this.userTagsGetAllUseCase.execute({ userId: user.id, session, sort: '-count', size: null, offset: null });
 
       return {

@@ -1,10 +1,11 @@
+import { Image } from '@domain/image/entities/Image';
 import { ImageFormatOptions } from '@domain/image/entities/protocols/FormatOptions';
 
 export const userImageFormat: ImageFormatOptions = {
   extension: 'png',
   sizes: [
     {
-      height: 200,
+      height: 50,
       width: 200,
     },
     {
@@ -21,7 +22,7 @@ export class User {
   name: string;
   level: string;
   email: string;
-  image: string;
+  image: { [key: string]: string };
   status: string;
   password: number;
   statement: string;
@@ -34,12 +35,17 @@ export class User {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(user?) {
+  constructor(user) {
+    const image = new Image();
+    const imageFormatted = image.formatImageUrl({
+      sizes: userImageFormat?.sizes,
+      imageUrl: user?.image,
+    });
     this.id = user?.id;
     this.name = user?.name;
     this.level = user?.level;
     this.email = user?.email;
-    this.image = user?.image;
+    this.image = imageFormatted;
     this.status = user?.status;
     this.statement = user?.statement;
     this.location = user?.location;

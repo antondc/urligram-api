@@ -3,10 +3,22 @@ import { IImageSaveOneRequest } from '@domain/image/useCases/interfaces/IImageSa
 import { IImageSaveOneResponse } from '@domain/image/useCases/interfaces/IImageSaveOneResponse';
 import { FileDTO } from './FileDTO';
 
+type ImageUrlSplitBySizes = {
+  imageUrl: string;
+  sizes: {
+    height: number;
+    width: number;
+  }[];
+};
+
+type ImageUrlSplitBySizesReturn = {
+  [key: string]: string;
+};
+
 export class Image extends FileDTO {
   imageRepo: IImageRepo;
 
-  constructor(imageRepo: IImageRepo) {
+  constructor(imageRepo?: IImageRepo) {
     super();
     this.imageRepo = imageRepo;
     // Here we may use the received url and create on instantiation the resolution url tree
@@ -30,7 +42,23 @@ export class Image extends FileDTO {
     return null;
   };
 
-  getImage = (): void => {
-    return null;
+  formatImageUrl = ({ imageUrl, sizes = [] }: ImageUrlSplitBySizes): ImageUrlSplitBySizesReturn => {
+    if (!imageUrl || !imageUrl.length) return {};
+
+    // Default image object
+    const accumulator = {
+      original: imageUrl,
+    };
+
+    // Enhance default image object with urls with sizes
+    const imageUrlWithSizes = sizes.reduce(
+      (acc, { width, height }) => ({
+        ...acc,
+        [`w${width}h${height}`]: imageUrl.replace('original', `w${width}h${height}`),
+      }),
+      accumulator
+    );
+
+    return imageUrlWithSizes;
   };
 }

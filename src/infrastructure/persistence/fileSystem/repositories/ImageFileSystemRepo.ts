@@ -59,7 +59,7 @@ export class ImageFileSystemRepo implements IImageRepo {
           mime = Jimp.MIME_JPEG;
           break;
       }
-      const destinationPath = path.join(config.MEDIA_IMAGES, formatOptions?.destinationFolder, 'w' + item.width);
+      const destinationPath = path.join(config.MEDIA_IMAGES, formatOptions?.destinationFolder, `w${item.width}h${item.height}`);
       const destinationPathExists = fs.existsSync(destinationPath);
       if (!destinationPathExists) mkdirp.sync(destinationPath);
 

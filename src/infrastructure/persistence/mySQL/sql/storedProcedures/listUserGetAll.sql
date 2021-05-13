@@ -7,13 +7,13 @@ CREATE PROCEDURE list_user_get_all(
 
 BEGIN
 
-  -- Upsert into list
  SELECT
     user.id,
     user.name,
     user.level,
     user.email,
     user.status,
+    user.image,
     user.statement,
     user.location,
     user.order,

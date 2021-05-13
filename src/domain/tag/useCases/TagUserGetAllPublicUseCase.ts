@@ -1,4 +1,5 @@
 import { ITagRepo } from '@domain/tag/repositories/ITagRepo';
+import { User } from '@domain/user/entities/User';
 import { ITagUserGetAllPublicRequest } from './interfaces/ITagUserGetAllPublicRequest';
 import { ITagUserGetAllPublicResponse } from './interfaces/ITagUserGetAllPublicResponse';
 
@@ -15,8 +16,15 @@ export class TagUserGetAllPublicUseCase implements ITagUserGetAllPublicUseCase {
 
   public async execute(tagUserGetAllPublic: ITagUserGetAllPublicRequest): Promise<ITagUserGetAllPublicResponse> {
     const { tagId } = tagUserGetAllPublic;
-    const response = await this.tagRepo.tagUserGetAllPublic({ tagId });
 
-    return response;
+    const usersData = await this.tagRepo.tagUserGetAllPublic({ tagId });
+
+    const users = usersData.map((userData) => {
+      const user = new User(userData);
+
+      return user;
+    });
+
+    return users;
   }
 }

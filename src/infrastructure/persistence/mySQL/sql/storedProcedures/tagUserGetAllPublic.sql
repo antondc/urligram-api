@@ -11,6 +11,7 @@ BEGIN
     user.id,
     user.name,
     user.level,
+    user.image,
     user.statement,
     user.location,
     user.createdAt,
@@ -20,6 +21,7 @@ BEGIN
   JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
   WHERE bookmark_tag.tag_id                     = $TAG_ID
     AND bookmark.isPrivate IS NOT TRUE
+  GROUP BY user.id
   ;
 
 END

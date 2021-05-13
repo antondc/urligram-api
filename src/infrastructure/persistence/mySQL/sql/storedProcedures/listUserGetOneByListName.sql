@@ -15,6 +15,7 @@ BEGIN
   IFNULL(user.level, user2.level) AS `level`,
   IFNULL(user.email, user2.email) AS `email`,
   IFNULL(user.status, user2.status) AS `status`,
+  IFNULL(user.image, user2.image) AS `image`,
   IFNULL(user.statement, user2.statement) AS `statement`,
   IFNULL(user.location, user2.location) AS `location`,
   IFNULL(user.order, user2.order) AS `order`,

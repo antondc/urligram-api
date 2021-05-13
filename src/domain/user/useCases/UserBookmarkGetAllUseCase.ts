@@ -25,7 +25,7 @@ export class UserBookmarkGetAllUseCase implements IUserBookmarkGetAllUseCase {
       sort,
       size,
       offset,
-      filter
+      filter,
     }); // (1)(2)
 
     const bookmarksWithVotesPromises = bookmarks.map(async (item) => {

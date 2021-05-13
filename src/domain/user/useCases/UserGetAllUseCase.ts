@@ -1,5 +1,6 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
+import { User } from '../entities/User';
 import { IUserGetAllRequest } from './interfaces/IUserGetAllRequest';
 import { IUserGetAllResponse } from './interfaces/IUserGetAllResponse';
 
@@ -19,9 +20,10 @@ export class UserGetAllUseCase implements IUserGetAllUseCase {
   public async execute(userGetAllRequest: IUserGetAllRequest): Promise<IUserGetAllResponse> {
     const { session, sort, size, offset, filter } = userGetAllRequest;
 
-    const { users, meta } = await this.userRepo.userGetAll({ sessionId: session?.id, sort, size, offset, filter });
+    const { usersData, meta } = await this.userRepo.userGetAll({ sessionId: session?.id, sort, size, offset, filter });
 
-    const usersWithTagsPromises = users.map(async (user) => {
+    const usersWithTagsPromises = usersData.map(async (userData) => {
+      const user = new User(userData);
       const tags = await this.userTagsGetAllUseCase.execute({ userId: user.id, session, sort: '-count', size: null, offset: null });
 
       return {
