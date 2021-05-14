@@ -1,5 +1,0 @@
-import { FileDTO } from '@domain/image/entities/FileDTO';
-
-export type IImageUploadOneRequest = {
-  file: FileDTO;
-};

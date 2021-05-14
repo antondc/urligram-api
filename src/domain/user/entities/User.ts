@@ -1,7 +1,7 @@
-import { Image } from '@domain/image/entities/Image';
-import { ImageFormatOptions } from '@domain/image/entities/protocols/FormatOptions';
+import { FileImage } from '@domain/file/entities/FileImage';
+import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
 
-export const userImageFormat: ImageFormatOptions = {
+export const userImageFormat: IFileImageFormatOptions = {
   extension: 'png',
   sizes: [
     {
@@ -36,8 +36,8 @@ export class User {
   updatedAt: Date;
 
   constructor(user) {
-    const image = new Image();
-    const imageFormatted = image.formatImageUrl({
+    const image = new FileImage();
+    const imageFormatted = image.getFormattedImageUrls({
       sizes: userImageFormat?.sizes,
       imageUrl: user?.image,
     });

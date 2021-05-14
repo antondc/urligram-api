@@ -1,5 +1,5 @@
-import { Image } from '@domain/image/entities/Image';
-import { IImageRepo } from '@domain/image/repositories/IImageRepo';
+import { FileImage } from '@domain/file/entities/FileImage';
+import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { userImageFormat } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
@@ -14,9 +14,9 @@ export interface IUserUpdateOneUseCase {
 
 export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
   private userRepo: IUserRepo;
-  private imageRepo: IImageRepo;
+  private imageRepo: IFileRepo;
 
-  constructor(userRepo: IUserRepo, imageRepo: IImageRepo) {
+  constructor(userRepo: IUserRepo, imageRepo: IFileRepo) {
     this.userRepo = userRepo;
     this.imageRepo = imageRepo;
   }
@@ -30,8 +30,8 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
     const userExists = await this.userRepo.userGetOne({ sessionId: session?.id, email, name });
     if (!userExists) throw new RequestError('User does not exist', 404);
 
-    const userImageEntity = new Image(this.imageRepo);
-    const savedImage = await userImageEntity.saveImage({ fileUrl: image, formatOptions: userImageFormat });
+    const userImageEntity = new FileImage({ fileRepo: this.imageRepo });
+    const savedImage = await userImageEntity.imageSave({ fileUrl: image, formatOptions: userImageFormat });
 
     await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id, image: savedImage?.path });
 

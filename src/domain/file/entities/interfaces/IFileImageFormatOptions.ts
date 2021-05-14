@@ -1,4 +1,4 @@
-export type ImageFormatOptions = {
+export type IFileImageFormatOptions = {
   extension: 'png' | 'jpg';
   sizes: {
     height: number;

@@ -43,7 +43,7 @@ import { UserListGetAllPublicController } from '@infrastructure/http/controllers
 import { UserRecommendedGetAllController } from '@infrastructure/http/controllers/UserRecommendedGetAllController';
 import { UserTagsGetAllController } from '@infrastructure/http/controllers/UserTagsGetAllController';
 import { UserUpdateOneController } from '@infrastructure/http/controllers/UserUpdateOneController';
-import { ImageFileSystemRepo } from '@infrastructure/persistence/fileSystem/repositories/ImageFileSystemRepo';
+import { FileRepo } from '@infrastructure/persistence/fileSystem/repositories/FileRepo';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
@@ -105,9 +105,9 @@ UsersRoute.post('/sign-up-confirmation', async (req: Request, res: Response, nex
 });
 
 UsersRoute.put('/me', async (req: Request, res: Response, next: NextFunction) => {
-  const imageFileSystemRepo = new ImageFileSystemRepo();
+  const fileRepo = new FileRepo();
   const userRepo = new UserRepo();
-  const userUpdateOneUseCase = new UserUpdateOneUseCase(userRepo, imageFileSystemRepo);
+  const userUpdateOneUseCase = new UserUpdateOneUseCase(userRepo, fileRepo);
   const userUpdateOneController = new UserUpdateOneController(userUpdateOneUseCase);
 
   const response = await userUpdateOneController.execute(req, res, next);

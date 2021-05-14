@@ -4,24 +4,24 @@ import mkdirp from 'mkdirp';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
-import { IImageRepo } from '@domain/image/repositories/IImageRepo';
-import { IImageSaveInTempFolderRequest } from '@domain/image/repositories/interfaces/IImageSaveInTempFolderRequest';
-import { IImageSaveInTempFolderResponse } from '@domain/image/repositories/interfaces/IImageSaveInTempFolderResponse';
-import { IImageSaveOneRequest } from '@domain/image/repositories/interfaces/IImageSaveOneRequest';
-import { IImageSaveOneResponse } from '@domain/image/repositories/interfaces/IImageSaveOneResponse';
+import { IFileRepo } from '@domain/file/repositories/IFileRepo';
+import { IFileSaveInTempFolderRequest } from '@domain/file/repositories/interfaces/IFileSaveInTempFolderRequest';
+import { IFileSaveInTempFolderResponse } from '@domain/file/repositories/interfaces/IFileSaveInTempFolderResponse';
+import { IImageSaveOneRequest } from '@domain/file/repositories/interfaces/IFileSaveOneRequest';
+import { IImageSaveOneResponse } from '@domain/file/repositories/interfaces/IFileSaveOneResponse';
 import config from '@root/config.test.json';
 import { MS_30_MINS } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { ServerError } from '@shared/errors/ServerError';
 import { URLWrapper } from '@shared/services/UrlWrapper';
 
-export class ImageFileSystemRepo implements IImageRepo {
-  public async saveImage(imageSaveOneRequest: IImageSaveOneRequest): Promise<IImageSaveOneResponse> {
+export class FileRepo implements IFileRepo {
+  public async imageSave(imageSaveOneRequest: IImageSaveOneRequest): Promise<IImageSaveOneResponse> {
     const myUrl = new URLWrapper(imageSaveOneRequest.fileUrl);
     const filename = myUrl.getFilename();
     const originPath = path.join(config.TEMP_FILES, filename);
     const imageExists = fs.existsSync(originPath);
-    if (!imageExists) throw new Error('Image does not exist');
+    if (!imageExists) throw new ServerError('Image does not exist', 500);
 
     const file = fs.createReadStream(originPath);
     const destinationOriginalPath = path.join(config.MEDIA_IMAGES, imageSaveOneRequest.formatOptions?.destinationFolder, 'original');
@@ -71,12 +71,12 @@ export class ImageFileSystemRepo implements IImageRepo {
     return;
   }
 
-  async deleteImage() {
+  async imageDelete() {
     return;
   }
 
-  async imageSaveInTempFolder(imageSaveInTempFolderRequest: IImageSaveInTempFolderRequest): Promise<IImageSaveInTempFolderResponse> {
-    const { content, extension } = imageSaveInTempFolderRequest.file;
+  async fileSaveInTempFolder(fileSaveInTempFolderRequest: IFileSaveInTempFolderRequest): Promise<IFileSaveInTempFolderResponse> {
+    const { content, extension } = fileSaveInTempFolderRequest.file;
     const name = `${uuidv4()}.${extension}`;
     const destinationPath = path.join(config.TEMP_FILES);
     const destinationPathExists = fs.existsSync(destinationPath);

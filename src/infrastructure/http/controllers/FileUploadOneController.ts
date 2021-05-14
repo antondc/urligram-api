@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 
-import { IImageUploadOneUseCase } from '@domain/image/useCases/ImageUploadOneUseCase';
+import { IFileUploadOneUseCase } from '@domain/file/useCases/FileUploadOneUseCase';
 import { URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
-export class ImageUploadOneController extends BaseController {
-  useCase: IImageUploadOneUseCase;
 
-  constructor(useCase: IImageUploadOneUseCase) {
+export class FileUploadOneController extends BaseController {
+  useCase: IFileUploadOneUseCase;
+
+  constructor(useCase: IFileUploadOneUseCase) {
     super();
     this.useCase = useCase;
   }

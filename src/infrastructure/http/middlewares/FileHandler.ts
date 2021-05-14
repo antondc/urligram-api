@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import multer from 'multer';
 
-import { FileDTO } from '@domain/image/entities/FileDTO';
+import { FileDTO } from '@domain/file/entities/FileDTO';
 
 export class FileHandler {
   static handleSingleFile(fieldName) {
