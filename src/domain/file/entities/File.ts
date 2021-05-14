@@ -1,5 +1,9 @@
+import { existsSync, lstatSync, readdirSync, unlinkSync } from 'fs';
 import { Magic } from 'mmmagic';
+import path from 'path';
 
+import config from '@root/config.test.json';
+import { URLWrapper } from '@shared/services/UrlWrapper';
 import { IFileRepo } from '../repositories/IFileRepo';
 import { FileDTO } from './FileDTO';
 import { IFileSaveInTempFolderRequest } from './interfaces/IFileSaveInTempFolderRequest';
@@ -42,10 +46,28 @@ export class File extends FileDTO {
     return magicPromise;
   }
 
-  deleteFile = (): void => {
-    // Remove image from filesystem
-    // This may go to a more general File class
+  deleteFile = (url: string): void => {
+    const urlWrapper = new URLWrapper(url);
+    const filename = urlWrapper.getFilename();
+    const rootPath = config.MEDIA_FOLDER;
 
-    return null;
+    this.removeFileRecursive(rootPath, filename);
+
+    return;
   };
+
+  removeFileRecursive(startPath, targetFileName) {
+    const files = readdirSync(startPath);
+
+    files.forEach((item) => {
+      const checkedFilePath = path.join(startPath, item);
+      const stat = lstatSync(checkedFilePath);
+      const contentItemIsDirectory = stat.isDirectory();
+      const filePathIncludesFileName = checkedFilePath.includes(targetFileName);
+      const checkedFilePathExists = existsSync(checkedFilePath);
+
+      if (contentItemIsDirectory) this.removeFileRecursive(checkedFilePath, targetFileName);
+      if (filePathIncludesFileName && checkedFilePathExists) unlinkSync(checkedFilePath);
+    });
+  }
 }

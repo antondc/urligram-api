@@ -65,7 +65,6 @@
     "EMAIL_PASSWORD": "G9khusC96RmK8fRm"
   },
   "SESSION_DURATION": 3600,
-  "MEDIA": "media",
   "MEDIA_FOLDER": "media",
   "MEDIA_IMAGES": "media/images",
   "TEMP_FILES": "media/temp_files",

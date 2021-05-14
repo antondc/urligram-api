@@ -1,5 +1,7 @@
+import { File } from '@domain/file/entities/File';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
+import { User } from '../entities/User';
 import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
 
@@ -17,12 +19,17 @@ export class UserDeleteOneUseCase implements IUserDeleteOneUseCase {
   public async execute(userDeleteOneRequest: IUserDeleteOneRequest): Promise<IUserDeleteOneResponse> {
     const { session } = userDeleteOneRequest;
 
-    const userExists = await this.userRepo.userGetOne({ userId: session?.id });
-    if (!userExists) throw new RequestError('User does not exist', 404);
-    if (userExists.status === 'disabled') throw new RequestError('User was already removed', 409);
+    const userData = await this.userRepo.userGetOne({ userId: session?.id });
+    if (!userData) throw new RequestError('User does not exist', 404);
+    if (userData.status === 'disabled') throw new RequestError('User was already removed', 409);
 
-    const response = await this.userRepo.userDeleteOne({ userId: session?.id });
+    const user = new User(userData);
+    const file = new File();
+    await file.deleteFile(user?.image?.original);
+    const { userId } = await this.userRepo.userDeleteOne({ userId: session?.id });
 
-    return response;
+    return {
+      userId,
+    };
   }
 }
