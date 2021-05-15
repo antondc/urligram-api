@@ -5,10 +5,14 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
+import { IFileDeleteOneRequest } from '@domain/file/repositories/interfaces/IFileDeleteOneRequest';
+import { IFileDeleteOneResponse } from '@domain/file/repositories/interfaces/IFileDeleteOneResponse';
+import { IFileImageSaveOneRequest } from '@domain/file/repositories/interfaces/IFileImageSaveOneRequest';
+import { IFileImageSaveOneResponse } from '@domain/file/repositories/interfaces/IFileImageSaveOneResponse';
 import { IFileSaveInTempFolderRequest } from '@domain/file/repositories/interfaces/IFileSaveInTempFolderRequest';
 import { IFileSaveInTempFolderResponse } from '@domain/file/repositories/interfaces/IFileSaveInTempFolderResponse';
-import { IImageSaveOneRequest } from '@domain/file/repositories/interfaces/IFileSaveOneRequest';
-import { IImageSaveOneResponse } from '@domain/file/repositories/interfaces/IFileSaveOneResponse';
+import { IFileSaveOneRequest } from '@domain/file/repositories/interfaces/IFileSaveOneRequest';
+import { IFileSaveOneResponse } from '@domain/file/repositories/interfaces/IFileSaveOneResponse';
 import config from '@root/config.test.json';
 import { MS_30_MINS } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
@@ -16,33 +20,17 @@ import { ServerError } from '@shared/errors/ServerError';
 import { URLWrapper } from '@shared/services/UrlWrapper';
 
 export class FileRepo implements IFileRepo {
-  public async imageSave(imageSaveOneRequest: IImageSaveOneRequest): Promise<IImageSaveOneResponse> {
-    const myUrl = new URLWrapper(imageSaveOneRequest.fileUrl);
-    const filename = myUrl.getFilename();
-    const originPath = path.join(config.TEMP_FILES, filename);
-    const imageExists = fs.existsSync(originPath);
-    if (!imageExists) throw new ServerError('Image does not exist', 500);
+  public async fileImageSaveOne(fileImageSaveOneRequest: IFileImageSaveOneRequest): Promise<IFileImageSaveOneResponse> {
+    const { path: finalPath, filename } = await this.fileSaveOne(fileImageSaveOneRequest);
 
-    const file = fs.createReadStream(originPath);
-    const destinationOriginalPath = path.join(config.MEDIA_IMAGES, imageSaveOneRequest.formatOptions?.destinationFolder, 'original');
-    const destinationOriginalPathExists = fs.existsSync(destinationOriginalPath);
-    if (!destinationOriginalPathExists) mkdirp.sync(destinationOriginalPath);
-
-    const finalFilePath = path.join(destinationOriginalPath, filename);
-    const outStream = fs.createWriteStream(finalFilePath);
-
-    file.pipe(outStream);
-
-    await this.saveAndResize(originPath, filename, imageSaveOneRequest.formatOptions);
-
-    fs.unlinkSync(originPath); // Remove original temp image
+    await this.imageResizeAndSave(finalPath, filename, fileImageSaveOneRequest.formatOptions);
 
     return {
-      path: `${URL_SERVER}/${finalFilePath}`,
+      path: `${URL_SERVER}/${finalPath}`,
     };
   }
 
-  private async saveAndResize(originPath, filename, formatOptions): Promise<void> {
+  private async imageResizeAndSave(originPath, filename, formatOptions): Promise<void> {
     if (!formatOptions?.sizes) return;
 
     await formatOptions.sizes.forEach(async (item) => {
@@ -59,7 +47,7 @@ export class FileRepo implements IFileRepo {
           mime = Jimp.MIME_JPEG;
           break;
       }
-      const destinationPath = path.join(config.MEDIA_IMAGES, formatOptions?.destinationFolder, `w${item.width}h${item.height}`);
+      const destinationPath = path.join(config.MEDIA_FILES, formatOptions?.destinationFolder, `w${item.width}h${item.height}`);
       const destinationPathExists = fs.existsSync(destinationPath);
       if (!destinationPathExists) mkdirp.sync(destinationPath);
 
@@ -71,8 +59,28 @@ export class FileRepo implements IFileRepo {
     return;
   }
 
-  async imageDelete() {
-    return;
+  async fileSaveOne(fileSaveOneRequest: IFileSaveOneRequest): Promise<IFileSaveOneResponse> {
+    const myUrl = new URLWrapper(fileSaveOneRequest.fileUrl);
+    const filename = myUrl.getFilename();
+    const originPath = path.join(config.TEMP_FILES, filename);
+    const fileExists = fs.existsSync(originPath);
+    if (!fileExists) throw new ServerError('File does not exist', 500);
+
+    const file = fs.createReadStream(originPath);
+    const destinationOriginalPath = path.join(config.MEDIA_FILES, fileSaveOneRequest.formatOptions?.destinationFolder, 'original');
+    const destinationOriginalPathExists = fs.existsSync(destinationOriginalPath);
+    if (!destinationOriginalPathExists) mkdirp.sync(destinationOriginalPath);
+
+    const finalFilePath = path.join(destinationOriginalPath, filename);
+    const outStream = fs.createWriteStream(finalFilePath);
+
+    file.pipe(outStream);
+    fs.unlinkSync(originPath);
+
+    return {
+      path: finalFilePath,
+      filename,
+    };
   }
 
   async fileSaveInTempFolder(fileSaveInTempFolderRequest: IFileSaveInTempFolderRequest): Promise<IFileSaveInTempFolderResponse> {
@@ -94,5 +102,34 @@ export class FileRepo implements IFileRepo {
     return {
       path: finalFilePath,
     };
+  }
+
+  async fileDeleteOne(url: IFileDeleteOneRequest): Promise<IFileDeleteOneResponse> {
+    // We don't have files with same name in our system
+    // Thus, we can traverse the /media folder recursively and remove coincidences
+    const urlWrapper = new URLWrapper(url);
+    const filename = urlWrapper.getFilename();
+    const rootPath = config.MEDIA_FOLDER;
+
+    this.fileRemoveRecursive(rootPath, filename);
+
+    return {
+      success: true,
+    };
+  }
+
+  fileRemoveRecursive(startPath, targetFileName) {
+    const files = fs.readdirSync(startPath);
+
+    files.forEach((item) => {
+      const checkedFilePath = path.join(startPath, item);
+      const fileStats = fs.lstatSync(checkedFilePath);
+      const contentItemIsDirectory = fileStats.isDirectory();
+      const filePathIncludesFileName = checkedFilePath.includes(targetFileName);
+      const checkedFilePathExists = fs.existsSync(checkedFilePath);
+
+      if (contentItemIsDirectory) this.fileRemoveRecursive(checkedFilePath, targetFileName);
+      if (filePathIncludesFileName && checkedFilePathExists) fs.unlinkSync(checkedFilePath);
+    });
   }
 }

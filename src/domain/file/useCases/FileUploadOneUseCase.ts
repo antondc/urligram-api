@@ -8,8 +8,7 @@ export interface IFileUploadOneUseCase {
   execute: (imageUploadOneRequest: IFileUploadOneRequest) => Promise<IFileUploadOneResponse>;
 }
 
-const allowedFileExtensions = ['jpg', 'png', 'pdf'];
-const allowedFileTypeSubstrings = ['image/jpeg', 'image/png', 'application/pdf', 'JPEG', 'PNG'];
+const allowedFileExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
 
 export class FileUploadOneUseCase implements IFileUploadOneUseCase {
   private fileRepo: IFileRepo;
@@ -24,7 +23,7 @@ export class FileUploadOneUseCase implements IFileUploadOneUseCase {
     const fileInstance = new File({ file, fileRepo: this.fileRepo });
     const mimeType = await fileInstance.detectMimeType();
 
-    const mimeIncludesSomeMimeFileType = allowedFileTypeSubstrings.some((item) => mimeType.includes(item));
+    const mimeIncludesSomeMimeFileType = allowedFileExtensions.some((item) => mimeType.toLowerCase().includes(item.toLowerCase()));
     if (!mimeIncludesSomeMimeFileType) throw new RequestError('Wrong file type', 400);
 
     const { path } = await fileInstance.fileSaveInTempFolder({ file });

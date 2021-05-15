@@ -1,13 +1,13 @@
-import { existsSync, lstatSync, readdirSync, unlinkSync } from 'fs';
 import { Magic } from 'mmmagic';
-import path from 'path';
 
-import config from '@root/config.test.json';
-import { URLWrapper } from '@shared/services/UrlWrapper';
 import { IFileRepo } from '../repositories/IFileRepo';
 import { FileDTO } from './FileDTO';
+import { IFileDeleteOneRequest } from './interfaces/IFileDeleteOneRequest';
+import { IFileDeleteOneResponse } from './interfaces/IFileDeleteOneResponse';
 import { IFileSaveInTempFolderRequest } from './interfaces/IFileSaveInTempFolderRequest';
 import { IFileSaveInTempFolderResponse } from './interfaces/IFileSaveInTempFolderResponse';
+import { IFileSaveOneRequest } from './interfaces/IFileSaveOneRequest';
+import { IFileSaveOneResponse } from './interfaces/IFileSaveOneResponse';
 
 export interface FileConstructorProps {
   file?: FileDTO;
@@ -46,28 +46,17 @@ export class File extends FileDTO {
     return magicPromise;
   }
 
-  deleteFile = (url: string): void => {
-    const urlWrapper = new URLWrapper(url);
-    const filename = urlWrapper.getFilename();
-    const rootPath = config.MEDIA_FOLDER;
+  async fileSaveOne(fileSaveOneRequest: IFileSaveOneRequest): Promise<IFileSaveOneResponse> {
+    const { path } = await this.fileRepo.fileSaveOne(fileSaveOneRequest);
 
-    this.removeFileRecursive(rootPath, filename);
-
-    return;
-  };
-
-  removeFileRecursive(startPath, targetFileName) {
-    const files = readdirSync(startPath);
-
-    files.forEach((item) => {
-      const checkedFilePath = path.join(startPath, item);
-      const stat = lstatSync(checkedFilePath);
-      const contentItemIsDirectory = stat.isDirectory();
-      const filePathIncludesFileName = checkedFilePath.includes(targetFileName);
-      const checkedFilePathExists = existsSync(checkedFilePath);
-
-      if (contentItemIsDirectory) this.removeFileRecursive(checkedFilePath, targetFileName);
-      if (filePathIncludesFileName && checkedFilePathExists) unlinkSync(checkedFilePath);
-    });
+    return { path };
   }
+
+  fileDeleteOne = async (url: IFileDeleteOneRequest): Promise<IFileDeleteOneResponse> => {
+    const { success } = await this.fileRepo.fileDeleteOne(url);
+
+    return {
+      success,
+    };
+  };
 }

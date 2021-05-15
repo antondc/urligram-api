@@ -1,4 +1,4 @@
-import { IFileFormatOptions } from '@domain/file/entities/interfaces/IFileFormatOptions';
+import { IFileFormatOptions } from './IFileFormatOptions';
 
 export type IFileSaveOneRequest = {
   fileUrl: string;

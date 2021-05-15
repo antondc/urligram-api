@@ -26,8 +26,8 @@ export class FileImage extends File {
     this.fileRepo = constructorProps?.fileRepo;
   }
 
-  async imageSave(imageSaveOneRequest: IImageSaveOneRequest): Promise<IImageSaveOneResponse> {
-    const image = await this.fileRepo.imageSave(imageSaveOneRequest);
+  async fileImageSaveOne(imageSaveOneRequest: IImageSaveOneRequest): Promise<IImageSaveOneResponse> {
+    const image = await this.fileRepo.fileImageSaveOne(imageSaveOneRequest);
 
     return image;
   }

@@ -25,7 +25,7 @@ export class UserDeleteOneUseCase implements IUserDeleteOneUseCase {
 
     const user = new User(userData);
     const file = new File();
-    await file.deleteFile(user?.image?.original);
+    await file.fileDeleteOne(user?.image?.original);
     const { userId } = await this.userRepo.userDeleteOne({ userId: session?.id });
 
     return {

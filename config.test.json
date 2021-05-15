@@ -67,6 +67,7 @@
   "SESSION_DURATION": 3600,
   "MEDIA_FOLDER": "media",
   "MEDIA_IMAGES": "media/images",
+  "MEDIA_FILES": "media/files",
   "TEMP_FILES": "media/temp_files",
   "DEFAULT_IMAGE": "/img/default-image.png",
   "RESTORE_MODELS": false,
