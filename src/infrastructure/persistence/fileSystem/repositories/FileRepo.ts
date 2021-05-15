@@ -18,6 +18,7 @@ import { MS_30_MINS } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { ServerError } from '@shared/errors/ServerError';
 import { URLWrapper } from '@shared/services/UrlWrapper';
+import { toRelative } from '@tools/helpers/url/toRelative';
 
 export class FileRepo implements IFileRepo {
   public async fileImageSaveOne(fileImageSaveOneRequest: IFileImageSaveOneRequest): Promise<IFileImageSaveOneResponse> {
@@ -60,9 +61,10 @@ export class FileRepo implements IFileRepo {
   }
 
   async fileSaveOne(fileSaveOneRequest: IFileSaveOneRequest): Promise<IFileSaveOneResponse> {
-    const myUrl = new URLWrapper(fileSaveOneRequest.fileUrl);
+    const myUrl = new URLWrapper(fileSaveOneRequest?.fileUrl);
+
     const filename = myUrl.getFilename();
-    const originPath = path.join(config.TEMP_FILES, filename);
+    const originPath = toRelative(myUrl.getPath());
     const fileExists = fs.existsSync(originPath);
     if (!fileExists) throw new ServerError('File does not exist', 500);
 
@@ -75,7 +77,9 @@ export class FileRepo implements IFileRepo {
     const outStream = fs.createWriteStream(finalFilePath);
 
     file.pipe(outStream);
-    fs.unlinkSync(originPath);
+
+    const fileIsTemporary = originPath.includes(config.TEMP_FILES);
+    fileIsTemporary && fs.unlinkSync(originPath);
 
     return {
       path: finalFilePath,

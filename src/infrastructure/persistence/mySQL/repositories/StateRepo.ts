@@ -47,7 +47,6 @@ export class StateRepo {
   private userFollowingDeleteProcedure: string;
   private userFollowerGetAllProcedure: string;
   private userBookmarkGetAllProcedure: string;
-  private userBookmarkGetOneProcedure: string;
   private userBookmarkGetOneByBookmarkIdUserIdProcedure: string;
   private userBookmarkGetOneByLinkIdUserIdProcedure: string;
   private userBookmarkGetOneByUserIdPathDomainProcedure: string;
@@ -149,7 +148,6 @@ export class StateRepo {
     this.userFollowingDeleteProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowingDelete.sql')).toString();
     this.userFollowerGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userFollowerGetAll.sql')).toString();
     this.userBookmarkGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetAll.sql')).toString();
-    this.userBookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetOne.sql')).toString();
     this.userBookmarkGetOneByBookmarkIdUserIdProcedure = fs
       .readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userBookmarkGetOneByBookmarkIdUserId.sql'))
       .toString();
@@ -263,7 +261,6 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userFollowingDeleteProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userFollowerGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetAllProcedure))),
-        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetOneByBookmarkIdUserIdProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetOneByLinkIdUserIdProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userBookmarkGetOneByUserIdPathDomainProcedure))),

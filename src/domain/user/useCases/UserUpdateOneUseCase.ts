@@ -1,6 +1,6 @@
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
-import { userImageFormat } from '@domain/user/entities/User';
+import { User, userImageFormat } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { UserError } from '@shared/errors/UserError';
@@ -35,8 +35,9 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
 
     await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id, image: savedImage?.path });
 
-    const response = await this.userRepo.userGetOne({ sessionId: session?.id, userId: session?.id });
+    const userData = await this.userRepo.userGetOne({ sessionId: session?.id, userId: session?.id });
+    const user = new User(userData);
 
-    return response;
+    return user;
   }
 }

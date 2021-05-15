@@ -5,12 +5,16 @@ export const userImageFormat: IFileImageFormatOptions = {
   extension: 'png',
   sizes: [
     {
-      height: 50,
+      height: 200,
       width: 200,
     },
     {
-      height: 500,
-      width: 500,
+      height: 600,
+      width: 600,
+    },
+    {
+      height: 1200,
+      width: 1200,
     },
   ],
   crop: 'center',

@@ -16,7 +16,7 @@ INSERT INTO `user` (
   'Antonio',
   'admin',
   'hello+1@antoniodiaz.me',
-  'https://loremflickr.com/300/300/portrait',
+  'https://dev.linking.me:3000/media/files/users/image/original/83fc6fce-c0be-4e71-bee5-78d0ebf46c5d.jpg',
   'password123',
   'active',
   'The quick brown fox jumps over the lazy dog',

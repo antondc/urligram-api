@@ -7,7 +7,7 @@ import { FileRepo } from '@infrastructure/persistence/fileSystem/repositories/Fi
 
 const FilesRoute = express.Router();
 
-FilesRoute.post('/upload/single', FileHandler.handleSingleFile('file'), FileHandler.wrapSingleFile, async (req: Request, res: Response, next: NextFunction) => {
+FilesRoute.post('/upload/single', FileHandler.handleSingleFile(), FileHandler.wrapSingleFile, async (req: Request, res: Response, next: NextFunction) => {
   const fileRepo = new FileRepo();
 
   const fileUploadOneUseCase = new FileUploadOneUseCase(fileRepo);
