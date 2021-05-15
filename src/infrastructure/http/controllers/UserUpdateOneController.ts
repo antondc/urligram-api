@@ -36,17 +36,15 @@ export class UserUpdateOneController extends BaseController {
       links: {
         self: URL_SERVER + '/users',
       },
-      data: [
-        {
-          type: 'link',
-          id: response?.id,
-          session: {
-            self: URL_SERVER + '/users' + response.id,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'user',
+        id: response?.id,
+        session: {
+          self: URL_SERVER + '/users' + response.id,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 
