@@ -35,7 +35,14 @@ export class FileRepo implements IFileRepo {
     if (!formatOptions?.sizes) return;
 
     await formatOptions.sizes.forEach(async (item) => {
-      const image = await Jimp.read(originPath);
+      const destinationPath = path.join(config.MEDIA_FILES, formatOptions?.destinationFolder, `w${item.width}h${item.height}`);
+      const destinationPathExists = fs.existsSync(destinationPath);
+      if (!destinationPathExists) mkdirp.sync(destinationPath);
+
+      const finalPath = path.join(destinationPath, filename);
+      const finalPathExists = fs.existsSync(finalPath);
+
+      if (finalPathExists) return; // If file already exists, return
 
       // Define mime type
       let mime;
@@ -48,11 +55,8 @@ export class FileRepo implements IFileRepo {
           mime = Jimp.MIME_JPEG;
           break;
       }
-      const destinationPath = path.join(config.MEDIA_FILES, formatOptions?.destinationFolder, `w${item.width}h${item.height}`);
-      const destinationPathExists = fs.existsSync(destinationPath);
-      if (!destinationPathExists) mkdirp.sync(destinationPath);
 
-      const finalPath = path.join(destinationPath, filename);
+      const image = await Jimp.read(originPath);
       await image.scaleToFit(item.width, item.height);
       await image.getBuffer(mime, (err, buff) => fs.writeFileSync(finalPath, buff));
     });
@@ -63,7 +67,6 @@ export class FileRepo implements IFileRepo {
   async fileSaveOne(fileSaveOneRequest: IFileSaveOneRequest): Promise<IFileSaveOneResponse> {
     const myUrl = new URLWrapper(fileSaveOneRequest?.fileUrl);
 
-    const filename = myUrl.getFilename();
     const originPath = toRelative(myUrl.getPath());
     const fileExists = fs.existsSync(originPath);
     if (!fileExists) throw new ServerError('File does not exist', 500);
@@ -73,7 +76,17 @@ export class FileRepo implements IFileRepo {
     const destinationOriginalPathExists = fs.existsSync(destinationOriginalPath);
     if (!destinationOriginalPathExists) mkdirp.sync(destinationOriginalPath);
 
+    const filename = myUrl.getFilename();
     const finalFilePath = path.join(destinationOriginalPath, filename);
+    const finalFilePathExists = fs.existsSync(finalFilePath);
+    // If file already exists, return
+    if (finalFilePathExists) {
+      return {
+        path: finalFilePath,
+        filename,
+      };
+    }
+
     const outStream = fs.createWriteStream(finalFilePath);
 
     file.pipe(outStream);
