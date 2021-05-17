@@ -1,5 +1,6 @@
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
+import { List } from '@domain/list/entitites/List';
 
 export const userImageFormat: IFileImageFormatOptions = {
   extension: 'png',
@@ -23,6 +24,7 @@ export const userImageFormat: IFileImageFormatOptions = {
 
 export class User {
   id: string;
+  order: string;
   name: string;
   level: string;
   email: string;
@@ -32,9 +34,12 @@ export class User {
   statement: string;
   location: string;
   bookmarksIds: number[];
-  followersIds: number[];
-  followingIds: number[];
-  order: number;
+  followers: number[];
+  following: number[];
+  lists: {
+    id: number;
+    userRole: 'reader' | 'editor' | 'admin';
+  }[];
   activationToken?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -46,6 +51,7 @@ export class User {
       imageUrl: user?.image,
     });
     this.id = user?.id;
+    this.order = user?.order;
     this.name = user?.name;
     this.level = user?.level;
     this.email = user?.email;
@@ -54,11 +60,11 @@ export class User {
     this.statement = user?.statement;
     this.location = user?.location;
     this.bookmarksIds = user?.bookmarksIds;
-    this.followersIds = user?.followersIds;
-    this.followingIds = user?.followingIds;
+    this.followers = user?.followers;
+    this.following = user?.following;
+    this.lists = user?.lists;
     this.password = user?.password;
     this.activationToken = user?.activationToken;
-    this.order = user?.order;
     this.createdAt = user?.createdAt;
     this.updatedAt = user?.updatedAt;
   }
