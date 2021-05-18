@@ -40,10 +40,28 @@ SELECT
       WHERE user_list.list_id = list.id
     ) AS members,
     (
-      SELECT
+     SELECT
       JSON_ARRAYAGG(bookmark_list.bookmark_id)
       FROM bookmark_list
-      WHERE bookmark_list.list_id = list.id
+      INNER JOIN bookmark ON bookmark.id = bookmark_list.bookmark_id
+      WHERE
+        bookmark_list.list_id = list.id
+        -- If list is public, only return public bookmarks
+        -- if list is private, return private bookmarks as well
+        AND
+        (
+          (
+            bookmark.isPrivate IS NOT TRUE
+            AND
+            bookmark.isPrivate IS NOT TRUE
+          )
+          OR
+          (
+            bookmark.isPrivate IS TRUE
+            AND
+            list.isPrivate IS TRUE
+          )
+        )
     ) AS bookmarksIds
     FROM `list`
     LEFT JOIN user_list   ON `list`.id = user_list.list_id

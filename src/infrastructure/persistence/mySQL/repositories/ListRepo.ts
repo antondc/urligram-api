@@ -141,13 +141,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserGetAll({ listId }) {
+  public async listUserGetAll({ sessionId, listId }) {
     const mySQL = new MySQL();
 
     try {
-      const listUserGetAllQuery = 'CALL list_user_get_all(?)';
+      const listUserGetAllQuery = 'CALL list_user_get_all(?, ?)';
 
-      const [results] = await mySQL.query(listUserGetAllQuery, [listId]);
+      const [results] = await mySQL.query(listUserGetAllQuery, [sessionId, listId ]);
 
       return results;
     } catch (err) {

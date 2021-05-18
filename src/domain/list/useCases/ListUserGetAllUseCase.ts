@@ -26,7 +26,7 @@ export class ListUserGetAllUseCase implements IListUserGetAllUseCase {
     const listUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id });
     if (!!list.isPrivate && !listUser) throw new RequestError('This list is private', 403, { message: '403 Forbidden' });
 
-    const listUsersData = await this.listRepo.listUserGetAll({ listId });
+    const listUsersData = await this.listRepo.listUserGetAll({ listId, sessionId: session?.id });
 
     const listUsers = listUsersData.map((listUserData) => {
       const user = new User(listUserData);
