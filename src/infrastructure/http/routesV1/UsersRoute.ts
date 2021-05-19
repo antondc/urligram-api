@@ -7,6 +7,7 @@ import { UserBookmarkCreateUseCase } from '@domain/user/useCases/UserBookmarkCre
 import { UserBookmarkDeleteOneUseCase } from '@domain/user/useCases/UserBookmarkDeleteOneUseCase';
 import { UserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
 import { UserBookmarkGetOneUseCase } from '@domain/user/useCases/UserBookmarkGetOneUseCase';
+import { UserBookmarkImportUseCase } from '@domain/user/useCases/UserBookmarkImportUseCase';
 import { UserBookmarkUpdateUseCase } from '@domain/user/useCases/UserBookmarkUpdateUseCase';
 import { UserCreateConfirmationUseCase } from '@domain/user/useCases/UserCreateConfirmationUseCase';
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
@@ -48,6 +49,7 @@ import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/Boo
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
+import { UserBookmarkImportController } from '../controllers/UserBookmarkImportController';
 
 const UsersRoute = express.Router();
 
@@ -212,6 +214,19 @@ UsersRoute.post('/me/bookmarks', async (req: Request, res: Response, next: NextF
   const userLinkCreateController = new UserBookmarkCreateController(userLinkCreateUseCase);
 
   const response = await userLinkCreateController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.post('/me/bookmarks/import', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const linkRepo = new LinkRepo();
+  const linkRequestInfoUseCase = new LinkRequestInfoUseCase();
+  const linkUpsertOneUseCase = new LinkUpsertOneUseCase(linkRepo, linkRequestInfoUseCase);
+  const userLinkImportUseCase = new UserBookmarkImportUseCase(userRepo, linkUpsertOneUseCase);
+  const userLinkImportController = new UserBookmarkImportController(userLinkImportUseCase);
+
+  const response = await userLinkImportController.execute(req, res, next);
 
   return response;
 });

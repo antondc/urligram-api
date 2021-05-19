@@ -1,5 +1,3 @@
-import { Magic } from 'mmmagic';
-
 import { IFileRepo } from '../repositories/IFileRepo';
 import { FileDTO } from './FileDTO';
 import { IFileDeleteOneRequest } from './interfaces/IFileDeleteOneRequest';
@@ -8,6 +6,8 @@ import { IFileSaveInTempFolderRequest } from './interfaces/IFileSaveInTempFolder
 import { IFileSaveInTempFolderResponse } from './interfaces/IFileSaveInTempFolderResponse';
 import { IFileSaveOneRequest } from './interfaces/IFileSaveOneRequest';
 import { IFileSaveOneResponse } from './interfaces/IFileSaveOneResponse';
+
+export const allowedFileExtensions = ['jpg', 'jpeg', 'png', 'pdf', 'html', 'json'];
 
 export interface FileConstructorProps {
   file?: FileDTO;
@@ -30,20 +30,6 @@ export class File extends FileDTO {
     const { path } = await this.fileRepo.fileSaveInTempFolder({ file });
 
     return { path };
-  }
-
-  async detectMimeType(): Promise<string> {
-    const magic = new Magic();
-
-    const magicPromise: string = await new Promise((resolve, reject) => {
-      magic.detect(this.file.content, (err, result: string) => {
-        if (err) reject;
-
-        return resolve(result);
-      });
-    });
-
-    return magicPromise;
   }
 
   async fileSaveOne(fileSaveOneRequest: IFileSaveOneRequest): Promise<IFileSaveOneResponse> {
