@@ -10,9 +10,9 @@ export class FileHandler {
         files: 1,
       },
     });
-    const retrieveSingleImage = multerInstance.any();
+    const retrieveSingleFile = multerInstance.any();
 
-    return retrieveSingleImage;
+    return retrieveSingleFile;
   }
 
   // We want our files complying with our own interface
