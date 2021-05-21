@@ -329,11 +329,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOneByUserIdPathDomain({ userId, path, domain }) {
+  public async userBookmarkGetOneByUserIdPathDomain({ userId, domain, path }) {
     const mySQL = new MySQL();
     try {
       const userBookmarkGetOneByLinkIdUserIdQuery = 'CALL user_bookmark_get_one_by_user_path_domain(?, ?, ?)';
-      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery, [userId, path, domain]);
+      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery, [userId, domain, path]);
 
       return results;
     } catch (err) {

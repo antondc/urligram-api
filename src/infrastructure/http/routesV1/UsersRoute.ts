@@ -6,6 +6,7 @@ import { LinkUpsertOneUseCase } from '@domain/link/useCases/LinkUpsertOneUseCase
 import { UserBookmarkCreateUseCase } from '@domain/user/useCases/UserBookmarkCreateUseCase';
 import { UserBookmarkDeleteOneUseCase } from '@domain/user/useCases/UserBookmarkDeleteOneUseCase';
 import { UserBookmarkGetAllUseCase } from '@domain/user/useCases/UserBookmarkGetAllUseCase';
+import { UserBookmarkGetByUrlUseCase } from '@domain/user/useCases/UserBookmarkGetByUrlUseCase';
 import { UserBookmarkGetOneUseCase } from '@domain/user/useCases/UserBookmarkGetOneUseCase';
 import { UserBookmarkImportUseCase } from '@domain/user/useCases/UserBookmarkImportUseCase';
 import { UserBookmarkUpdateUseCase } from '@domain/user/useCases/UserBookmarkUpdateUseCase';
@@ -27,7 +28,9 @@ import { UserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase
 import { UserBookmarkCreateController } from '@infrastructure/http/controllers/UserBookmarkCreateController';
 import { UserBookmarkDeleteOneController } from '@infrastructure/http/controllers/UserBookmarkDeleteOneController';
 import { UserBookmarkGetAllController } from '@infrastructure/http/controllers/UserBookmarkGetAllController';
+import { UserBookmarkGetByUrlController } from '@infrastructure/http/controllers/UserBookmarkGetByUrlController';
 import { UserBookmarkGetOneController } from '@infrastructure/http/controllers/UserBookmarkGetOneController';
+import { UserBookmarkImportController } from '@infrastructure/http/controllers/UserBookmarkImportController';
 import { UserBookmarkUpdateController } from '@infrastructure/http/controllers/UserBookmarkUpdateController';
 import { UserCreateConfirmationController } from '@infrastructure/http/controllers/UserCreateConfirmationController';
 import { UserCreateOneController } from '@infrastructure/http/controllers/UserCreateOneController';
@@ -49,7 +52,6 @@ import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/Boo
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { UserBookmarkImportController } from '../controllers/UserBookmarkImportController';
 
 const UsersRoute = express.Router();
 
@@ -188,6 +190,19 @@ UsersRoute.get('/:userId/bookmarks', async (req: Request, res: Response, next: N
   const userLinkGetAllController = new UserBookmarkGetAllController(userLinkGetAllUseCase);
 
   const response = await userLinkGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+UsersRoute.get('/me/bookmarks/url', async (req: Request, res: Response, next: NextFunction) => {
+  const userRepo = new UserRepo();
+  const linkRepo = new LinkRepo();
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
+  const userBookarkGetByUrlUseCase = new UserBookmarkGetByUrlUseCase(userRepo, linkGetStatisticsUseCase);
+  const userBookarkGetByUrlController = new UserBookmarkGetByUrlController(userBookarkGetByUrlUseCase);
+
+  const response = await userBookarkGetByUrlController.execute(req, res, next);
 
   return response;
 });
