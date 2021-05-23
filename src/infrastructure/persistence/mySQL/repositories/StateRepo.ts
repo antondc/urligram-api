@@ -242,8 +242,8 @@ export class StateRepo {
 
         // Create procedures
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.debuggerProcedure))),
-        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageGetOneProcedure))),
-        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageGetAllProcedure))),
+        ...(!!true && (await mySQL.query(this.languageGetOneProcedure))), // As languages are isolated we can modify them without affecting the rest of the DB
+        ...(!!true && (await mySQL.query(this.languageGetAllProcedure))), // As languages are isolated we can modify them without affecting the rest of the DB
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetByIdsProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetOneProcedure))),
@@ -306,8 +306,8 @@ export class StateRepo {
 
         // Insert data
         ...(!!RESTORE_DATA && (await mySQL.query(this.domainData))),
-        ...(!!RESTORE_DATA && (await mySQL.query(this.languageData))),
-        ...(!!RESTORE_DATA && (await mySQL.query(this.glossaryData))),
+        ...(!!true && (await mySQL.query(this.languageData))), // As languages are isolated we can modify them without affecting the rest of the DB
+        ...(!!true && (await mySQL.query(this.glossaryData))), // As languages are isolated we can modify them without affecting the rest of the DB
         ...(!!RESTORE_DATA && (await mySQL.query(this.linkData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.userData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.bookmarkData))),
