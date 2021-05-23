@@ -11,7 +11,21 @@ export class TagRepo implements ITagRepo {
 
       const [tags] = await mySQL.query(tagGetAllQuery, [sessionId, sort, size, offset, JSON.stringify(filter)]);
 
-      return tags;
+      const resultsWithoutTotal = tags.map((item) => ({
+        ...item,
+        totalItems: undefined,
+      }));
+
+      return {
+        meta: {
+          totalItems: tags[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+          filter,
+        },
+        tags: resultsWithoutTotal,
+      };
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {

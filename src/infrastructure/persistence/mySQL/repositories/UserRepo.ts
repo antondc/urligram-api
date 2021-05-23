@@ -423,8 +423,20 @@ export class UserRepo implements IUserRepo {
       const userTagsGetAllQuery = 'CALL user_tags_get_all(?, ?, ?, ?, ?)';
 
       const [results] = await mySQL.query(userTagsGetAllQuery, [userId, sessionId, sort, size, offset]);
+      const resultsWithoutTotal = results.map((item) => ({
+        ...item,
+        totalItems: undefined,
+      }));
 
-      return results;
+      return {
+        meta: {
+          totalItems: results[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+        },
+        tags: resultsWithoutTotal,
+      };
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {

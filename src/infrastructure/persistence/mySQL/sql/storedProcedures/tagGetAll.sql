@@ -49,13 +49,13 @@ BEGIN
     ) AS T
     GROUP BY T.id
       ORDER BY
-      CASE WHEN $SORT = 'id'      THEN T.id      	  ELSE NULL END ASC,
-      CASE WHEN $SORT = '-id'     THEN T.id      	  ELSE NULL END DESC,
-      CASE WHEN $SORT = 'name'    THEN T.name	      ELSE NULL END ASC,
-      CASE WHEN $SORT = '-name'   THEN T.name       ELSE NULL END DESC,
-      CASE WHEN $SORT = 'count'   THEN COUNT(T.id)  ELSE NULL END ASC,
-      CASE WHEN $SORT = '-count'  THEN COUNT(T.id)  ELSE NULL END DESC,
-      CASE WHEN $SORT IS NULL     THEN COUNT(T.id)  ELSE NULL END DESC
+      CASE WHEN $SORT = 'id'             THEN T.id      	  ELSE NULL END ASC,
+      CASE WHEN $SORT = '-id'            THEN T.id      	  ELSE NULL END DESC,
+      CASE WHEN $SORT = 'name'           THEN T.name	      ELSE NULL END ASC,
+      CASE WHEN $SORT = '-name'          THEN T.name       ELSE NULL END DESC,
+      CASE WHEN $SORT = 'count'          THEN COUNT(T.id)  ELSE NULL END ASC,
+      CASE WHEN $SORT = '-count'         THEN COUNT(T.id)  ELSE NULL END DESC,
+      CASE WHEN $SORT IS NULL            THEN COUNT(T.name)  ELSE NULL END DESC
     LIMIT $OFFSET , $SIZE
   ;
 

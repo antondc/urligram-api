@@ -7,6 +7,8 @@ import { URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
+const DEFAULT_USER_TAGS_GET_ALL_SORT = '-count';
+
 type UserTagsGetAllControllerQueryType = {
   sort: 'id' | '-id' | 'name' | '-name' | 'count' | '-count';
   page: {
@@ -24,7 +26,7 @@ export class UserTagsGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort, page: { size, offset } = {} } = req.query as UserTagsGetAllControllerQueryType;
+    const { sort = DEFAULT_USER_TAGS_GET_ALL_SORT, page: { size, offset } = {} } = req.query as UserTagsGetAllControllerQueryType;
     const { userId } = req.params;
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
@@ -39,9 +41,9 @@ export class UserTagsGetAllController extends BaseController {
       offset: castedOffset,
     };
 
-    const response = await this.useCase.execute(userUpdateRequest);
+    const { tags, meta } = await this.useCase.execute(userUpdateRequest);
 
-    const formattedItems = response.map((item) => {
+    const formattedItems = tags?.map((item) => {
       return {
         type: 'tag',
         id: item.id,
@@ -53,6 +55,7 @@ export class UserTagsGetAllController extends BaseController {
       links: {
         self: URL_SERVER + '/users/' + userId + '/tags',
       },
+      meta,
       data: formattedItems,
       included: [],
     };

@@ -16,7 +16,7 @@ export class TagGetAllUseCase implements ITagGetAllUseCase {
   public async execute(tagGetAllRequest: ITagGetAllRequest): Promise<ITagGetAllResponse> {
     const { session, sort, size, offset, filter } = tagGetAllRequest;
 
-    const response = await this.tagRepo.tagGetAll({
+    const { meta, tags } = await this.tagRepo.tagGetAll({
       sessionId: session?.id,
       sort,
       size,
@@ -24,6 +24,6 @@ export class TagGetAllUseCase implements ITagGetAllUseCase {
       filter,
     });
 
-    return response;
+    return { meta, tags };
   }
 }

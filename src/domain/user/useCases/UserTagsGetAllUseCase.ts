@@ -16,8 +16,11 @@ export class UserTagsGetAllUseCase implements IUserTagsGetAllUseCase {
   public async execute(UserTagsGetAllRequest: IUserTagsGetAllRequest): Promise<IUserTagsGetAllResponse> {
     const { userId, session, sort, size, offset } = UserTagsGetAllRequest;
 
-    const tags = await this.userRepo.userTagsGetAll({ userId, sessionId: session?.id, sort, size, offset });
+    const { tags, meta } = await this.userRepo.userTagsGetAll({ userId, sessionId: session?.id, sort, size, offset });
 
-    return tags;
+    return {
+      tags,
+      meta,
+    };
   }
 }

@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_tags_get_all;
 
+-- DELIMITER $$
+
 CREATE PROCEDURE user_tags_get_all(
   IN $USER_ID VARCHAR(40),
   IN $SESSION_ID VARCHAR(40),
@@ -13,6 +15,7 @@ BEGIN
 
   -- Return tags used by users
   SELECT
+    count(*) OVER() as totalItems,
     T.id,
     T.name,
     COUNT(T.id) AS count
@@ -39,11 +42,12 @@ BEGIN
       CASE WHEN $SORT = '-name'   THEN T.name       ELSE NULL END DESC,
       CASE WHEN $SORT = 'count'   THEN COUNT(T.id)  ELSE NULL END ASC,
       CASE WHEN $SORT = '-count'  THEN COUNT(T.id)  ELSE NULL END DESC,
-      CASE WHEN $SORT IS NULL     THEN COUNT(T.id)  ELSE NULL END DESC
+      CASE WHEN $SORT IS NULL     THEN COUNT(T.name)  ELSE NULL END DESC
     LIMIT $OFFSET , $SIZE
   ;
 
 END
 
+-- DELIMITER ;
 
-/* CALL  user_tags_get_all("e4e2bb46-c210-4a47-9e84-f45c789fcec1", "e4e2bb46-c210-4a47-9e84-f45c789fcec1", "-count", "2", "1"); */
+-- CALL  user_tags_get_all("e4e2bb46-c210-4a47-9e84-f45c789fcec1", "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL);
