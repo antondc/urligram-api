@@ -1,5 +1,21 @@
 // https://gist.github.com/mba7/979e6c3fe715fc618549fae4d09019ef
 
+/**
+ * Hash a string using Nodes asynchronous pbkdf2 function.
+ *
+ * Returns promise with a self-contained buffer encoded with config.encoding
+ * that contains all the data needed to verify a password:
+       -----------------------
+       | SaltLen |     4     |
+       -----------------------
+       | Salt    | saltBytes |
+       -----------------------
+       | HashLen |     4     |
+       -----------------------
+       | Salt    | hashBytes |
+       - ---------------------
+*/
+
 import crypto from 'crypto';
 
 const encoding = 'base64';
