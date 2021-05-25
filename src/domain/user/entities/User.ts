@@ -30,7 +30,7 @@ export class User {
   email: string;
   image: { [key: string]: string };
   status: string;
-  password: number;
+  password: string;
   statement: string;
   location: string;
   bookmarksIds: number[];

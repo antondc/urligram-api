@@ -34,6 +34,8 @@ import { IUserGetAllRequest } from './interfaces/IUserGetAllRequest';
 import { IUserGetAllResponse } from './interfaces/IUserGetAllResponse';
 import { IUserGetByIdsRequest } from './interfaces/IUserGetByIdsRequest';
 import { IUserGetByIdsResponse } from './interfaces/IUserGetByIdsResponse';
+import { IUserGetCredentialsRequest } from './interfaces/IUserGetCredentialsRequest';
+import { IUserGetCredentialsResponse } from './interfaces/IUserGetCredentialsResponse';
 import { IUserGetOneRequest } from './interfaces/IUserGetOneRequest';
 import { IUserGetOneResponse } from './interfaces/IUserGetOneResponse';
 import { IUserListGetAllPublicRequest } from './interfaces/IUserListGetAllPublicRequest';
@@ -59,6 +61,7 @@ export interface IUserRepo {
   userCreateConfirmation: (userCreateConfirmationRequest: IUserCreateConfirmationRequest) => Promise<IUserCreateConfirmationResponse>;
   userUpdateOne: (userUpdateOneRequest: IUserUpdateOneRequest) => Promise<IUserUpdateOneResponse>;
   userDeleteOne: (userDeleteOneRequest: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;
+  userGetCredentials: (userGetCredentialsRequest: IUserGetCredentialsRequest) => Promise<IUserGetCredentialsResponse>;
   userLogin: (userLoginRequest: IUserLoginRequest) => Promise<IUserLoginResponse>;
   userLogSession: (userLogSessionRequest: IUserLogSessionRequest) => Promise<IUserLogSessionResponse>;
   userResetPassword: (userResetPasswordRequest: IUserResetPasswordRequest) => Promise<IUserResetPasswordResponse>;

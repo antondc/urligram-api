@@ -4,6 +4,7 @@ import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCr
 import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
 import { UserError } from '@shared/errors/UserError';
 import { MailService } from '@shared/services/MailService';
+import { PasswordHasher } from '@shared/services/PasswordHasher';
 import { StringValidator } from '@shared/services/StringValidator';
 import { TokenService } from '@shared/services/TokenService';
 
@@ -45,7 +46,11 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     const { success } = await emailService.sendMail(emailOptions);
     if (!success) throw new UserError('Email incorrect', 409, 'email');
 
-    const user = await this.userRepo.userCreateOne({ name, email, password, token });
+    const passwordHasher = new PasswordHasher();
+    const passwordBuffer = await passwordHasher.hashPassword(password);
+    const hashedPassword = await passwordHasher.bufferToHash(passwordBuffer);
+    const user = await this.userRepo.userCreateOne({ name, email, password: hashedPassword, token });
+
     if (!user.id) throw new UserError('User creation failed', 409);
 
     return user;

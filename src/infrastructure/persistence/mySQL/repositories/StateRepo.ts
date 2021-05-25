@@ -32,6 +32,7 @@ export class StateRepo {
   private languageGetAllProcedure: string;
   private userGetAllProcedure: string;
   private userGetByIdsProcedure: string;
+  private userGetCredentialsProcedure: string;
   private userGetOneProcedure: string;
   private userCreateOneProcedure: string;
   private userCreateConfirmationProcedure: string;
@@ -133,6 +134,7 @@ export class StateRepo {
     this.languageGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/languageGetAll.sql')).toString();
     this.userGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetAll.sql')).toString();
     this.userGetByIdsProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetByIds.sql')).toString();
+    this.userGetCredentialsProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetCredentials.sql')).toString();
     this.userGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetOne.sql')).toString();
     this.userCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateOne.sql')).toString();
     this.userCreateConfirmationProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateConfirmation.sql')).toString();
@@ -242,10 +244,11 @@ export class StateRepo {
 
         // Create procedures
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.debuggerProcedure))),
-        ...(!!true && (await mySQL.query(this.languageGetOneProcedure))), // As languages are isolated we can modify them without affecting the rest of the DB
-        ...(!!true && (await mySQL.query(this.languageGetAllProcedure))), // As languages are isolated we can modify them without affecting the rest of the DB
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageGetOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.languageGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetByIdsProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetCredentialsProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userCreateOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userCreateConfirmationProcedure))),

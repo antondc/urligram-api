@@ -5,7 +5,9 @@ export abstract class BaseController {
 
   public async execute(req: Request, res: Response, next: NextFunction): Promise<unknown> {
     try {
-      await this.executeImpl(req, res, next);
+      const response = await this.executeImpl(req, res, next);
+
+      return response;
     } catch (err) {
       return next(err);
     }

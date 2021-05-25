@@ -15,7 +15,7 @@ StateRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
   const response = await stateHealthCheckController.execute(req, res, next);
 
-  return response;
+  return res.status(200).send(response);
 });
 
 StateRoute.delete('/', async (req: Request, res: Response, next: NextFunction) => {

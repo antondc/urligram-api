@@ -1,6 +1,7 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
+import { PasswordHasher } from '@shared/services/PasswordHasher';
 import { TokenService } from '@shared/services/TokenService';
 import { IUserResetPasswordRequest } from './interfaces/IUserResetPasswordRequest';
 import { IUserResetPasswordResponse } from './interfaces/IUserResetPasswordResponse';
@@ -27,7 +28,11 @@ export class UserResetPasswordUseCase implements IUserResetPasswordUseCase {
     const decodedToken = tokenService.decodeToken(token) as { name: string };
     if (decodedToken?.name !== name) throw new AuthenticationError('401 Unauthorized', 401);
 
-    const user = await this.userRepo.userResetPassword({ name, token, newPassword: password });
+    const passwordHasher = new PasswordHasher();
+    const passwordBuffer = await passwordHasher.hashPassword(password);
+    const hashedPassword = await passwordHasher.bufferToHash(passwordBuffer);
+
+    const user = await this.userRepo.userResetPassword({ name, token, newPassword: hashedPassword });
     if (!user?.id) throw new UserError('User not found', 404);
 
     const userFound = await this.userRepo.userGetOne({

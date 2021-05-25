@@ -4,6 +4,19 @@ import { BaseError } from '@shared/errors/BaseError';
 import { RequestError } from '@shared/errors/RequestError';
 
 export class UserRepo implements IUserRepo {
+  public async userGetCredentials({ userId }) {
+    const mySQL = new MySQL();
+    try {
+      const userGetAllQuery = 'CALL user_get_credentials(?)';
+      const [[userCredentials]] = await mySQL.query(userGetAllQuery, [userId]);
+
+      return userCredentials;
+    } catch (err) {
+      throw new RequestError('Something failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
   public async userGetAll({ sessionId, sort, size, offset, filter }) {
     const mySQL = new MySQL();
     try {
