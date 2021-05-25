@@ -23,7 +23,7 @@ export class UserFollowerGetAllUseCase implements IUserFollowerGetAllUseCase {
 
     const usersWithTagsPromises = usersData.map(async (userData) => {
       const user = new User(userData);
-      const tags = await this.userTagsGetAllUseCase.execute({ userId: user.id, session, sort: '-count', size: null, offset: null });
+      const { tags } = await this.userTagsGetAllUseCase.execute({ userId: user.id, session, sort: '-count', size: null, offset: null });
 
       return {
         ...user,
