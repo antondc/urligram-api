@@ -309,8 +309,8 @@ export class StateRepo {
 
         // Insert data
         ...(!!RESTORE_DATA && (await mySQL.query(this.domainData))),
-        ...(!!true && (await mySQL.query(this.languageData))), // As languages are isolated we can modify them without affecting the rest of the DB
-        ...(!!true && (await mySQL.query(this.glossaryData))), // As languages are isolated we can modify them without affecting the rest of the DB
+        ...(!!RESTORE_DATA && (await mySQL.query(this.languageData))), // As languages are isolated we can modify them without affecting the rest of the DB
+        ...(!!RESTORE_DATA && (await mySQL.query(this.glossaryData))), // As languages are isolated we can modify them without affecting the rest of the DB
         ...(!!RESTORE_DATA && (await mySQL.query(this.linkData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.userData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.bookmarkData))),
