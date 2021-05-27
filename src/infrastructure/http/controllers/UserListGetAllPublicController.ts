@@ -18,6 +18,7 @@ type UserListGetAllPublicControllerQueryType = {
   };
   filter?: {
     role?: string[];
+    lists?: string[];
   };
 };
 
@@ -30,7 +31,11 @@ export class UserListGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort = DEFAULT_LIST_GET_ALL_SORT, page: { size, offset } = {}, filter: { role } = {} } = req.query as UserListGetAllPublicControllerQueryType;
+    const {
+      sort = DEFAULT_LIST_GET_ALL_SORT,
+      page: { size, offset } = {},
+      filter: { role, lists } = {},
+    } = req.query as UserListGetAllPublicControllerQueryType;
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedOffset = Number(offset) || undefined;
     const { userId } = req.params;
@@ -45,12 +50,13 @@ export class UserListGetAllPublicController extends BaseController {
       offset: checkedOffset,
       filter: {
         role,
+        lists,
       },
     };
 
-    const { lists, meta } = await this.useCase.execute(userListGetAllPublicRequest);
+    const { lists: listsResult, meta } = await this.useCase.execute(userListGetAllPublicRequest);
 
-    const formattedLinks = lists.map((item) => {
+    const formattedLinks = listsResult.map((item) => {
       return {
         type: 'list',
         id: item.id,

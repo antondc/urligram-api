@@ -8,5 +8,6 @@ export interface IUserListGetAllPublicRequest {
   offset?: number;
   filter?: {
     role?: string[];
+    lists?: string[];
   };
 }

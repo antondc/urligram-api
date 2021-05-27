@@ -15,6 +15,7 @@ CREATE PROCEDURE user_list_get_all(
 BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
   SET @filterRole  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.role'));
+  SET @filterListName  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.lists'));
 
  SELECT
     count(*) OVER() as totalItems,
@@ -80,6 +81,15 @@ BEGIN
       OR
       CASE WHEN @filterRole IS NOT NULL THEN JSON_CONTAINS(@filterRole, JSON_QUOTE(user_list.userRole)) AND user_list.user_id = $USER_ID END
       OR CASE WHEN @filterRole IS NULL THEN TRUE END
+    )
+    AND
+    (
+      -- Case for only one name string, useful to search from partial strings with LIKE
+      -- Convert(x USING uft8 removes the tildes)
+      CASE WHEN @filterListName IS NOT NULL THEN UPPER(list.name) LIKE UPPER(CONCAT('%', CONVERT(JSON_UNQUOTE(JSON_EXTRACT(@filterListName, '$[0]')) USING utf8), '%')) END
+      -- Case for many lists, useful to search for full list names/
+      OR CASE WHEN @filterListName IS NOT NULL AND JSON_CONTAINS(@filterListName, JSON_QUOTE(list.name)) THEN TRUE END
+      OR CASE WHEN @filterListName IS NULL THEN TRUE END
     )
   GROUP BY list.id
   ORDER BY
