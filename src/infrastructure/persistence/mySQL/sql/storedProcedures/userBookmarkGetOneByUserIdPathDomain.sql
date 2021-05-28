@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS user_bookmark_get_one_by_user_path_domain;
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_get_one_by_user_path_domain(
   IN $USER_ID VARCHAR(40),
-  IN $DOMAIN VARCHAR(40),
+  IN $DOMAIN TEXT,
   IN $_PATH TEXT
 )
 
