@@ -1,23 +1,110 @@
 INSERT INTO `list` (
-  `id`, `order`, `name`, `description`, `isPrivate`, `userId`, `createdAt`, `updatedAt`
-) VALUES
-  (1, 1, 'First list', 'Description of First list', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (2, 2, 'Second list', 'Description of Second list', true, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', 1617143194, 1617143194),
-  (3, 3, 'Third list', 'Description of Third list', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (4, 4, 'Fourth list', 'Description of Fourth list', false, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', 1617143194, 1617143194),
-  (5, 5, 'Fifth list', 'Description of Fifth list', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (6, 6, 'Sixth list', 'Description of Sixth list', true, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', 1617143194, 1617143194),
-  (7, 7, 'Seventh list', 'Description of Seventh list', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (8, 8, 'Eighth list', 'Description of Eighthlist', false, 'b95274c9-3d26-4ce3-98b2-77dce5bd7aae', 1617143194, 1617143194),
-  (9, 9, 'Ninth list', 'Description of Ninthlist', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (10, 10, 'Tenth list', 'Description of Tenth list', false, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 1617143194, 1617143194),
-  (11, 11, 'Eleventh list', 'Description of Eleventh list', true, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 1617143194, 1617143194),
-  (12, 12, 'Twelfth list', 'Description of Twelfth Twelfthst', false, '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000', 1617143194, 1617143194),
-  (13, 13, 'Thirteenth list', 'Description of Thirteenth Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (14, 14, 'Fourteenth list', 'Description of Fourteenth Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (15, 15, 'Fifteen list', 'Description of Fifteen Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (16, 16, 'Sixteen list', 'Description of Sixteen Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (17, 17, 'Seventeen list', 'Description of Seventeen Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (18, 18, 'Eighteen list', 'Description of Eighteen Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (19, 19, 'Nineteen list', 'Description of Nineteenh Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194),
-  (20, 20, 'Twentieth list', 'Description of Twentiethh Twelfthst', false, 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 1617143194, 1617143194);
+    `id`,
+    `order`,
+    `name`,
+    `description`,
+    `isPrivate`,
+    `userId`,
+    `createdAt`,
+    `updatedAt`
+  )
+VALUES (
+    1,
+    10000,
+    'Pending',
+    'List of articles pending to read',
+    0,
+    'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
+    1619457325,
+    1619779365
+  ),
+  (
+    3,
+    10000,
+    'Books',
+    'Books I like or I have pending to read',
+    0,
+    'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
+    1619778442,
+    1619779350
+  ),
+  (
+    4,
+    10000,
+    'Software',
+    'Tech, security, business models and other stuff',
+    0,
+    'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
+    1619778483,
+    1621319725
+  ),
+  (
+    5,
+    10000,
+    'Vela',
+    'Lista de clubs de vela en San Petersburgo',
+    0,
+    'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
+    1621092115,
+    1621238459
+  ),
+  (
+    7,
+    10000,
+    'Jobs',
+    'I do not have description',
+    NULL,
+    'b95274c9-3d26-4ce3-98b2-77dce5bd7aae',
+    1621354134,
+    1621354134
+  ),
+  (
+    8,
+    10000,
+    'Wishlist',
+    '',
+    0,
+    'b95274c9-3d26-4ce3-98b2-77dce5bd7aae',
+    1621792887,
+    1621792887
+  ),
+  (
+    9,
+    10000,
+    'Compras',
+    'Cosas pendientes de compra',
+    1,
+    'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
+    1622229856,
+    1622229856
+  ),
+  (
+    10,
+    10000,
+    'Agenda',
+    'Cosas para hacer',
+    NULL,
+    'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
+    1622238808,
+    1622238808
+  ),
+  (
+    11,
+    10000,
+    'Online tools',
+    'Online tools I use',
+    1,
+    'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
+    1622532539,
+    1622532539
+  ),
+  (
+    12,
+    10000,
+    'Theatre',
+    'Performance list',
+    0,
+    'b95274c9-3d26-4ce3-98b2-77dce5bd7aae',
+    1622565881,
+    1622565881
+  );
