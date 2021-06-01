@@ -34,7 +34,13 @@
     "HOST_SERVER": "linking-api-staging.antoniodiaz.me",
     "PORT_SERVER_HTTP": "16186",
     "PORT_SERVER_HTTPS": 0,
-    "ENDPOINT_CLIENTS": ["https://linking-staging.antoniodiaz.me", "http://0.0.0.0:4000", "http://dev.linking.me:4000"],
+    "ENDPOINT_CLIENTS": [
+      "https://linking-staging.antoniodiaz.me",
+      "http://0.0.0.0:4000",
+      "http://dev.linking.me:4000",
+      "http://dev.linking.me",
+      "https://dev.linking.me"
+    ],
     "SECRET": "superSecret",
     "LOGGING": true,
     "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",

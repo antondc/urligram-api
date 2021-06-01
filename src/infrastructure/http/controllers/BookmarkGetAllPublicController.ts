@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { IBookmarkGetAllPublicUseCase } from '@domain/bookmark/useCases/BookmarkGetAllPublicUseCase';
 import { IBookmarkGetAllPublicRequest } from '@domain/bookmark/useCases/interfaces/IBookmarkGetAllPublicRequest';
 import { User } from '@domain/user/entities/User';
+import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
@@ -33,7 +34,7 @@ export class BookmarkGetAllPublicController extends BaseController {
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
-    const checkedSize = Number(size) || undefined;
+    const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedAfter = Number(offset) || undefined;
 
     const bookmarkGetAllPublicRequest: IBookmarkGetAllPublicRequest = {
