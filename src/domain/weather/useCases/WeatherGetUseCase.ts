@@ -1,6 +1,6 @@
+import { IWeatherRepo } from '@domain/weather/repositories/IWeatherRepo';
 import { DEFAULT_LOCATION } from '@shared/constants/env';
 import { validateIpAddress } from '@tools/helpers/string/validateIpAddress';
-import { IWeatherRepo } from '../repositories/IWeatherRepo';
 import { IWeatherGetRequest } from './interfaces/IWeatherGetRequest';
 import { IWeatherGetResponse } from './interfaces/IWeatherGetResponse';
 
