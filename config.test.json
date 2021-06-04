@@ -20,7 +20,8 @@
     "EMAIL_PASSWORD": "G9khusC96RmK8fRm",
     "RESTORE_MODELS": true,
     "RESTORE_DATA": true,
-    "RESTORE_PROCEDURES": true
+    "RESTORE_PROCEDURES": true,
+    "DEFAULT_LOCATION": "Saint_Petersburg"
   },
   "staging": {
     "database": {
@@ -49,7 +50,8 @@
     "EMAIL_PASSWORD": "G9khusC96RmK8fRm",
     "RESTORE_MODELS": false,
     "RESTORE_DATA": false,
-    "RESTORE_PROCEDURES": true
+    "RESTORE_PROCEDURES": true,
+    "DEFAULT_LOCATION": "Saint_Petersburg"
   },
   "production": {
     "database": {
@@ -78,5 +80,6 @@
   "DEFAULT_IMAGE": "/img/default-image.png",
   "RESTORE_MODELS": false,
   "RESTORE_DATA": false,
-  "RESTORE_PROCEDURES": true
+  "RESTORE_PROCEDURES": true,
+  "DEFAULT_LOCATION": "Saint_Petersburg"
 }

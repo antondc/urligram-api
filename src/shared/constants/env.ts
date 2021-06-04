@@ -22,3 +22,4 @@ export const EMAIL_ADDRESS_SENT = config[process.env.NODE_ENV].EMAIL_ADDRESS_SEN
 export const RESTORE_MODELS = config[process.env.NODE_ENV].RESTORE_MODELS;
 export const RESTORE_DATA = config[process.env.NODE_ENV].RESTORE_DATA;
 export const RESTORE_PROCEDURES = config[process.env.NODE_ENV].RESTORE_PROCEDURES;
+export const DEFAULT_LOCATION = config[process.env.NODE_ENV].DEFAULT_LOCATION;
