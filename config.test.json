@@ -10,7 +10,7 @@
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "dev.linking.me",
     "PORT_SERVER_HTTP": 0,
-    "PORT_SERVER_HTTPS": "3000",
+    "PORT_SERVER_HTTPS": 3000,
     "ENDPOINT_CLIENTS": ["http://dev.linking.me", "https://dev.linking.me"],
     "SECRET": "superSecret",
     "LOGGING": true,
@@ -21,22 +21,22 @@
     "RESTORE_MODELS": true,
     "RESTORE_DATA": true,
     "RESTORE_PROCEDURES": true,
-    "DEFAULT_LOCATION": "Saint_Petersburg"
+    "DEFAULT_LOCATION": "Madrid"
   },
   "staging": {
     "database": {
-      "host": "ec2-3-124-187-180.eu-central-1.compute.amazonaws.com",
+      "host": "127.0.0.1",
       "database": "linking_stage",
       "user": "w_9aIfE2XpoYz",
-      "password": "UrStkX_oihbDWEaz7Gr",
-      "port": 3306
+      "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "linking-api-staging.antoniodiaz.me",
-    "PORT_SERVER_HTTP": "16186",
+    "HOST_SERVER": "ec2-3-64-180-27.eu-central-1.compute.amazonaws.com",
+    "PORT_SERVER_HTTP": 3001,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENTS": [
-      "https://linking-staging.antoniodiaz.me",
+      "http://linking-staging.woprs.com",
+      "https://linking-staging.woprs.com",
       "http://0.0.0.0:4000",
       "http://dev.linking.me:4000",
       "http://dev.linking.me",
@@ -61,10 +61,10 @@
       "password": "w_9aIjH3vfE2XpoYz"
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "linking-api-production.antoniodiaz.me",
-    "PORT_SERVER_HTTP": "13475",
+    "HOST_SERVER": "linking-api-production.woprs.com",
+    "PORT_SERVER_HTTP": 3002,
     "PORT_SERVER_HTTPS": 0,
-    "ENDPOINT_CLIENTS": ["https://linking-production.antoniodiaz.me"],
+    "ENDPOINT_CLIENTS": ["https://linking-production.woprs.com"],
     "SECRET": "superSecret",
     "LOGGING": false,
     "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
