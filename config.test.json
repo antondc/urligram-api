@@ -55,10 +55,10 @@
   },
   "production": {
     "database": {
-      "host": "ec2-3-124-187-180.eu-central-1.compute.amazonaws.com",
-      "database": "linking_prod",
-      "user": "v_9uRshudbX",
-      "password": "w_9aIjH3vfE2XpoYz"
+      "host": "127.0.0.1",
+      "database": "linking_stage",
+      "user": "w_9aIfE2XpoYz",
+      "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "linking-api-production.woprs.com",
