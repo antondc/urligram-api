@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS userBookmarkUser (
-  `id` CHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `user_id1` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   `bookmark_id` INT(11) NOT NULL,
   `user_id2` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,

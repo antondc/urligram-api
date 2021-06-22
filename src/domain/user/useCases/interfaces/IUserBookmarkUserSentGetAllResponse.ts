@@ -1,3 +1,9 @@
-import { Bookmark } from '@domain/bookmark/entities/Bookmark';
-
-export type IUserBookmarkUserSentGetAllResponse = Bookmark[];
+export type IUserBookmarkUserSentGetAllResponse = {
+  bookmarkId: number;
+  favicon: string;
+  title: string;
+  url: string;
+  viewed: boolean;
+  receiverId: string;
+  senderId: string;
+}[];

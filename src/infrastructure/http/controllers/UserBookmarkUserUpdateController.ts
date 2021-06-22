@@ -32,16 +32,15 @@ export class UserBookmarkUserUpdateController extends BaseController {
       links: {
         self: URL_SERVER + '/users/me' + '/' + bookmarkId,
       },
-      data: [
-        {
-          type: 'link',
-          session: {
-            self: URL_SERVER + '/users/me' + '/' + bookmarkId,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'link',
+        session: {
+          self: URL_SERVER + '/users/me' + '/' + bookmarkId,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
+
       included: [],
     };
 

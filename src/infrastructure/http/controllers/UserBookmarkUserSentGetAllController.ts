@@ -24,22 +24,26 @@ export class UserBookmarkUserSentGetAllController extends BaseController {
       session,
     };
 
-    const response = await this.useCase.execute(userBookmarkUserRequest);
+    const bookmarks = await this.useCase.execute(userBookmarkUserRequest);
+
+    const formattedBookmarks = bookmarks.map((item) => {
+      return {
+        type: 'link',
+        id: item.bookmarkId,
+        session: {
+          self: URL_SERVER + '/bookmarks/' + item.bookmarkId,
+        },
+        attributes: {
+          ...item,
+        },
+      };
+    });
 
     const formattedResponse = {
       links: {
         self: URL_SERVER + '/users/me' + '/',
       },
-      data: [
-        {
-          type: 'link',
-          session: {
-            self: URL_SERVER + '/users/me' + '/',
-          },
-          attributes: response,
-          relationships: {},
-        },
-      ],
+      data: formattedBookmarks,
       included: [],
     };
 
