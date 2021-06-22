@@ -18,11 +18,6 @@ export class UserBookmarkImportController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { importFile } = req.body;
 
-    console.log('=======');
-    console.log('importFile:');
-    console.log(JSON.stringify(importFile, null, 4));
-    console.log('=======');
-
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 

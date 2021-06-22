@@ -1,6 +1,5 @@
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
-import { List } from '@domain/list/entitites/List';
 
 export const userImageFormat: IFileImageFormatOptions = {
   extension: 'png',

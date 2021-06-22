@@ -31,11 +31,10 @@
       "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "ec2-3-64-180-27.eu-central-1.compute.amazonaws.com",
+    "HOST_SERVER": "linking-api-staging.woprs.com",
     "PORT_SERVER_HTTP": 3001,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENTS": [
-      "http://linking-staging.woprs.com",
       "https://linking-staging.woprs.com",
       "http://0.0.0.0:4000",
       "http://dev.linking.me:4000",

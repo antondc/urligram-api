@@ -91,13 +91,17 @@ export class FileRepo implements IFileRepo {
 
     file.pipe(outStream);
 
-    const fileIsTemporary = originPath.includes(config.TEMP_FILES);
-    fileIsTemporary && fs.unlinkSync(originPath);
+    return new Promise((resolve) => {
+      outStream.on('finish', () => {
+        const fileIsTemporary = originPath.includes(config.TEMP_FILES);
+        fileIsTemporary && fs.unlinkSync(originPath);
 
-    return {
-      path: finalFilePath,
-      filename,
-    };
+        resolve({
+          path: finalFilePath,
+          filename,
+        });
+      });
+    });
   }
 
   async fileSaveInTempFolder(fileSaveInTempFolderRequest: IFileSaveInTempFolderRequest): Promise<IFileSaveInTempFolderResponse> {

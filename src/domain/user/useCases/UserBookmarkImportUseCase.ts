@@ -19,14 +19,6 @@ export class UserBookmarkImportUseCase implements IUserBookmarkImportUseCase {
   public async execute(bookmarkImportRequest: IUserBookmarkImportRequest): Promise<IUserBookmarkImportResponse> {
     const { session, content } = bookmarkImportRequest;
 
-    console.log('=======');
-    console.log('session:');
-    console.log(JSON.stringify(session, null, 4));
-    console.log('-   -   -');
-    console.log('content:');
-    console.log(JSON.stringify(content, null, 4));
-    console.log('=======');
-
     return [];
   }
 }
