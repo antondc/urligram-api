@@ -472,4 +472,68 @@ export class UserRepo implements IUserRepo {
       await mySQL.close();
     }
   }
+
+  public async userBookmarkUserCreate({ sessionId, bookmarkId, userId }) {
+    const mySQL = new MySQL();
+
+    try {
+      const userBookmarkUserCreateQuery = 'CALL user_bookmark_user_create(?, ?, ?)';
+
+      const [[results]] = await mySQL.query(userBookmarkUserCreateQuery, [sessionId, bookmarkId, userId]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userBookmarkUserUpdate({ bookmarkId, userId, viewed }) {
+    const mySQL = new MySQL();
+
+    try {
+      const userBookmarkUserCreateQuery = 'CALL user_bookmark_user_update(?, ?, ?)';
+
+      const [[results]] = await mySQL.query(userBookmarkUserCreateQuery, [bookmarkId, userId, viewed]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userBookmarkUserReceivedGetAll({ sessionId, sort, size, offset, filter }) {
+    const mySQL = new MySQL();
+
+    try {
+      const query = 'CALL user_bookmark_user_received_get_all(?, ?, ?, ?, ?)';
+
+      const [results] = await mySQL.query(query, [sessionId, sort, size, offset, JSON.stringify(filter)]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async userBookmarkUserSentGetAll({ sessionId, sort, size, offset, filter }) {
+    const mySQL = new MySQL();
+
+    try {
+      const query = 'CALL user_bookmark_user_sent_get_all(?, ?, ?, ?, ?)';
+
+      const [results] = await mySQL.query(query, [sessionId, sort, size, offset, JSON.stringify(filter)]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
 }
