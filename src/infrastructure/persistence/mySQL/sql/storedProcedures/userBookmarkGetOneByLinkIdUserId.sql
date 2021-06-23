@@ -61,7 +61,45 @@ BEGIN
         bookmark.isPrivate IS NOT TRUE
         OR bookmark.user_id = $USER_ID
       )
-    ) AS bookmarksRelated
+    ) AS bookmarksRelated,
+    (
+      SELECT
+        IF(
+          COUNT(userBookmarkUser.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'senderId', `userBookmarkUser`.`user_id1`,
+              'receiverId', `userBookmarkUser`.`user_id2`,
+              'viewed', `userBookmarkUser`.`viewed`
+            )
+          )
+        )
+      FROM `userBookmarkUser`
+      WHERE
+        userBookmarkUser.bookmark_id = bookmark.id
+        AND
+        userBookmarkUser.user_id2 = $USER_ID
+    ) AS bookmarkReceivedFrom,
+    (
+      SELECT
+        IF(
+          COUNT(userBookmarkUser.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'senderId', `userBookmarkUser`.`user_id1`,
+              'receiverId', `userBookmarkUser`.`user_id2`,
+              'viewed', `userBookmarkUser`.`viewed`
+            )
+          )
+        )
+      FROM `userBookmarkUser`
+      WHERE
+        userBookmarkUser.bookmark_id = bookmark.id
+        AND
+        userBookmarkUser.user_id1 = $USER_ID
+    ) AS bookmarkSentTo
   FROM bookmark
   INNER JOIN `link` ON `bookmark`.`link_id` = `link`.`id`
   INNER JOIN `domain` ON `link`.`domain_id` = `domain`.`id`

@@ -505,13 +505,13 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkUserReceivedGetAll({ sessionId }) {
+  public async userBookmarkUserReceivedGetAll({ sessionId, sort, size, offset, filter }) {
     const mySQL = new MySQL();
 
     try {
-      const query = 'CALL user_bookmark_user_received_get_all(?)';
+      const query = 'CALL user_bookmark_user_received_get_all(?, ?, ?, ?, ?)';
 
-      const [results] = await mySQL.query(query, [sessionId]);
+      const [results] = await mySQL.query(query, [sessionId, sort, size, offset, JSON.stringify(filter)]);
 
       return results;
     } catch (err) {
@@ -521,13 +521,13 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkUserSentGetAll({ sessionId }) {
+  public async userBookmarkUserSentGetAll({ sessionId, sort, size, offset, filter }) {
     const mySQL = new MySQL();
 
     try {
-      const query = 'CALL user_bookmark_user_sent_get_all(?)';
+      const query = 'CALL user_bookmark_user_sent_get_all(?, ?, ?, ?, ?)';
 
-      const [results] = await mySQL.query(query, [sessionId]);
+      const [results] = await mySQL.query(query, [sessionId, sort, size, offset, JSON.stringify(filter)]);
 
       return results;
     } catch (err) {
