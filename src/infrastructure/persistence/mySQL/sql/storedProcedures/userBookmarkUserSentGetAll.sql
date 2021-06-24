@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_bookmark_user_sent_get_all;
 
-/* DELIMITER $$ */
+DELIMITER $$
 
 CREATE PROCEDURE user_bookmark_user_sent_get_all(
   IN $SESSION_ID VARCHAR(40),
@@ -93,7 +93,8 @@ BEGIN
             JSON_OBJECT(
               'senderId', `userBookmarkUser`.`user_id1`,
               'receiverId', `userBookmarkUser`.`user_id2`,
-              'viewed', `userBookmarkUser`.`viewed`
+              'viewed', `userBookmarkUser`.`viewed`,
+              'bookmarkId', `userBookmarkUser`.`bookmark_id`
             )
           )
         )
@@ -112,7 +113,8 @@ BEGIN
             JSON_OBJECT(
               'senderId', `userBookmarkUser`.`user_id1`,
               'receiverId', `userBookmarkUser`.`user_id2`,
-              'viewed', `userBookmarkUser`.`viewed`
+              'viewed', `userBookmarkUser`.`viewed`,
+              'bookmarkId', `userBookmarkUser`.`bookmark_id`
             )
           )
         )
@@ -129,7 +131,11 @@ BEGIN
   LEFT JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
   LEFT JOIN tag ON bookmark_tag.tag_id = tag.id
   WHERE
-      bookmark.isPrivate IS NOT TRUE
+      (
+        bookmark.isPrivate IS NOT TRUE
+        OR
+        bookmark.`user_id` = $SESSION_ID
+      )
       AND
       (
         CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
@@ -154,7 +160,7 @@ BEGIN
   LIMIT $OFFSET , $SIZE
   ;
 
-END
+END $$
 
-/* DELIMITER ; */
-/* CALL user_bookmark_user_sent_get_all('b95274c9-3d26-4ce3-98b2-77dce5bd7aae', NULL, NULL, NULL, NULL); */
+DELIMITER ;
+CALL user_bookmark_user_sent_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', NULL, NULL, NULL, NULL);

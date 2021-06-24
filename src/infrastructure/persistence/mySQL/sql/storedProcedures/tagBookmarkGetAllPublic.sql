@@ -60,7 +60,8 @@ BEGIN
             JSON_OBJECT(
               'senderId', `userBookmarkUser`.`user_id1`,
               'receiverId', `userBookmarkUser`.`user_id2`,
-              'viewed', `userBookmarkUser`.`viewed`
+              'viewed', `userBookmarkUser`.`viewed`,
+              'bookmarkId', `userBookmarkUser`.`bookmark_id`
             )
           )
         )
@@ -79,7 +80,8 @@ BEGIN
             JSON_OBJECT(
               'senderId', `userBookmarkUser`.`user_id1`,
               'receiverId', `userBookmarkUser`.`user_id2`,
-              'viewed', `userBookmarkUser`.`viewed`
+              'viewed', `userBookmarkUser`.`viewed`,
+              'bookmarkId', `userBookmarkUser`.`bookmark_id`
             )
           )
         )

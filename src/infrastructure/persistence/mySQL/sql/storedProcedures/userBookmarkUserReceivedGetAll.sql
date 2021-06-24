@@ -93,7 +93,8 @@ BEGIN
             JSON_OBJECT(
               'senderId', `userBookmarkUser`.`user_id1`,
               'receiverId', `userBookmarkUser`.`user_id2`,
-              'viewed', `userBookmarkUser`.`viewed`
+              'viewed', `userBookmarkUser`.`viewed`,
+              'bookmarkId', `userBookmarkUser`.`bookmark_id`
             )
           )
         )
@@ -112,7 +113,8 @@ BEGIN
             JSON_OBJECT(
               'senderId', `userBookmarkUser`.`user_id1`,
               'receiverId', `userBookmarkUser`.`user_id2`,
-              'viewed', `userBookmarkUser`.`viewed`
+              'viewed', `userBookmarkUser`.`viewed`,
+              'bookmarkId', `userBookmarkUser`.`bookmark_id`
             )
           )
         )
@@ -129,7 +131,11 @@ BEGIN
   LEFT JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
   LEFT JOIN tag ON bookmark_tag.tag_id = tag.id
   WHERE
-      bookmark.isPrivate IS NOT TRUE
+      (
+        bookmark.isPrivate IS NOT TRUE
+        OR
+        bookmark.`user_id` = $SESSION_ID
+      )
       AND
       (
         CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
