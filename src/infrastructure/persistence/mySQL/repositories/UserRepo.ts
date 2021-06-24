@@ -314,11 +314,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOneByBookmarkIdUserId({ bookmarkId, userId }) {
+  public async userBookmarkGetOneByBookmarkIdUserId({ sessionId, bookmarkId, userId }) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetOneByBookmarkIdUserIdQuery = 'CALL user_bookmark_get_one_by_id(?, ?)';
-      const [[results]] = await mySQL.query(userBookmarkGetOneByBookmarkIdUserIdQuery, [bookmarkId, userId]);
+      const userBookmarkGetOneByBookmarkIdUserIdQuery = 'CALL user_bookmark_get_one_by_id(?, ?, ?)';
+      const [[results]] = await mySQL.query(userBookmarkGetOneByBookmarkIdUserIdQuery, [sessionId, bookmarkId, userId]);
 
       return results;
     } catch (err) {
@@ -328,11 +328,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOneByLinkIdUserId({ linkId, userId }) {
+  public async userBookmarkGetOneByLinkIdUserId({ sessionId, linkId, userId }) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetOneByLinkIdUserIdQuery = 'CALL user_bookmark_get_one_by_link_user(?, ?)';
-      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery, [linkId, userId]);
+      const userBookmarkGetOneByLinkIdUserIdQuery = 'CALL user_bookmark_get_one_by_link_user(?, ?, ?)';
+      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery, [sessionId, linkId, userId]);
 
       return results;
     } catch (err) {
@@ -342,11 +342,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkGetOneByUserIdPathDomain({ userId, domain, path }) {
+  public async userBookmarkGetOneByUserIdPathDomain({ sessionId, userId, domain, path }) {
     const mySQL = new MySQL();
     try {
-      const userBookmarkGetOneByLinkIdUserIdQuery = 'CALL user_bookmark_get_one_by_user_path_domain(?, ?, ?)';
-      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery, [userId, domain, path]);
+      const userBookmarkGetOneByLinkIdUserIdQuery = 'CALL user_bookmark_get_one_by_user_path_domain(?, ?, ?, ?)';
+      const [[results]] = await mySQL.query(userBookmarkGetOneByLinkIdUserIdQuery, [sessionId, userId, domain, path]);
 
       return results;
     } catch (err) {

@@ -21,6 +21,7 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
     const { session, bookmarkId, order, title, isPrivate, tags } = userBookmarkUpdateRequest;
 
     const bookmarkExists = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      sessionId: session?.id,
       bookmarkId,
       userId: session?.id,
     });
@@ -35,6 +36,7 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
     });
 
     const bookmark = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      sessionId: session?.id,
       bookmarkId: result.bookmarkId,
       userId: session?.id,
     });

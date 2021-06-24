@@ -49,13 +49,13 @@ export class TagRepo implements ITagRepo {
     }
   }
 
-  public async tagBookmarkGetAllPublic({ tagId }) {
+  public async tagBookmarkGetAllPublic({ sessionId, tagId }) {
     const mySQL = new MySQL();
 
     try {
-      const tagBookmarkGetAllPublicQuery = 'CALL tag_bookmark_get_all(?)';
+      const tagBookmarkGetAllPublicQuery = 'CALL tag_bookmark_get_all(?, ?)';
 
-      const [results] = await mySQL.query(tagBookmarkGetAllPublicQuery, [tagId]);
+      const [results] = await mySQL.query(tagBookmarkGetAllPublicQuery, [sessionId, tagId]);
 
       return results;
     } catch (err) {

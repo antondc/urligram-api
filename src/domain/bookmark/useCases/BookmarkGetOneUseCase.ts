@@ -19,7 +19,7 @@ export class BookmarkGetOneUseCase implements IBookmarkGetOneUseCase {
 
   public async execute(listBookmarkGetOneRequest: IBookmarkGetOneRequest): Promise<IBookmarkGetOneResponse> {
     const { session, bookmarkId } = listBookmarkGetOneRequest;
-    const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId });
+    const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId, sessionId: session?.id });
 
     if (!bookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not found' });
 

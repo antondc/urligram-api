@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS user_bookmark_get_one_by_user_path_domain;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_get_one_by_user_path_domain(
+  IN $SESSION_ID VARCHAR(40),
   IN $USER_ID VARCHAR(40),
   IN $DOMAIN TEXT,
   IN $_PATH TEXT
@@ -79,7 +80,7 @@ BEGIN
       WHERE
         userBookmarkUser.bookmark_id = bookmark.id
         AND
-        userBookmarkUser.user_id2 = $USER_ID
+        userBookmarkUser.user_id2 = $SESSION_ID
     ) AS bookmarkReceivedFrom,
     (
       SELECT
@@ -98,7 +99,7 @@ BEGIN
       WHERE
         userBookmarkUser.bookmark_id = bookmark.id
         AND
-        userBookmarkUser.user_id1 = $USER_ID
+        userBookmarkUser.user_id1 = $SESSION_ID
     ) AS bookmarkSentTo
   FROM bookmark
   INNER JOIN `link` ON `bookmark`.`link_id` = `link`.`id`

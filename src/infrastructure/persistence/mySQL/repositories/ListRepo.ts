@@ -93,13 +93,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listBookmarkGetOne({ listId, bookmarkId }) {
+  public async listBookmarkGetOne({ sessionId, listId, bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
-      const listBookmarkGetOneQuery = 'CALL list_bookmark_get_one(?, ?)';
+      const listBookmarkGetOneQuery = 'CALL list_bookmark_get_one(?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listBookmarkGetOneQuery, [listId, bookmarkId]);
+      const [[results]] = await mySQL.query(listBookmarkGetOneQuery, [sessionId, listId, bookmarkId]);
 
       return results;
     } catch (err) {
@@ -147,7 +147,7 @@ export class ListRepo implements IListRepo {
     try {
       const listUserGetAllQuery = 'CALL list_user_get_all(?, ?)';
 
-      const [results] = await mySQL.query(listUserGetAllQuery, [sessionId, listId ]);
+      const [results] = await mySQL.query(listUserGetAllQuery, [sessionId, listId]);
 
       return results;
     } catch (err) {

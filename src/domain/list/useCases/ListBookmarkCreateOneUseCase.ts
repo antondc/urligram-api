@@ -23,18 +23,18 @@ export class ListBookmarkCreateOneUseCase implements IListBookmarkCreateOneUseCa
     const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List does not exist', 404, { message: '404 Not Found' }); // (1)
 
-    const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId });
+    const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId, sessionId: session?.id });
     if (!bookmark) throw new RequestError('Bookmark does not exist', 404, { message: '404 Not Found' }); // (2)
 
     const listUser = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
     if (!listUser || listUser?.userRole === 'reader') throw new RequestError('You can not edit this list', 403, { message: '403 Forbidden' }); // (3)
 
-    const listBookmark = await this.listRepo.listBookmarkGetOne({ listId, bookmarkId });
+    const listBookmark = await this.listRepo.listBookmarkGetOne({ sessionId: session?.id, listId, bookmarkId });
     if (!!listBookmark) throw new RequestError('List bookmark already exists', 409, { message: '409 Conflict' }); // (4)
 
     const createdBookmarkInList = await this.listRepo.listBookmarkCreateOne({ listId, bookmarkId });
 
-    const result = await this.listRepo.listBookmarkGetOne({ listId, bookmarkId: createdBookmarkInList.bookmarkId });
+    const result = await this.listRepo.listBookmarkGetOne({ sessionId: session?.id, listId, bookmarkId: createdBookmarkInList.bookmarkId });
 
     return result;
   }

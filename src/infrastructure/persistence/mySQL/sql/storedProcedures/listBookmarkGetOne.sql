@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS list_bookmark_get_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_bookmark_get_one(
+  IN $SESSION_ID VARCHAR(40),
   IN $LIST_ID INT,
   IN $BOOKMARK_ID INT
 )

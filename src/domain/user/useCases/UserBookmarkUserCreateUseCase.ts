@@ -18,6 +18,7 @@ export class UserBookmarkUserCreateUseCase implements IUserBookmarkUserCreateUse
     const { session, bookmarkId, userId } = userBookmarkUserCreateRequest;
 
     const bookmark = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      sessionId: session?.id,
       userId: session?.id,
       bookmarkId,
     });

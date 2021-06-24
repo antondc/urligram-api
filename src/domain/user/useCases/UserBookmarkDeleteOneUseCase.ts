@@ -18,6 +18,7 @@ export class UserBookmarkDeleteOneUseCase implements IUserBookmarkDeleteOneUseCa
     const { bookmarkId, session } = userBookmarkDeleteOneRequest;
 
     const result = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      sessionId: session?.id,
       bookmarkId,
       userId: session?.id,
     });

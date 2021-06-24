@@ -25,7 +25,8 @@ export class BookmarkGetAllPublicUseCase implements IBookmarkGetAllPublicUseCase
     const bookmarksWithUserBookmarkPromises = bookmarks.map(async (item) => {
       const sessionUserPartialBookmark = item?.bookmarksRelated?.find((item) => item?.userId === session?.id);
       const sessionUserBookmarked = !!sessionUserPartialBookmark?.id;
-      const sessionUserBookmarkTemporary = !!sessionUserBookmarked && (await this.bookmarkRepo.bookmarkGetOne({ bookmarkId: sessionUserPartialBookmark?.id }));
+      const sessionUserBookmarkTemporary =
+        !!sessionUserBookmarked && (await this.bookmarkRepo.bookmarkGetOne({ bookmarkId: sessionUserPartialBookmark?.id, sessionId: session?.id }));
       const sessionUserBookmark = sessionUserBookmarked ? sessionUserBookmarkTemporary : item;
 
       return sessionUserBookmark;

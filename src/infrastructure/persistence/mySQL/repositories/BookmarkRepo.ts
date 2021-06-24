@@ -4,13 +4,13 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class BookmarkRepo implements IBookmarkRepo {
-  public async bookmarkGetOne({ bookmarkId }) {
+  public async bookmarkGetOne({ sessionId, bookmarkId }) {
     const mySQL = new MySQL();
 
     try {
-      const bookmarkGetOneQuery = 'CALL bookmark_get_one(?)';
+      const bookmarkGetOneQuery = 'CALL bookmark_get_one(?, ?)';
 
-      const [[bookmark]] = await mySQL.query(bookmarkGetOneQuery, [bookmarkId]);
+      const [[bookmark]] = await mySQL.query(bookmarkGetOneQuery, [sessionId, bookmarkId]);
 
       return bookmark;
     } catch (err) {

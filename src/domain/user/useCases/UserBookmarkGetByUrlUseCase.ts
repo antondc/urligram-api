@@ -26,6 +26,7 @@ export class UserBookmarkGetByUrlUseCase implements IUserBookmarkGetByUrlUseCase
     const path = parsedUrl.getPathAndSearch();
 
     const bookmark = await this.userRepo.userBookmarkGetOneByUserIdPathDomain({
+      sessionId: session?.id,
       path,
       domain,
       userId: session?.id,

@@ -14,8 +14,8 @@ export class TagBookmarkGetAllPublicUseCase implements ITagBookmarkGetAllPublicU
   }
 
   public async execute(tagBookmarkGetAllPublic: ITagBookmarkGetAllPublicRequest): Promise<ITagBookmarkGetAllPublicResponse> {
-    const { tagId } = tagBookmarkGetAllPublic;
-    const response = await this.tagRepo.tagBookmarkGetAllPublic({ tagId });
+    const { tagId, session } = tagBookmarkGetAllPublic;
+    const response = await this.tagRepo.tagBookmarkGetAllPublic({ sessionId: session?.id, tagId });
 
     return response;
   }

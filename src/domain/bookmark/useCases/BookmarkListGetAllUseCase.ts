@@ -17,7 +17,7 @@ export class BookmarkListGetAllUseCase implements IBookmarkListGetAllUseCase {
   public async execute(bookmarkListGetAllRequest: IBookmarkListGetAllRequest): Promise<IBookmarkListGetAllResponse> {
     const { bookmarkId, session } = bookmarkListGetAllRequest;
 
-    const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId });
+    const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId, sessionId: session?.id });
     if (bookmark.isPrivate && session?.id !== bookmark.userId) throw new RequestError('Bookmark is private', 403, { message: '403 Forbidden' }); // (1)
 
     const bookmarkLists = await this.bookmarkRepo.bookmarkListGetAll({ bookmarkId });

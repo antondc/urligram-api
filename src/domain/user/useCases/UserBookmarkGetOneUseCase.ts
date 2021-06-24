@@ -21,6 +21,7 @@ export class UserBookmarkGetOneUseCase implements IUserBookmarkGetOneUseCase {
     const { bookmarkId, session } = userBookmarkGetOneRequest;
 
     const bookmark = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      sessionId: session?.id,
       bookmarkId,
       userId: session?.id,
     }); // (1)

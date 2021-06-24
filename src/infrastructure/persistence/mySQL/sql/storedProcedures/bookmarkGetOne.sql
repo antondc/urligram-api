@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS bookmark_get_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE bookmark_get_one(
+  IN $SESSION_ID VARCHAR(40),
   IN $BOOKMARK_ID INT
 )
 
@@ -82,7 +83,45 @@ BEGIN
         )
       FROM `bookmark`
       WHERE bookmark.link_id = link.id
-    ) AS bookmarksRelated
+    ) AS bookmarksRelated,
+    (
+      SELECT
+        IF(
+          COUNT(userBookmarkUser.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'senderId', `userBookmarkUser`.`user_id1`,
+              'receiverId', `userBookmarkUser`.`user_id2`,
+              'viewed', `userBookmarkUser`.`viewed`
+            )
+          )
+        )
+      FROM `userBookmarkUser`
+      WHERE
+        userBookmarkUser.bookmark_id = bookmark.id
+        AND
+        userBookmarkUser.user_id2 = $SESSION_ID
+    ) AS bookmarkReceivedFrom,
+    (
+      SELECT
+        IF(
+          COUNT(userBookmarkUser.id) = 0,
+          JSON_ARRAY(),
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'senderId', `userBookmarkUser`.`user_id1`,
+              'receiverId', `userBookmarkUser`.`user_id2`,
+              'viewed', `userBookmarkUser`.`viewed`
+            )
+          )
+        )
+      FROM `userBookmarkUser`
+      WHERE
+        userBookmarkUser.bookmark_id = bookmark.id
+        AND
+        userBookmarkUser.user_id1 = $SESSION_ID
+    ) AS bookmarkSentTo
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id

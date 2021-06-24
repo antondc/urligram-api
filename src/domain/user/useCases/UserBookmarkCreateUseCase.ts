@@ -30,6 +30,7 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
     const path = parsedUrl.getPathAndSearch();
 
     const bookmarkExist = await this.userRepo.userBookmarkGetOneByUserIdPathDomain({
+      sessionId: session?.id,
       path,
       domain,
       userId: session?.id,
@@ -48,6 +49,7 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
     if (!result?.id) throw new RequestError('Bookmark creation failed', 500, { message: '500 Server Error' });
 
     const response = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
+      sessionId: session?.id,
       bookmarkId: result?.id,
       userId: session?.id,
     });
