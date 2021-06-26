@@ -6,6 +6,7 @@ import { QueryStringWrapper } from './QueryStringWrapper';
 interface Options {
   timeout?: number;
   credentials?: boolean;
+  contentType?: string;
 }
 
 export class HttpClient {
@@ -21,13 +22,19 @@ export class HttpClient {
       }),
     });
 
-    axiosInstance.defaults.timeout = options?.timeout;
+    if (!!options?.timeout) axiosInstance.defaults.timeout = options?.timeout;
     axiosInstance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     axiosInstance.defaults.paramsSerializer = this.paramsSerializer;
     axiosInstance.defaults.withCredentials = credentials;
 
     axiosInstance.interceptors.response.use(
-      (response) => response.data,
+      (response) => {
+        if (!!options?.contentType && !response?.headers['Content-Type'].includes(options?.contentType)) {
+          throw new Error("Received response doesn't match provided content-type");
+        }
+
+        return response.data;
+      },
       (err) => Promise.reject(err)
     );
 

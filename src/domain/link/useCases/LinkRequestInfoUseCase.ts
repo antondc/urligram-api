@@ -27,7 +27,7 @@ export class LinkRequestInfoUseCase implements ILinkRequestInfoUseCase {
     const origin = parsedUrl.getOrigin();
 
     try {
-      const httpClient = new HttpClient({ timeout: DEFAULT_REQUEST_TIMEOUT });
+      const httpClient = new HttpClient({ timeout: DEFAULT_REQUEST_TIMEOUT, contentType: 'html' });
       const html: string = await httpClient.publicInstance.get(urlWithDefaultProtocol);
       const htmlScraper = new HtmlScrapper(html);
       const title = htmlScraper.getTitle();
