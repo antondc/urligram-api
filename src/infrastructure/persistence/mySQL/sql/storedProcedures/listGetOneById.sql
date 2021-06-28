@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_get_one;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_get_one(
@@ -56,30 +56,33 @@ BEGIN
       ) subQuery
     ) AS tags,
     (
-      SELECT
-      JSON_ARRAYAGG(bookmark_list.bookmark_id)
-      FROM bookmark_list
-      INNER JOIN bookmark ON bookmark.id = bookmark_list.bookmark_id
-      WHERE
-        bookmark_list.list_id = list.id
-        -- If list is public, only return public bookmarks
-        -- if list is private, return private bookmarks as well
-        AND
-        (
+      SELECT JSON_ARRAYAGG(bookmark_id)
+      FROM (
+        SELECT
+          bookmark_list.bookmark_id
+        FROM bookmark_list
+        INNER JOIN bookmark ON bookmark.id = bookmark_list.bookmark_id
+        WHERE
+          bookmark_list.list_id = list.id
+          -- If list is public, only return public bookmarks
+          -- if list is private, return private bookmarks as well
+          AND
           (
-            bookmark.isPrivate IS NOT TRUE
-            AND
-            bookmark.isPrivate IS NOT TRUE
+            (
+              bookmark.isPrivate IS NOT TRUE
+              AND
+              bookmark.isPrivate IS NOT TRUE
+            )
+            OR
+            (
+              bookmark.isPrivate IS TRUE
+              AND
+              list.isPrivate IS TRUE
+            )
           )
-          OR
-          (
-            bookmark.isPrivate IS TRUE
-            AND
-            list.isPrivate IS TRUE
-          )
-        )
+        GROUP BY bookmark.link_id
+      ) AS derivedAlias
     ) AS bookmarksIds
-
     FROM `list`
     LEFT JOIN user_list ON list.id = user_list.list_id
     WHERE
@@ -97,6 +100,6 @@ BEGIN
 
 END
 
-/* DELIMITER ;
+-- DELIMITER ;
 
-CALL list_get_one(1, "11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000"); */
+-- CALL list_get_one(12, "e4e2bb46-c210-4a47-9e84-f45c789fcec1");

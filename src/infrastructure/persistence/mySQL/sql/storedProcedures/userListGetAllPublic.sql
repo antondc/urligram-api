@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_list_get_all;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_list_get_all(
@@ -35,6 +35,14 @@ BEGIN
         WHERE user_list.list_id = list.id AND user_list.user_id = $USER_ID
       ), "admin"
     ) userRole,
+    IFNULL(
+      (
+        SELECT
+        user_list.userListStatus
+        FROM user_list
+        WHERE user_list.list_id = list.id AND user_list.user_id = $USER_ID
+      ), "active"
+    ) userListStatus,
     (
       SELECT
         IF(COUNT(bookmark_list.bookmark_id) = 0, JSON_ARRAY(), JSON_ARRAYAGG(bookmark_list.bookmark_id))
@@ -112,6 +120,6 @@ BEGIN
 
 END
 
-/* DELIMITER ; */
+-- DELIMITER ;
 
-/* CALL user_list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', "e4e2bb46-c210-4a47-9e84-f45c789fcec1", "id", NULL,  NULL, '{"role": ["admin","reader","editor"]}'); */
+-- CALL user_list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL,  NULL, NULL);

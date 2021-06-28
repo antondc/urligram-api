@@ -140,7 +140,7 @@ BEGIN
          OR
         `user_list`.`user_id` = $SESSION_ID
       )
-  GROUP BY bookmark.id
+  GROUP BY bookmark.link_id
   ORDER BY
     CASE WHEN $SORT = 'id'                THEN `bookmark`.id      	  ELSE NULL END ASC,
     CASE WHEN $SORT = '-id'               THEN `bookmark`.id      	  ELSE NULL END DESC,
@@ -161,4 +161,4 @@ END
 
 -- DELIMITER ;
 
--- CALL list_bookmark_get_all(1, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL);
+-- CALL list_bookmark_get_all(12, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL);

@@ -23,8 +23,8 @@ BEGIN
   IFNULL(user.createdAt, user2.createdAt) AS `createdAt`,
   IFNULL(user.updatedAt, user2.updatedAt) AS `updatedAt`,
   IF(user.id IS NULL, user_list.userRole, "admin") AS `userRole`,
-  user_list.userListStatus AS userListStatus
-    FROM `list`
+  IF(user.id IS NULL, user_list.userListStatus, "active") AS `userListStatus`
+  FROM `list`
   LEFT JOIN `user` ON user.id = list.userId AND list.userId = $USER_ID
   LEFT JOIN `user_list` ON list.id = user_list.list_id AND user_list.list_id = $LIST_ID AND user_list.user_id = $USER_ID
   LEFT JOIN `user` user2 ON user_list.user_id = user2.id
