@@ -31,7 +31,8 @@ SELECT
           JSON_ARRAYAGG(
             JSON_OBJECT(
               'id', `user`.`id`,
-              'userRole', `user_list`.`userRole`
+              'userRole', `user_list`.`userRole`,
+              'userListStatus', `user_list`.`userListStatus`
             )
           )
         )

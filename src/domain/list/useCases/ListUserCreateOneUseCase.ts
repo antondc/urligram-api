@@ -18,7 +18,7 @@ export class ListUserCreateOneUseCase implements IListUserCreateOneUseCase {
   }
 
   public async execute(listUserCreateOneRequest: IListUserCreateOneRequest): Promise<IListUserCreateOneResponse> {
-    const { listId, userId, session } = listUserCreateOneRequest;
+    const { listId, userId, session, userRole } = listUserCreateOneRequest;
 
     const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' }); // (1)
@@ -33,10 +33,10 @@ export class ListUserCreateOneUseCase implements IListUserCreateOneUseCase {
     if (!!list.isPrivate && listSessionUser.userRole !== 'admin')
       throw new RequestError('You have no permission to edit this list', 403, { message: '403 Forbidden' });
 
-    if (!list.isPrivate) await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'active' });
+    if (!list.isPrivate) await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending', userRole });
 
     if (!!list.isPrivate && userId !== session?.id && listSessionUser.userRole === 'admin')
-      await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending' });
+      await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending', userRole });
 
     const listUserCreated = await this.listRepo.listUserGetOneByListId({ listId, userId: userId });
 

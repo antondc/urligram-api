@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS list_user_create_one;
 CREATE PROCEDURE list_user_create_one(
   IN $LIST_ID INT,
   IN $USER_ID TEXT,
+  IN $USER_ROLE TEXT,
   IN $USER_LIST_STATUS TEXT
 )
 
@@ -19,7 +20,7 @@ BEGIN
     $USER_ID,
     $LIST_ID,
     $USER_LIST_STATUS,
-    "reader"
+    $USER_ROLE
   );
 
   UPDATE

@@ -4,4 +4,4 @@ interface UserWithUserListRole extends User {
   userListRole?: string;
 }
 
-export type IListUserUpdateOneResponse = UserWithUserListRole;
+export type IListUserUpsertOneResponse = UserWithUserListRole;

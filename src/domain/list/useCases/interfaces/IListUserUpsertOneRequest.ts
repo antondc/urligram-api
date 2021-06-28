@@ -1,6 +1,6 @@
 import { User } from '@domain/user/entities/User';
 
-export type IListUserUpdateOneRequest = {
+export type IListUserUpsertOneRequest = {
   listId: number;
   userId: string;
   session: User;

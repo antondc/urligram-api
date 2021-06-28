@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 
-import { IListUserUpdateOneRequest } from '@domain/list/useCases/interfaces/IListUserUpdateOneRequest';
-import { IListUserUpdateOneUseCase } from '@domain/list/useCases/ListUserUpdateOneUseCase';
+import { IListUserUpsertOneRequest } from '@domain/list/useCases/interfaces/IListUserUpsertOneRequest';
+import { ListUserUpsertOneUseCase } from '@domain/list/useCases/ListUserUpsertOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-export class ListUserUpdateOneController extends BaseController {
-  useCase: IListUserUpdateOneUseCase;
+export class ListUserUpsertOneController extends BaseController {
+  useCase: ListUserUpsertOneUseCase;
 
-  constructor(useCase: IListUserUpdateOneUseCase) {
+  constructor(useCase: ListUserUpsertOneUseCase) {
     super();
 
     this.useCase = useCase;
@@ -22,29 +22,27 @@ export class ListUserUpdateOneController extends BaseController {
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
-    const listUserUpdateOne: IListUserUpdateOneRequest = {
+    const listUserUpsertOne: IListUserUpsertOneRequest = {
       listId: Number(listId),
       userId,
       userRole,
       session,
     };
 
-    const response = await this.useCase.execute(listUserUpdateOne);
+    const response = await this.useCase.execute(listUserUpsertOne);
 
     const formattedResponse = {
       links: {
         self: URL_SERVER + '/lists/' + listId + '/users/' + userId,
       },
-      data: [
-        {
-          type: 'user',
-          session: {
-            self: URL_SERVER + '/users/' + userId,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'user',
+        session: {
+          self: URL_SERVER + '/users/' + userId,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 

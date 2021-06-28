@@ -14,7 +14,7 @@ import { ListUserCreateOneUseCase } from '@domain/list/useCases/ListUserCreateOn
 import { ListUserDeleteOneUseCase } from '@domain/list/useCases/ListUserDeleteOneUseCase';
 import { ListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { ListUserGetOneUseCase } from '@domain/list/useCases/ListUserGetOneUseCase';
-import { ListUserUpdateOneUseCase } from '@domain/list/useCases/ListUserUpdateOneUseCase';
+import { ListUserUpsertOneUseCase } from '@domain/list/useCases/ListUserUpsertOneUseCase';
 import { ListBookmarkCreateOneController } from '@infrastructure/http/controllers/ListBookmarkCreateOneController';
 import { ListBookmarkDeleteOneController } from '@infrastructure/http/controllers/ListBookmarkDeleteOneController';
 import { ListBookmarkGetAllController } from '@infrastructure/http/controllers/ListBookmarkGetAllController';
@@ -29,7 +29,7 @@ import { ListUserCreateOneController } from '@infrastructure/http/controllers/Li
 import { ListUserDeleteOneController } from '@infrastructure/http/controllers/ListUserDeleteOneController';
 import { ListUserGetAllController } from '@infrastructure/http/controllers/ListUserGetAllController';
 import { ListUserGetOneController } from '@infrastructure/http/controllers/ListUserGetOneController';
-import { ListUserUpdateOneController } from '@infrastructure/http/controllers/ListUserUpdateOneController';
+import { ListUserUpsertOneController } from '@infrastructure/http/controllers/ListUserUpsertOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
@@ -120,10 +120,10 @@ ListsRoute.post('/:listId/users/:userId', async (req: Request, res: Response, ne
 ListsRoute.put('/:listId/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
   const userRepo = new UserRepo();
-  const listUserUpdateOneUseCase = new ListUserUpdateOneUseCase(listRepo, userRepo);
-  const listUserUpdateOneController = new ListUserUpdateOneController(listUserUpdateOneUseCase);
+  const listUserUpsertOneUseCase = new ListUserUpsertOneUseCase(listRepo, userRepo);
+  const listUserUpsertOneController = new ListUserUpsertOneController(listUserUpsertOneUseCase);
 
-  const response = await listUserUpdateOneController.execute(req, res, next);
+  const response = await listUserUpsertOneController.execute(req, res, next);
 
   return response;
 });

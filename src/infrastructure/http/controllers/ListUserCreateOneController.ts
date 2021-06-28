@@ -18,10 +18,13 @@ export class ListUserCreateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { listId, userId } = req.params;
+    const { userRole } = req.body;
+
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const listUserCreateOne: IListUserCreateOneRequest = {
+      userRole,
       listId: Number(listId),
       userId,
       session,

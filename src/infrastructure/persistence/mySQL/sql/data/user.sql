@@ -41,7 +41,7 @@ INSERT INTO `user` (
 ),
 (
   '11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000',
-  'User3',
+  'Test',
   'user',
   'hello1@example.com',
   'https://loremflickr.com/300/300/portrait',

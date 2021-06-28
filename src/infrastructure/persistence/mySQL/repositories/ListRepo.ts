@@ -157,13 +157,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUserCreateOne({ listId, userId, userListStatus }) {
+  public async listUserCreateOne({ listId, userId, userRole, userListStatus }) {
     const mySQL = new MySQL();
 
     try {
-      const listUserCreateOneQuery = 'CALL list_user_create_one(?, ?, ?)';
+      const listUserCreateOneQuery = 'CALL list_user_create_one(?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listUserCreateOneQuery, [listId, userId, userListStatus]);
+      const [[results]] = await mySQL.query(listUserCreateOneQuery, [listId, userId, userRole, userListStatus]);
 
       return results;
     } catch (err) {

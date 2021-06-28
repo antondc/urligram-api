@@ -70,7 +70,8 @@ BEGIN
             JSON_ARRAYAGG(
               JSON_OBJECT(
                 'id', `user_list`.list_id,
-                'userRole', `user_list`.userRole
+                'userRole', `user_list`.userRole,
+                'userListStatus', `user_list`.`userListStatus`
               )
             )
           )

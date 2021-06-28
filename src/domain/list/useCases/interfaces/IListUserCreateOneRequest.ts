@@ -4,4 +4,5 @@ export type IListUserCreateOneRequest = {
   listId: number;
   userId: string;
   session: User;
+  userRole: 'reader' | 'editor';
 };
