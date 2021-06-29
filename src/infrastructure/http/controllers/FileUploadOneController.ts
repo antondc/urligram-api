@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { IFileUploadOneUseCase } from '@domain/file/useCases/FileUploadOneUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class FileUploadOneController extends BaseController {
@@ -19,7 +19,7 @@ export class FileUploadOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/images/upload/single',
+        self: URL_SERVER + PATH_API_V1 + '/images/upload/single',
       },
       data: {
         image: `${URL_SERVER}/${response?.path}`,

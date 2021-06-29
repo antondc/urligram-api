@@ -4,7 +4,7 @@ import { IBookmarkGetAllPublicUseCase } from '@domain/bookmark/useCases/Bookmark
 import { IBookmarkGetAllPublicRequest } from '@domain/bookmark/useCases/interfaces/IBookmarkGetAllPublicRequest';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -54,7 +54,7 @@ export class BookmarkGetAllPublicController extends BaseController {
         type: 'bookmark',
         id: item.id,
         links: {
-          self: URL_SERVER + '/bookmarks/' + item.id,
+          self: URL_SERVER + PATH_API_V1 + '/bookmarks/' + item.id,
         },
         attributes: item,
       };

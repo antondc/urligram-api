@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { ITagUserGetAllPublicRequest } from '@domain/tag/useCases/interfaces/ITagUserGetAllPublicRequest';
 import { ITagUserGetAllPublicUseCase } from '@domain/tag/useCases/TagUserGetAllPublicUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class TagUserGetAllPublicController extends BaseController {
@@ -26,7 +26,7 @@ export class TagUserGetAllPublicController extends BaseController {
         type: 'user',
         id: user.id,
         session: {
-          self: URL_SERVER + '/users/' + user.id,
+          self: URL_SERVER + PATH_API_V1 + '/users/' + user.id,
         },
         attributes: {
           ...user,
@@ -36,7 +36,7 @@ export class TagUserGetAllPublicController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/tags/' + tagId + '/users/',
+        self: URL_SERVER + PATH_API_V1 + '/tags/' + tagId + '/users/',
       },
       data: formattedUsers,
       included: [],

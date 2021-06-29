@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserCreateOneController extends BaseController {
@@ -27,13 +27,13 @@ export class UserCreateOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/me',
+        self: URL_SERVER + PATH_API_V1 + '/users/me',
       },
       data: {
         type: 'user',
         id: response.id,
         session: {
-          self: URL_SERVER + '/users/me',
+          self: URL_SERVER + PATH_API_V1 + '/users/me',
         },
         attributes: response,
         relationships: {},

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IListUserUpsertOneRequest } from '@domain/list/useCases/interfaces/IListUserUpsertOneRequest';
 import { ListUserUpsertOneUseCase } from '@domain/list/useCases/ListUserUpsertOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -33,12 +33,12 @@ export class ListUserUpsertOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/lists/' + listId + '/users/' + userId,
+        self: URL_SERVER + PATH_API_V1 + '/lists/' + listId + '/users/' + userId,
       },
       data: {
         type: 'user',
         session: {
-          self: URL_SERVER + '/users/' + userId,
+          self: URL_SERVER + PATH_API_V1 + '/users/' + userId,
         },
         attributes: response,
         relationships: {},

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { ILanguageGetOneRequest } from '@domain/language/useCases/interfaces/ILanguageGetOneRequest';
 import { ILanguageGetOneUseCase } from '@domain/language/useCases/LanguageGetOneUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class LanguageGetOneController extends BaseController {
@@ -23,7 +23,7 @@ export class LanguageGetOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/languages/' + response.slug,
+        self: URL_SERVER + PATH_API_V1 + '/languages/' + response.slug,
       },
       data: {
         type: 'language',

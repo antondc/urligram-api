@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserDeleteOneRequest } from '@domain/user/useCases/interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -27,14 +27,14 @@ export class UserDeleteOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/' + response?.userId,
+        self: URL_SERVER + PATH_API_V1 + '/users/' + response?.userId,
       },
       data: [
         {
           type: 'user',
           id: response?.userId,
           session: {
-            self: URL_SERVER + '/users/' + response?.userId,
+            self: URL_SERVER + PATH_API_V1 + '/users/' + response?.userId,
           },
           attributes: response,
           relationships: {},

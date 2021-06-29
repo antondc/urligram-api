@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { ILinkVoteOneRequest } from '@domain/link/useCases/interfaces/ILinkVoteOneRequest';
 import { ILinkVoteOneUseCase } from '@domain/link/useCases/LinkVoteOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -31,13 +31,13 @@ export class LinkVoteOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/links',
+        self: URL_SERVER + PATH_API_V1 + '/links',
       },
       data: {
         type: 'link',
         id: response.id,
         session: {
-          self: URL_SERVER + '/links/' + response.id,
+          self: URL_SERVER + PATH_API_V1 + '/links/' + response.id,
         },
         attributes: response,
       },

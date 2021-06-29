@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -40,7 +40,7 @@ export class ListGetAllController extends BaseController {
         type: 'list',
         id: item.id,
         session: {
-          self: URL_SERVER + '/lists/' + item.id,
+          self: URL_SERVER + PATH_API_V1 + '/lists/' + item.id,
         },
         attributes: {
           ...item,
@@ -51,7 +51,7 @@ export class ListGetAllController extends BaseController {
     const formattedResponse = {
       meta,
       lists: {
-        self: URL_SERVER + '/lists',
+        self: URL_SERVER + PATH_API_V1 + '/lists',
       },
       data: formattedLists,
     };

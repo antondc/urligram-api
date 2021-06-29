@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserFollowingDeleteRequest } from '@domain/user/useCases/interfaces/IUserFollowingDeleteRequest';
 import { IUserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingDeleteUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -31,7 +31,7 @@ export class UserFollowingDeleteController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/following/' + response.userId,
+        self: URL_SERVER + PATH_API_V1 + '/users/following/' + response.userId,
       },
       data: {
         success: true,

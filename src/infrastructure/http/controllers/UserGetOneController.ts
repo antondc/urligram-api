@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserGetOneRequest } from '@domain/user/useCases/interfaces/IUserGetOneRequest';
 import { IUserGetOneUseCase } from '@domain/user/useCases/UserGetOneUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -31,12 +31,12 @@ export class UserGetOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/' + userId,
+        self: URL_SERVER + PATH_API_V1 + '/users/' + userId,
       },
       data: {
         type: 'user',
         session: {
-          self: URL_SERVER + '/users/' + userId,
+          self: URL_SERVER + PATH_API_V1 + '/users/' + userId,
         },
         id: response?.id,
         attributes: response,

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { IUserLoginRequest } from '@domain/user/useCases/interfaces/IUserLoginRequest';
 import { IUserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
-import { ENDPOINT_CLIENTS, URL_SERVER } from '@shared/constants/env';
+import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { URLWrapper } from '@shared/services/UrlWrapper';
 import { BaseController } from './BaseController';
@@ -29,13 +29,13 @@ export class UserLoginController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/me',
+        self: URL_SERVER + PATH_API_V1 + '/users/me',
       },
       data: {
         type: 'session',
         id: response.id,
         session: {
-          self: URL_SERVER + '/users/me',
+          self: URL_SERVER + PATH_API_V1 + '/users/me',
         },
         attributes: response,
         relationships: {},

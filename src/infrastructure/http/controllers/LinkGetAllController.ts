@@ -4,7 +4,7 @@ import { ILinkGetAllRequest } from '@domain/link/useCases/interfaces/ILinkGetAll
 import { ILinkGetAllUseCase } from '@domain/link/useCases/LinkGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -54,7 +54,7 @@ export class LinkGetAllController extends BaseController {
         type: 'link',
         id: item.id,
         session: {
-          self: URL_SERVER + '/links/' + item.id,
+          self: URL_SERVER + PATH_API_V1 + '/links/' + item.id,
         },
         attributes: {
           ...item,
@@ -65,7 +65,7 @@ export class LinkGetAllController extends BaseController {
     const formattedResponse = {
       meta,
       Links: {
-        self: URL_SERVER + '/links',
+        self: URL_SERVER + PATH_API_V1 + '/links',
       },
       data: formattedLinks,
       included: [],

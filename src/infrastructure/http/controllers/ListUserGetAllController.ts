@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IListUserGetAllRequest } from '@domain/list/useCases/interfaces/IListUserGetAllRequest';
 import { IListUserGetAllUseCase } from '@domain/list/useCases/ListUserGetAllUseCase';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -30,13 +30,13 @@ export class ListUserGetAllController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/lists/' + listId + '/users/',
+        self: URL_SERVER + PATH_API_V1 + '/lists/' + listId + '/users/',
       },
       data: [
         {
           type: 'user',
           session: {
-            self: URL_SERVER + '/users/',
+            self: URL_SERVER + PATH_API_V1 + '/users/',
           },
           attributes: response,
           relationships: {},

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { ILinkTagGetAllRequest } from '@domain/link/useCases/interfaces/ILinkTagGetAllRequest';
 import { ILinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllPublicUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class LinkTagGetAllController extends BaseController {
@@ -34,7 +34,7 @@ export class LinkTagGetAllController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/links/' + linkId + '/tags',
+        self: URL_SERVER + PATH_API_V1 + '/links/' + linkId + '/tags',
       },
       data: formattedLinks,
       included: [],

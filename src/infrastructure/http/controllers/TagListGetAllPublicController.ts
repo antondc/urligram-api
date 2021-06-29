@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { ITagListGetAllPublicRequest } from '@domain/tag/useCases/interfaces/ITagListGetAllPublicRequest';
 import { ITagListGetAllPublicUseCase } from '@domain/tag/useCases/TagListGetAllPublicUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class TagListGetAllPublicController extends BaseController {
@@ -27,7 +27,7 @@ export class TagListGetAllPublicController extends BaseController {
         type: 'list',
         id: item.id,
         session: {
-          self: URL_SERVER + '/lists/' + item.id,
+          self: URL_SERVER + PATH_API_V1 + '/lists/' + item.id,
         },
         attributes: {
           ...item,
@@ -37,7 +37,7 @@ export class TagListGetAllPublicController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/tags/' + tagId + '/lists/',
+        self: URL_SERVER + PATH_API_V1 + '/tags/' + tagId + '/lists/',
       },
       data: formattedLists,
       included: [],

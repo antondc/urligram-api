@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserGetByIdsUseCase } from '@domain/user/useCases/UserGetByIdsUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -54,7 +54,7 @@ export class UserGetByIdsController extends BaseController {
         type: 'user',
         id: item.id,
         session: {
-          self: URL_SERVER + '/users/' + item.id,
+          self: URL_SERVER + PATH_API_V1 + '/users/' + item.id,
         },
         attributes: {
           ...item,
@@ -64,7 +64,7 @@ export class UserGetByIdsController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users',
+        self: URL_SERVER + PATH_API_V1 + '/users',
       },
       data: formattedUsers,
       included: [],

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserBookmarkUserCreateRequest } from '@domain/user/useCases/interfaces/IUserBookmarkUserCreateRequest';
 import { IUserBookmarkUserCreateUseCase } from '@domain/user/useCases/UserBookmarkUserCreateUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -31,12 +31,12 @@ export class UserBookmarkUserCreateController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/me' + '/' + bookmarkId,
+        self: URL_SERVER + PATH_API_V1 + '/users/me' + '/' + bookmarkId,
       },
       data: {
         type: 'link',
         session: {
-          self: URL_SERVER + '/users/me' + '/' + bookmarkId,
+          self: URL_SERVER + PATH_API_V1 + '/users/me' + '/' + bookmarkId,
         },
         attributes: response,
         relationships: {},

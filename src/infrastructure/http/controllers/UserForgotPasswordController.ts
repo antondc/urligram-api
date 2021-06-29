@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { IUserForgotPasswordRequest } from '@domain/user/useCases/interfaces/IUserForgotPasswordRequest';
 import { IUserForgotPasswordUseCase } from '@domain/user/useCases/UserForgotPasswordUseCase';
-import { ENDPOINT_CLIENTS, URL_SERVER } from '@shared/constants/env';
+import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { URLWrapper } from '@shared/services/UrlWrapper';
 import { BaseController } from './BaseController';
 
@@ -25,14 +25,14 @@ export class UserForgotPasswordController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/login',
-        next: URL_SERVER + '/reset-password',
+        self: URL_SERVER + PATH_API_V1 + '/login',
+        next: URL_SERVER + PATH_API_V1 + '/reset-password',
       },
       data: {
         type: 'session',
         success: response.success,
         login: {
-          self: URL_SERVER + '/login',
+          self: URL_SERVER + PATH_API_V1 + '/login',
         },
       },
 

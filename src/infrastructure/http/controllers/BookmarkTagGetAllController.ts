@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IBookmarkTagGetAllUseCase } from '@domain/bookmark/useCases/BookmarkTagGetAllUseCase';
 import { IBookmarkTagGetAllRequest } from '@domain/bookmark/useCases/interfaces/IBookmarkTagGetAllRequest';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -32,7 +32,7 @@ export class BookmarkTagGetAllController extends BaseController {
         type: 'tag',
         id: item.id,
         session: {
-          self: URL_SERVER + '/tags/' + item.id,
+          self: URL_SERVER + PATH_API_V1 + '/tags/' + item.id,
         },
         attributes: item,
       };
@@ -40,7 +40,7 @@ export class BookmarkTagGetAllController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/bookmarks/' + bookmarkId + '/tags',
+        self: URL_SERVER + PATH_API_V1 + '/bookmarks/' + bookmarkId + '/tags',
       },
       data: formattedLinks,
       included: [],

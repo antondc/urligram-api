@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 
+import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { ListBookmarkCreateOneUseCase } from '@domain/list/useCases/ListBookmarkCreateOneUseCase';
 import { ListBookmarkDeleteOneUseCase } from '@domain/list/useCases/ListBookmarkDeleteOneUseCase';
 import { ListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGetAllUseCase';
@@ -31,6 +32,7 @@ import { ListUserGetAllController } from '@infrastructure/http/controllers/ListU
 import { ListUserGetOneController } from '@infrastructure/http/controllers/ListUserGetOneController';
 import { ListUserUpsertOneController } from '@infrastructure/http/controllers/ListUserUpsertOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
+import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
@@ -78,7 +80,10 @@ ListsRoute.delete('/:listId', async (req: Request, res: Response, next: NextFunc
 
 ListsRoute.get('/:listId/bookmarks/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
-  const listBookmarkGetOneUseCase = new ListBookmarkGetOneUseCase(listRepo);
+  const linkRepo = new LinkRepo();
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
+  const listBookmarkGetOneUseCase = new ListBookmarkGetOneUseCase(listRepo,linkGetStatisticsUseCase);
   const listBookmarkGetOneController = new ListBookmarkGetOneController(listBookmarkGetOneUseCase);
 
   const response = await listBookmarkGetOneController.execute(req, res, next);
@@ -151,7 +156,10 @@ ListsRoute.put('/:listId', async (req: Request, res: Response, next: NextFunctio
 
 ListsRoute.get('/:listId/bookmarks', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
-  const listBookmarksUseCase = new ListBookmarkGetAllUseCase(listRepo);
+  const linkRepo = new LinkRepo();
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
+  const listBookmarksUseCase = new ListBookmarkGetAllUseCase(listRepo, linkGetStatisticsUseCase);
   const listBookmarksController = new ListBookmarkGetAllController(listBookmarksUseCase);
 
   const response = await listBookmarksController.execute(req, res, next);

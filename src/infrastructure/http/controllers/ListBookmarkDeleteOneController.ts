@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IListBookmarkDeleteOneRequest } from '@domain/list/useCases/interfaces/IListBookmarkDeleteOneRequest';
 import { IListBookmarkDeleteOneUseCase } from '@domain/list/useCases/ListBookmarkDeleteOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -31,12 +31,12 @@ export class ListBookmarkDeleteOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/lists/' + listId + '/bookmarks/' + response.bookmarkId,
+        self: URL_SERVER + PATH_API_V1 + '/lists/' + listId + '/bookmarks/' + response.bookmarkId,
       },
       data: {
         type: 'bookmark',
         session: {
-          self: URL_SERVER + '/bookmarks/' + response.bookmarkId,
+          self: URL_SERVER + PATH_API_V1 + '/bookmarks/' + response.bookmarkId,
         },
         attributes: response,
         relationships: {},

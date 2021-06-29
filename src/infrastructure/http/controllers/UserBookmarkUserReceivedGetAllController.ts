@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserBookmarkUserReceivedGetAllRequest } from '@domain/user/useCases/interfaces/IUserBookmarkUserReceivedGetAllRequest';
 import { IUserBookmarkUserReceivedGetAllUseCase } from '@domain/user/useCases/UserBookmarkUserReceivedGetAllUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -31,7 +31,7 @@ export class UserBookmarkUserReceivedGetAllController extends BaseController {
         type: 'link',
         id: item.bookmarkId,
         session: {
-          self: URL_SERVER + '/bookmarks/' + item.bookmarkId,
+          self: URL_SERVER + PATH_API_V1 + '/bookmarks/' + item.bookmarkId,
         },
         attributes: {
           ...item,
@@ -41,7 +41,7 @@ export class UserBookmarkUserReceivedGetAllController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/me' + '/',
+        self: URL_SERVER + PATH_API_V1 + '/users/me' + '/',
       },
       data: formattedBookmarks,
       included: [],

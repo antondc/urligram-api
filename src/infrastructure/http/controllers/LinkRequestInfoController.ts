@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { ILinkRequestInfoRequest } from '@domain/link/useCases/interfaces/ILinkRequestInfoRequest';
 import { ILinkRequestInfoUseCase } from '@domain/link/useCases/LinkRequestInfoUseCase';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 type LinkRequestInfoControllerQueryType = {
@@ -28,7 +28,7 @@ export class LinkRequestInfoController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/links',
+        self: URL_SERVER + PATH_API_V1 + '/links',
       },
       data: {
         type: 'link',

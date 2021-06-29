@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserRecommendedGetAllUseCase } from '@domain/user/useCases/UserRecommendedGetAllUseCase';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -41,7 +41,7 @@ export class UserRecommendedGetAllController extends BaseController {
         type: 'user',
         id: item.id,
         session: {
-          // self: URL_SERVER + '/users/' + item.id,
+          // self: URL_SERVER + PATH_API_V1 + '/users/' + item.id,
         },
         attributes: {
           ...item,
@@ -51,7 +51,7 @@ export class UserRecommendedGetAllController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/users/me/following',
+        self: URL_SERVER + PATH_API_V1 + '/users/me/following',
       },
       meta,
       data: formattedItems,

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { ITagGetAllRequest } from '@domain/tag/useCases/interfaces/ITagGetAllRequest';
 import { ITagGetAllUseCase } from '@domain/tag/useCases/TagGetAllUseCase';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -52,7 +52,7 @@ export class TagGetAllController extends BaseController {
         type: 'tag',
         id: item.id,
         session: {
-          self: URL_SERVER + '/tags/' + item.id,
+          self: URL_SERVER + PATH_API_V1 + '/tags/' + item.id,
         },
         attributes: {
           ...item,
@@ -62,7 +62,7 @@ export class TagGetAllController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/tags',
+        self: URL_SERVER + PATH_API_V1 + '/tags',
       },
       meta,
       data: formattedTags,

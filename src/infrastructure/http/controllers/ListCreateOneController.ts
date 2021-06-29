@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IListCreateOneRequest } from '@domain/list/useCases/interfaces/IListCreateOneRequest';
 import { IListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -32,13 +32,13 @@ export class ListCreateOneController extends BaseController {
 
     const formattedResponse = {
       lists: {
-        self: URL_SERVER + '/lists/',
+        self: URL_SERVER + PATH_API_V1 + '/lists/',
       },
       data: {
         type: 'list',
         id: response?.id,
         session: {
-          self: URL_SERVER + '/lists/' + response?.id,
+          self: URL_SERVER + PATH_API_V1 + '/lists/' + response?.id,
         },
         attributes: response,
         relationships: {},

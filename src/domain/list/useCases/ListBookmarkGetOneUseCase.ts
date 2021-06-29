@@ -1,3 +1,4 @@
+import { ILinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IListBookmarkGetOneRequest } from './interfaces/IListBookmarkGetOneRequest';
@@ -9,9 +10,11 @@ export interface IListBookmarkGetOneUseCase {
 
 export class ListBookmarkGetOneUseCase implements IListBookmarkGetOneUseCase {
   private listRepo: IListRepo;
+  private linkGetStatisticsUseCase: ILinkGetStatisticsUseCase;
 
-  constructor(listRepo: IListRepo) {
+  constructor(listRepo: IListRepo, linkGetStatisticsUseCase: ILinkGetStatisticsUseCase) {
     this.listRepo = listRepo;
+    this.linkGetStatisticsUseCase = linkGetStatisticsUseCase;
   }
 
   public async execute(listBookmarkGetOneRequest: IListBookmarkGetOneRequest): Promise<IListBookmarkGetOneResponse> {
@@ -23,11 +26,15 @@ export class ListBookmarkGetOneUseCase implements IListBookmarkGetOneUseCase {
 
     const bookmark = await this.listRepo.listBookmarkGetOne({ sessionId: session?.id, listId, bookmarkId });
     if (!bookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
+    const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: bookmark.linkId, session });
 
     const userInList = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
     if (!userInList && (!!list.isPrivate || !!bookmark.isPrivate)) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
-    return bookmark;
+    return {
+      ...bookmark,
+      statistics,
+    };
   }
 }
 

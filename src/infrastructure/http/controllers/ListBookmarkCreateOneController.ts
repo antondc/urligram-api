@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IListBookmarkCreateOneRequest } from '@domain/list/useCases/interfaces/IListBookmarkCreateOneRequest';
 import { IListBookmarkCreateOneUseCase } from '@domain/list/useCases/ListBookmarkCreateOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -31,12 +31,12 @@ export class ListBookmarkCreateOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + '/lists/' + listId + '/bookmarks/' + response.id,
+        self: URL_SERVER + PATH_API_V1 + '/lists/' + listId + '/bookmarks/' + response.id,
       },
       data: {
         type: 'bookmark',
         session: {
-          self: URL_SERVER + '/bookmarks/' + response.id,
+          self: URL_SERVER + PATH_API_V1 + '/bookmarks/' + response.id,
         },
         attributes: response,
         relationships: {},

@@ -1,3 +1,4 @@
+import { ILinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IListBookmarkGetAllRequest } from './interfaces/IListBookmarkGetAllRequest';
@@ -9,9 +10,11 @@ export interface IListBookmarkGetAllUseCase {
 
 export class ListBookmarkGetAllUseCase implements IListBookmarkGetAllUseCase {
   private listRepo: IListRepo;
+  private linkGetStatisticsUseCase: ILinkGetStatisticsUseCase;
 
-  constructor(listRepo: IListRepo) {
+  constructor(listRepo: IListRepo, linkGetStatisticsUseCase: ILinkGetStatisticsUseCase) {
     this.listRepo = listRepo;
+    this.linkGetStatisticsUseCase = linkGetStatisticsUseCase;
   }
 
   public async execute(listBookmarkGetAllRequest: IListBookmarkGetAllRequest): Promise<IListBookmarkGetAllResponse> {
@@ -21,11 +24,24 @@ export class ListBookmarkGetAllUseCase implements IListBookmarkGetAllUseCase {
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
     const { bookmarks, meta } = await this.listRepo.listBookmarkGetAll({ listId, sessionId: session?.id, sort, size, offset });
+    const bookmarksWithVotesPromises = bookmarks.map(async (item) => {
+      const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.linkId, session });
+
+      return {
+        ...item,
+        statistics,
+      };
+    });
+    const bookmarksWithVotes = await Promise.all(bookmarksWithVotesPromises);
+
     const userInList = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
 
     if (!userInList && !!list.isPrivate) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
-    return { bookmarks, meta };
+    return {
+      bookmarks: bookmarksWithVotes,
+      meta,
+    };
   }
 }
 

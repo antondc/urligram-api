@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IListUpdateOneRequest } from '@domain/list/useCases/interfaces/IListUpdateOneRequest';
 import { IListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
 import { User } from '@domain/user/entities/User';
-import { URL_SERVER } from '@shared/constants/env';
+import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
@@ -34,13 +34,13 @@ export class ListUpdateOneController extends BaseController {
 
     const formattedResponse = {
       lists: {
-        self: URL_SERVER + '/list',
+        self: URL_SERVER + PATH_API_V1 + '/list',
       },
       data: {
         type: 'list',
         id: response?.id,
         session: {
-          self: URL_SERVER + '/list',
+          self: URL_SERVER + PATH_API_V1 + '/list',
         },
         attributes: response,
         relationships: {},
