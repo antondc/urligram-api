@@ -29,7 +29,7 @@ export class HttpClient {
 
     axiosInstance.interceptors.response.use(
       (response) => {
-        if (!!options?.contentType && !response?.headers['Content-Type'].includes(options?.contentType)) {
+        if (!!options?.contentType && !response?.headers['content-type']?.includes(options?.contentType)) {
           throw new Error("Received response doesn't match provided content-type");
         }
 
