@@ -108,4 +108,4 @@ END
 
 /* DELIMITER ; */
 
-/* CALL user_get_one("9b360676-5b69-11eb-ae93-0242ac130002", "9b360676-5b69-11eb-ae93-0242ac130002", NULL, NULL); */
+/* CALL user_get_one(NULL, NULL, "hello@antoniodiaz.me", "hello@antoniodiaz.me"); */

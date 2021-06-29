@@ -3,6 +3,7 @@ import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
 import { PasswordHasher } from '@shared/services/PasswordHasher';
 import { TokenService } from '@shared/services/TokenService';
+import { User } from '../entities/User';
 import { IUserResetPasswordRequest } from './interfaces/IUserResetPasswordRequest';
 import { IUserResetPasswordResponse } from './interfaces/IUserResetPasswordResponse';
 
@@ -32,13 +33,14 @@ export class UserResetPasswordUseCase implements IUserResetPasswordUseCase {
     const passwordBuffer = await passwordHasher.hashPassword(password);
     const hashedPassword = await passwordHasher.bufferToHash(passwordBuffer);
 
-    const user = await this.userRepo.userResetPassword({ name, token, newPassword: hashedPassword });
-    if (!user?.id) throw new UserError('User not found', 404);
+    const userWithPasswordUpdated = await this.userRepo.userResetPassword({ name, token, newPassword: hashedPassword });
+    if (!userWithPasswordUpdated?.id) throw new UserError('User not found', 404);
 
-    const userFound = await this.userRepo.userGetOne({
-      userId: user?.id,
+    const userData = await this.userRepo.userGetOne({
+      userId: userWithPasswordUpdated?.id,
     });
+    const user = new User(userData);
 
-    return userFound;
+    return user;
   }
 }

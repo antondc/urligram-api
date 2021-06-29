@@ -15,7 +15,7 @@ INSERT INTO `user` (
   'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
   'Antonio',
   'admin',
-  'hello+1@antoniodiaz.me',
+  'hello@antoniodiaz.me',
   'https://dev.linking.me:3000/media/files/users/image/original/a7e8c43a-0b81-49e8-9dfd-1a5adb3e4a5a.jpg',
   'AAAAEAANUVdHjasyNC0fUFdAZg5Nl6m6a+RZyy8WxrYGWbaLF6xwCfFhW2Kw3hZtXZuWM/uq3wg=',
   'active',

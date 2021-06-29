@@ -11,7 +11,7 @@
     "HOST_SERVER": "dev.linking.me",
     "PORT_SERVER_HTTP": 0,
     "PORT_SERVER_HTTPS": 3000,
-    "ENDPOINT_CLIENTS": ["http://dev.linking.me", "https://dev.linking.me"],
+    "ENDPOINT_CLIENTS": ["https://dev.linking.me", "http://dev.linking.me"],
     "SECRET": "superSecret",
     "LOGGING": true,
     "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
