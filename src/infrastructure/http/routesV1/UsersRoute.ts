@@ -10,10 +10,6 @@ import { UserBookmarkGetByUrlUseCase } from '@domain/user/useCases/UserBookmarkG
 import { UserBookmarkGetOneUseCase } from '@domain/user/useCases/UserBookmarkGetOneUseCase';
 import { UserBookmarkImportUseCase } from '@domain/user/useCases/UserBookmarkImportUseCase';
 import { UserBookmarkUpdateUseCase } from '@domain/user/useCases/UserBookmarkUpdateUseCase';
-import { UserBookmarkUserCreateUseCase } from '@domain/user/useCases/UserBookmarkUserCreateUseCase';
-import { UserBookmarkUserReceivedGetAllUseCase } from '@domain/user/useCases/UserBookmarkUserReceivedGetAllUseCase';
-import { UserBookmarkUserSentGetAllUseCase } from '@domain/user/useCases/UserBookmarkUserSentGetAllUseCase';
-import { UserBookmarkUserUpdateUseCase } from '@domain/user/useCases/UserBookmarkUserUpdateUseCase';
 import { UserCreateConfirmationUseCase } from '@domain/user/useCases/UserCreateConfirmationUseCase';
 import { UserCreateOneUseCase } from '@domain/user/useCases/UserCreateOneUseCase';
 import { UserDeleteOneUseCase } from '@domain/user/useCases/UserDeleteOneUseCase';
@@ -36,7 +32,6 @@ import { UserBookmarkGetByUrlController } from '@infrastructure/http/controllers
 import { UserBookmarkGetOneController } from '@infrastructure/http/controllers/UserBookmarkGetOneController';
 import { UserBookmarkImportController } from '@infrastructure/http/controllers/UserBookmarkImportController';
 import { UserBookmarkUpdateController } from '@infrastructure/http/controllers/UserBookmarkUpdateController';
-import { UserBookmarkUserCreateController } from '@infrastructure/http/controllers/UserBookmarkUserCreateController';
 import { UserCreateConfirmationController } from '@infrastructure/http/controllers/UserCreateConfirmationController';
 import { UserCreateOneController } from '@infrastructure/http/controllers/UserCreateOneController';
 import { UserDeleteOneController } from '@infrastructure/http/controllers/UserDeleteOneController';
@@ -57,9 +52,6 @@ import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/Boo
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { UserBookmarkUserReceivedGetAllController } from '../controllers/UserBookmarkUserReceivedGetAllController';
-import { UserBookmarkUserSentGetAllController } from '../controllers/UserBookmarkUserSentGetAllController';
-import { UserBookmarkUserUpdateController } from '../controllers/UserBookmarkUserUpdateController';
 
 const UsersRoute = express.Router();
 
@@ -211,46 +203,6 @@ UsersRoute.get('/me/bookmarks/url', async (req: Request, res: Response, next: Ne
   const userBookarkGetByUrlController = new UserBookmarkGetByUrlController(userBookarkGetByUrlUseCase);
 
   const response = await userBookarkGetByUrlController.execute(req, res, next);
-
-  return response;
-});
-
-UsersRoute.post('/me/bookmarks/:bookmarkId/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new UserRepo();
-  const userBookmarkUserCreateUseCase = new UserBookmarkUserCreateUseCase(userRepo);
-  const userBookmarkUserCreateController = new UserBookmarkUserCreateController(userBookmarkUserCreateUseCase);
-
-  const response = await userBookmarkUserCreateController.execute(req, res, next);
-
-  return response;
-});
-
-UsersRoute.put('/me/bookmarks/received/:bookmarkId', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new UserRepo();
-  const userBookmarkUserUpdateUseCase = new UserBookmarkUserUpdateUseCase(userRepo);
-  const userBookmarkUserUpdateController = new UserBookmarkUserUpdateController(userBookmarkUserUpdateUseCase);
-
-  const response = await userBookmarkUserUpdateController.execute(req, res, next);
-
-  return response;
-});
-
-UsersRoute.get('/me/bookmarks/received', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new UserRepo();
-  const userBookmarkUserReceivedGetAllUseCase = new UserBookmarkUserReceivedGetAllUseCase(userRepo);
-  const userBookmarkUserReceivedGetAllController = new UserBookmarkUserReceivedGetAllController(userBookmarkUserReceivedGetAllUseCase);
-
-  const response = await userBookmarkUserReceivedGetAllController.execute(req, res, next);
-
-  return response;
-});
-
-UsersRoute.get('/me/bookmarks/sent', async (req: Request, res: Response, next: NextFunction) => {
-  const userRepo = new UserRepo();
-  const userBookmarkUserSentGetAllUseCase = new UserBookmarkUserSentGetAllUseCase(userRepo);
-  const userBookmarkUserSentGetAllController = new UserBookmarkUserSentGetAllController(userBookmarkUserSentGetAllUseCase);
-
-  const response = await userBookmarkUserSentGetAllController.execute(req, res, next);
 
   return response;
 });

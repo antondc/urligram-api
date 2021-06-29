@@ -12,14 +12,6 @@ import { IUserBookmarkGetOneByUserIdPathDomainRequest } from './interfaces/IUser
 import { IUserBookmarkGetOneByUserIdPathDomainResponse } from './interfaces/IUserBookmarkGetOneByUserIdPathDomainResponse';
 import { IUserBookmarkUpdateRequest } from './interfaces/IUserBookmarkUpdateRequest';
 import { IUserBookmarkUpdateResponse } from './interfaces/IUserBookmarkUpdateResponse';
-import { IUserBookmarkUserCreateRequest } from './interfaces/IUserBookmarkUserCreateRequest';
-import { IUserBookmarkUserCreateResponse } from './interfaces/IUserBookmarkUserCreateResponse';
-import { IUserBookmarkUserReceivedGetAllRequest } from './interfaces/IUserBookmarkUserReceivedGetAllRequest';
-import { IUserBookmarkUserReceivedGetAllResponse } from './interfaces/IUserBookmarkUserReceivedGetAllResponse';
-import { IUserBookmarkUserSentGetAllRequest } from './interfaces/IUserBookmarkUserSentGetAllRequest';
-import { IUserBookmarkUserSentGetAllResponse } from './interfaces/IUserBookmarkUserSentGetAllResponse';
-import { IUserBookmarkUserUpdateRequest } from './interfaces/IUserBookmarkUserUpdateRequest';
-import { IUserBookmarkUserUpdateResponse } from './interfaces/IUserBookmarkUserUpdateResponse';
 import { IUserCreateConfirmationRequest } from './interfaces/IUserCreateConfirmationRequest';
 import { IUserCreateConfirmationResponse } from './interfaces/IUserCreateConfirmationResponse';
 import { IUserCreateOneRequest } from './interfaces/IUserCreateOneRequest';
@@ -95,8 +87,4 @@ export interface IUserRepo {
   userTagsGetAll: (userTagsGetAllRequest: IUserTagsGetAllRequest) => Promise<IUserTagsGetAllResponse>;
   userForgotPassword: (userForgotPasswordRequest: IUserForgotPasswordRequest) => Promise<IUserForgotPasswordResponse>;
   userRecommended: (userRecommendedRequest: IUserRecommendedRequest) => Promise<IUserRecommendedResponse>;
-  userBookmarkUserCreate: (userBookmarkUserCreate: IUserBookmarkUserCreateRequest) => Promise<IUserBookmarkUserCreateResponse>;
-  userBookmarkUserUpdate: (userBookmarkUserUpdate: IUserBookmarkUserUpdateRequest) => Promise<IUserBookmarkUserUpdateResponse>;
-  userBookmarkUserReceivedGetAll: (userBookmarkUserReceivedGetAll: IUserBookmarkUserReceivedGetAllRequest) => Promise<IUserBookmarkUserReceivedGetAllResponse>;
-  userBookmarkUserSentGetAll: (userBookmarkUserSentGetAll: IUserBookmarkUserSentGetAllRequest) => Promise<IUserBookmarkUserSentGetAllResponse>;
 }

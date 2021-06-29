@@ -50,47 +50,7 @@ BEGIN
       JOIN `list` ON bookmark_list.list_id = list.id
       JOIN user_list ON user_list.list_id = list.id
       WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPrivate != 1
-    ) AS lists,
-    (
-      SELECT
-        IF(
-          COUNT(userBookmarkUser.id) = 0,
-          JSON_ARRAY(),
-          JSON_ARRAYAGG(
-            JSON_OBJECT(
-              'senderId', `userBookmarkUser`.`user_id1`,
-              'receiverId', `userBookmarkUser`.`user_id2`,
-              'viewed', `userBookmarkUser`.`viewed`,
-              'bookmarkId', `userBookmarkUser`.`bookmark_id`
-            )
-          )
-        )
-      FROM `userBookmarkUser`
-      WHERE
-        userBookmarkUser.bookmark_id = bookmark.id
-        AND
-        userBookmarkUser.user_id2 = $SESSION_ID
-    ) AS bookmarkReceivedFrom,
-    (
-      SELECT
-        IF(
-          COUNT(userBookmarkUser.id) = 0,
-          JSON_ARRAY(),
-          JSON_ARRAYAGG(
-            JSON_OBJECT(
-              'senderId', `userBookmarkUser`.`user_id1`,
-              'receiverId', `userBookmarkUser`.`user_id2`,
-              'viewed', `userBookmarkUser`.`viewed`,
-              'bookmarkId', `userBookmarkUser`.`bookmark_id`
-            )
-          )
-        )
-      FROM `userBookmarkUser`
-      WHERE
-        userBookmarkUser.bookmark_id = bookmark.id
-        AND
-        userBookmarkUser.user_id1 = $SESSION_ID
-    ) AS bookmarkSentTo
+    ) AS lists
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id
   INNER JOIN domain ON link.domain_id = domain.id

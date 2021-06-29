@@ -16,7 +16,7 @@ export class UserBookmarkImportController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { importFile } = req.body;
+    // const { importFile } = req.body;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
