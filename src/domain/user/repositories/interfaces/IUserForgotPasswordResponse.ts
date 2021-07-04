@@ -1,3 +1,3 @@
-import { User } from '@domain/user/entities/User';
-
-export type IUserForgotPasswordResponse = User;
+export type IUserForgotPasswordResponse = {
+  userId: string;
+};

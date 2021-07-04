@@ -35,10 +35,10 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
 
     console.log('token: ', token);
 
-    const userUpdated = await this.userRepo.userForgotPassword({ userId: user?.id, token });
-    if (!userUpdated) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
+    const response = await this.userRepo.userForgotPassword({ userId: user?.id, token });
+    if (!response?.userId) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
 
-    console.log('userUpdated?.id: ', userUpdated?.id);
+    console.log('response?.userId: ', response?.userId);
 
     const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
     const emailService = new MailService(connectionOptions);
