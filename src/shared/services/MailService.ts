@@ -32,9 +32,13 @@ export class MailService {
     return this.transporter
       .sendMail(mailOptions)
       .then((payload) => {
+        console.log('sccess');
+
         return { success: true, payload };
       })
       .catch((payload) => {
+        console.log('failure');
+
         return { success: false, payload };
       });
   }
