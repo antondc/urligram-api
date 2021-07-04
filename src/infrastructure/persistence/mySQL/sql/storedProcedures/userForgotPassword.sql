@@ -15,6 +15,6 @@ BEGIN
     id = $USER_ID;
 
   SELECT
-    $USER_ID;
+    $USER_ID as userId;
 
 END
