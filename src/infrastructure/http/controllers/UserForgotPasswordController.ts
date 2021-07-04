@@ -16,6 +16,9 @@ export class UserForgotPasswordController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { nameOrEmail } = req.body;
+    console.log('--------------------------------------------------------');
+    console.log('UserForgotPasswordController: ');
+    console.log('nameOrEmail: ', nameOrEmail);
 
     const userForgotPasswordRequest: IUserForgotPasswordRequest = {
       nameOrEmail,

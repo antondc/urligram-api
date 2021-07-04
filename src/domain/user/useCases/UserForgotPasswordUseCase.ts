@@ -21,14 +21,24 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
   public async execute(userLogin: IUserForgotPasswordRequest): Promise<IUserForgotPasswordResponse> {
     const { nameOrEmail } = userLogin;
 
+    console.log('--------------------------------------------------------');
+    console.log('IUserForgotPasswordUseCase: ');
+    console.log('nameOrEmail: ', nameOrEmail);
+
     const user = await this.userRepo.userGetOne({ name: nameOrEmail, email: nameOrEmail });
     if (!user) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
+
+    console.log('user?.id: ', user?.id);
 
     const tokenService = new TokenService();
     const token = tokenService.createToken({ name: user?.name });
 
+    console.log('token: ', token);
+
     const userUpdated = await this.userRepo.userForgotPassword({ userId: user?.id, token });
     if (!userUpdated) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
+
+    console.log('userUpdated?.id: ', userUpdated?.id);
 
     const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
     const emailService = new MailService(connectionOptions);
@@ -41,6 +51,7 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
 
     const { success } = await emailService.sendMail(emailOptions);
     if (!success) throw new UserError('Email incorrect', 409, 'email');
+    console.log('success: ', success);
 
     const sessionLogData = {
       result: 'success',
@@ -49,6 +60,9 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
     };
 
     await this.userRepo.userLogSession(sessionLogData);
+
+    console.log('sessionLogData: ', sessionLogData);
+    console.log('--------------------------------------------------------');
 
     return { success: true };
   }
