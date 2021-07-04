@@ -11,9 +11,9 @@ before_script:
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 stages:
-  # - install
+  - install
   # - test
-  # - build
+  - build
   - deploy_staging
   - deploy_production
 
@@ -21,13 +21,13 @@ cache:
   paths:
     - node_modules/
 
-# install:
-#   stage: install
-#   script:
-#     - npm install
-#   artifacts:
-#     paths:
-#       - node_modules/
+install:
+  stage: install
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
 
 # test:
 #   stage: test
@@ -37,10 +37,10 @@ cache:
 #     paths:
 #       - node_modules/
 
-# build:
-#   stage: build
-#   script:
-#     - npm run build
+build:
+  stage: build
+  script:
+    - npm run build
 
 deploy_staging:
   stage: deploy_staging
