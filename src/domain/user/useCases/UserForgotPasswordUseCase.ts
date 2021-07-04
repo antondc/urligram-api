@@ -41,6 +41,8 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
     console.log('response?.userId: ', response?.userId);
 
     const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
+    console.log('connectionOptions: ', connectionOptions);
+
     const emailService = new MailService(connectionOptions);
     const emailOptions = {
       from: EMAIL_USER,
