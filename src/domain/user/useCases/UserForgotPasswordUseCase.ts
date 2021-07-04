@@ -52,6 +52,9 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
     };
 
     const { success } = await emailService.sendMail(emailOptions);
+
+    console.log('success mailService: ', success);
+
     if (!success) throw new UserError('Email incorrect', 409, 'email');
     console.log('success: ', success);
 
