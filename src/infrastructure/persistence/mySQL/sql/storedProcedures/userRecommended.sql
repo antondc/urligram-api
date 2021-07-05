@@ -30,9 +30,7 @@ BEGIN
     `lists`,
     `users`,
     `link`,
-    `bookmarksRelated`,
-    `bookmarkReceivedFrom`,
-    `bookmarkSentTo`
+    `bookmarksRelated`
     FROM
     (
       (
