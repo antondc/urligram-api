@@ -47,8 +47,10 @@ BEGIN
       ON bookmark_tag.tag_id = tag.id
       WHERE bookmark.id = bookmark_tag.bookmark_id
     ) AS tags,
-    -- Returns only public lists or those where user is in
-    -- Unsorted
+    /*
+    Returns only public lists or those where user is in
+    Unsorted
+    */
     (
       SELECT
         CAST(
@@ -104,9 +106,10 @@ BEGIN
   LEFT JOIN bookmark_tag ON bookmark.id = bookmark_tag.bookmark_id
   LEFT JOIN tag ON tag.id = bookmark_tag.tag_id
   INNER JOIN domain ON link.domain_id = domain.id
-  WHERE
+  GROUP BY link.id
+  HAVING
     (
-      CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
+      CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(JSON_EXTRACT(tags, '$[*].name'), @filterTags) THEN TRUE END
       OR
       CASE WHEN @filterTags IS NULL THEN TRUE END
     )
@@ -116,7 +119,6 @@ BEGIN
       OR
       bookmark.`user_id` = $SESSION_ID
     )
-  GROUP BY link.id
   ORDER BY
     CASE WHEN $SORT = 'id'          THEN `bookmark`.id      	ELSE NULL END ASC,
     CASE WHEN $SORT = '-id'         THEN `bookmark`.id      	ELSE NULL END DESC,
@@ -134,4 +136,4 @@ END
 
 -- DELIMITER ;
 
--- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, NULL);
+-- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{"tags": ["design", "programming"]}');

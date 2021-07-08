@@ -88,7 +88,8 @@ BEGIN
   INNER JOIN domain ON link.domain_id = domain.id
   LEFT JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
   LEFT JOIN tag ON bookmark_tag.tag_id = tag.id
-  WHERE
+  GROUP BY bookmark.id
+  HAVING
       (
         (
           bookmark.`user_id` = $USER_ID
@@ -104,12 +105,10 @@ BEGIN
       )
       AND
       (
-        CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
+        CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(JSON_EXTRACT(tags, '$[*].name'), @filterTags) THEN TRUE END
         OR
         CASE WHEN @filterTags IS NULL THEN TRUE END
       )
-
-  GROUP BY bookmark.id
   ORDER BY
     CASE WHEN $SORT = 'id'                THEN `bookmark`.id      	ELSE NULL END ASC,
     CASE WHEN $SORT = '-id'               THEN `bookmark`.id      	ELSE NULL END DESC,

@@ -101,8 +101,9 @@ BEGIN
   LEFT JOIN bookmark_tag ON bookmark.id = bookmark_tag.bookmark_id
   LEFT JOIN tag ON tag.id = bookmark_tag.tag_id
   LEFT JOIN user_link ON user_link.link_id = link.id
-  WHERE
-    CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(@filterTags, JSON_QUOTE(tag.name)) THEN TRUE END
+  GROUP BY link.id
+  HAVING
+    CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(JSON_EXTRACT(tags, '$[*].name'), @filterTags) THEN TRUE END
     OR
     CASE WHEN @filterTags IS NULL THEN TRUE END
     AND (
@@ -110,7 +111,6 @@ BEGIN
       OR
       bookmark.`user_id` = $SESSION_ID
     )
-  GROUP BY link.id
   ORDER BY
     CASE WHEN $SORT = 'id'                THEN link.id      	          ELSE NULL END ASC,
     CASE WHEN $SORT = '-id'               THEN link.id      	          ELSE NULL END DESC,
