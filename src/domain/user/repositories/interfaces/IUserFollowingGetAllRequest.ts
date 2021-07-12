@@ -4,4 +4,7 @@ export interface IUserFollowingGetAllRequest {
   sort?: 'order' | '-order' | 'name' | '-name' | 'login' | '-login' | 'bookmarks' | '-bookmarks';
   size: number;
   offset: number;
+  filter: {
+    tags?: string;
+  };
 }

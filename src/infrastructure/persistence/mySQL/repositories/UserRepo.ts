@@ -177,11 +177,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowingGetAll({ sessionId, userId, sort, size, offset }) {
+  public async userFollowingGetAll({ sessionId, userId, sort, size, offset, filter }) {
     const mySQL = new MySQL();
     try {
-      const userFollowingGetAllQuery = 'CALL user_following_get_all(?, ?, ?, ?, ?)';
-      const [usersData] = await mySQL.query(userFollowingGetAllQuery, [sessionId, userId, sort, size, offset]);
+      const userFollowingGetAllQuery = 'CALL user_following_get_all(?, ?, ?, ?, ?, ?)';
+      const [usersData] = await mySQL.query(userFollowingGetAllQuery, [sessionId, userId, sort, size, offset, JSON.stringify(filter)]);
 
       const usersWithoutTotal = usersData.map((item) => ({ ...item, totalItems: undefined }));
 
@@ -266,11 +266,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userFollowerGetAll({ sessionId, userId, sort, size, offset }) {
+  public async userFollowerGetAll({ sessionId, userId, sort, size, offset, filter }) {
     const mySQL = new MySQL();
     try {
-      const userFollowerGetAllQuery = 'CALL user_follower_get_all(?, ?, ?, ?, ?)';
-      const [usersData] = await mySQL.query(userFollowerGetAllQuery, [sessionId, userId, sort, size, offset]);
+      const userFollowerGetAllQuery = 'CALL user_follower_get_all(?, ?, ?, ?, ?, ?)';
+      const [usersData] = await mySQL.query(userFollowerGetAllQuery, [sessionId, userId, sort, size, offset, JSON.stringify(filter)]);
 
       const usersWithoutTotal = usersData.map((item) => ({ ...item, totalItems: undefined }));
 

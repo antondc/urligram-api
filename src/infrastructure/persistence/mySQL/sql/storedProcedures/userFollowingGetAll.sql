@@ -7,11 +7,13 @@ CREATE PROCEDURE user_following_get_all(
   IN $USER_ID VARCHAR(40),
   IN $SORT VARCHAR(40),
   IN $SIZE INT,
-  IN $OFFSET INT
+  IN $OFFSET INT,
+  IN $FILTER JSON
 )
 
 BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
+  SET @filterTags  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
 
   SELECT
     count(*) OVER() as totalItems,
@@ -117,7 +119,7 @@ BEGIN
           FROM tag as subTag
           JOIN bookmark_tag ON bookmark_tag.tag_id = subTag.id
           JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
-          WHERE bookmark.user_id = user.id
+          WHERE bookmark.user_id = `following`.id
           AND
             (
               bookmark.isPrivate IS NOT TRUE
@@ -134,6 +136,12 @@ BEGIN
   LEFT JOIN `user_session_log` ON `user_session_log`.`user_id` = `following`.`id`
   WHERE `user`.`id` = $USER_ID
   GROUP BY `following`.`id`
+  HAVING
+    (
+      CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(JSON_EXTRACT(tags, '$[*].name'), @filterTags) THEN TRUE END
+      OR
+      CASE WHEN @filterTags IS NULL THEN TRUE END
+    )
   ORDER BY
     CASE WHEN $SORT = 'createdAt'    THEN `user_user`.createdAt	      ELSE NULL END ASC,
     CASE WHEN $SORT = '-createdAt'   THEN `user_user`.createdAt       ELSE NULL END DESC,
@@ -149,4 +157,4 @@ BEGIN
 END
 
 -- DELIMITER ;
--- CALL user_following_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL);
+-- CALL user_following_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL, '{"tags": ["vestido"]}');

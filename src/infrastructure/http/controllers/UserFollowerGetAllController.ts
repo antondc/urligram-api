@@ -15,6 +15,9 @@ type UserFollowerGetAllControllerQueryType = {
     size: string;
     offset: string;
   };
+  filter: {
+    tags?: string;
+  };
 };
 
 export class UserFollowerGetAllController extends BaseController {
@@ -27,14 +30,23 @@ export class UserFollowerGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort = DEFAULT_FOLLOWERS_GET_ALL_SORT, page: { size, offset } = {} } = req.query as UserFollowerGetAllControllerQueryType;
+    const { sort = DEFAULT_FOLLOWERS_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as UserFollowerGetAllControllerQueryType;
     const { userId } = req.params;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || undefined;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
-    const { users, meta } = await this.useCase.execute({ session, userId, sort, size: castedSize, offset: castedOffset });
+    const { users, meta } = await this.useCase.execute({
+      session,
+      userId,
+      sort,
+      size: castedSize,
+      offset: castedOffset,
+      filter: {
+        tags,
+      },
+    });
 
     const formattedItems = users.map((item) => {
       return {
