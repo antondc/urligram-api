@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_get_all;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 CREATE PROCEDURE user_get_all(
   IN $SESSION_ID VARCHAR(40),
@@ -14,6 +14,7 @@ BEGIN
 
   SET $SIZE = IFNULL($SIZE, -1);
   SET @filterName  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.name'));
+  SET @filterTags  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
 
   SELECT
     count(*) OVER() as totalItems,
@@ -99,13 +100,50 @@ BEGIN
         IF(COUNT(user_user.user_id1) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id1))
       FROM user_user
       WHERE user_user.user_id = user.id
-    ) AS following
+    ) AS following,
+    (
+      SELECT
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'id', tag.id,
+            'name', tag.name,
+            'count', tag.count
+          )
+        )
+      FROM
+        (
+          SELECT DISTINCT
+          subTag.id,
+          subTag.name,
+          COUNT(bookmark.id) as count
+          FROM tag as subTag
+          JOIN bookmark_tag ON bookmark_tag.tag_id = subTag.id
+          JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
+          WHERE bookmark.user_id = user.id
+          AND
+            (
+              bookmark.isPrivate IS NOT TRUE
+              OR
+              bookmark.user_id = $SESSION_ID
+            )
+          GROUP BY subTag.id
+          ORDER BY count DESC
+          ) as tag
+    ) AS tags
     FROM `user`
-    WHERE
-      CASE WHEN @filterName IS NOT NULL THEN CONVERT(UPPER(`user`.name) USING utf8) = CONVERT(UPPER(@filterName) USING utf8) END
-      OR
-      CASE WHEN @filterName IS NULL THEN TRUE END
     GROUP BY `user`.`id`
+    HAVING
+      (
+        CASE WHEN @filterName IS NOT NULL THEN CONVERT(UPPER(`user`.name) USING utf8) = CONVERT(UPPER(@filterName) USING utf8) END
+        OR
+        CASE WHEN @filterName IS NULL THEN TRUE END
+      )
+      AND
+      (
+        CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(JSON_EXTRACT(tags, '$[*].name'), @filterTags) THEN TRUE END
+        OR
+        CASE WHEN @filterTags IS NULL THEN TRUE END
+      )
     ORDER BY
       CASE WHEN $SORT = 'order'          THEN `user`.order      	                ELSE NULL END ASC,
       CASE WHEN $SORT = '-order'         THEN `user`.order      	                ELSE NULL END DESC,
@@ -126,6 +164,6 @@ BEGIN
 
 END
 
-/* DELIMITER ; */
+-- DELIMITER ;
 
-/* CALL user_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-following', NULL, NULL, '{"name": "antonio"}'); */
+-- CALL user_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-following', NULL, NULL, '{"tags": ["vestido"]}');

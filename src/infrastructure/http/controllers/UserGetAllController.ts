@@ -29,6 +29,7 @@ type UserGetAllControllerQueryType = {
   };
   filter?: {
     name?: string;
+    tags?: string;
   };
 };
 
@@ -42,7 +43,7 @@ export class UserGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort = DEFAULT_USER_GET_ALL_SORT, page: { size, offset } = {}, filter: { name } = {} } = req.query as UserGetAllControllerQueryType;
+    const { sort = DEFAULT_USER_GET_ALL_SORT, page: { size, offset } = {}, filter: { name, tags } = {} } = req.query as UserGetAllControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
@@ -57,6 +58,7 @@ export class UserGetAllController extends BaseController {
       offset: castedOffset,
       filter: {
         name,
+        tags,
       },
     });
 

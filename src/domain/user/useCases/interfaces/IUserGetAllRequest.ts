@@ -19,5 +19,6 @@ export type IUserGetAllRequest = {
   offset?: number;
   filter?: {
     name?: string;
+    tags?: string;
   };
 };

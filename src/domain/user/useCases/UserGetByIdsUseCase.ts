@@ -1,5 +1,4 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { IUserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
 import { User } from '../entities/User';
 import { IUserGetByIdsRequest } from './interfaces/IUserGetByIdsRequest';
 import { IUserGetByIdsResponse } from './interfaces/IUserGetByIdsResponse';
@@ -10,11 +9,9 @@ export interface IUserGetByIdsUseCase {
 
 export class UserGetByIdsUseCase implements IUserGetByIdsUseCase {
   private userRepo: IUserRepo;
-  private userTagsGetAllUseCase: IUserTagsGetAllUseCase;
 
-  constructor(userRepo: IUserRepo, userTagsGetAllUseCase: IUserTagsGetAllUseCase) {
+  constructor(userRepo: IUserRepo) {
     this.userRepo = userRepo;
-    this.userTagsGetAllUseCase = userTagsGetAllUseCase;
   }
 
   public async execute(userGetByIdsRequest: IUserGetByIdsRequest): Promise<IUserGetByIdsResponse> {
@@ -22,18 +19,8 @@ export class UserGetByIdsUseCase implements IUserGetByIdsUseCase {
 
     const { usersData } = await this.userRepo.userGetByIds({ sessionId: session?.id, userIds, sort, size, offset });
 
-    const usersWithTagsPromises = usersData.map(async (userData) => {
-      const user = new User(userData);
-      const { tags } = await this.userTagsGetAllUseCase.execute({ userId: user.id, session, sort: '-count', size: null, offset: null });
+    const users = usersData.map((userData) => new User(userData));
 
-      return {
-        ...user,
-        tags,
-      };
-    });
-
-    const usersWithTags = await Promise.all(usersWithTagsPromises);
-
-    return usersWithTags;
+    return users;
   }
 }

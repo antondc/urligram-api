@@ -98,7 +98,36 @@ BEGIN
         IF(COUNT(user_user.user_id1) = 0, JSON_ARRAY(), JSON_ARRAYAGG(user_user.user_id1))
       FROM user_user
       WHERE user_user.user_id = follower.id
-    ) AS following
+    ) AS following,
+    (
+      SELECT
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'id', tag.id,
+            'name', tag.name,
+            'count', tag.count
+          )
+        )
+      FROM
+        (
+          SELECT DISTINCT
+          subTag.id,
+          subTag.name,
+          COUNT(bookmark.id) as count
+          FROM tag as subTag
+          JOIN bookmark_tag ON bookmark_tag.tag_id = subTag.id
+          JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
+          WHERE bookmark.user_id = user.id
+          AND
+            (
+              bookmark.isPrivate IS NOT TRUE
+              OR
+              bookmark.user_id = $SESSION_ID
+            )
+          GROUP BY subTag.id
+          ORDER BY count DESC
+          ) as tag
+    ) AS tags
   FROM `user`
   INNER JOIN `user_user` ON `user`.id = `user_user`.`user_id`
   INNER JOIN `user` `follower` ON `follower`.`id` = `user_user`.`user_id`

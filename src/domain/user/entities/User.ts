@@ -39,6 +39,11 @@ export class User {
     id: number;
     userRole: 'reader' | 'editor' | 'admin';
   }[];
+  tags: {
+    id: number;
+    name: string;
+    count: number;
+  }[];
   activationToken?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -66,5 +71,6 @@ export class User {
     this.activationToken = user?.activationToken;
     this.createdAt = user?.createdAt;
     this.updatedAt = user?.updatedAt;
+    this.tags = user?.tags;
   }
 }

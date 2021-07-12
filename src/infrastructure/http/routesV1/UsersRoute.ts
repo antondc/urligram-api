@@ -57,8 +57,7 @@ const UsersRoute = express.Router();
 
 UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
-  const userGetAllUseCase = new UserGetAllUseCase(userRepo, userTagsGetAllUseCase);
+  const userGetAllUseCase = new UserGetAllUseCase(userRepo);
   const userGetAllController = new UserGetAllController(userGetAllUseCase);
 
   const response = await userGetAllController.execute(req, res, next);
@@ -68,8 +67,7 @@ UsersRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
 
 UsersRoute.get('/ids', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
-  const userGetByIdsUseCase = new UserGetByIdsUseCase(userRepo, userTagsGetAllUseCase);
+  const userGetByIdsUseCase = new UserGetByIdsUseCase(userRepo);
   const userGetByIdsController = new UserGetByIdsController(userGetByIdsUseCase);
 
   const response = await userGetByIdsController.execute(req, res, next);
@@ -79,8 +77,7 @@ UsersRoute.get('/ids', async (req: Request, res: Response, next: NextFunction) =
 
 UsersRoute.get('/:userId', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
-  const userGetOneUseCase = new UserGetOneUseCase(userRepo, userTagsGetAllUseCase);
+  const userGetOneUseCase = new UserGetOneUseCase(userRepo);
   const userGetOneController = new UserGetOneController(userGetOneUseCase);
 
   const response = await userGetOneController.execute(req, res, next);
@@ -131,8 +128,7 @@ UsersRoute.delete('/me', async (req: Request, res: Response, next: NextFunction)
 
 UsersRoute.get('/:userId/following', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
-  const userFollowingGetAllUserCase = new UserFollowingGetAllUseCase(userRepo, userTagsGetAllUseCase);
+  const userFollowingGetAllUserCase = new UserFollowingGetAllUseCase(userRepo);
   const userFollowingGetAllController = new UserFollowingGetAllController(userFollowingGetAllUserCase);
 
   const response = await userFollowingGetAllController.execute(req, res, next);
@@ -172,8 +168,7 @@ UsersRoute.delete('/me/following/:followedId', async (req: Request, res: Respons
 
 UsersRoute.get('/:userId/followers', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();
-  const userTagsGetAllUseCase = new UserTagsGetAllUseCase(userRepo);
-  const userFollowerGetAllUseCase = new UserFollowerGetAllUseCase(userRepo, userTagsGetAllUseCase);
+  const userFollowerGetAllUseCase = new UserFollowerGetAllUseCase(userRepo);
   const userFollowerGetAllController = new UserFollowerGetAllController(userFollowerGetAllUseCase);
 
   const response = await userFollowerGetAllController.execute(req, res, next);
