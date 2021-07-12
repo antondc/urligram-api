@@ -3,13 +3,13 @@ import { MySQL } from '@infrastructure/persistence/mySQL/services/MySQL';
 import { BaseError } from '@shared/errors/BaseError';
 
 export class ListRepo implements IListRepo {
-  public async listGetAll({ userId, sort, size, offset }) {
+  public async listGetAll({ userId, sort, size, offset, filter }) {
     const mySQL = new MySQL();
 
     try {
-      const listGetAllQuery = 'CALL list_get_all(?, ?, ?, ?)';
+      const listGetAllQuery = 'CALL list_get_all(?, ?, ?, ?, ?)';
 
-      const [list] = await mySQL.query(listGetAllQuery, [userId, sort, size, offset]);
+      const [list] = await mySQL.query(listGetAllQuery, [userId, sort, size, offset, JSON.stringify(filter)]);
 
       const resultsWithoutTotal = list.map((item) => ({ ...item, totalItems: undefined }));
 

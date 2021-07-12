@@ -15,6 +15,9 @@ type ListGetAllControllerQueryType = {
     size: string;
     offset: string;
   };
+  filter: {
+    tags?: string;
+  };
 };
 
 export class ListGetAllController extends BaseController {
@@ -26,14 +29,22 @@ export class ListGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort = DEFAULT_LIST_GET_ALL_SORT, page: { size, offset } = {} } = req.query as ListGetAllControllerQueryType;
+    const { sort = DEFAULT_LIST_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as ListGetAllControllerQueryType;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedSort = sort || undefined;
     const castedOffset = Number(offset) || undefined;
 
-    const { lists, meta } = await this.useCase.execute({ session, size: checkedSize, sort: checkedSort, offset: castedOffset });
+    const { lists, meta } = await this.useCase.execute({
+      session,
+      size: checkedSize,
+      sort: checkedSort,
+      offset: castedOffset,
+      filter: {
+        tags,
+      },
+    });
 
     const formattedLists = lists.map((item) => {
       return {
