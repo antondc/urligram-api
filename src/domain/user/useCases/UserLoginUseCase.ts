@@ -6,7 +6,7 @@ import { IUserLoginRequest } from './interfaces/IUserLoginRequest';
 import { IUserLoginResponse } from './interfaces/IUserLoginResponse';
 
 export interface IUserLoginUseCase {
-  execute: (userLogin: IUserLoginRequest) => Promise<User>;
+  execute: (userLogin: IUserLoginRequest) => Promise<IUserLoginResponse>;
 }
 
 export class UserLoginUseCase implements IUserLoginUseCase {
