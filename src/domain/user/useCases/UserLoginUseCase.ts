@@ -29,16 +29,29 @@ export class UserLoginUseCase implements IUserLoginUseCase {
     const isEqual = await passwordHasher.verifyPassword(password, hashBuffer);
     if (!isEqual) throw new AuthenticationError('Password not correct', 500, 'password');
 
-    const userAuthenticated = new User(userData);
+    const user = new User(userData);
 
+    const sessionData = {
+      id: user.id,
+      order: user.order,
+      name: user.name,
+      level: user.level,
+      email: user.email,
+      image: user.image,
+      status: user.status,
+      statement: user.statement,
+      location: user.location,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
     const sessionLogData = {
       result: 'success',
       type: 'login',
-      userId: userAuthenticated.id,
+      userId: sessionData.id,
     };
 
     await this.userRepo.userLogSession(sessionLogData);
 
-    return userAuthenticated;
+    return sessionData;
   }
 }
