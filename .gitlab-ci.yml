@@ -51,7 +51,7 @@ deploy_staging:
     - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && git pull origin staging"
     - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/linking_api_staging && nvm use --delete-prefix && git checkout staging && npm ci --verbose && npm run build && npm run copy:sql"
     - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && pm2 stop ./dist/src/infrastructure/http/http.js"
-    - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js"
+    - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name linking-api-staging"
 
 deploy_production:
   stage: deploy_production
@@ -62,4 +62,4 @@ deploy_production:
     - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && git pull origin master"
     - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/linking_api_production && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
     - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && pm2 stop ./dist/src/infrastructure/http/http.js"
-    - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js"
+    - ssh xum35s@ec2-3-64-180-27.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name linking-api-production"
