@@ -19,6 +19,7 @@ type UserListGetAllPublicControllerQueryType = {
   filter?: {
     role?: string[];
     lists?: string[];
+    tags?: string[];
   };
 };
 
@@ -34,7 +35,7 @@ export class UserListGetAllPublicController extends BaseController {
     const {
       sort = DEFAULT_LIST_GET_ALL_SORT,
       page: { size, offset } = {},
-      filter: { role, lists } = {},
+      filter: { role, lists, tags } = {},
     } = req.query as UserListGetAllPublicControllerQueryType;
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedOffset = Number(offset) || undefined;
@@ -51,6 +52,7 @@ export class UserListGetAllPublicController extends BaseController {
       filter: {
         role,
         lists,
+        tags,
       },
     };
 

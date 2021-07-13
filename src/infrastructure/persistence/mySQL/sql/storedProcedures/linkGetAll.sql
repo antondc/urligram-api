@@ -103,7 +103,7 @@ BEGIN
   LEFT JOIN user_link ON user_link.link_id = link.id
   GROUP BY link.id
   HAVING
-    CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(JSON_EXTRACT(tags, '$[*].name'), @filterTags) THEN TRUE END
+    CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(UPPER(JSON_EXTRACT(tags, '$[*].name')), UPPER(@filterTags)) THEN TRUE END
     OR
     CASE WHEN @filterTags IS NULL THEN TRUE END
     AND (

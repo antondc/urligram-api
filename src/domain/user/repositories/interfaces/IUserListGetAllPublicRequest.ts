@@ -7,5 +7,6 @@ export interface IUserListGetAllPublicRequest {
   filter?: {
     role?: string[];
     lists?: string[];
+    tags?: string[];
   };
 }

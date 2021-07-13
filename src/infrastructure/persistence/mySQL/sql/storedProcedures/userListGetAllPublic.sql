@@ -16,6 +16,7 @@ BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
   SET @filterRole  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.role'));
   SET @filterListName  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.lists'));
+  SET @filterTags  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
 
  SELECT
     count(*) OVER() as totalItems,
@@ -65,7 +66,37 @@ BEGIN
       FROM user_list
       INNER JOIN `user` ON `user`.`id` = user_list.user_id
       WHERE user_list.list_id = list.id
-    ) AS members
+    ) AS members,
+    (
+      SELECT
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'id', tag.id,
+            'name', tag.name,
+            'count', tag.count
+          )
+        )
+      FROM
+        (
+          SELECT DISTINCT
+          subTag.id,
+          subTag.name,
+          COUNT(bookmark.id) as count
+          FROM tag as subTag
+          JOIN bookmark_tag ON bookmark_tag.tag_id = subTag.id
+          JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
+          JOIN bookmark_list ON bookmark_list.bookmark_id = bookmark.id
+          WHERE bookmark_list.list_id = `list`.id
+          AND
+            (
+              bookmark.isPrivate IS NOT TRUE
+              OR
+              bookmark.user_id = $SESSION_ID
+            )
+          GROUP BY subTag.id
+          ORDER BY count DESC
+        ) as tag
+    ) AS tags
   FROM `list`
   LEFT JOIN user_list ON user_list.list_id = list.id
   WHERE
@@ -101,6 +132,12 @@ BEGIN
       OR CASE WHEN @filterListName IS NULL THEN TRUE END
     )
   GROUP BY list.id
+  HAVING
+    (
+      CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(UPPER(JSON_EXTRACT(tags, '$[*].name')), UPPER(@filterTags)) THEN TRUE END
+      OR
+      CASE WHEN @filterTags IS NULL THEN TRUE END
+    )
   ORDER BY
     CASE WHEN $SORT = 'id'          THEN `list`.id      	          ELSE NULL END ASC,
     CASE WHEN $SORT = '-id'         THEN `list`.id      	          ELSE NULL END DESC,
@@ -112,8 +149,8 @@ BEGIN
     CASE WHEN $SORT = '-updatedAt'  THEN `list`.updatedAt           ELSE NULL END DESC,
     CASE WHEN $SORT = 'bookmarks'   THEN JSON_LENGTH(bookmarksIds)  ELSE NULL END ASC,
     CASE WHEN $SORT = '-bookmarks'  THEN JSON_LENGTH(bookmarksIds)  ELSE NULL END DESC,
-    CASE WHEN $SORT = 'members'     THEN JSON_LENGTH(members)    ELSE NULL END ASC,
-    CASE WHEN $SORT = '-members'    THEN JSON_LENGTH(members)    ELSE NULL END DESC,
+    CASE WHEN $SORT = 'members'     THEN JSON_LENGTH(members)       ELSE NULL END ASC,
+    CASE WHEN $SORT = '-members'    THEN JSON_LENGTH(members)       ELSE NULL END DESC,
     CASE WHEN $SORT IS NULL         THEN `list`.id                  ELSE NULL END ASC
   LIMIT $OFFSET , $SIZE
   ;
