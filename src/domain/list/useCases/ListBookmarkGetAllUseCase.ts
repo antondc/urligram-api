@@ -18,12 +18,12 @@ export class ListBookmarkGetAllUseCase implements IListBookmarkGetAllUseCase {
   }
 
   public async execute(listBookmarkGetAllRequest: IListBookmarkGetAllRequest): Promise<IListBookmarkGetAllResponse> {
-    const { listId, session, sort, size, offset } = listBookmarkGetAllRequest;
+    const { listId, session, sort, size, offset, filter } = listBookmarkGetAllRequest;
 
     const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
-    const { bookmarks, meta } = await this.listRepo.listBookmarkGetAll({ listId, sessionId: session?.id, sort, size, offset });
+    const { bookmarks, meta } = await this.listRepo.listBookmarkGetAll({ listId, sessionId: session?.id, sort, size, offset, filter });
     const bookmarksWithVotesPromises = bookmarks.map(async (item) => {
       const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.linkId, session });
 

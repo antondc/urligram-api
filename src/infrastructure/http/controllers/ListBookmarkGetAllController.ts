@@ -17,6 +17,9 @@ type ListBookmarkGetAllControllerQueryType = {
     size: string;
     offset: string;
   };
+  filter: {
+    tags?: string[];
+  };
 };
 
 export class ListBookmarkGetAllController extends BaseController {
@@ -29,7 +32,11 @@ export class ListBookmarkGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort = DEFAULT_LIST_BOOKMARK_GET_ALL_SORT, page: { size, offset } = {} } = req.query as ListBookmarkGetAllControllerQueryType;
+    const {
+      sort = DEFAULT_LIST_BOOKMARK_GET_ALL_SORT,
+      page: { size, offset } = {},
+      filter: { tags } = {},
+    } = req.query as ListBookmarkGetAllControllerQueryType;
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedAfter = Number(offset) || undefined;
     const { listId } = req.params;
@@ -42,6 +49,9 @@ export class ListBookmarkGetAllController extends BaseController {
       sort,
       size: checkedSize,
       offset: checkedAfter,
+      filter: {
+        tags,
+      },
     };
 
     const { bookmarks, meta }: IListBookmarkGetAllResponse = await this.useCase.execute(listBookmarkGetAllRequest);

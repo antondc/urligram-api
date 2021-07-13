@@ -1,17 +1,19 @@
 DROP PROCEDURE IF EXISTS list_bookmark_get_all;
 
--- DELIMITER $$
+/* DELIMITER $$ */
 
 CREATE PROCEDURE list_bookmark_get_all(
   IN $LIST_ID INT,
   IN $SESSION_ID TEXT,
   IN $SORT TEXT,
   IN $SIZE INT,
-  IN $OFFSET INT
+  IN $OFFSET INT,
+  IN $FILTER JSON
 )
 
 BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
+  SET @filterTags  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
 
   SELECT
     count(*) OVER() AS totalItems,
@@ -101,6 +103,12 @@ BEGIN
         `user_list`.`user_id` = $SESSION_ID
       )
   GROUP BY bookmark.link_id
+  HAVING
+    (
+      CASE WHEN @filterTags IS NOT NULL AND JSON_CONTAINS(UPPER(JSON_EXTRACT(tags, '$[*].name')), UPPER(@filterTags)) THEN TRUE END
+      OR
+      CASE WHEN @filterTags IS NULL THEN TRUE END
+    )
   ORDER BY
     CASE WHEN $SORT = 'id'                THEN `bookmark`.id      	  ELSE NULL END ASC,
     CASE WHEN $SORT = '-id'               THEN `bookmark`.id      	  ELSE NULL END DESC,
@@ -119,6 +127,6 @@ BEGIN
 
 END
 
--- DELIMITER ;
+/* DELIMITER ; */
 
--- CALL list_bookmark_get_all(12, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL);
+/* CALL list_bookmark_get_all(10, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{"tags": ["Москва"]}'); */
