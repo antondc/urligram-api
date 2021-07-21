@@ -7,6 +7,7 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import logger from 'morgan';
+import { AddressInfo } from 'net';
 import path from 'path';
 
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
@@ -59,17 +60,25 @@ app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - Server - - - - - - - - - - - - - -*/
 // Try to load conf files for HTTPS. In any case, load HTTP server.
 try {
+  console.log('--------------------------------------------------------');
   // /* - - - - - - - - - - - SSL options - - - - - - - - - - - */
   const certOptions = {
     key: fs.readFileSync(path.resolve(process.cwd(), 'src/infrastructure/http/ssl/private.key')),
     cert: fs.readFileSync(path.resolve(process.cwd(), 'src/infrastructure/http/ssl/private.crt')),
   };
   const httpsServer = https.createServer(certOptions, app);
-  httpsServer.listen(PORT_SERVER_HTTPS);
+  httpsServer.listen(PORT_SERVER_HTTPS, () => {
+    const address = httpsServer.address() as AddressInfo;
+    console.log('=> App listening to HTTPS on port: ' + address.port);
+  });
 } catch {
   // Do nothing
 } finally {
   const httpServer = http.createServer(app);
-  httpServer.listen(PORT_SERVER_HTTP);
+  httpServer.listen(PORT_SERVER_HTTP, () => {
+    const address = httpServer.address() as AddressInfo;
+    console.log('=> App listening to HTTP on port: ' + address.port);
+    console.log('--------------------------------------------------------');
+  });
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

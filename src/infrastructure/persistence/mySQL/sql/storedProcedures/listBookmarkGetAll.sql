@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_bookmark_get_all;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 CREATE PROCEDURE list_bookmark_get_all(
   IN $LIST_ID INT,
@@ -47,6 +47,7 @@ BEGIN
       FROM user_link
       WHERE user_link.link_id = bookmark.link_id
     ) AS totalVote,
+    -- Retrieve all tags of the bookmarks related to this list
     (
       SELECT
         JSON_ARRAYAGG(
@@ -55,10 +56,16 @@ BEGIN
             'name', tag.name
           )
         )
-      FROM bookmark_tag
-      JOIN tag
-      ON bookmark_tag.tag_id = tag.id
-      WHERE bookmark.id = bookmark_tag.bookmark_id
+      FROM (
+        SELECT DISTINCT
+        subTag.id,
+        subTag.name
+        FROM link
+        INNER JOIN bookmark bookmark2 ON link.id = bookmark2.link_id
+        INNER JOIN bookmark_tag ON bookmark2.id = bookmark_tag.bookmark_id
+        INNER JOIN tag subTag ON bookmark_tag.tag_id = subTag.id
+        WHERE bookmark.link_id = link.id
+      ) as tag
     ) AS tags,
     (
       SELECT
@@ -124,9 +131,8 @@ BEGIN
   LIMIT $OFFSET , $SIZE
   ;
 
-
 END
 
-/* DELIMITER ; */
+-- DELIMITER ;
 
-/* CALL list_bookmark_get_all(10, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{"tags": ["Москва"]}'); */
+-- CALL list_bookmark_get_all(1, "e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, NULL);
