@@ -55,6 +55,7 @@ BEGIN
         WHERE bookmark_list.list_id = $LIST_ID
       ) subQuery
     ) AS tags,
+    -- Not grouped, return all duplicates
     (
       SELECT JSON_ARRAYAGG(bookmark_id)
       FROM (
@@ -80,7 +81,6 @@ BEGIN
               list.isPrivate IS TRUE
             )
           )
-        GROUP BY bookmark.link_id
       ) AS derivedAlias
     ) AS bookmarksIds
     FROM `list`

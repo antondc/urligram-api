@@ -23,6 +23,7 @@ SELECT DISTINCT
     `list`.`userId`,
     `list`.`createdAt`,
     `list`.`updatedAt`,
+    -- Not grouped, return all duplicates
     (
       SELECT JSON_ARRAYAGG(bookmark_id)
       FROM (
@@ -48,7 +49,6 @@ SELECT DISTINCT
               list.isPrivate IS TRUE
             )
           )
-        GROUP BY bookmark.link_id
       ) AS derivedAlias
     ) AS bookmarksIds,
     (
