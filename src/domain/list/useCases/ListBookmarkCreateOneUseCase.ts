@@ -34,6 +34,14 @@ export class ListBookmarkCreateOneUseCase implements IListBookmarkCreateOneUseCa
 
     const createdBookmarkInList = await this.listRepo.listBookmarkCreateOne({ listId, bookmarkId });
 
+    // (5)
+    const membersIds = list?.members.map((item) => item.id);
+    const usersToNotify = [...(membersIds || []), list?.userId].filter((item) => item !== session?.id);
+    const listMembersPromises = usersToNotify.map(async (item) => {
+      await this.listRepo.listBookmarkUserUpsertOne({ listId, bookmarkId, userId: item, pending: true });
+    });
+    await Promise.all(listMembersPromises);
+
     const result = await this.listRepo.listBookmarkGetOne({ sessionId: session?.id, listId, bookmarkId: createdBookmarkInList.bookmarkId });
 
     return result;
@@ -46,4 +54,6 @@ export class ListBookmarkCreateOneUseCase implements IListBookmarkCreateOneUseCa
   (2) Bookmark doesn't exists
   (3) User is not in that list, or is in that list as a reader
   (4) The bookmark is already in that list
+  Comments
+  (5) Add listUserBookmark table entry to track that user has new items for this list
 */

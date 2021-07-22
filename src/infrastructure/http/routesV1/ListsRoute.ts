@@ -5,6 +5,7 @@ import { ListBookmarkCreateOneUseCase } from '@domain/list/useCases/ListBookmark
 import { ListBookmarkDeleteOneUseCase } from '@domain/list/useCases/ListBookmarkDeleteOneUseCase';
 import { ListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGetAllUseCase';
 import { ListBookmarkGetOneUseCase } from '@domain/list/useCases/ListBookmarkGetOneUseCase';
+import { ListBookmarkUserUpsertOneUseCase } from '@domain/list/useCases/ListBookmarkUserUpsertOneUseCase';
 import { ListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
 import { ListDeleteOneUseCase } from '@domain/list/useCases/ListDeleteOneUseCase';
 import { ListGetAllUseCase } from '@domain/list/useCases/ListGetAllUseCase';
@@ -35,6 +36,7 @@ import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/Boo
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
+import { ListBookmarkUserUpsertOneController } from '../controllers/ListBookmarkUserUpsertOneController';
 
 const ListsRoute = express.Router();
 
@@ -83,7 +85,7 @@ ListsRoute.get('/:listId/bookmarks/:bookmarkId', async (req: Request, res: Respo
   const linkRepo = new LinkRepo();
   const bookmarkRepo = new BookmarkRepo();
   const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
-  const listBookmarkGetOneUseCase = new ListBookmarkGetOneUseCase(listRepo,linkGetStatisticsUseCase);
+  const listBookmarkGetOneUseCase = new ListBookmarkGetOneUseCase(listRepo, linkGetStatisticsUseCase);
   const listBookmarkGetOneController = new ListBookmarkGetOneController(listBookmarkGetOneUseCase);
 
   const response = await listBookmarkGetOneController.execute(req, res, next);
@@ -195,6 +197,16 @@ ListsRoute.get('/:listId/similar', async (req: Request, res: Response, next: Nex
   const listSimilarGetAllController = new ListSimilarGetAllController(listSimilarGetAllUseCase);
 
   const response = await listSimilarGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+ListsRoute.patch('/:listId/bookmarks/:bookmarkId/users/:userId', async (req: Request, res: Response, next: NextFunction) => {
+  const listRepo = new ListRepo();
+  const listBookmarkUserUpsertOneUseCase = new ListBookmarkUserUpsertOneUseCase(listRepo);
+  const listBookmarkUserUpsertOneController = new ListBookmarkUserUpsertOneController(listBookmarkUserUpsertOneUseCase);
+
+  const response = await listBookmarkUserUpsertOneController.execute(req, res, next);
 
   return response;
 });

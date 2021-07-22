@@ -19,6 +19,7 @@ export class StateRepo {
   private bookmark: string;
   private list: string;
   private bookmarkList: string;
+  private listBookmarkUser: string;
   private tag: string;
   private bookmarkTag: string;
   private userLink: string;
@@ -86,6 +87,7 @@ export class StateRepo {
   private listUserDeleteOneProcedure: string;
   private listTagsGetAllProcedure: string;
   private listSimilarGetAllProcedure: string;
+  private listBookmarkUserUpsertOne: string;
   private tagGetAllProcedure: string;
   private tagListGetAllPublicProcedure: string;
   private tagBookmarkGetAllPublicProcedure: string;
@@ -121,6 +123,7 @@ export class StateRepo {
     this.bookmark = fs.readFileSync(path.resolve(__dirname, '../sql/models/bookmark.sql')).toString();
     this.list = fs.readFileSync(path.resolve(__dirname, '../sql/models/list.sql')).toString();
     this.bookmarkList = fs.readFileSync(path.resolve(__dirname, '../sql/models/bookmarkList.sql')).toString();
+    this.listBookmarkUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/listBookmarkUser.sql')).toString();
     this.tag = fs.readFileSync(path.resolve(__dirname, '../sql/models/tag.sql')).toString();
     this.bookmarkTag = fs.readFileSync(path.resolve(__dirname, '../sql/models/bookmarkTag.sql')).toString();
     this.userLink = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLink.sql')).toString();
@@ -194,6 +197,7 @@ export class StateRepo {
     this.listUserDeleteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listUserDeleteOne.sql')).toString();
     this.listTagsGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listTagsGetAll.sql')).toString();
     this.listSimilarGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listSimilarGetAll.sql')).toString();
+    this.listBookmarkUserUpsertOne = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkUserUpsertOne.sql')).toString();
     this.tagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAll.sql')).toString();
     this.tagListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagListGetAllPublic.sql')).toString();
     this.tagBookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagBookmarkGetAllPublic.sql')).toString();
@@ -235,6 +239,7 @@ export class StateRepo {
         ...(!!RESTORE_MODELS && (await mySQL.query(this.bookmark))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.list))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.bookmarkList))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.listBookmarkUser))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.tag))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.bookmarkTag))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.userLink))),
@@ -302,6 +307,7 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listUserDeleteOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listTagsGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listSimilarGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listBookmarkUserUpsertOne))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagListGetAllPublicProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagBookmarkGetAllPublicProcedure))),
