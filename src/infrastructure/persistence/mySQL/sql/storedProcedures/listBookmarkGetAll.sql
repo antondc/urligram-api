@@ -29,6 +29,7 @@ BEGIN
     bookmark.saved,
     bookmark.createdAt,
     bookmark.updatedAt,
+    list_bookmark_user.viewPending,
     (
       SELECT
         COUNT(bookmark.id)
@@ -92,6 +93,12 @@ BEGIN
   JOIN domain ON link.domain_id               = domain.id
   JOIN `list` ON bookmark_list.list_id        = list.id
   LEFT JOIN user_list ON user_list.list_id    = list.id
+  LEFT JOIN list_bookmark_user ON
+    list_bookmark_user.list_id = $LIST_ID
+    AND
+    list_bookmark_user.bookmark_id = bookmark.id
+    AND
+    list_bookmark_user.user_id = $SESSION_ID
   WHERE
     list.id                                   = $LIST_ID
     AND

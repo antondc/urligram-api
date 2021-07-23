@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `list_bookmark_user` (
   `list_id` INT(11) NOT NULL,
   `bookmark_id` INT(11) NOT NULL,
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
-  `pending` TINYINT(1) NULL DEFAULT NULL,
+  `viewPending` TINYINT(1) NULL DEFAULT '0',
   PRIMARY KEY (`list_id`, `bookmark_id`, `user_id`),
   INDEX `fk_list_bookmark_user_list1_idx` (`list_id` ASC),
   INDEX `fk_list_bookmark_user_bookmark1_idx` (`bookmark_id` ASC),

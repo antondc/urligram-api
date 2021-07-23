@@ -20,6 +20,8 @@ export class Bookmark {
     title: string;
     userId: string;
   }[];
+  viewPending?: boolean;
+
   constructor(options) {
     this.id = options.id;
     this.title = options.title;
@@ -31,5 +33,6 @@ export class Bookmark {
     this.linkId = options.linkId;
     this.statistics = options.statistics;
     this.bookmarksRelated = options.bookmarksRelated;
+    this.viewPending = options.viewPending;
   }
 }

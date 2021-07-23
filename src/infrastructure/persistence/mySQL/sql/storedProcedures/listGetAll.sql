@@ -25,6 +25,7 @@ SELECT
     `list`.`userId`,
     `list`.`createdAt`,
     `list`.`updatedAt`,
+    list_bookmark_user.viewPending AS contentPending,
     (
       SELECT
         IF(
@@ -102,6 +103,12 @@ SELECT
     ) AS tags
     FROM `list`
     LEFT JOIN user_list   ON `list`.id = user_list.list_id
+    LEFT JOIN list_bookmark_user ON
+      list_bookmark_user.list_id = list.id
+      AND
+      list_bookmark_user.user_id = $SESSION_ID
+      AND
+      list_bookmark_user.viewPending = TRUE
     WHERE
       `list`.`isPrivate` IS NOT TRUE
       OR `list`.`userId`       = $SESSION_ID
@@ -133,4 +140,4 @@ END
 
 -- DELIMITER ;
 
--- CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', '-members', NULL, NULL, '{"tags": ["wishlist"]}');
+-- CALL list_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', NULL, NULL, NULL, NULL);
