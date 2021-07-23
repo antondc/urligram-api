@@ -6,7 +6,7 @@ CREATE PROCEDURE list_bookmark_user_upsert_one(
   IN $LIST_ID INT,
   IN $BOOKMARK_ID INT,
   IN $USER_ID TEXT,
-  IN $PENDING BOOLEAN
+  IN $VIEW_PENDING BOOLEAN
 )
 
 BEGIN
@@ -17,27 +17,27 @@ BEGIN
     `list_id`,
     `bookmark_id`,
     `user_id`,
-    `pending`
+    `viewPending`
   ) VALUES (
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),
     $LIST_ID,
     $BOOKMARK_ID,
     $USER_ID,
-    $PENDING
+    $VIEW_PENDING
   )
   ON DUPLICATE KEY UPDATE
     updatedAt = UNIX_TIMESTAMP(),
-    `pending` = $PENDING
+    `viewPending` = $VIEW_PENDING
   ;
 
   SELECT
+    id,
     createdAt,
     updatedAt,
     `list_id`,
     `bookmark_id`,
-    `user_id`,
-    `pending`
+    `viewPending`
   FROM list_bookmark_user
   WHERE
     `list_id`     = $LIST_ID

@@ -19,7 +19,6 @@ BEGIN
     `list`.`isPrivate`,
     `list`.`createdAt`,
     `list`.`updatedAt`,
-    list_bookmark_user.viewPending AS contentPending,
     (
       SELECT
         IF(
@@ -86,12 +85,6 @@ BEGIN
     ) AS bookmarksIds
     FROM `list`
     LEFT JOIN user_list ON list.id = user_list.list_id
-    LEFT JOIN list_bookmark_user ON
-      list_bookmark_user.list_id = $LIST_ID
-      AND
-      list_bookmark_user.user_id = $SESSION_ID
-      AND
-      list_bookmark_user.viewPending = TRUE
     WHERE
       `list`.`id` = $LIST_ID
       AND
@@ -109,4 +102,4 @@ END
 
 -- DELIMITER ;
 
--- CALL list_get_one(1, "e4e2bb46-c210-4a47-9e84-f45c789fcec1");
+-- CALL list_get_one(12, "e4e2bb46-c210-4a47-9e84-f45c789fcec1");

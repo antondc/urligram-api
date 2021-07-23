@@ -17,17 +17,16 @@ export class ListBookmarkUserUpsertOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { listId, bookmarkId, userId } = req.params;
-    const { pending } = req.body;
+    const { listId, bookmarkId } = req.params;
+    const { viewPending } = req.body;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
     const listBookmarkGetOneUseCase: IListBookmarkUserUpsertOneRequest = {
       listId: Number(listId),
       bookmarkId: Number(bookmarkId),
-      userId,
       session,
-      pending
+      viewPending,
     };
 
     const response = await this.useCase.execute(listBookmarkGetOneUseCase);

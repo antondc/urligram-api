@@ -15,7 +15,7 @@ export class ListBookmarkUserUpsertOneUseCase implements IListBookmarkUserUpsert
   }
 
   public async execute(listBookmarkUserUpsertOneRequest: IListBookmarkUserUpsertOneRequest): Promise<IListBookmarkUserUpsertOneResponse> {
-    const { session, listId, bookmarkId, userId, pending } = listBookmarkUserUpsertOneRequest;
+    const { session, listId, bookmarkId, viewPending } = listBookmarkUserUpsertOneRequest;
 
     const list = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
@@ -26,7 +26,7 @@ export class ListBookmarkUserUpsertOneUseCase implements IListBookmarkUserUpsert
     const userInList = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
     if (!userInList && (!!list.isPrivate || !!bookmark.isPrivate)) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
-    const listBookmarkUserUpdated = await this.listRepo.listBookmarkUserUpsertOne({ listId, bookmarkId, userId, pending });
+    const listBookmarkUserUpdated = await this.listRepo.listBookmarkUserUpsertOne({ listId, bookmarkId, userId: session?.id, viewPending });
 
     return listBookmarkUserUpdated;
   }

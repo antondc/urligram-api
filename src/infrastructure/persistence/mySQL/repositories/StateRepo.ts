@@ -88,6 +88,7 @@ export class StateRepo {
   private listTagsGetAllProcedure: string;
   private listSimilarGetAllProcedure: string;
   private listBookmarkUserUpsertOne: string;
+  private listBookmarkUserGetAll: string;
   private tagGetAllProcedure: string;
   private tagListGetAllPublicProcedure: string;
   private tagBookmarkGetAllPublicProcedure: string;
@@ -198,6 +199,7 @@ export class StateRepo {
     this.listTagsGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listTagsGetAll.sql')).toString();
     this.listSimilarGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listSimilarGetAll.sql')).toString();
     this.listBookmarkUserUpsertOne = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkUserUpsertOne.sql')).toString();
+    this.listBookmarkUserGetAll = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listBookmarkUserGetAll.sql')).toString();
     this.tagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagGetAll.sql')).toString();
     this.tagListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagListGetAllPublic.sql')).toString();
     this.tagBookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/tagBookmarkGetAllPublic.sql')).toString();
@@ -308,6 +310,7 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listTagsGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listSimilarGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listBookmarkUserUpsertOne))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listBookmarkUserGetAll))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagListGetAllPublicProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.tagBookmarkGetAllPublicProcedure))),

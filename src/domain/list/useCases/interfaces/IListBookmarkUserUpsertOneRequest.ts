@@ -4,6 +4,5 @@ export type IListBookmarkUserUpsertOneRequest = {
   session: User;
   listId: number;
   bookmarkId: number;
-  userId: string;
-  pending: boolean;
+  viewPending: boolean;
 };

@@ -18,7 +18,6 @@ BEGIN
     `link`.`favicon`,
     bookmark.isPrivate,
     bookmark.saved,
-    list_bookmark_user.viewPending,
     (
       SELECT
         IF(
@@ -41,12 +40,6 @@ BEGIN
   JOIN domain ON link.domain_id               = domain.id
   JOIN `list` ON bookmark_list.list_id        = list.id
   LEFT JOIN user_list ON user_list.list_id    = list.id
-  LEFT JOIN list_bookmark_user ON
-    list_bookmark_user.list_id = $LIST_ID
-    AND
-    list_bookmark_user.bookmark_id = $BOOKMARK_ID
-    AND
-    list_bookmark_user.user_id = $SESSION_ID
   WHERE
     `bookmark_list`.`list_id`                 = $LIST_ID
     AND `bookmark_list`.`bookmark_id`         = $BOOKMARK_ID
@@ -57,4 +50,4 @@ END
 
 -- DELIMITER ;
 
--- CALL list_bookmark_get_one("e4e2bb46-c210-4a47-9e84-f45c789fcec1", 1, 2);
+-- CALL list_bookmark_get_one(1, 1);

@@ -303,13 +303,29 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listBookmarkUserUpsertOne({ listId, bookmarkId, userId, pending }) {
+  public async listBookmarkUserUpsertOne({ listId, bookmarkId, userId, viewPending }) {
     const mySQL = new MySQL();
 
     try {
       const listBookmarkUserUpsertOneQuery = 'CALL list_bookmark_user_upsert_one(?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listBookmarkUserUpsertOneQuery, [listId, bookmarkId, userId, pending]);
+      const [[results]] = await mySQL.query(listBookmarkUserUpsertOneQuery, [listId, bookmarkId, userId, viewPending]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async listBookmarkUserGetAll({ userId }) {
+    const mySQL = new MySQL();
+
+    try {
+      const listBookmarkUserGetAllQuery = 'CALL list_bookmark_user_get_all(?)';
+
+      const [results] = await mySQL.query(listBookmarkUserGetAllQuery, [userId]);
 
       return results;
     } catch (err) {

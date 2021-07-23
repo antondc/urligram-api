@@ -15,7 +15,6 @@ export class List {
   tags: Tag[];
   createdAt: Date;
   updatedAt: Date;
-  contentPending?: boolean;
 
   constructor(options) {
     this.id = options.id;
@@ -29,6 +28,5 @@ export class List {
     this.tags = options.tags;
     this.createdAt = options.createdAt;
     this.updatedAt = options.updatedAt;
-    this.contentPending = options.contentPending;
   }
 }
