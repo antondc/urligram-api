@@ -14,9 +14,9 @@ export class BookmarkGetByIdsUseCase implements IBookmarkGetByIdsUseCase {
   }
 
   public async execute(bookmarkGetByIdsRequest: IBookmarkGetByIdsRequest): Promise<IBookmarkGetByIdsResponse> {
-    const { session, bookmarkIds } = bookmarkGetByIdsRequest;
+    const { session, ids } = bookmarkGetByIdsRequest;
 
-    const bookmarksData = await this.bookmarkRepo.bookmarkGetByIds({ sessionId: session?.id, bookmarkIds });
+    const bookmarksData = await this.bookmarkRepo.bookmarkGetByIds({ sessionId: session?.id, ids });
 
     return bookmarksData;
   }

@@ -1,4 +1,4 @@
 export type IBookmarkGetByIdsRequest = {
   sessionId: string;
-  bookmarkIds: string[];
+  ids: string[];
 };

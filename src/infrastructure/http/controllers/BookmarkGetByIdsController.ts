@@ -7,7 +7,7 @@ import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
 type BookmarkGetByIdsControllerQueryType = {
-  bookmarkIds: string[];
+  ids: string[];
 };
 
 export class BookmarkGetByIdsController extends BaseController {
@@ -20,12 +20,12 @@ export class BookmarkGetByIdsController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { bookmarkIds } = req.query as BookmarkGetByIdsControllerQueryType;
+    const { ids } = req.query as BookmarkGetByIdsControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
 
-    const users = await this.useCase.execute({ session, bookmarkIds });
+    const users = await this.useCase.execute({ session, ids });
 
     const formattedUsers = users.map((item) => {
       return {

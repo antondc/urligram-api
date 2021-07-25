@@ -65,12 +65,12 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
-  public async bookmarkGetByIds({ sessionId, bookmarkIds }) {
+  public async bookmarkGetByIds({ sessionId, ids }) {
     const mySQL = new MySQL();
 
     try {
       const bookmarkGetByIdsQuery = 'CALL bookmark_get_by_ids(?, ?)';
-      const [bookmarks] = await mySQL.query(bookmarkGetByIdsQuery, [sessionId, JSON.stringify(bookmarkIds)]);
+      const [bookmarks] = await mySQL.query(bookmarkGetByIdsQuery, [sessionId, JSON.stringify(ids)]);
 
       return bookmarks;
     } catch (err) {
