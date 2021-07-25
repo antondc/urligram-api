@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 
 import { BookmarkGetAllPublicUseCase } from '@domain/bookmark/useCases/BookmarkGetAllPublicUseCase';
+import { BookmarkGetByIdsUseCase } from '@domain/bookmark/useCases/BookmarkGetByIdsUseCase';
 import { BookmarkGetOneUseCase } from '@domain/bookmark/useCases/BookmarkGetOneUseCase';
 import { BookmarkListGetAllUseCase } from '@domain/bookmark/useCases/BookmarkListGetAllUseCase';
 import { BookmarkTagGetAllUseCase } from '@domain/bookmark/useCases/BookmarkTagGetAllUseCase';
@@ -11,6 +12,7 @@ import { BookmarkListGetAllController } from '@infrastructure/http/controllers/B
 import { BookmarkTagGetAllController } from '@infrastructure/http/controllers/BookmarkTagGetAllController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
+import { BookmarkGetByIdsController } from '../controllers/BookmarkGetByIdsController';
 
 const BookmarksRoute = express.Router();
 
@@ -55,6 +57,16 @@ BookmarksRoute.get('/:bookmarkId/lists', async (req: Request, res: Response, nex
   const bookmarkListGetAllController = new BookmarkListGetAllController(bookmarkListGetAllUseCase);
 
   const response = await bookmarkListGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+BookmarksRoute.get('/ids', async (req: Request, res: Response, next: NextFunction) => {
+  const bookmarkRepo = new BookmarkRepo();
+  const bookmarkGetByIdsUseCase = new BookmarkGetByIdsUseCase(bookmarkRepo);
+  const bookmarkGetByIdsController = new BookmarkGetByIdsController(bookmarkGetByIdsUseCase);
+
+  const response = await bookmarkGetByIdsController.execute(req, res, next);
 
   return response;
 });
