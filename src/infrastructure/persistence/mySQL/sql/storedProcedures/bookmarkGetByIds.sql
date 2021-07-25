@@ -10,7 +10,6 @@ CREATE PROCEDURE bookmark_get_by_ids(
 BEGIN
 
   SELECT
-    count(*) OVER() as totalItems,
     bookmark.id,
     bookmark.order,
     link.image as img,
