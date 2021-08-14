@@ -61,6 +61,7 @@ export class StateRepo {
   private bookmarkGetOneProcedure: string;
   private bookmarkGetAllPublicProcedure: string;
   private bookmarkGetAllByLinkIdProcedure: string;
+  private bookmarkGetByIds: string;
   private bookmarkTagGetAllProcedure: string;
   private bookmarkListGetAllProcedure: string;
   private linkGetOneProcedure: string;
@@ -172,6 +173,7 @@ export class StateRepo {
     this.bookmarkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetOne.sql')).toString();
     this.bookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetAllPublic.sql')).toString();
     this.bookmarkGetAllByLinkIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetAllByLinkId.sql')).toString();
+    this.bookmarkGetByIds = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetByIds.sql')).toString();
     this.bookmarkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkTagGetAll.sql')).toString();
     this.bookmarkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkListGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
@@ -283,6 +285,7 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetAllPublicProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetAllByLinkIdProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetByIds))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkTagGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkListGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkGetOneProcedure))),
