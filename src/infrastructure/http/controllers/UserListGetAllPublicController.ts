@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import { User } from '@domain/user/entities/User';
 import { IUserListGetAllPublicRequest } from '@domain/user/useCases/interfaces/IUserListGetAllPublicRequest';
 import { IUserListGetAllPublicUseCase } from '@domain/user/useCases/UserListGetAllPublicUseCase';
-import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
@@ -37,7 +36,7 @@ export class UserListGetAllPublicController extends BaseController {
       page: { size, offset } = {},
       filter: { role, lists, tags } = {},
     } = req.query as UserListGetAllPublicControllerQueryType;
-    const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
+    const checkedSize = Number(size) || undefined;
     const checkedOffset = Number(offset) || undefined;
     const { userId } = req.params;
     const tokenService = new TokenService();
