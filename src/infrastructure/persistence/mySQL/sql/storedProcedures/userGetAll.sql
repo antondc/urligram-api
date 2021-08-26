@@ -131,7 +131,6 @@ BEGIN
           ) as tag
     ) AS tags
     FROM `user`
-    GROUP BY `user`.`id`
     HAVING
       (
         CASE WHEN @filterName IS NOT NULL THEN CONVERT(UPPER(`user`.name) USING utf8) = CONVERT(UPPER(@filterName) USING utf8) END
