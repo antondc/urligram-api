@@ -30,7 +30,9 @@ BookmarksRoute.get('/', async (req: Request, res: Response, next: NextFunction) 
 
 BookmarksRoute.get('/ids', async (req: Request, res: Response, next: NextFunction) => {
   const bookmarkRepo = new BookmarkRepo();
-  const bookmarkGetByIdsUseCase = new BookmarkGetByIdsUseCase(bookmarkRepo);
+  const linkRepo = new LinkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
+  const bookmarkGetByIdsUseCase = new BookmarkGetByIdsUseCase(bookmarkRepo, linkGetStatisticsUseCase);
   const bookmarkGetByIdsController = new BookmarkGetByIdsController(bookmarkGetByIdsUseCase);
 
   const response = await bookmarkGetByIdsController.execute(req, res, next);
