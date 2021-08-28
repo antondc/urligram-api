@@ -20,6 +20,9 @@ BEGIN
       WHERE id = @link_id
   );
 
+  DELETE FROM list_bookmark_user
+  WHERE bookmark_id  = $BOOKMARK_ID;
+
   DELETE FROM bookmark_tag
   WHERE bookmark_id  = $BOOKMARK_ID;
 
