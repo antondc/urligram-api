@@ -9,7 +9,7 @@ import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-const DEFAULT_LIST_BOOKMARK_GET_ALL_SORT = '-vote';
+const DEFAULT_LIST_BOOKMARK_GET_ALL_SORT = '-createdAt';
 
 type ListBookmarkGetAllControllerQueryType = {
   sort: 'id' | '-id' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt' | 'vote' | '-vote' | 'timesbookmarked' | 'timesbookmarked';
