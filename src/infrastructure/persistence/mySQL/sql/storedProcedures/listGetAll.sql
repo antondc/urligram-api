@@ -48,25 +48,10 @@ SELECT
         SELECT
           bookmark_list.bookmark_id
         FROM bookmark_list
-        INNER JOIN bookmark ON bookmark.id = bookmark_list.bookmark_id
+        INNER JOIN bookmark     ON bookmark.id = bookmark_list.bookmark_id
+        INNER JOIN list subList ON subList.id     = bookmark_list.list_id
         WHERE
           bookmark_list.list_id = list.id
-          -- If list is public, only return public bookmarks
-          -- if list is private, return private bookmarks as well
-          AND
-          (
-            (
-              bookmark.isPrivate IS NOT TRUE
-              AND
-              bookmark.isPrivate IS NOT TRUE
-            )
-            OR
-            (
-              bookmark.isPrivate IS TRUE
-              AND
-              list.isPrivate IS TRUE
-            )
-          )
         GROUP BY bookmark.link_id
       ) AS derivedAlias
     ) AS bookmarksIds,
