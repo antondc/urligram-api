@@ -116,7 +116,7 @@ BEGIN
     )
     AND
     (
-      CASE WHEN @filterText IS NOT NULL AND bookmark.title LIKE CONCAT('%', @filterText, '%') THEN TRUE END
+      CASE WHEN @filterText IS NOT NULL AND UPPER(bookmark.title) LIKE CONCAT('%', UPPER(@filterText), '%') THEN TRUE END
       OR
       CASE WHEN @filterText IS NULL THEN TRUE END
     )
