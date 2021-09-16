@@ -13,6 +13,7 @@ CREATE PROCEDURE bookmark_get_all_public(
 BEGIN
   SET $SIZE = IFNULL($SIZE, -1);
   SET @filterTags  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.tags'));
+  SET @filterText  = JSON_UNQUOTE(JSON_EXTRACT($FILTER, '$.text'));
 
   SELECT
     count(*) OVER() as totalItems,
@@ -115,6 +116,12 @@ BEGIN
     )
     AND
     (
+      CASE WHEN @filterText IS NOT NULL AND bookmark.title LIKE CONCAT('%', @filterText, '%') THEN TRUE END
+      OR
+      CASE WHEN @filterText IS NULL THEN TRUE END
+    )
+    AND
+    (
       bookmark.isPrivate IS NOT TRUE
       OR
       bookmark.`user_id` = $SESSION_ID
@@ -136,4 +143,4 @@ END
 
 -- DELIMITER ;
 
--- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{"tags": ["design", "programming"]}');
+-- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{ "tags": [ "electronics" ], "text": "eard" }');

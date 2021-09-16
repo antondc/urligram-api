@@ -18,6 +18,7 @@ type BookmarkGetAllPublicControllerQueryType = {
   };
   filter?: {
     tags?: string[];
+    text?: string;
   };
 };
 
@@ -30,7 +31,7 @@ export class BookmarkGetAllPublicController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { sort = DEFAULT_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
+    const { sort = DEFAULT_SORT, page: { size, offset } = {}, filter: { tags, text } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
@@ -44,6 +45,7 @@ export class BookmarkGetAllPublicController extends BaseController {
       offset: checkedAfter,
       filter: {
         tags,
+        text,
       },
     };
 

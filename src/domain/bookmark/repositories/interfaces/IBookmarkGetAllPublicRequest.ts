@@ -5,5 +5,6 @@ export type IBookmarkGetAllPublicRequest = {
   offset: number;
   filter?: {
     tags?: string[];
+    text?: string;
   };
 };
