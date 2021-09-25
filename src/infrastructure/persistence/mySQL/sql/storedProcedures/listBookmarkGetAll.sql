@@ -96,7 +96,7 @@ BEGIN
     list.id                                   = $LIST_ID
     AND
       (
-        `list`.`isPrivate` IS NOT TRUE
+        `bookmark`.`isPrivate` IS NOT TRUE
         OR
         `list`.`userId`       = $SESSION_ID
          OR

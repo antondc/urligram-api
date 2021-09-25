@@ -12,8 +12,8 @@ INSERT INTO `bookmark` (
 VALUES (
     1,
     10000,
-    'A 5G future – O’Reilly',
-    0,
+    'PRIVATE — A 5G future – O’Reilly',
+    1,
     0,
     1619457303,
     1619647205,
