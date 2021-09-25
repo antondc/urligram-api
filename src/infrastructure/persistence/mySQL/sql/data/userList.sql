@@ -17,4 +17,14 @@ VALUES (
     'reader',
     'active',
     'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
+  ),
+  (
+    2,
+    10000,
+    NULL,
+    NULL,
+    13,
+    'editor',
+    'active',
+    'b95274c9-3d26-4ce3-98b2-77dce5bd7aae'
   );

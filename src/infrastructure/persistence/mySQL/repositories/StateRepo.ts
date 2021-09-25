@@ -110,6 +110,7 @@ export class StateRepo {
   private userListData: string;
   private userLoginData: string;
   private userUserData: string;
+  private listBookmarkUserData: string;
 
   constructor() {
     // Operational tables
@@ -222,6 +223,7 @@ export class StateRepo {
     this.userLinkData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLink.sql')).toString();
     this.userListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userList.sql')).toString();
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
+    this.listBookmarkUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/listBookmarkUser.sql')).toString();
   }
 
   public async resetContent() {
@@ -334,6 +336,7 @@ export class StateRepo {
         ...(!!RESTORE_DATA && (await mySQL.query(this.userListData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.userLoginData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.userUserData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.listBookmarkUserData))),
       };
     } catch (err) {
       mySQL.rollback();

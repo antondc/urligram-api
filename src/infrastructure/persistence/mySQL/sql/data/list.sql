@@ -107,4 +107,14 @@ VALUES (
     'b95274c9-3d26-4ce3-98b2-77dce5bd7aae',
     1622565881,
     1622565881
+  ),
+  (
+    13,
+    10000,
+    'Shared list',
+    'List shared by some users',
+    0,
+    'e4e2bb46-c210-4a47-9e84-f45c789fcec1',
+    1622565881,
+    1622565881
   );
