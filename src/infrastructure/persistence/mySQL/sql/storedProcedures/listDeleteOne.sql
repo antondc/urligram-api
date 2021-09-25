@@ -13,6 +13,9 @@ BEGIN
   DELETE FROM bookmark_list
   WHERE list_id = $LIST_ID;
 
+  DELETE FROM list_bookmark_user
+  WHERE list_id = $LIST_ID;
+
   DELETE FROM `list`
   WHERE id = $LIST_ID;
 
