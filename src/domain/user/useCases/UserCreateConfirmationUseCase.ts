@@ -4,6 +4,7 @@ import { IUserCreateConfirmationResponse } from '@domain/user/useCases/interface
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
 import { TokenService } from '@shared/services/TokenService';
+import { User } from '../entities/User';
 
 export interface IUserCreateConfirmationUseCase {
   execute: (userCreateConfirmationRequest: IUserCreateConfirmationRequest) => Promise<IUserCreateConfirmationResponse>;
@@ -26,22 +27,12 @@ export class UserCreateConfirmationUseCase implements IUserCreateConfirmationUse
     const activatedUser = await this.userRepo.userCreateConfirmation({ token });
     if (!activatedUser?.id) throw new UserError('User not found', 404);
 
-    const user = await this.userRepo.userGetOne({ userId: activatedUser?.id });
-    if (decodedToken?.name !== user?.name) throw new AuthenticationError('401 Unauthorized', 401);
-    if (!user?.id) throw new UserError('User not found', 404);
+    const userData = await this.userRepo.userGetOne({ userId: activatedUser?.id });
+    if (decodedToken?.name !== userData?.name) throw new AuthenticationError('401 Unauthorized', 401);
+    if (!userData?.id) throw new UserError('User not found', 404);
 
-    return {
-      id: user?.id,
-      name: user?.name,
-      level: user?.level,
-      email: user?.email,
-      status: user?.status,
-      image: user?.image,
-      statement: user?.statement,
-      location: user?.location,
-      order: user?.order,
-      createdAt: user?.createdAt,
-      updatedAt: user?.updatedAt,
-    };
+    const user = new User(userData);
+
+    return user;
   }
 }

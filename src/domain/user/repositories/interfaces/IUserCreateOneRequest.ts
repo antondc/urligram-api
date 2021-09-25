@@ -3,4 +3,5 @@ export interface IUserCreateOneRequest {
   email: string;
   password: string;
   token: string;
+  image: string;
 }

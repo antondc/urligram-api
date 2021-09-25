@@ -8,6 +8,8 @@ import { PasswordHasher } from '@shared/services/PasswordHasher';
 import { StringValidator } from '@shared/services/StringValidator';
 import { TokenService } from '@shared/services/TokenService';
 
+const DEFAULT_USER_IMAGE = 'https://picsum.photos/id/2/300/300';
+
 export interface IUserCreateOneUseCase {
   execute: (userCreateOneRequest: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;
 }
@@ -35,23 +37,23 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     const tokenService = new TokenService();
     const token = tokenService.createToken({ name });
 
+    const passwordHasher = new PasswordHasher();
+    const passwordBuffer = await passwordHasher.hashPassword(password);
+    const hashedPassword = await passwordHasher.bufferToHash(passwordBuffer);
+
+    const user = await this.userRepo.userCreateOne({ name, email, image: DEFAULT_USER_IMAGE, password: hashedPassword, token });
+    if (!user.id) throw new UserError('User creation failed', 409);
+
     const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
     const emailService = new MailService(connectionOptions);
     const emailOptions = {
       from: EMAIL_USER,
       to: email,
       subject: `Hello ${name}`,
-      text: `Welcome ${name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/sign-up-confirmation?name=${name}&token=${token}`,
+      text: `Welcome ${name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/sign-up-confirmation/check?name=${name}&token=${token}`,
     };
     const { success } = await emailService.sendMail(emailOptions);
     if (!success) throw new UserError('Email incorrect', 409, 'email');
-
-    const passwordHasher = new PasswordHasher();
-    const passwordBuffer = await passwordHasher.hashPassword(password);
-    const hashedPassword = await passwordHasher.bufferToHash(passwordBuffer);
-    const user = await this.userRepo.userCreateOne({ name, email, password: hashedPassword, token });
-
-    if (!user.id) throw new UserError('User creation failed', 409);
 
     return user;
   }

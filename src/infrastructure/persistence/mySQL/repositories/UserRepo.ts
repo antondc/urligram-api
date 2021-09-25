@@ -77,11 +77,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userCreateOne({ name, email, password, token }) {
+  public async userCreateOne({ name, email, password, image, token }) {
     const mySQL = new MySQL();
     try {
-      const userCreateQuery = 'CALL user_create(?, ?, ?, ?)';
-      const [[results]] = await mySQL.query(userCreateQuery, [name, email, password, token]);
+      const userCreateQuery = 'CALL user_create(?, ?, ?, ?, ?)';
+      const [[results]] = await mySQL.query(userCreateQuery, [name, email, password, image, token]);
 
       return results;
     } catch (err) {
