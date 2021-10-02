@@ -52,7 +52,6 @@ SELECT
         INNER JOIN list subList ON subList.id     = bookmark_list.list_id
         WHERE
           bookmark_list.list_id = list.id
-        GROUP BY bookmark.link_id
       ) AS derivedAlias
     ) AS bookmarksIds,
     (

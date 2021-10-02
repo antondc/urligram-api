@@ -2,7 +2,6 @@ DROP PROCEDURE IF EXISTS list_get_one;
 
 -- DELIMITER $$
 
--- Stored procedure to insert post and tags
 CREATE PROCEDURE list_get_one(
   IN $LIST_ID INT,
   IN $SESSION_ID INT
@@ -66,7 +65,6 @@ BEGIN
         INNER JOIN list subList ON subList.id     = bookmark_list.list_id
         WHERE
           bookmark_list.list_id = $LIST_ID
-        GROUP BY bookmark.link_id
       ) AS derivedAlias
     ) AS bookmarksIds
     FROM `list`
@@ -88,4 +86,4 @@ END
 
 -- DELIMITER ;
 
--- CALL list_get_one(14, "e4e2bb46-c210-4a47-9e84-f45c789fcec1");
+-- CALL list_get_one(27, "b95274c9-3d26-4ce3-98b2-77dce5bd7aae", "2387463876");
