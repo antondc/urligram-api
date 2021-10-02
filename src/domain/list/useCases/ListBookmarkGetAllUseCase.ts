@@ -1,5 +1,6 @@
 import { ILinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
+import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IListBookmarkGetAllRequest } from './interfaces/IListBookmarkGetAllRequest';
 import { IListBookmarkGetAllResponse } from './interfaces/IListBookmarkGetAllResponse';
@@ -10,10 +11,12 @@ export interface IListBookmarkGetAllUseCase {
 
 export class ListBookmarkGetAllUseCase implements IListBookmarkGetAllUseCase {
   private listRepo: IListRepo;
+  private userRepo: IUserRepo;
   private linkGetStatisticsUseCase: ILinkGetStatisticsUseCase;
 
-  constructor(listRepo: IListRepo, linkGetStatisticsUseCase: ILinkGetStatisticsUseCase) {
+  constructor(listRepo: IListRepo, userRepo: IUserRepo, linkGetStatisticsUseCase: ILinkGetStatisticsUseCase) {
     this.listRepo = listRepo;
+    this.userRepo = userRepo;
     this.linkGetStatisticsUseCase = linkGetStatisticsUseCase;
   }
 
@@ -24,7 +27,14 @@ export class ListBookmarkGetAllUseCase implements IListBookmarkGetAllUseCase {
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
     const { bookmarks, meta } = await this.listRepo.listBookmarkGetAll({ listId, sessionId: session?.id, sort, size, offset, filter });
-    const bookmarksWithVotesPromises = bookmarks.map(async (item) => {
+    // If the user has bookmarked this bookmark, retrieve it and replace
+    const bookmarksWithUserBookmarkPromises = bookmarks.map(async (item) => {
+      const userBookmark = await this.userRepo.userBookmarkGetOneByLinkIdUserId({ linkId: item.linkId, userId: session?.id, sessionId: session?.id });
+
+      return userBookmark || item;
+    });
+    const bookmarksWithUserBookmark = await Promise.all(bookmarksWithUserBookmarkPromises);
+    const bookmarksWithVotesPromises = bookmarksWithUserBookmark.map(async (item) => {
       const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: item.linkId, session });
 
       return {
@@ -32,6 +42,7 @@ export class ListBookmarkGetAllUseCase implements IListBookmarkGetAllUseCase {
         statistics,
       };
     });
+
     const bookmarksWithVotes = await Promise.all(bookmarksWithVotesPromises);
 
     const userInList = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });

@@ -1,3 +1,7 @@
 import { Bookmark } from '@domain/bookmark/entities/Bookmark';
 
-export type IUserBookmarkGetOneByLinkIdUserIdResponse = Bookmark;
+interface BookmarkWithUrl extends Bookmark {
+  url: string;
+}
+
+export type IUserBookmarkGetOneByLinkIdUserIdResponse = BookmarkWithUrl;

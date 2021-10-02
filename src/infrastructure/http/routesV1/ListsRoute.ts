@@ -181,9 +181,10 @@ ListsRoute.put('/:listId', async (req: Request, res: Response, next: NextFunctio
 ListsRoute.get('/:listId/bookmarks', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();
   const linkRepo = new LinkRepo();
+  const userRepo = new UserRepo();
   const bookmarkRepo = new BookmarkRepo();
   const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
-  const listBookmarksUseCase = new ListBookmarkGetAllUseCase(listRepo, linkGetStatisticsUseCase);
+  const listBookmarksUseCase = new ListBookmarkGetAllUseCase(listRepo, userRepo, linkGetStatisticsUseCase);
   const listBookmarksController = new ListBookmarkGetAllController(listBookmarksUseCase);
 
   const response = await listBookmarksController.execute(req, res, next);

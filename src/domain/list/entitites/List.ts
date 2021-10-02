@@ -8,6 +8,7 @@ export class List {
   userId: string;
   image: string;
   bookmarksIds: number[];
+  linksIds: number[];
   members: {
     id: string;
     role: 'admin' | 'editor';

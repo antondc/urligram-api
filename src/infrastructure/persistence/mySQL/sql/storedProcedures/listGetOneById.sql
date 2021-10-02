@@ -66,7 +66,19 @@ BEGIN
         WHERE
           bookmark_list.list_id = $LIST_ID
       ) AS derivedAlias
-    ) AS bookmarksIds
+    ) AS bookmarksIds,
+        -- Not grouped, return all duplicates
+    (
+      SELECT JSON_ARRAYAGG(link_id)
+        FROM (
+          SELECT
+            bookmark.link_id
+          FROM bookmark
+          INNER JOIN bookmark_list ON bookmark.id = bookmark_list.bookmark_id
+          WHERE
+            bookmark_list.list_id = $LIST_ID
+        ) AS derivedAlias
+    ) AS linkIds
     FROM `list`
     LEFT JOIN user_list ON list.id = user_list.list_id
     WHERE

@@ -52,6 +52,17 @@ SELECT DISTINCT
       ) AS derivedAlias
     ) AS bookmarksIds,
     (
+      SELECT JSON_ARRAYAGG(link_id)
+        FROM (
+          SELECT
+            bookmark.link_id
+          FROM bookmark
+          INNER JOIN bookmark_list ON bookmark.id = bookmark_list.bookmark_id
+          WHERE
+            bookmark_list.list_id = list.id
+        ) AS derivedAlias
+    ) AS linkIds,
+    (
       SELECT
         IF(
           COUNT(`user`.id) = 0,
