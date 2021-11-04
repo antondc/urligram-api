@@ -34,7 +34,7 @@ export class UserUpdateOneController extends BaseController {
 
     const formattedResponse = {
       links: {
-        self: URL_SERVER + PATH_API_V1 + '/users',
+        self: URL_SERVER + PATH_API_V1 + '/users/me',
       },
       data: {
         type: 'user',

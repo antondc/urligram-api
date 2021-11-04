@@ -117,8 +117,9 @@ UsersRoute.put('/me', async (req: Request, res: Response, next: NextFunction) =>
 });
 
 UsersRoute.delete('/me', async (req: Request, res: Response, next: NextFunction) => {
+  const fileRepo = new FileRepo();
   const userRepo = new UserRepo();
-  const userDeleteOneUseCase = new UserDeleteOneUseCase(userRepo);
+  const userDeleteOneUseCase = new UserDeleteOneUseCase(userRepo, fileRepo);
   const userDeleteOneController = new UserDeleteOneController(userDeleteOneUseCase);
 
   const response = await userDeleteOneController.execute(req, res, next);
