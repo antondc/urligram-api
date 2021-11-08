@@ -20,13 +20,15 @@ export class UserGetOneController extends BaseController {
     const { userId, name, email } = req.params;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const userOrSession = userId === 'me' ? session?.id : userId;
 
     const userGetOneRequest: IUserGetOneRequest = {
-      userId,
+      userId: userOrSession,
       name,
       email,
       session,
     };
+
     const response = await this.useCase.execute(userGetOneRequest);
 
     const formattedResponse = {

@@ -22,11 +22,12 @@ export class ListUserCreateOneController extends BaseController {
 
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const userOrSession = userId === 'me' ? session?.id : userId;
 
     const listUserCreateOne: IListUserCreateOneRequest = {
       userRole,
       listId: Number(listId),
-      userId,
+      userId: userOrSession,
       session,
     };
 

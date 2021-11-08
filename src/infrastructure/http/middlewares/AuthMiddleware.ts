@@ -4,8 +4,11 @@ import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError
 import { TokenService } from '@shared/services/TokenService';
 
 export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const regexTestMe = /\b(\/me)\b/i;
+  const urlIncludesMe = regexTestMe.test(req.baseUrl);
+
   if (
-    (req.method === 'GET' && !req.baseUrl.includes('/me/')) || // All get are free except routes using "me"
+    (req.method === 'GET' && !urlIncludesMe) || // All get are free except routes using "me"
     (req.method === 'POST' && req.baseUrl === '/api/v1/login') || // Allow login
     (req.method === 'DELETE' && req.baseUrl === '/api/v1/login') || // Allow logout for users with corrupted cookies
     (req.method === 'PUT' && req.baseUrl === '/api/v1/login') || // Allow forgot password request

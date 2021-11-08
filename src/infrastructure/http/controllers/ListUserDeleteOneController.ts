@@ -20,10 +20,11 @@ export class ListUserDeleteOneController extends BaseController {
     const { listId, userId } = req.params;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const userOrSession = userId === 'me' ? session?.id : userId;
 
     const listUserDeleteOneRequest: IListUserDeleteOneRequest = {
       listId: Number(listId),
-      userId,
+      userId: userOrSession,
       session,
     };
 

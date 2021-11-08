@@ -41,9 +41,10 @@ export class UserBookmarkGetAllController extends BaseController {
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || null;
+    const userOrSession = userId === 'me' ? session?.id : userId;
 
     const userBookmarkGetAllRequest: IUserBookmarkGetAllRequest = {
-      userId,
+      userId: userOrSession,
       session,
       sort,
       size: checkedSize,

@@ -41,9 +41,10 @@ export class UserListGetAllPublicController extends BaseController {
     const { userId } = req.params;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const userOrSession = userId === 'me' ? session?.id : userId;
 
     const userListGetAllPublicRequest: IUserListGetAllPublicRequest = {
-      userId,
+      userId: userOrSession,
       session,
       sort,
       size: checkedSize,

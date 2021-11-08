@@ -21,10 +21,11 @@ export class ListUserUpsertOneController extends BaseController {
     const { userRole } = req.body;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const userOrSession = userId === 'me' ? session?.id : userId;
 
     const listUserUpsertOne: IListUserUpsertOneRequest = {
       listId: Number(listId),
-      userId,
+      userId: userOrSession,
       userRole,
       session,
     };

@@ -32,10 +32,11 @@ export class UserTagsGetAllController extends BaseController {
     const castedOffset = Number(offset) || null;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const userOrSession = userId === 'me' ? session?.id : userId;
 
     const userUpdateRequest: IUserTagsGetAllRequest = {
       session,
-      userId,
+      userId: userOrSession,
       sort,
       size: castedSize,
       offset: castedOffset,
