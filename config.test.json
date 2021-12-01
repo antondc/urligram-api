@@ -8,10 +8,10 @@
       "port": 3306
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "dev.linking.me",
+    "HOST_SERVER": "dev.urligram.com",
     "PORT_SERVER_HTTP": 0,
     "PORT_SERVER_HTTPS": 3000,
-    "ENDPOINT_CLIENTS": ["https://dev.linking.me", "http://dev.linking.me"],
+    "ENDPOINT_CLIENTS": ["https://dev.urligram.com", "http://dev.urligram.com"],
     "SECRET": "superSecret",
     "LOGGING": true,
     "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
@@ -31,15 +31,15 @@
       "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "linking-api-staging.woprs.com",
+    "HOST_SERVER": "api-staging.urligram.com",
     "PORT_SERVER_HTTP": 3001,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENTS": [
-      "https://linking-staging.woprs.com",
+      "https://staging.urligram.com",
       "http://0.0.0.0:4000",
-      "http://dev.linking.me:4000",
-      "http://dev.linking.me",
-      "https://dev.linking.me"
+      "http://dev.urligram.com:4000",
+      "http://dev.urligram.com",
+      "https://dev.urligram.com"
     ],
     "SECRET": "superSecret",
     "LOGGING": true,
@@ -50,7 +50,7 @@
     "RESTORE_MODELS": false,
     "RESTORE_DATA": false,
     "RESTORE_PROCEDURES": true,
-    "DEFAULT_LOCATION": "Saint_Petersburg"
+    "DEFAULT_LOCATION": "Frankfurt"
   },
   "production": {
     "database": {
@@ -60,10 +60,10 @@
       "password": "UrStkX_oihbDWEaz7Gr"
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "linking-api-production.woprs.com",
+    "HOST_SERVER": "api.urligram.com",
     "PORT_SERVER_HTTP": 3002,
     "PORT_SERVER_HTTPS": 0,
-    "ENDPOINT_CLIENTS": ["https://linking-production.woprs.com"],
+    "ENDPOINT_CLIENTS": ["https://urligram.com"],
     "SECRET": "superSecret",
     "LOGGING": false,
     "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
@@ -80,5 +80,5 @@
   "RESTORE_MODELS": false,
   "RESTORE_DATA": false,
   "RESTORE_PROCEDURES": true,
-  "DEFAULT_LOCATION": "Saint_Petersburg"
+  "DEFAULT_LOCATION": "Frankfurt"
 }
