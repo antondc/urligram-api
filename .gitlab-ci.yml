@@ -9,57 +9,56 @@ before_script:
   - ssh-add <(echo "$K8S_SECRET_SSH_PRIVATE_KEY_AWS" | base64 -d)
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+# stages:
+#   - install
+#   # - test
+#   - build
+#   - deploy_staging
+#   - deploy_production
 
-stages:
-  - install
-  # - test
-  - build
-  - deploy_staging
-  - deploy_production
+# cache:
+#   paths:
+#     - node_modules/
 
-cache:
-  paths:
-    - node_modules/
-
-install:
-  stage: install
-  script:
-    - npm install
-  artifacts:
-    paths:
-      - node_modules/
-
-# test:
-#   stage: test
+# install:
+#   stage: install
 #   script:
-#     - npm test
+#     - npm install
 #   artifacts:
 #     paths:
 #       - node_modules/
 
-build:
-  stage: build
-  script:
-    - npm run build
+# # test:
+# #   stage: test
+# #   script:
+# #     - npm test
+# #   artifacts:
+# #     paths:
+# #       - node_modules/
 
-deploy_staging:
-  stage: deploy_staging
-  only:
-    - staging
-  script:
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && rm -rf node_modules dist/* tmp"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && git pull origin staging"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/linking_api_staging && nvm use --delete-prefix && git checkout staging && npm ci --verbose && npm run build && npm run copy:sql"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && pm2 stop ./dist/src/infrastructure/http/http.js"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name linking-api-staging"
+# build:
+#   stage: build
+#   script:
+#     - npm run build
 
-deploy_production:
-  stage: deploy_production
-  only:
-    - master
-  script:
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && rm -rf node_modules dist/* tmp"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && git pull origin master"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/linking_api_production && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && pm2 stop ./dist/src/infrastructure/http/http.js"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name linking-api-production"
+# deploy_staging:
+#   stage: deploy_staging
+#   only:
+#     - staging
+#   script:
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && rm -rf node_modules dist/* tmp"
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && git pull origin staging"
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/linking_api_staging && nvm use --delete-prefix && git checkout staging && npm ci --verbose && npm run build && npm run copy:sql"
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && pm2 stop ./dist/src/infrastructure/http/http.js"
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_staging && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name linking-api-staging"
+
+# deploy_production:
+#   stage: deploy_production
+#   only:
+#     - master
+#   script:
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && rm -rf node_modules dist/* tmp"
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && git pull origin master"
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/linking_api_production && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && pm2 stop ./dist/src/infrastructure/http/http.js"
+#     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/linking_api_production && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name linking-api-production"
