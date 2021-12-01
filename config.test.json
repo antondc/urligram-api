@@ -36,6 +36,7 @@
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENTS": [
       "https://staging.urligram.com",
+      "https://www.staging.urligram.com",
       "http://0.0.0.0:4000",
       "http://dev.urligram.com:4000",
       "http://dev.urligram.com",
@@ -63,7 +64,7 @@
     "HOST_SERVER": "api.urligram.com",
     "PORT_SERVER_HTTP": 3002,
     "PORT_SERVER_HTTPS": 0,
-    "ENDPOINT_CLIENTS": ["https://urligram.com"],
+    "ENDPOINT_CLIENTS": ["https://urligram.com", "https://www.urligram.com"],
     "SECRET": "superSecret",
     "LOGGING": false,
     "EMAIL_HOST": "antoniodiaz-me.correoseguro.dinaserver.com",
