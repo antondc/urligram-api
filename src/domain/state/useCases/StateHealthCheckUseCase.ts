@@ -15,7 +15,8 @@ export class StateHealthCheckUseCase {
     const MySQL = await this.stateRepo.healthCheck();
     const Node = process.version;
     const OS = process.platform;
+    const email = process.env.EMAIL_ADDRESS;
 
-    return { MySQL, Node, OS };
+    return { MySQL, Node, OS, email };
   }
 }
