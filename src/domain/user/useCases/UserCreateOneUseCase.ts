@@ -1,7 +1,7 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCreateOneResponse';
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_TLS, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
 import { UserError } from '@shared/errors/UserError';
 import { MailService } from '@shared/services/MailService';
 import { PasswordHasher } from '@shared/services/PasswordHasher';
@@ -44,7 +44,7 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     const user = await this.userRepo.userCreateOne({ name, email, image: DEFAULT_USER_IMAGE, password: hashedPassword, token });
     if (!user.id) throw new UserError('User creation failed', 409);
 
-    const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
+    const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD, secure: EMAIL_TLS };
     const emailService = new MailService(connectionOptions);
     const emailOptions = {
       from: EMAIL_USER,
