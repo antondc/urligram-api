@@ -15,6 +15,7 @@
     "EMAIL_HOST": "mail.urligram.com",
     "EMAIL_PORT": 25,
     "EMAIL_USER": "hello@urligram.com",
+    "EMAIL_TLS": false,
     "RESTORE_MODELS": true,
     "RESTORE_DATA": true,
     "RESTORE_PROCEDURES": true,
@@ -42,6 +43,7 @@
     "EMAIL_HOST": "mail.urligram.com",
     "EMAIL_PORT": 25,
     "EMAIL_USER": "hello@urligram.com",
+    "EMAIL_TLS": false,
     "RESTORE_MODELS": false,
     "RESTORE_DATA": false,
     "RESTORE_PROCEDURES": true,
@@ -61,7 +63,8 @@
     "LOGGING": false,
     "EMAIL_HOST": "mail.urligram.com",
     "EMAIL_PORT": 25,
-    "EMAIL_USER": "hello@urligram.com"
+    "EMAIL_USER": "hello@urligram.com",
+    "EMAIL_TLS": false
   },
   "SESSION_DURATION": 3600,
   "MEDIA_FOLDER": "media",

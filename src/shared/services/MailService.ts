@@ -5,6 +5,7 @@ interface ConnectionOptions {
   port: number;
   user: string;
   pass: string;
+  secure: boolean;
 }
 
 interface MailOptions {
@@ -25,6 +26,10 @@ export class MailService {
         user: connectionOptions.user,
         pass: connectionOptions.pass,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
+      secure: connectionOptions.secure,
     });
   }
 
@@ -32,12 +37,12 @@ export class MailService {
     return this.transporter
       .sendMail(mailOptions)
       .then((payload) => {
-        console.log('sccess');
+        console.log('success');
 
         return { success: true, payload };
       })
       .catch((payload) => {
-        console.log('failure');
+        console.log('Email error: ', payload);
 
         return { success: false, payload };
       });
