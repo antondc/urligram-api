@@ -4,7 +4,6 @@
       "host": "dev.linking.me",
       "database": "linking_stage_local",
       "user": "w_9aIfE2XpoYz",
-      "password": "UrStkX_oihbDWEaz7Gr",
       "port": 3306
     },
     "PROTOCOL_SERVER": "https://",
@@ -12,12 +11,10 @@
     "PORT_SERVER_HTTP": 0,
     "PORT_SERVER_HTTPS": 3000,
     "ENDPOINT_CLIENTS": ["https://dev.urligram.com", "http://dev.urligram.com"],
-    "SECRET": "superSecret",
     "LOGGING": true,
     "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
     "EMAIL_PORT": 587,
     "EMAIL_USER": "hello@urligram.com",
-    "EMAIL_PASSWORD": "xV6&_iKrSvzY",
     "RESTORE_MODELS": true,
     "RESTORE_DATA": true,
     "RESTORE_PROCEDURES": true,
@@ -27,8 +24,7 @@
     "database": {
       "host": "127.0.0.1",
       "database": "linking_stage",
-      "user": "w_9aIfE2XpoYz",
-      "password": "UrStkX_oihbDWEaz7Gr"
+      "user": "w_9aIfE2XpoYz"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "api-staging.urligram.com",
@@ -42,12 +38,10 @@
       "http://dev.urligram.com",
       "https://dev.urligram.com"
     ],
-    "SECRET": "superSecret",
     "LOGGING": true,
     "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
     "EMAIL_PORT": 587,
     "EMAIL_USER": "hello@urligram.com",
-    "EMAIL_PASSWORD": "xV6&_iKrSvzY",
     "RESTORE_MODELS": false,
     "RESTORE_DATA": false,
     "RESTORE_PROCEDURES": true,
@@ -57,20 +51,17 @@
     "database": {
       "host": "127.0.0.1",
       "database": "linking_stage",
-      "user": "w_9aIfE2XpoYz",
-      "password": "UrStkX_oihbDWEaz7Gr"
+      "user": "w_9aIfE2XpoYz"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "api.urligram.com",
     "PORT_SERVER_HTTP": 3002,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENTS": ["https://urligram.com", "https://www.urligram.com"],
-    "SECRET": "superSecret",
     "LOGGING": false,
     "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
     "EMAIL_PORT": 587,
-    "EMAIL_USER": "hello@urligram.com",
-    "EMAIL_PASSWORD": "xV6&_iKrSvzY"
+    "EMAIL_USER": "hello@urligram.com"
   },
   "SESSION_DURATION": 3600,
   "MEDIA_FOLDER": "media",

@@ -6,6 +6,7 @@ export const PRODUCTION = ENVIRONMENT === 'production';
 export const STAGING = ENVIRONMENT === 'staging';
 export const DOMAIN = config[process.env.NODE_ENV].HOST_SERVER;
 export const DATABASE_SETTINGS = config[process.env.NODE_ENV].database;
+export const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD;
 export const PROTOCOL_SERVER = config[process.env.NODE_ENV].PROTOCOL_SERVER;
 export const HOST_SERVER = config[process.env.NODE_ENV].HOST_SERVER;
 export const PORT_SERVER_HTTP = config[process.env.NODE_ENV].PORT_SERVER_HTTP; // To be deprecated, currently useful for staging and prod
@@ -14,7 +15,7 @@ export const LOGGING = config[process.env.NODE_ENV].LOGGING;
 export const ENDPOINT_CLIENTS = config[process.env.NODE_ENV].ENDPOINT_CLIENTS;
 export const URL_SERVER = `${PROTOCOL_SERVER}${HOST_SERVER}${!!PORT_SERVER_HTTPS ? `:${PORT_SERVER_HTTPS}` : ''}`; // URL_SERVER will always be with https
 export const PATH_API_V1 = '/api/v1';
-export const SECRET = config[process.env.NODE_ENV].SECRET;
+export const SECRET = process.env.SECRET;
 export const EMAIL_HOST = config[process.env.NODE_ENV].EMAIL_HOST;
 export const EMAIL_PORT = config[process.env.NODE_ENV].EMAIL_PORT;
 export const EMAIL_USER = config[process.env.NODE_ENV].EMAIL_USER;

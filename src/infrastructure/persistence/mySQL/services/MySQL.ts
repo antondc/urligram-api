@@ -1,7 +1,7 @@
 import mysql from 'mysql2';
 import { promisify } from 'util';
 
-import { DATABASE_SETTINGS } from '@shared/constants/env';
+import { DATABASE_PASSWORD, DATABASE_SETTINGS } from '@shared/constants/env';
 
 type Options = {
   multipleStatements?: boolean;
@@ -20,6 +20,7 @@ export class MySQL {
 
     this.mySQL = mysql.createConnection({
       ...DATABASE_SETTINGS,
+      password: DATABASE_PASSWORD,
       ...defaultOptions,
       ...options,
       typeCast: this.typeCast,
