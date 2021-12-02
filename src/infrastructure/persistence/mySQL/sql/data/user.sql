@@ -29,7 +29,7 @@ INSERT INTO `user` (
   'b95274c9-3d26-4ce3-98b2-77dce5bd7aae',
   'Alexandra',
   'user',
-  'lobodoskin+1@gmail.com',
+  'alexyloboda@gmail.com',
   'https://dev.linking.me:3000/media/files/users/image/original/68a64bc8-5c6c-4f89-8675-a88bbb0c824b.jpg',
   'AAAAEAANUVdHjasyNC0fUFdAZg5Nl6m6a+RZyy8WxrYGWbaLF6xwCfFhW2Kw3hZtXZuWM/uq3wg=',
   'active',
