@@ -50,7 +50,7 @@ deploy_staging:
     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && rm -rf node_modules dist/* tmp"
     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && git pull origin staging"
     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/urligram/api-staging.urligram.com && nvm use --delete-prefix && git checkout staging && npm ci --verbose && npm run build && npm run copy:sql"
-    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && pm2 stop ./dist/src/infrastructure/http/http.js"
+    - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && pm2 delete ./dist/src/infrastructure/http/http.js"
     - ssh xum35s@ec2-3-120-27-57.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && NODE_ENV=staging EMAIL_ADDRESS=${EMAIL_ADDRESS} pm2 start ./dist/src/infrastructure/http/http.js --name api-staging.urligram.com"
 
 deploy_production:
