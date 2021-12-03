@@ -5,7 +5,6 @@ interface ConnectionOptions {
   port: number;
   user: string;
   pass: string;
-  secure: boolean;
 }
 
 interface MailOptions {
@@ -26,10 +25,6 @@ export class MailService {
         user: connectionOptions.user,
         pass: connectionOptions.pass,
       },
-      tls: {
-        rejectUnauthorized: false,
-      },
-      secure: connectionOptions.secure,
     });
   }
 

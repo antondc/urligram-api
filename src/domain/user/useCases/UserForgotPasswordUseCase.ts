@@ -1,5 +1,5 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_TLS, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
 import { MailService } from '@shared/services/MailService';
@@ -30,7 +30,7 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
     const userUpdated = await this.userRepo.userForgotPassword({ userId: user?.id, token });
     if (!userUpdated) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
 
-    const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD, secure: EMAIL_TLS };
+    const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
     const emailService = new MailService(connectionOptions);
     const emailOptions = {
       from: EMAIL_USER,
