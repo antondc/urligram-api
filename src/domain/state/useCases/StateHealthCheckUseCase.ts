@@ -21,6 +21,6 @@ export class StateHealthCheckUseCase {
     const EMAIL_PORT_ = '=> ' + EMAIL_PORT;
     const EMAIL_USER_ = '=> ' + EMAIL_USER;
 
-    return { MySQL, Node, OS, EMAIL_HOST_, EMAIL_PASSWORD_, EMAIL_PORT_, EMAIL_TLS_, EMAIL_USER_ };
+    return { MySQL, Node, OS, EMAIL_HOST_, EMAIL_PASSWORD_, EMAIL_PORT_, EMAIL_USER_ };
   }
 }
