@@ -1,5 +1,5 @@
 import { IStateRepo } from '@domain/state/repositories/IStateRepo';
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_TLS, EMAIL_USER } from '@shared/constants/env';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER } from '@shared/constants/env';
 
 export interface IStateHealthCheckUseCase {
   execute: () => unknown;
