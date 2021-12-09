@@ -19,7 +19,7 @@ export class UserBookmarkImportController extends BaseController {
     // const { importFile } = req.body;
 
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     // Call parse import file service here
 

@@ -34,7 +34,7 @@ export class BookmarkGetAllPublicController extends BaseController {
     const { sort = DEFAULT_SORT, page: { size, offset } = {}, filter: { tags, text } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
 
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedAfter = Number(offset) || undefined;
 

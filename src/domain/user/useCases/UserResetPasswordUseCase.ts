@@ -26,7 +26,7 @@ export class UserResetPasswordUseCase implements IUserResetPasswordUseCase {
     if (password !== passwordRepeated) throw new UserError('Passwords are not equal', 409, 'password');
 
     const tokenService = new TokenService();
-    const decodedToken = tokenService.decodeToken(token) as { name: string };
+    const decodedToken = tokenService.decodeToken<{ name: string }>(token);
     if (decodedToken?.name !== name) throw new AuthenticationError('401 Unauthorized', 401);
 
     const passwordHasher = new PasswordHasher();

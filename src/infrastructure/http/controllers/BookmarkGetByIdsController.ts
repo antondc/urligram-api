@@ -23,7 +23,7 @@ export class BookmarkGetByIdsController extends BaseController {
     const { ids } = req.query as BookmarkGetByIdsControllerQueryType;
 
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const users = await this.useCase.execute({ session, ids });
 

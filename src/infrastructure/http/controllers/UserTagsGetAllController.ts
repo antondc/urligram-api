@@ -31,7 +31,7 @@ export class UserTagsGetAllController extends BaseController {
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const userOrSession = userId === 'me' ? session?.id : userId;
 
     const userUpdateRequest: IUserTagsGetAllRequest = {

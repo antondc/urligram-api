@@ -27,7 +27,7 @@ export class ListSimilarGetAllController extends BaseController {
     const { listId } = req.params;
 
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const checkedListId = Number(listId);
     const checkedSort = sort || undefined;
     const checkedSize = Number(size) || undefined;

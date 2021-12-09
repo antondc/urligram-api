@@ -33,7 +33,7 @@ export class TagGetAllController extends BaseController {
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const userUpdateRequest: ITagGetAllRequest = {
       session,

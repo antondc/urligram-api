@@ -19,7 +19,7 @@ export class LinkVoteOneController extends BaseController {
     const { linkId } = req.params;
     const { vote } = req.body;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const linkVoteOneRequest: ILinkVoteOneRequest = {
       linkId: Number(linkId),

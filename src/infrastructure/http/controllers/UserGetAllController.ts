@@ -46,7 +46,7 @@ export class UserGetAllController extends BaseController {
     const { sort = DEFAULT_USER_GET_ALL_SORT, page: { size, offset } = {}, filter: { name, tags } = {} } = req.query as UserGetAllControllerQueryType;
 
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const castedSort = sort || undefined;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || undefined;

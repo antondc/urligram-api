@@ -42,16 +42,23 @@ export class UserCreateConfirmationController extends BaseController {
     };
 
     const tokenService = new TokenService();
-    const cookieToken = tokenService.createToken(response);
+    const sessionToken = tokenService.createToken(response);
 
     const clientFound = ENDPOINT_CLIENTS.some((item) => item.includes(req.headers.origin)); // Identify the client
 
     const urlWrapper = new URLWrapper(`${req.protocol}://${req.hostname}`);
     const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
     const domainForCookie = clientFound ? '.' + domainWithoutSubdomain : null; // Return domain only for recognized clients
+    const sessionData = JSON.stringify(response);
 
     return res
-      .cookie('sessionToken', cookieToken, {
+      .cookie('sessionToken', sessionToken, {
+        maxAge: 24 * 60 * 60 * 1000 * 30, // One month
+        httpOnly: true,
+        path: '/',
+        domain: domainForCookie, // We need to prepend «.» to enable any subdomain
+      })
+      .cookie('sessionData', sessionData, {
         maxAge: 24 * 60 * 60 * 1000 * 30, // One month
         httpOnly: true,
         path: '/',

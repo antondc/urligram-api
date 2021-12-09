@@ -31,7 +31,7 @@ export class ListGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { sort = DEFAULT_LIST_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as ListGetAllControllerQueryType;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedSort = sort || undefined;
     const castedOffset = Number(offset) || undefined;

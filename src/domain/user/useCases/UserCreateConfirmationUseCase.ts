@@ -21,7 +21,7 @@ export class UserCreateConfirmationUseCase implements IUserCreateConfirmationUse
     const { name, token } = userCreateConfirmationRequest;
 
     const tokenService = new TokenService();
-    const decodedToken = tokenService.decodeToken(token) as { name: string };
+    const decodedToken = tokenService.decodeToken<User>(token);
     if (decodedToken?.name !== name) throw new AuthenticationError('401 Unauthorized', 401);
 
     const activatedUser = await this.userRepo.userCreateConfirmation({ token });

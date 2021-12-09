@@ -1,7 +1,7 @@
 {
   "development": {
     "database": {
-      "host": "dev.urligram.com",
+      "host": "127.0.0.1",
       "database": "linking_stage_local",
       "user": "w_9aIfE2XpoYz",
       "port": 3306

@@ -11,6 +11,7 @@ export const ErrorHandlerMiddleware = (err, req, res, next) => {
   if (err && isAuthenticationError)
     return res
       .clearCookie('sessionToken', { path: '/' })
+      .clearCookie('sessionData', { path: '/' })
       .status(err.statusCode)
       .send(LOGGING ? { error: err } : err.message)
       .end();

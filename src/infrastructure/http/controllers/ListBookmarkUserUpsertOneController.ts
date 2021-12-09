@@ -20,7 +20,7 @@ export class ListBookmarkUserUpsertOneController extends BaseController {
     const { listId, bookmarkId } = req.params;
     const { viewPending } = req.body;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const listBookmarkGetOneUseCase: IListBookmarkUserUpsertOneRequest = {
       listId: Number(listId),

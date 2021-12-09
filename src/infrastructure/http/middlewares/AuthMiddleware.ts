@@ -21,9 +21,13 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
   }
 
   const tokenService = new TokenService();
-  const session = tokenService.decodeToken(req.cookies.sessionToken);
+  const sessionToken = req.cookies.sessionToken;
+  const sessionData = req.cookies.sessionData;
+  const sessionTokenDecoded = tokenService.decodeToken(sessionToken);
+  const sessionTokenDecodedStringified = JSON.stringify(sessionTokenDecoded);
+  const sessionDataMatches = sessionData === sessionTokenDecodedStringified;
 
-  if (!session) throw new AuthenticationError('401 Unauthorized', 401);
+  if (!sessionTokenDecoded || !sessionData || !sessionDataMatches) throw new AuthenticationError('401 Unauthorized', 401);
 
-  return next();
+  if (sessionToken && sessionData && sessionDataMatches) return next();
 };

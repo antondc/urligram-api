@@ -41,7 +41,7 @@ export class ListBookmarkGetAllController extends BaseController {
     const checkedAfter = Number(offset) || undefined;
     const { listId } = req.params;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const listBookmarkGetAllRequest: IListBookmarkGetAllRequest = {
       listId: Number(listId),

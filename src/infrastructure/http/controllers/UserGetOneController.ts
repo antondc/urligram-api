@@ -19,7 +19,7 @@ export class UserGetOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { userId, name, email } = req.params;
     const tokenService = new TokenService();
-    const session = tokenService.decodeToken(req.cookies.sessionToken) as User;
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const userOrSession = userId === 'me' ? session?.id : userId;
 
     const userGetOneRequest: IUserGetOneRequest = {
