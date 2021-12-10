@@ -53,7 +53,12 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
       text: `Welcome ${name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/sign-up-confirmation/check?name=${name}&token=${token}`,
     };
     const { success } = await emailService.sendMail(emailOptions);
-    if (!success) throw new UserError('Email incorrect', 409, 'email');
+
+    if (!success) {
+      await this.userRepo.userCreateOneUndo({ userId: user.id });
+
+      throw new UserError('Email incorrect', 409, 'email');
+    }
 
     return user;
   }

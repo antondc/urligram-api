@@ -91,6 +91,20 @@ export class UserRepo implements IUserRepo {
     }
   }
 
+  public async userCreateOneUndo({ userId }) {
+    const mySQL = new MySQL();
+    try {
+      const userCreateQuery = 'CALL user_create_one_undo(?)';
+      const [[results]] = await mySQL.query(userCreateQuery, [userId]);
+
+      return results;
+    } catch (err) {
+      throw new RequestError('User creation undo failed', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async userCreateConfirmation({ token }) {
     const mySQL = new MySQL();
     try {

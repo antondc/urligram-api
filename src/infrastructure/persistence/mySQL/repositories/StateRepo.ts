@@ -36,6 +36,7 @@ export class StateRepo {
   private userGetCredentialsProcedure: string;
   private userGetOneProcedure: string;
   private userCreateOneProcedure: string;
+  private userCreateOneUndoProcedure: string;
   private userCreateConfirmationProcedure: string;
   private userForgotPasswordProcedure: string;
   private userUpdateOneProcedure: string;
@@ -143,6 +144,7 @@ export class StateRepo {
     this.userGetCredentialsProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetCredentials.sql')).toString();
     this.userGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userGetOne.sql')).toString();
     this.userCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateOne.sql')).toString();
+    this.userCreateOneUndoProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateOneUndo.sql')).toString();
     this.userCreateConfirmationProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userCreateConfirmation.sql')).toString();
     this.userForgotPasswordProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userForgotPassword.sql')).toString();
     this.userUpdateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/userUpdateOne.sql')).toString();
@@ -262,6 +264,7 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetCredentialsProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userGetOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userCreateOneProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userCreateOneUndoProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userCreateConfirmationProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userForgotPasswordProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.userUpdateOneProcedure))),

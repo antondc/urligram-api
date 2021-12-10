@@ -16,6 +16,8 @@ import { IUserCreateConfirmationRequest } from './interfaces/IUserCreateConfirma
 import { IUserCreateConfirmationResponse } from './interfaces/IUserCreateConfirmationResponse';
 import { IUserCreateOneRequest } from './interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from './interfaces/IUserCreateOneResponse';
+import { IUserCreateOneUndoRequest } from './interfaces/IUserCreateOneUndoRequest';
+import { IUserCreateOneUndoResponse } from './interfaces/IUserCreateOneUndoResponse';
 import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
 import { IUserFollowerGetAllRequest } from './interfaces/IUserFollowerGetAllRequest';
@@ -58,6 +60,7 @@ export interface IUserRepo {
   userGetAll: (userGetAllRequest: IUserGetAllRequest) => Promise<IUserGetAllResponse>;
   userGetByIds: (userGetByIdsRequest: IUserGetByIdsRequest) => Promise<IUserGetByIdsResponse>;
   userCreateOne: (userCreateOneRequest: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;
+  userCreateOneUndo: (userCreateOneUndoRequest: IUserCreateOneUndoRequest) => Promise<IUserCreateOneUndoResponse>;
   userCreateConfirmation: (userCreateConfirmationRequest: IUserCreateConfirmationRequest) => Promise<IUserCreateConfirmationResponse>;
   userUpdateOne: (userUpdateOneRequest: IUserUpdateOneRequest) => Promise<IUserUpdateOneResponse>;
   userDeleteOne: (userDeleteOneRequest: IUserDeleteOneRequest) => Promise<IUserDeleteOneResponse>;
