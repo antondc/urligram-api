@@ -4,12 +4,11 @@ import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError
 import { TokenService } from '@shared/services/TokenService';
 
 export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const regexTestMe = /\b(\/me)\b/i; // Test if route has «/me» string
+  const regexTestMe = /\b(\/me)\b/i;
   const urlIncludesMe = regexTestMe.test(req.baseUrl);
 
-  // All routes need authentication, except:
   if (
-    (req.method === 'GET' && !urlIncludesMe) || // All get except routes using "me"
+    (req.method === 'GET' && !urlIncludesMe) || // All get are free except routes using "me"
     (req.method === 'POST' && req.baseUrl === '/api/v1/login') || // Allow login
     (req.method === 'DELETE' && req.baseUrl === '/api/v1/login') || // Allow logout for users with corrupted cookies
     (req.method === 'PUT' && req.baseUrl === '/api/v1/login') || // Allow forgot password request
@@ -21,13 +20,9 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
   }
 
   const tokenService = new TokenService();
-  const sessionToken = req.cookies.sessionToken;
-  const sessionData = req.cookies.sessionData;
-  const sessionTokenDecoded = tokenService.decodeToken(sessionToken);
-  const sessionTokenDecodedStringified = JSON.stringify(sessionTokenDecoded);
-  const sessionDataMatches = sessionData === sessionTokenDecodedStringified;
+  const sessionTokenDecoded = tokenService.decodeToken(req.cookies.sessionToken);
 
-  if (!sessionTokenDecoded || !sessionData || !sessionDataMatches) throw new AuthenticationError('401 Unauthorized', 401);
+  if (!sessionTokenDecoded) throw new AuthenticationError('401 Unauthorized', 401);
 
-  if (sessionToken && sessionData && sessionDataMatches) return next();
+  return next();
 };

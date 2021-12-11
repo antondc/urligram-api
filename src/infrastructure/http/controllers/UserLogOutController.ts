@@ -50,10 +50,6 @@ export class UserLogOutController extends BaseController {
     const domainWithoutSubdomain = urlWrapper.getDomainWithoutSubdomain();
     const domainForCookie = clientFound ? '.' + domainWithoutSubdomain : null; // Return domain only for recognized clients
 
-    return res
-      .clearCookie('sessionToken', { path: '/', domain: domainForCookie })
-      .clearCookie('sessionData', { path: '/', domain: domainForCookie })
-      .status(205)
-      .send(formattedResponse);
+    return res.clearCookie('sessionToken', { path: '/', domain: domainForCookie }).status(205).send(formattedResponse);
   }
 }
