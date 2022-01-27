@@ -2,7 +2,7 @@
   "development": {
     "database": {
       "host": "127.0.0.1",
-      "database": "linking_stage_local",
+      "database": "urligram_stage_local",
       "user": "w_9aIfE2XpoYz",
       "port": 3306
     },
@@ -23,7 +23,7 @@
   "staging": {
     "database": {
       "host": "127.0.0.1",
-      "database": "linking_stage",
+      "database": "urligram_stage",
       "user": "w_9aIfE2XpoYz"
     },
     "PROTOCOL_SERVER": "https://",
@@ -50,7 +50,7 @@
   "production": {
     "database": {
       "host": "127.0.0.1",
-      "database": "linking_stage",
+      "database": "urligram_stage",
       "user": "w_9aIfE2XpoYz"
     },
     "PROTOCOL_SERVER": "https://",
