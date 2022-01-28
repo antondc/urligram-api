@@ -50,8 +50,8 @@
   "production": {
     "database": {
       "host": "127.0.0.1",
-      "database": "urligram_stage",
-      "user": "w_9aIfE2XpoYz"
+      "database": "urligram_production",
+      "user": "r_Klo9WfxWzg8"
     },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "api.urligram.com",
