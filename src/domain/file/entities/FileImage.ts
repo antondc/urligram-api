@@ -53,7 +53,10 @@ export class FileImage extends File {
   };
 
   getFormattedImageUrls = ({ imageUrl, sizes = [] }: ImageUrlSplitBySizes): ImageUrlSplitBySizesReturn => {
-    if (!imageUrl || !imageUrl.length) return {};
+    if (!imageUrl || !imageUrl.length)
+      return {
+        original: null,
+      };
 
     // Default image object
     const accumulator = {
@@ -62,9 +65,9 @@ export class FileImage extends File {
 
     // Enhance default image object with urls with sizes
     const imageUrlWithSizes = sizes.reduce(
-      (acc, { width, height }) => ({
+      (acc, { width }) => ({
         ...acc,
-        [`w${width}h${height}`]: imageUrl.replace('original', `w${width}h${height}`),
+        [`${width}w`]: imageUrl.replace('original', `${width}w`),
       }),
       accumulator
     );
