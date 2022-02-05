@@ -49,11 +49,6 @@ app.use('/api/v1/', RouterV1);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-console.log('=======');
-console.log('process.env.NODE_ENV:');
-console.log(JSON.stringify(process.env.NODE_ENV, null, 4));
-console.log('=======');
-
 /* - - - - - - - - - - - Errors Handler - - - - - - - - - -*/
 app.use('*', ErrorHandlerMiddleware);
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
