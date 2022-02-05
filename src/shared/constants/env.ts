@@ -13,6 +13,7 @@ export const PORT_SERVER_HTTP = config[process.env.NODE_ENV].PORT_SERVER_HTTP; /
 export const PORT_SERVER_HTTPS = config[process.env.NODE_ENV].PORT_SERVER_HTTPS;
 export const LOGGING = config[process.env.NODE_ENV].LOGGING;
 export const ENDPOINT_CLIENTS = config[process.env.NODE_ENV].ENDPOINT_CLIENTS;
+export const ENDPOINT_CLIENT = config[process.env.NODE_ENV].ENDPOINT_CLIENT;
 export const URL_SERVER = `${PROTOCOL_SERVER}${HOST_SERVER}${!!PORT_SERVER_HTTPS ? `:${PORT_SERVER_HTTPS}` : ''}`; // URL_SERVER will always be with https
 export const PATH_API_V1 = '/api/v1';
 export const SECRET = process.env.SECRET;

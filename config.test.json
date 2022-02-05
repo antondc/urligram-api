@@ -2,7 +2,7 @@
   "development": {
     "database": {
       "host": "127.0.0.1",
-      "database": "urligram_stage_local",
+      "database": "linking_stage_local",
       "user": "w_9aIfE2XpoYz",
       "port": 3306
     },
@@ -10,7 +10,8 @@
     "HOST_SERVER": "dev.urligram.com",
     "PORT_SERVER_HTTP": 0,
     "PORT_SERVER_HTTPS": 3000,
-    "ENDPOINT_CLIENTS": ["https://dev.urligram.com", "http://dev.urligram.com"],
+    "ENDPOINT_CLIENT": true,
+    "ENDPOINT_CLIENTS": ["http://www.dev.urligram.com", "https://www.dev.urligram.com"],
     "LOGGING": true,
     "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
     "EMAIL_PORT": 587,
@@ -30,6 +31,7 @@
     "HOST_SERVER": "api-staging.urligram.com",
     "PORT_SERVER_HTTP": 3001,
     "PORT_SERVER_HTTPS": 0,
+    "ENDPOINT_CLIENT": "https://www.staging.urligram.com",
     "ENDPOINT_CLIENTS": ["https://staging.urligram.com", "https://www.staging.urligram.com"],
     "LOGGING": true,
     "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
@@ -51,6 +53,7 @@
     "HOST_SERVER": "api.urligram.com",
     "PORT_SERVER_HTTP": 3002,
     "PORT_SERVER_HTTPS": 0,
+    "ENDPOINT_CLIENT": "https://www.urligram.com",
     "ENDPOINT_CLIENTS": ["https://urligram.com", "https://www.urligram.com"],
     "LOGGING": false,
     "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",

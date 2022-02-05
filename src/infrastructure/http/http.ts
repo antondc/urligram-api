@@ -1,5 +1,5 @@
 import 'module-alias/register';
-import bodyParser from 'body-parser';
+import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
@@ -13,12 +13,12 @@ import path from 'path';
 import { AuthMiddleware } from '@infrastructure/http/middlewares/AuthMiddleware';
 import { ErrorHandlerMiddleware } from '@infrastructure/http/middlewares/ErrorHandlerMiddleware';
 import { RouterV1 } from '@infrastructure/http/routesV1';
-import { ENDPOINT_CLIENTS, PORT_SERVER_HTTP, PORT_SERVER_HTTPS } from '@shared/constants/env';
+import { ENDPOINT_CLIENT, PORT_SERVER_HTTP, PORT_SERVER_HTTPS } from '@shared/constants/env';
 
 const app = express();
 
 /* - - - - - - - - - - - Cors - - - - - - - - - - - - - - */
-app.use(cors({ credentials: true, origin: ENDPOINT_CLIENTS }));
+app.use(cors({ credentials: true, origin: ENDPOINT_CLIENT }));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 /* - - - - - - - - - - - Static - - - - - - - - - - - - - */
@@ -32,14 +32,10 @@ app.use('/media', express.static('media'));
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 /* - - - - - - - - - - - Parsers - - - - - - - - - - - - -*/
-// Parsing application/x-www-form-urlencoded:
-app.use(bodyParser.urlencoded({ extended: false }));
-// Parsing body
-app.use(bodyParser.json());
-// Parsing JSON
-app.use(express.json());
 // Parsing req.body
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+// Parsing JSON
+app.use(express.json({ limit: '50mb' }));
 // Parsing cookies
 app.use(cookieParser());
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -52,6 +48,11 @@ app.use('*', AuthMiddleware);
 app.use('/api/v1/', RouterV1);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+console.log('=======');
+console.log('process.env.NODE_ENV:');
+console.log(JSON.stringify(process.env.NODE_ENV, null, 4));
+console.log('=======');
 
 /* - - - - - - - - - - - Errors Handler - - - - - - - - - -*/
 app.use('*', ErrorHandlerMiddleware);
