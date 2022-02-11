@@ -50,7 +50,7 @@
       "port": 3306
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "api.woprs.com",
+    "HOST_SERVER": "api-service.woprs.com",
     "PORT_SERVER_HTTP": 3002,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://www.woprs.com",
