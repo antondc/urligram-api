@@ -8,7 +8,7 @@ node_modules
 ehthumbs.db
 Thumbs.db
 media/*
-!media/update.json
+!media/docs
 dist/*
 __snapshots__
 node_modules
