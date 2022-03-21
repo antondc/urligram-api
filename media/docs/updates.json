@@ -3,10 +3,6 @@
     "{73f822a0-2d3c-498a-ad54-f194c3374652}": {
       "updates": [
         {
-          "version": "1.0",
-          "update_link": "https://www.api-service.woprs.com/media/docs/woprs_browser_extension-1.0-fx.xpi"
-        },
-        {
           "version": "1.0.1",
           "update_link": "https://www.api-service.woprs.com/media/docs/woprs_browser_extension-1.0.1-fx.xpi"
         }
