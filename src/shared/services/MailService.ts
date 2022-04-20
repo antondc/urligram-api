@@ -27,6 +27,7 @@ export class MailService {
       },
       tls: {
         rejectUnauthorized: false,
+        ciphers: 'SSLv3',
       },
       secure: true,
     });
