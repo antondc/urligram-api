@@ -25,6 +25,10 @@ export class MailService {
         user: connectionOptions.user,
         pass: connectionOptions.pass,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
+      secure: true,
     });
   }
 
