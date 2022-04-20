@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_forgot_password;
 
+-- DELIMITER $$
+
 CREATE PROCEDURE user_forgot_password(
   IN $USER_ID VARCHAR(40),
   IN $RESET_PASSWORD_TOKEN TEXT
@@ -10,7 +12,8 @@ BEGIN
   UPDATE
     user
   SET
-    resetPasswordToken = $RESET_PASSWORD_TOKEN
+    resetPasswordToken = $RESET_PASSWORD_TOKEN,
+    status = "active"
   WHERE
     id = $USER_ID;
 
@@ -18,3 +21,5 @@ BEGIN
     $USER_ID as userId;
 
 END
+
+-- DELIMITER ;

@@ -6,6 +6,15 @@ Add local api of the machine running the app to config.test.json
 
     "ENDPOINT_CLIENTS": ["https://192.168.88.193", "http://dev.woprs.com", "https://dev.woprs.com"],
 
+## Environment variables
+
+Add .env file with environment variables:
+
+    SECRET=xxxx
+    DATABASE_PASSWORD=xxxx
+    EMAIL_PASSWORD=xxxx
+    NODE_TLS_REJECT_UNAUTHORIZED=0
+
 ## Conventions
 
 ### Naming conventions
