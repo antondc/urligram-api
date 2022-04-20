@@ -31,6 +31,12 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
     if (!userUpdated) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
 
     const connectionOptions = { host: EMAIL_HOST, port: EMAIL_PORT, user: EMAIL_USER, pass: EMAIL_PASSWORD };
+
+    console.log('=======');
+    console.log('connectionOptions:');
+    console.log(JSON.stringify(connectionOptions, null, 4));
+    console.log('=======');
+
     const emailService = new MailService(connectionOptions);
     const emailOptions = {
       from: EMAIL_USER,
@@ -38,6 +44,11 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
       subject: `Reset password request — ${user?.name}`,
       text: `Hi ${user?.name}! We received a request to reset your password. Please click here to reset your password: ${ENDPOINT_CLIENTS[0]}/reset-password?name=${user?.name}&token=${token}`,
     };
+
+    console.log('=======');
+    console.log('emailOptions:');
+    console.log(JSON.stringify(emailOptions, null, 4));
+    console.log('=======');
 
     const { success } = await emailService.sendMail(emailOptions);
     if (!success) throw new UserError('Email incorrect', 409, 'email');
