@@ -12,8 +12,7 @@ BEGIN
   UPDATE
     user
   SET
-    resetPasswordToken = $RESET_PASSWORD_TOKEN,
-    status = "active"
+    resetPasswordToken = $RESET_PASSWORD_TOKEN
   WHERE
     id = $USER_ID;
 

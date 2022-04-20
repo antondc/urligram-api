@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_reset_password;
 
+-- DELIMITER $$
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_reset_password(
   IN $USER_NAME VARCHAR(40),
@@ -26,6 +28,7 @@ BEGIN
   SET
    `user`.`password`            = $NEW_PASSWORD,
    `user`.`resetPasswordToken`  = NULL,
+   `user`.`status`              = "active",
    `user`.`updatedAt`           = UNIX_TIMESTAMP()
   WHERE
     `user`.name                 = $USER_NAME
@@ -35,3 +38,5 @@ BEGIN
   SELECT @userId;
 
 END
+
+-- DELIMITER ;
