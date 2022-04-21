@@ -58,7 +58,7 @@ export class UserResetPasswordController extends BaseController {
         path: '/',
         domain: domainForCookie, // We need to prepend «.» to enable any subdomain
       })
-      .status(200)
-      .send(formattedResponse);
+      .json(formattedResponse)
+      .end();
   }
 }
