@@ -39,8 +39,21 @@ export class UserResetPasswordUseCase implements IUserResetPasswordUseCase {
     const userData = await this.userRepo.userGetOne({
       userId: userWithPasswordUpdated?.id,
     });
-    const user = new User(userData);
 
-    return user;
+    const sessionData = {
+      id: userData.id,
+      order: userData.order,
+      name: userData.name,
+      level: userData.level,
+      email: userData.email,
+      image: userData.image,
+      status: userData.status,
+      statement: userData.statement,
+      location: userData.location,
+      createdAt: userData.createdAt,
+      updatedAt: userData.updatedAt,
+    };
+
+    return sessionData;
   }
 }
