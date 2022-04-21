@@ -63,11 +63,11 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userGetOne({ sessionId = null, userId = null, email = null, name = null }) {
+  public async userGetOne({ adminRequest = null, sessionId = null, userId = null, email = null, name = null }) {
     const mySQL = new MySQL();
     try {
-      const userGetOneQuery = 'CALL user_get_one(?, ?, ?, ?)';
-      const [[results]] = await mySQL.query(userGetOneQuery, [sessionId, userId, email, name]);
+      const userGetOneQuery = 'CALL user_get_one(?, ?, ?, ?, ?)';
+      const [[results]] = await mySQL.query(userGetOneQuery, [adminRequest, sessionId, userId, email, name]);
 
       return results;
     } catch (err) {

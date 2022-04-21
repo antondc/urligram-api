@@ -21,7 +21,7 @@ export class UserForgotPasswordUseCase implements IUserForgotPasswordUseCase {
   public async execute(userLogin: IUserForgotPasswordRequest): Promise<IUserForgotPasswordResponse> {
     const { nameOrEmail } = userLogin;
 
-    const user = await this.userRepo.userGetOne({ name: nameOrEmail, email: nameOrEmail });
+    const user = await this.userRepo.userGetOne({ adminRequest: true, name: nameOrEmail, email: nameOrEmail });
     if (!user) throw new AuthenticationError('User doesn’t exist', 404, 'nameOrEmail');
 
     const tokenService = new TokenService();

@@ -1,4 +1,5 @@
 type IUserGetOneRequestBasic = {
+  adminRequest?: boolean;
   sessionId?: string;
 };
 

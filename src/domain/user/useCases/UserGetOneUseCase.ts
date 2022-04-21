@@ -1,4 +1,5 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
+import { RequestError } from '@shared/errors/RequestError';
 import { User } from '../entities/User';
 import { IUserGetOneRequest } from './interfaces/IUserGetOneRequest';
 import { IUserGetOneResponse } from './interfaces/IUserGetOneResponse';
@@ -18,6 +19,7 @@ export class UserGetOneUseCase implements IUserGetOneUseCase {
     const { session, userId, email, name } = userGetOneRequest;
 
     const userData = await this.userRepo.userGetOne({ sessionId: session?.id, userId, name, email });
+    if (!userData?.id) throw new RequestError('User not found', 404, { message: '404 Not Found' });
     const user = new User(userData);
 
     return user;

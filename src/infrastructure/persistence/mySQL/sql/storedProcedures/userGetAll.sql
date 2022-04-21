@@ -143,6 +143,12 @@ BEGIN
         OR
         CASE WHEN @filterTags IS NULL THEN TRUE END
       )
+      AND
+      (
+          `user`.status = 'active'
+        OR
+          `user`.id     = $SESSION_ID
+      )
     ORDER BY
       CASE WHEN $SORT = 'order'          THEN `user`.order      	                ELSE NULL END ASC,
       CASE WHEN $SORT = '-order'         THEN `user`.order      	                ELSE NULL END DESC,

@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS user_get_one;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_get_one(
+  IN $ADMIN_REQUEST BOOLEAN,
   IN $SESSION_ID VARCHAR(40),
   IN $USER_ID VARCHAR(40),
   IN $EMAIL VARCHAR(40),
@@ -127,9 +128,21 @@ SELECT
     ) AS tags
   FROM `user`
   WHERE
-    `user`.`id` = $USER_ID
-    OR `name`   = $NAME_
-    OR `email`  = $EMAIL
+    (
+      `user`.`id` = $USER_ID
+      OR
+      `name`   = $NAME_
+      OR
+      `email`  = $EMAIL
+    )
+    AND
+    (
+      `user`.status  = 'active'
+      OR
+      `user`.id      = $SESSION_ID
+      OR
+      $ADMIN_REQUEST = TRUE
+    )
   GROUP BY `user`.`id`
 ;
 
