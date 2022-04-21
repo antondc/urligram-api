@@ -27,7 +27,6 @@ export class MailService {
       },
       tls: {
         rejectUnauthorized: false,
-        ciphers: 'SSLv3',
       },
       secure: true,
     });
@@ -37,12 +36,15 @@ export class MailService {
     return this.transporter
       .sendMail(mailOptions)
       .then((payload) => {
-        console.log('success');
-
-        return { success: true, payload };
+        return {
+          success: true,
+          payload,
+        };
       })
       .catch((payload) => {
+        console.log('---------------');
         console.log('Email error: ', payload);
+        console.log('---------------');
 
         return { success: false, payload };
       });
