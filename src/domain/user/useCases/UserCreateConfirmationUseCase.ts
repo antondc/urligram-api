@@ -31,18 +31,20 @@ export class UserCreateConfirmationUseCase implements IUserCreateConfirmationUse
     if (decodedToken?.name !== userData?.name) throw new AuthenticationError('401 Unauthorized', 401);
     if (!userData?.id) throw new UserError('User not found', 404);
 
+    const user = new User(userData);
+
     const sessionData = {
-      id: userData.id,
-      order: userData.order,
-      name: userData.name,
-      level: userData.level,
-      email: userData.email,
-      image: userData.image,
-      status: userData.status,
-      statement: userData.statement,
-      location: userData.location,
-      createdAt: userData.createdAt,
-      updatedAt: userData.updatedAt,
+      id: user.id,
+      order: user.order,
+      name: user.name,
+      level: user.level,
+      email: user.email,
+      image: user.image,
+      status: user.status,
+      statement: user.statement,
+      location: user.location,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
 
     return sessionData;
