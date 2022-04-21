@@ -1,5 +1,13 @@
 import nodemailer, { Transporter } from 'nodemailer';
 
+/*
+Sends email through nodemailer lib.
+Requirements:
+- Set the password in .env file
+- Use TLS port 465.
+- TLS is a requirement for platforms as AWS
+*/
+
 interface ConnectionOptions {
   host: string;
   port: number;
