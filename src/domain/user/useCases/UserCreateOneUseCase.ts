@@ -1,3 +1,4 @@
+import { DEFAULT_USER_IMAGE } from '@domain/file/entities/constants';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCreateOneResponse';
@@ -7,8 +8,6 @@ import { MailService } from '@shared/services/MailService';
 import { PasswordHasher } from '@shared/services/PasswordHasher';
 import { StringValidator } from '@shared/services/StringValidator';
 import { TokenService } from '@shared/services/TokenService';
-
-const DEFAULT_USER_IMAGE = 'https://picsum.photos/id/2/300/300';
 
 export interface IUserCreateOneUseCase {
   execute: (userCreateOneRequest: IUserCreateOneRequest) => Promise<IUserCreateOneResponse>;

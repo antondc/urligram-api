@@ -3,7 +3,7 @@ import Jimp from 'jimp';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { IImageSaveOneRequest } from '@domain/file/useCases/interfaces/IFileSaveOneRequest';
 import { IImageSaveOneResponse } from '@domain/file/useCases/interfaces/IFileSaveOneResponse';
-import { DEFAULT_IMAGE } from './constants';
+import { DEFAULT_USER_IMAGE } from './constants';
 import { File, FileConstructorProps } from './File';
 import { FileDTO } from './FileDTO';
 
@@ -56,7 +56,7 @@ export class FileImage extends File {
   getFormattedImageUrls = ({ imageUrl, sizes = [] }: ImageUrlSplitBySizes): ImageUrlSplitBySizesReturn => {
     if (!imageUrl || !imageUrl.length)
       return {
-        original: DEFAULT_IMAGE,
+        original: DEFAULT_USER_IMAGE,
       };
 
     // Default image object
