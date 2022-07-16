@@ -5,8 +5,7 @@ before_script:
   - apt-get install -qq git
   - 'which ssh-agent || ( apt-get install -qq openssh-client )'
   - eval $(ssh-agent -s)
-  - ssh-add <(echo "$K8S_SECRET_SSH_PRIVATE_KEY" | base64 -d)
-  - ssh-add <(echo "$K8S_SECRET_SSH_PRIVATE_KEY_AWS" | base64 -d)
+  - ssh-add <(echo "$SERVER_KEY" | base64 -d)
   - mkdir -p ~/.ssh
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
@@ -47,19 +46,19 @@ deploy_staging:
   only:
     - staging
   script:
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && rm -rf node_modules dist/* tmp"
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && git pull origin staging"
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/urligram/api-staging.urligram.com && nvm use --delete-prefix && git checkout staging && npm ci --verbose && npm run build && npm run copy:sql"
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && pm2 delete api-staging.urligram.com"
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api-staging.urligram.com && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_STAGING} && export SECRET=${SECRET} && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name api-staging.urligram.com --update-env"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && rm -rf node_modules dist/* tmp"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && git pull origin staging"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd ${SERVER_PATH_STAGING} && nvm use --delete-prefix && git checkout staging && npm ci --verbose && npm run build && npm run copy:sql"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && pm2 delete api-staging.urligram.com"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_STAGING} && export SECRET=${SECRET} && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name api-staging.urligram.com --update-env"
 
 deploy_production:
   stage: deploy_production
   only:
     - master
   script:
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api.urligram.com && rm -rf node_modules dist/* tmp"
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api.urligram.com && git pull origin master"
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd /var/www/html/urligram/api.urligram.com && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api.urligram.com && pm2 delete api.urligram.com"
-    - ssh xum35s@ec2-35-158-133-68.eu-central-1.compute.amazonaws.com "cd /var/www/html/urligram/api.urligram.com && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION} && export SECRET=${SECRET} && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.urligram.com --update-env"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && rm -rf node_modules dist/* tmp"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && git pull origin master"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd ${SERVER_PATH_PRODUCTION} && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && pm2 delete api.urligram.com"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION} && export SECRET=${SECRET} && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.urligram.com --update-env"
