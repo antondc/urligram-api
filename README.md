@@ -4,7 +4,7 @@
 
 Add local api of the machine running the app to config.test.json
 
-    "ENDPOINT_CLIENTS": ["https://192.168.88.193", "http://dev.woprs.com", "https://dev.woprs.com"],
+    "ENDPOINT_CLIENTS": ["https://192.168.88.193", "http://dev.urligram.com", "https://dev.urligram.com"],
 
 ## Environment variables
 
