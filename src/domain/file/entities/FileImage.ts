@@ -44,6 +44,7 @@ export class FileImage extends File {
   };
 
   getImageProportions = async (path: string): Promise<number> => {
+    // TODO: interacting here directly with file system. This should call the file system repository
     const image = await Jimp.read(path);
     const height = image.bitmap.height;
     const width = image.bitmap.width;

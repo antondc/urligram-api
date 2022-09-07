@@ -22,8 +22,10 @@ import { toRelative } from '@tools/helpers/url/toRelative';
 
 export class FileRepo implements IFileRepo {
   public async fileImageSaveOne(fileImageSaveOneRequest: IFileImageSaveOneRequest): Promise<IFileImageSaveOneResponse> {
+    // Save original image
     const { path: finalPath, filename } = await this.fileSaveOne(fileImageSaveOneRequest);
 
+    // Resize and save images
     await this.imageResizeAndSave(finalPath, filename, fileImageSaveOneRequest.formatOptions);
 
     return {
