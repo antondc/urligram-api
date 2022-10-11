@@ -10,7 +10,7 @@ Add local api of the machine running the app to config.test.json
 
 Add .env file with environment variables:
 
-    SECRET=xxxx
+    JWT_SECRET=xxxx
     DATABASE_PASSWORD=xxxx
     EMAIL_PASSWORD=xxxx
     NODE_TLS_REJECT_UNAUTHORIZED=0

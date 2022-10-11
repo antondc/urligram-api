@@ -47,6 +47,7 @@
       "host": "127.0.0.1",
       "database": "urligram_production",
       "user": "r_Klo9WfxWzg8",
+      
       "port": 3306
     },
     "PROTOCOL_SERVER": "https://",

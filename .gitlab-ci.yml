@@ -50,7 +50,7 @@ deploy_staging:
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && git pull origin staging"
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd ${SERVER_PATH_STAGING} && nvm use --delete-prefix && git checkout staging && npm ci --verbose && npm run build && npm run copy:sql"
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && pm2 delete api-staging.urligram.com"
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_STAGING} && export SECRET=${SECRET} && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name api-staging.urligram.com --update-env"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_STAGING} && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_STAGING} && export JWT_SECRET=${JWT_SECRET} && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name api-staging.urligram.com --update-env"
 
 deploy_production:
   stage: deploy_production
@@ -61,4 +61,4 @@ deploy_production:
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && git pull origin master"
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "source ~/.bash_profile && export NPM_TOKEN=${NPM_TOKEN} && cd ${SERVER_PATH_PRODUCTION} && nvm use --delete-prefix && git checkout master && npm ci --verbose && npm run build && npm run copy:sql"
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && pm2 delete api.urligram.com"
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION} && export SECRET=${SECRET} && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.urligram.com --update-env"
+    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "cd ${SERVER_PATH_PRODUCTION} && export EMAIL_PASSWORD=${EMAIL_PASSWORD} && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION} && export JWT_SECRET=${JWT_SECRET} && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.urligram.com --update-env"

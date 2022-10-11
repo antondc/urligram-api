@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 
 import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';
-import { SECRET } from '@shared/constants/env';
+import { JWT_SECRET } from '@shared/constants/env';
 
 export class TokenService {
   createToken(string: unknown) {
-    const token = jwt.sign(JSON.stringify(string), SECRET);
+    const token = jwt.sign(JSON.stringify(string), JWT_SECRET);
 
     return token;
   }
@@ -14,7 +14,7 @@ export class TokenService {
     if (!string) return null;
 
     try {
-      const token = jwt.verify(string, SECRET);
+      const token = jwt.verify(string, JWT_SECRET);
 
       return token as unknown as T;
     } catch (error) {
