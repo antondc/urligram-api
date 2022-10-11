@@ -26,6 +26,7 @@ export class StateRepo {
   private userList: string;
   private userLogins: string;
   private userUser: string;
+  private note: string;
 
   // Procedures
   private debuggerProcedure: string;
@@ -71,6 +72,8 @@ export class StateRepo {
   private linkVoteOneProcedure: string;
   private linkListGetAllPublicProcedure: string;
   private linkTagGetAllProcedure: string;
+  private linkNotesGetAllProcedure: string;
+  private linkUsersGetAllProcedure: string;
   private listGetOneByIdProcedure: string;
   private listGetAllProcedure: string;
   private listCreateOneProcedure: string;
@@ -112,6 +115,7 @@ export class StateRepo {
   private userLoginData: string;
   private userUserData: string;
   private listBookmarkUserData: string;
+  private noteData: string;
 
   constructor() {
     // Operational tables
@@ -134,6 +138,7 @@ export class StateRepo {
     this.userList = fs.readFileSync(path.resolve(__dirname, '../sql/models/userList.sql')).toString();
     this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLog.sql')).toString();
     this.userUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/userUser.sql')).toString();
+    this.note = fs.readFileSync(path.resolve(__dirname, '../sql/models/note.sql')).toString();
 
     // Stored procedures
     this.debuggerProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql')).toString();
@@ -185,6 +190,8 @@ export class StateRepo {
     this.linkVoteOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkVoteOne.sql')).toString();
     this.linkListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAllPublic.sql')).toString();
     this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
+    this.linkNotesGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkNotesGetAllPublic.sql')).toString();
+    this.linkUsersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkUsersGetAllPublic.sql')).toString();
     this.listGetOneByIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOneById.sql')).toString();
     this.listGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetAll.sql')).toString();
     this.listCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreateOne.sql')).toString();
@@ -226,6 +233,7 @@ export class StateRepo {
     this.userListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userList.sql')).toString();
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
     this.listBookmarkUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/listBookmarkUser.sql')).toString();
+    this.noteData = fs.readFileSync(path.resolve(__dirname, '../sql/data/note.sql')).toString();
   }
 
   public async resetContent() {
@@ -254,6 +262,7 @@ export class StateRepo {
         ...(!!RESTORE_MODELS && (await mySQL.query(this.userList))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.userLogins))),
         ...(!!RESTORE_MODELS && (await mySQL.query(this.userUser))),
+        ...(!!RESTORE_MODELS && (await mySQL.query(this.note))),
 
         // Create procedures
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.debuggerProcedure))),
@@ -299,6 +308,8 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkVoteOneProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkListGetAllPublicProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkTagGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkNotesGetAllProcedure))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkUsersGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listGetOneByIdProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.listCreateOneProcedure))),
@@ -340,6 +351,7 @@ export class StateRepo {
         ...(!!RESTORE_DATA && (await mySQL.query(this.userLoginData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.userUserData))),
         ...(!!RESTORE_DATA && (await mySQL.query(this.listBookmarkUserData))),
+        ...(!!RESTORE_DATA && (await mySQL.query(this.noteData))),
       };
     } catch (err) {
       mySQL.rollback();

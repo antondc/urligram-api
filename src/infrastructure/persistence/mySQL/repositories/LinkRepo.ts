@@ -98,6 +98,38 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
+  public async linkNotesGetAll({ linkId }) {
+    const mySQL = new MySQL();
+
+    try {
+      const linkNotesGetAllQuery = 'CALL link_notes_get_all_public(?)';
+
+      const [results] = await mySQL.query(linkNotesGetAllQuery, [linkId]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async linkUsersGetAll({ linkId }) {
+    const mySQL = new MySQL();
+
+    try {
+      const linkUsersGetAllQuery = 'CALL link_users_get_all_public(?)';
+
+      const [results] = await mySQL.query(linkUsersGetAllQuery, [linkId]);
+
+      return results;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async linkGetVotes({ linkId }) {
     const mySQL = new MySQL();
 

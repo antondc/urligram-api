@@ -15,6 +15,7 @@ BEGIN
     link.image as img,
     `link`.`favicon`,
     bookmark.title,
+    bookmark.notes,
     CONCAT(domain.domain, link.path) AS url,
     link.id AS linkId,
     bookmark.user_id AS userId,

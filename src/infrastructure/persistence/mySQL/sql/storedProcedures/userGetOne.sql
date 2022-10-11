@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_get_one;
 
-DELIMITER $$
+-- DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_get_one(
@@ -146,8 +146,8 @@ SELECT
   GROUP BY `user`.`id`
 ;
 
-END $$
+END
 
-DELIMITER ;
+-- DELIMITER ;
 
 -- CALL user_get_one(NULL, NULL, "hello@antoniodiaz.me", "hello@antoniodiaz.me");

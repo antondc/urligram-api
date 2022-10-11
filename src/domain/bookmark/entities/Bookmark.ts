@@ -1,4 +1,5 @@
 import { ILinkStatistics } from '@domain/link/entities/LinkStatistics';
+import { Tag } from '@domain/tag/entities/Tag';
 
 export class Bookmark {
   id: number;
@@ -20,6 +21,8 @@ export class Bookmark {
     title: string;
     userId: string;
   }[];
+  notes: string;
+  tags: Tag[];
 
   constructor(options) {
     this.id = options.id;
@@ -32,5 +35,7 @@ export class Bookmark {
     this.linkId = options.linkId;
     this.statistics = options.statistics;
     this.bookmarksRelated = options.bookmarksRelated;
+    this.notes = options.notes;
+    this.tags = options.tags;
   }
 }

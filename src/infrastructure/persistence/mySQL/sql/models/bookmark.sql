@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `bookmark` (
   `title` VARCHAR(255) NOT NULL,
   `isPrivate` TINYINT(1) NULL DEFAULT '0',
   `saved` TINYINT(1) NULL DEFAULT '0',
+  `notes` TEXT DEFAULT NULL,
   `createdAt` int(11) DEFAULT NULL,
   `updatedAt` int(11) DEFAULT NULL,
   `user_id` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,

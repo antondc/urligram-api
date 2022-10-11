@@ -19,6 +19,7 @@ BEGIN
     `link`.`favicon`,
     bookmark.user_id AS userId,
     bookmark.title,
+    bookmark.notes,
     bookmark.isPrivate,
     bookmark.saved,
     bookmark.createdAt,
