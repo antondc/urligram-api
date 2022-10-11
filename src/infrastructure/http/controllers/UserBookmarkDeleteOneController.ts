@@ -30,17 +30,15 @@ export class UserBookmarkDeleteOneController extends BaseController {
       links: {
         self: URL_SERVER + PATH_API_V1 + '/users/me/bookmarks/' + bookmarkId,
       },
-      data: [
-        {
-          type: 'bookmark',
-          id: response,
-          session: {
-            self: URL_SERVER + PATH_API_V1 + '/users/me/bookmarks/' + bookmarkId,
-          },
-          attributes: response,
-          relationships: {},
+      data: {
+        type: 'bookmark',
+        id: response,
+        session: {
+          self: URL_SERVER + PATH_API_V1 + '/users/me/bookmarks/' + bookmarkId,
         },
-      ],
+        attributes: response,
+        relationships: {},
+      },
       included: [],
     };
 

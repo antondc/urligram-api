@@ -114,15 +114,16 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkUsersGetAll({ linkId }) {
+  public async linkUsersGetIds({ userId, linkId }) {
     const mySQL = new MySQL();
 
     try {
-      const linkUsersGetAllQuery = 'CALL link_users_get_all_public(?)';
+      const linkUsersGetAllQuery = 'CALL link_users_get_all(?, ?)';
 
-      const [results] = await mySQL.query(linkUsersGetAllQuery, [linkId]);
+      const [results] = await mySQL.query(linkUsersGetAllQuery, [userId, linkId]);
+      const resultsArray = results?.map((item) => item.id);
 
-      return results;
+      return resultsArray;
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {

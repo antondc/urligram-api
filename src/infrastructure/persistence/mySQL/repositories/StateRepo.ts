@@ -64,6 +64,8 @@ export class StateRepo {
   private bookmarkGetAllPublicProcedure: string;
   private bookmarkGetAllByLinkIdProcedure: string;
   private bookmarkGetByIds: string;
+  private bookmarkGetOneByLinkUser: string;
+  private bookmarkGetDefaultByLink: string;
   private bookmarkTagGetAllProcedure: string;
   private bookmarkListGetAllProcedure: string;
   private linkGetOneProcedure: string;
@@ -182,6 +184,8 @@ export class StateRepo {
     this.bookmarkGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetAllPublic.sql')).toString();
     this.bookmarkGetAllByLinkIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetAllByLinkId.sql')).toString();
     this.bookmarkGetByIds = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetByIds.sql')).toString();
+    this.bookmarkGetOneByLinkUser = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetOneByLinkUser.sql')).toString();
+    this.bookmarkGetDefaultByLink = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkGetDefaultByLink.sql')).toString();
     this.bookmarkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkTagGetAll.sql')).toString();
     this.bookmarkListGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/bookmarkListGetAll.sql')).toString();
     this.linkGetOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkGetOne.sql')).toString();
@@ -191,7 +195,7 @@ export class StateRepo {
     this.linkListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAllPublic.sql')).toString();
     this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
     this.linkNotesGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkNotesGetAllPublic.sql')).toString();
-    this.linkUsersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkUsersGetAllPublic.sql')).toString();
+    this.linkUsersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkUsersGetAll.sql')).toString();
     this.listGetOneByIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOneById.sql')).toString();
     this.listGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetAll.sql')).toString();
     this.listCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreateOne.sql')).toString();
@@ -300,6 +304,8 @@ export class StateRepo {
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetAllPublicProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetAllByLinkIdProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetByIds))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetOneByLinkUser))),
+        ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkGetDefaultByLink))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkTagGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.bookmarkListGetAllProcedure))),
         ...(!!RESTORE_PROCEDURES && (await mySQL.query(this.linkGetOneProcedure))),

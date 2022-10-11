@@ -1,0 +1,11 @@
+import { User } from '@domain/user/entities/User';
+
+export type ILinkUsersGetAllResponse = {
+  meta: {
+    totalItems: number;
+    offset: number;
+    size: number;
+    sort: string;
+  };
+  users: User[];
+};

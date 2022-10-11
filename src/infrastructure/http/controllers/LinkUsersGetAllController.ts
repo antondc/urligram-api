@@ -1,31 +1,75 @@
 import { Request, Response } from 'express';
 
-import { ILinkUsersGetAllPublicRequest } from '@domain/link/useCases/interfaces/ILinkUsersGetAllPublicRequest';
-import { ILinkUsersGetAllPublicUseCase } from '@domain/link/useCases/LinkUsersGetAllPublicUseCase';
+import { LinkUsersGetAllUseCase } from '@domain/link/useCases/LinkUsersGetAllUseCase';
+import { User } from '@domain/user/entities/User';
+import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
+import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-export class LinkUsersGetAllController extends BaseController {
-  useCase: ILinkUsersGetAllPublicUseCase;
+const DEFAULT_USER_GET_ALL_SORT = '-createdAt';
 
-  constructor(useCase: ILinkUsersGetAllPublicUseCase) {
+type LinkUsersGetAllControllerQueryType = {
+  sort?:
+    | 'order'
+    | '-order'
+    | 'createdAt'
+    | '-createdAt'
+    | 'updatedAt'
+    | '-updatedAt'
+    | 'followers'
+    | '-followers'
+    | 'following'
+    | '-following'
+    | 'bookmarks'
+    | '-bookmarks'
+    | 'lists'
+    | '-lists';
+  page: {
+    size: string;
+    offset: string;
+  };
+  filter?: {
+    name?: string;
+    tags?: string;
+  };
+};
+
+export class LinkUsersGetAllController extends BaseController {
+  useCase: LinkUsersGetAllUseCase;
+
+  constructor(useCase: LinkUsersGetAllUseCase) {
     super();
+
     this.useCase = useCase;
   }
 
   async executeImpl(req: Request, res: Response) {
+    const { sort = DEFAULT_USER_GET_ALL_SORT, page: { size, offset } = {} } = req.query as LinkUsersGetAllControllerQueryType;
     const { linkId } = req.params;
 
-    const linkLinkGetAllRequest: ILinkUsersGetAllPublicRequest = {
-      linkId: Number(linkId),
-    };
+    const tokenService = new TokenService();
+    const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
+    const castedLinkId = Number(linkId);
+    const castedSort = sort || undefined;
+    const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
+    const castedOffset = Number(offset) || undefined;
 
-    const response = await this.useCase.execute(linkLinkGetAllRequest);
+    const { users, meta } = await this.useCase.execute({
+      session,
+      linkId: castedLinkId,
+      sort: castedSort,
+      size: castedSize,
+      offset: castedOffset,
+    });
 
-    const formattedLinks = response.map((item) => {
+    const formattedUsers = users.map((item) => {
       return {
         type: 'user',
-        id: item?.id,
+        id: item.id,
+        session: {
+          self: URL_SERVER + PATH_API_V1 + '/users/' + item.id,
+        },
         attributes: {
           ...item,
         },
@@ -33,10 +77,11 @@ export class LinkUsersGetAllController extends BaseController {
     });
 
     const formattedResponse = {
+      meta,
       links: {
-        self: URL_SERVER + PATH_API_V1 + '/links/' + linkId + '/users',
+        self: URL_SERVER + PATH_API_V1 + req.originalUrl,
       },
-      data: formattedLinks,
+      data: formattedUsers,
       included: [],
     };
 

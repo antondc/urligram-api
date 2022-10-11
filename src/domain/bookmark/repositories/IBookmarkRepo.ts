@@ -4,6 +4,10 @@ import { IBookmarkGetAllPublicRequest } from './interfaces/IBookmarkGetAllPublic
 import { IBookmarkGetAllPublicResponse } from './interfaces/IBookmarkGetAllPublicResponse';
 import { IBookmarkGetByIdsRequest } from './interfaces/IBookmarkGetByIdsRequest';
 import { IBookmarkGetByIdsResponse } from './interfaces/IBookmarkGetByIdsResponse';
+import { IBookmarkGetDefaultByLinkRequest } from './interfaces/IBookmarkGetDefaultByLinkRequest';
+import { IBookmarkGetDefaultByLinkResponse } from './interfaces/IBookmarkGetDefaultByLinkResponse';
+import { IBookmarkGetOneByLinkUserRequest } from './interfaces/IBookmarkGetOneByLinkUserRequest';
+import { IBookmarkGetOneByLinkUserResponse } from './interfaces/IBookmarkGetOneByLinkUserResponse';
 import { IBookmarkGetOneRequest } from './interfaces/IBookmarkGetOneRequest';
 import { IBookmarkGetOneResponse } from './interfaces/IBookmarkGetOneResponse';
 import { IBookmarkListGetAllRequest } from './interfaces/IBookmarkListGetAllRequest';
@@ -18,4 +22,6 @@ export interface IBookmarkRepo {
   bookmarkTagGetAll: (bookmarkTagGetAllRequest: IBookmarkTagGetAllRequest) => Promise<IBookmarkTagGetAllResponse>;
   bookmarkListGetAll: (bookmarkListGetAllRequest: IBookmarkListGetAllRequest) => Promise<IBookmarkListGetAllResponse>;
   bookmarkGetByIds: (bookmarkListGetAllRequest: IBookmarkGetByIdsRequest) => Promise<IBookmarkGetByIdsResponse>;
+  bookmarkGetOneByLinkUser: (bookmarkGetOneByLinkUserRequest: IBookmarkGetOneByLinkUserRequest) => Promise<IBookmarkGetOneByLinkUserResponse>;
+  bookmarkGetDefaultByLink: (bookmarkGetByLinkUserRequest: IBookmarkGetDefaultByLinkRequest) => Promise<IBookmarkGetDefaultByLinkResponse>;
 }

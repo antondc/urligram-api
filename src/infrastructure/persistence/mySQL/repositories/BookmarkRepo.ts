@@ -20,6 +20,38 @@ export class BookmarkRepo implements IBookmarkRepo {
     }
   }
 
+  public async bookmarkGetOneByLinkUser({ userId, linkId }) {
+    const mySQL = new MySQL();
+
+    try {
+      const bookmarkGetOneQuery = 'CALL bookmark_get_one_by_link_user(?, ?)';
+
+      const [[bookmark]] = await mySQL.query(bookmarkGetOneQuery, [userId, linkId]);
+
+      return bookmark;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
+  public async bookmarkGetDefaultByLink({ userId, linkId }) {
+    const mySQL = new MySQL();
+
+    try {
+      const bookmarkGetOneQuery = 'CALL bookmark_get_default_by_link(?, ?)';
+
+      const [[bookmark]] = await mySQL.query(bookmarkGetOneQuery, [userId, linkId]);
+
+      return bookmark;
+    } catch (err) {
+      throw new BaseError('Something went wrong', 500, err);
+    } finally {
+      await mySQL.close();
+    }
+  }
+
   public async bookmarkTagGetAll({ bookmarkId }) {
     const mySQL = new MySQL();
 

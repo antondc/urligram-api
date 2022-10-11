@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 
 import { BookmarkGetAllPublicUseCase } from '@domain/bookmark/useCases/BookmarkGetAllPublicUseCase';
 import { BookmarkGetByIdsUseCase } from '@domain/bookmark/useCases/BookmarkGetByIdsUseCase';
+import { BookmarkGetOneByLinkUserUseCase } from '@domain/bookmark/useCases/BookmarkGetOneByLinkUserUseCase';
 import { BookmarkGetOneUseCase } from '@domain/bookmark/useCases/BookmarkGetOneUseCase';
 import { BookmarkListGetAllUseCase } from '@domain/bookmark/useCases/BookmarkListGetAllUseCase';
 import { BookmarkTagGetAllUseCase } from '@domain/bookmark/useCases/BookmarkTagGetAllUseCase';
@@ -13,6 +14,7 @@ import { BookmarkTagGetAllController } from '@infrastructure/http/controllers/Bo
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { BookmarkGetByIdsController } from '../controllers/BookmarkGetByIdsController';
+import { BookmarkGetByLinkIdAndUserIdController } from '../controllers/BookmarkGetOneByLinkUserController';
 
 const BookmarksRoute = express.Router();
 
@@ -69,6 +71,18 @@ BookmarksRoute.get('/:bookmarkId/lists', async (req: Request, res: Response, nex
   const bookmarkListGetAllController = new BookmarkListGetAllController(bookmarkListGetAllUseCase);
 
   const response = await bookmarkListGetAllController.execute(req, res, next);
+
+  return response;
+});
+
+BookmarksRoute.get('/link/:linkId/user/me', async (req: Request, res: Response, next: NextFunction) => {
+  const bookmarkRepo = new BookmarkRepo();
+  const linkRepo = new LinkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
+  const bookmarkGetOneByLinkUserUseCase = new BookmarkGetOneByLinkUserUseCase(bookmarkRepo, linkGetStatisticsUseCase);
+  const bookmarkGetOneByLinkUserController = new BookmarkGetByLinkIdAndUserIdController(bookmarkGetOneByLinkUserUseCase);
+
+  const response = await bookmarkGetOneByLinkUserController.execute(req, res, next);
 
   return response;
 });

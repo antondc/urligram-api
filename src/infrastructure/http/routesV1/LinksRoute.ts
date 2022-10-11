@@ -7,7 +7,7 @@ import { LinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAl
 import { LinkNotesGetAllPublicUseCase } from '@domain/link/useCases/LinkNotesGetAllPublicUseCase';
 import { LinkRequestInfoUseCase } from '@domain/link/useCases/LinkRequestInfoUseCase';
 import { LinkTagGetAllUseCase } from '@domain/link/useCases/LinkTagGetAllPublicUseCase';
-import { LinkUsersGetAllPublicUseCase } from '@domain/link/useCases/LinkUsersGetAllPublicUseCase';
+import { LinkUsersGetAllUseCase } from '@domain/link/useCases/LinkUsersGetAllUseCase';
 import { LinkVoteOneUseCase } from '@domain/link/useCases/LinkVoteOneUseCase';
 import { LinkGetAllController } from '@infrastructure/http/controllers/LinkGetAllController';
 import { LinkGetOneController } from '@infrastructure/http/controllers/LinkGetOneController';
@@ -17,6 +17,7 @@ import { LinkTagGetAllController } from '@infrastructure/http/controllers/LinkTa
 import { LinkVoteOneController } from '@infrastructure/http/controllers/LinkVoteOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
+import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 import { LinkNotesGetAllController } from '../controllers/LinkNotesGetAllController';
 import { LinkUsersGetAllController } from '../controllers/LinkUsersGetAllController';
 
@@ -33,8 +34,8 @@ LinksRoute.get('/url', async (req: Request, res: Response, next: NextFunction) =
 
 LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const bookmarkRepoRepo = new BookmarkRepo();
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepoRepo);
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
 
   const linkGetOneUseCase = new LinkGetOneUseCase(linkRepo, linkGetStatisticsUseCase);
   const linkGetOneController = new LinkGetOneController(linkGetOneUseCase);
@@ -46,9 +47,9 @@ LinksRoute.get('/:linkId', async (req: Request, res: Response, next: NextFunctio
 
 LinksRoute.put('/:linkId', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const bookmarkRepoRepo = new BookmarkRepo();
+  const bookmarkRepo = new BookmarkRepo();
 
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepoRepo);
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
   const linkGetOneUseCase = new LinkGetOneUseCase(linkRepo, linkGetStatisticsUseCase);
   const linkVoteOneUseCase = new LinkVoteOneUseCase(linkRepo, linkGetOneUseCase);
   const linkVoteOneController = new LinkVoteOneController(linkVoteOneUseCase);
@@ -60,8 +61,8 @@ LinksRoute.put('/:linkId', async (req: Request, res: Response, next: NextFunctio
 
 LinksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const bookmarkRepoRepo = new BookmarkRepo();
-  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepoRepo);
+  const bookmarkRepo = new BookmarkRepo();
+  const linkGetStatisticsUseCase = new LinkGetStatisticsUseCase(linkRepo, bookmarkRepo);
 
   const linkGetAllUseCase = new LinkGetAllUseCase(linkRepo, linkGetStatisticsUseCase);
   const linkGetAllController = new LinkGetAllController(linkGetAllUseCase);
@@ -103,7 +104,8 @@ LinksRoute.get('/:linkId/notes', async (req: Request, res: Response, next: NextF
 
 LinksRoute.get('/:linkId/users', async (req: Request, res: Response, next: NextFunction) => {
   const linkRepo = new LinkRepo();
-  const linkUsersGetAllUseCase = new LinkUsersGetAllPublicUseCase(linkRepo);
+  const userRepo = new UserRepo();
+  const linkUsersGetAllUseCase = new LinkUsersGetAllUseCase(linkRepo, userRepo);
   const linkUsersGetAllController = new LinkUsersGetAllController(linkUsersGetAllUseCase);
 
   const response = await linkUsersGetAllController.execute(req, res, next);

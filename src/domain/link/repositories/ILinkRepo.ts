@@ -12,8 +12,8 @@ import { ILinkTagGetAllRequest } from './interfaces/ILinkTagGetAllRequest';
 import { ILinkTagGetAllResponse } from './interfaces/ILinkTagGetAllResponse';
 import { ILinkUpsertOneRequest } from './interfaces/ILinkUpsertOneRequest';
 import { ILinkUpsertOneResponse } from './interfaces/ILinkUpsertOneResponse';
-import { ILinkUsersGetAllPublicRequest } from './interfaces/ILinkUsersGetAllPublicRequest';
-import { ILinkUsersGetAllPublicResponse } from './interfaces/ILinkUsersGetAllPublicResponse';
+import { ILinkUsersGetIdsPublicRequest } from './interfaces/ILinkUsersGetIdsPublicRequest';
+import { ILinkUsersGetIdsPublicResponse } from './interfaces/ILinkUsersGetIdsPublicResponse';
 import { ILinkVoteOneRequest } from './interfaces/ILinkVoteOneRequest';
 import { ILinkVoteOneResponse } from './interfaces/ILinkVoteOneResponse';
 
@@ -23,7 +23,7 @@ export interface ILinkRepo {
   linkListGetAllPublic: (linkListGetAllPublicRequest: ILinkListGetAllPublicRequest) => Promise<ILinkListGetAllPublicResponse>;
   linkTagGetAll: (linkTagGetAllRequest: ILinkTagGetAllRequest) => Promise<ILinkTagGetAllResponse>;
   linkNotesGetAll: (linkNotesGetAllRequest: ILinkNotesGetAllPublicRequest) => Promise<ILinkNotesGetAllPublicResponse>;
-  linkUsersGetAll: (linkUsersGetAllRequest: ILinkUsersGetAllPublicRequest) => Promise<ILinkUsersGetAllPublicResponse>;
+  linkUsersGetIds: (linkUsersGetIdsRequest: ILinkUsersGetIdsPublicRequest) => Promise<ILinkUsersGetIdsPublicResponse>;
   linkGetVotes: (linkGetVotesRequest: ILinkGetVotesRequest) => Promise<ILinkGetVotesResponse>;
   linkVoteOne: (linkVoteOneRequest: ILinkVoteOneRequest) => Promise<ILinkVoteOneResponse>;
   linkUpsertOne: (linkUpsertOneRequest: ILinkUpsertOneRequest) => Promise<ILinkUpsertOneResponse>;
