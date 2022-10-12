@@ -6,7 +6,8 @@ CREATE PROCEDURE user_bookmark_create(
   IN $LINK_ID INT,
   IN $TITLE VARCHAR(255),
   IN $IS_PRIVATE BOOLEAN,
-  IN $TAGS JSON
+  IN $TAGS JSON,
+  IN $NOTES TEXT
 )
 
 BEGIN
@@ -20,6 +21,7 @@ BEGIN
     `bookmark`.`isPrivate`,
     `bookmark`.`user_id`,
     `bookmark`.`link_id`,
+    `bookmark`.`notes`,
     createdAt,
     updatedAt
   ) VALUES (
@@ -27,11 +29,13 @@ BEGIN
     $IS_PRIVATE,
     $USER_ID,
     $LINK_ID,
+    $NOTES,
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP()
   ) ON DUPLICATE KEY UPDATE
     isPrivate   = $IS_PRIVATE,
     title       = $TITLE,
+    notes       = $NOTES,
     updatedAt   = UNIX_TIMESTAMP()
   ;
 

@@ -16,7 +16,7 @@ export class UserBookmarkCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { title, saved, isPrivate, url, tags } = req.body;
+    const { title, saved, isPrivate, url, tags, notes } = req.body;
     const tokenService = new TokenService();
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
@@ -26,6 +26,7 @@ export class UserBookmarkCreateController extends BaseController {
       isPrivate,
       url,
       tags,
+      notes,
       session,
     };
 

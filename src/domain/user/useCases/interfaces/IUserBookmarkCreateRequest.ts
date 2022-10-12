@@ -11,4 +11,5 @@ export interface IUserBookmarkCreateRequest {
   url: string;
   tags?: Tag[];
   session: User;
+  notes: string;
 }

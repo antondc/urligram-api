@@ -20,7 +20,7 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
   }
 
   public async execute(bookmarkCreateRequest: IUserBookmarkCreateRequest): Promise<IUserBookmarkCreateResponse> {
-    const { session, url, title, isPrivate, tags } = bookmarkCreateRequest;
+    const { session, url, title, isPrivate, tags, notes } = bookmarkCreateRequest;
 
     const stringIsValidUrl = testStringIsValidUrl(url);
     if (!stringIsValidUrl) throw new RequestError('Url is not valid', 409, { message: '409 Conflict' });
@@ -45,6 +45,7 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
       title,
       isPrivate,
       tags,
+      notes,
     });
     if (!result?.id) throw new RequestError('Bookmark creation failed', 500, { message: '500 Server Error' });
 

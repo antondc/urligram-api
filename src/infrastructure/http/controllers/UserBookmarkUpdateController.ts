@@ -16,7 +16,7 @@ export class UserBookmarkUpdateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { order, saved, isPrivate, tags, title } = req.body;
+    const { order, saved, isPrivate, tags, title, notes } = req.body;
     const { bookmarkId } = req.params;
 
     const tokenService = new TokenService();
@@ -30,6 +30,7 @@ export class UserBookmarkUpdateController extends BaseController {
       isPrivate,
       tags,
       session,
+      notes,
     };
 
     const response = await this.useCase.execute(userBookmarkUpdateRequest);

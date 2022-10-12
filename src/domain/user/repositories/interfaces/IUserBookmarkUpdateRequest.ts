@@ -8,4 +8,5 @@ export interface IUserBookmarkUpdateRequest {
   title: string;
   isPrivate: boolean;
   tags: Tag[];
+  notes: string;
 }

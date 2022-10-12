@@ -6,7 +6,8 @@ CREATE PROCEDURE user_bookmark_update(
   IN $ORDER INT,
   IN $TITLE VARCHAR(255),
   IN $IS_PRIVATE BOOLEAN,
-  IN $TAGS JSON
+  IN $TAGS JSON,
+  IN $NOTES TEXT
 )
 
 BEGIN
@@ -19,7 +20,8 @@ BEGIN
   SET
     `bookmark`.`isPrivate`  = $IS_PRIVATE,
     `bookmark`.`order`      = $ORDER,
-    `bookmark`.`title`      = $TITLE
+    `bookmark`.`title`      = $TITLE,
+    `bookmark`.`notes`      = $NOTES
   WHERE
     `bookmark`.id           = $BOOKMARK_ID
   ;

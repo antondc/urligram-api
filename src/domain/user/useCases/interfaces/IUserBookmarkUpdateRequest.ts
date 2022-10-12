@@ -11,5 +11,6 @@ export interface IUserBookmarkUpdateRequest {
   saved: boolean;
   isPrivate: boolean;
   tags: Tag[];
+  notes: string;
   session: User;
 }
