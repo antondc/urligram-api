@@ -26,7 +26,6 @@ export class File extends FileDTO {
 
   async fileSaveInTempFolder(fileSaveInTempFolderRequest: IFileSaveInTempFolderRequest): Promise<IFileSaveInTempFolderResponse> {
     const { file } = fileSaveInTempFolderRequest;
-
     const { path } = await this.fileRepo.fileSaveInTempFolder({ file });
 
     return { path };

@@ -5,7 +5,7 @@ export type ILinkUsersGetAllResponse = {
     totalItems: number;
     offset: number;
     size: number;
-    sort: string;
+    sort?: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   };
   users: User[];
 };

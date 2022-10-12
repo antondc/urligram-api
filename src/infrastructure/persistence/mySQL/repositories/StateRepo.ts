@@ -195,7 +195,7 @@ export class StateRepo {
     this.linkListGetAllPublicProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkListGetAllPublic.sql')).toString();
     this.linkTagGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkTagGetAll.sql')).toString();
     this.linkNotesGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkNotesGetAllPublic.sql')).toString();
-    this.linkUsersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkUsersGetAll.sql')).toString();
+    this.linkUsersGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/linkUsersGetIds.sql')).toString();
     this.listGetOneByIdProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetOneById.sql')).toString();
     this.listGetAllProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listGetAll.sql')).toString();
     this.listCreateOneProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/listCreateOne.sql')).toString();

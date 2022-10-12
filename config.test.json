@@ -7,7 +7,7 @@
       "port": 3306
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "dev.urligram.com",
+    "HOST_SERVER": "www.dev.urligram.com",
     "PORT_SERVER_HTTP": 0,
     "PORT_SERVER_HTTPS": 3000,
     "ENDPOINT_CLIENT": true,
@@ -47,7 +47,7 @@
       "host": "127.0.0.1",
       "database": "urligram_production",
       "user": "r_Klo9WfxWzg8",
-      
+
       "port": 3306
     },
     "PROTOCOL_SERVER": "https://",

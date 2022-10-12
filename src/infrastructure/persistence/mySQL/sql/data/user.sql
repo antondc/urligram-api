@@ -17,7 +17,7 @@ INSERT INTO `user` (
   'admin',
   'hello@antoniodiaz.me',
   'https://dev.urligram.com:3000/media/files/users/image/original/35001bcc-dfdb-4943-8cf5-874e6ef72960.jpg',
-  'AAAAEAANUVdHjasyNC0fUFdAZg5Nl6m6a+RZyy8WxrYGWbaLF6xwCfFhW2Kw3hZtXZuWM/uq3wg=',
+  'AAAAEAANUVftWlCR+CtW2FMuL/xGX1B3mQM5y0Uw',
   'active',
   'The quick brown fox jumps over the lazy dog',
   'Mars',

@@ -5,6 +5,8 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
+import { IFileCheckIfExistsRequest } from '@domain/file/repositories/interfaces/IFileCheckIfExistsRequest';
+import { IFileCheckIfExistsResponse } from '@domain/file/repositories/interfaces/IFileCheckIfExistsResponse';
 import { IFileDeleteOneRequest } from '@domain/file/repositories/interfaces/IFileDeleteOneRequest';
 import { IFileDeleteOneResponse } from '@domain/file/repositories/interfaces/IFileDeleteOneResponse';
 import { IFileImageSaveOneRequest } from '@domain/file/repositories/interfaces/IFileImageSaveOneRequest';
@@ -21,6 +23,18 @@ import { URLWrapper } from '@shared/services/UrlWrapper';
 import { toRelative } from '@tools/helpers/url/toRelative';
 
 export class FileRepo implements IFileRepo {
+  public async fileCheckIfExists(fileImageSaveOneRequest: IFileCheckIfExistsRequest): Promise<IFileCheckIfExistsResponse> {
+    try {
+      const url = new URLWrapper(fileImageSaveOneRequest?.fileUrl);
+      const originPath = toRelative(url.getPath());
+      const exists = fs.existsSync(originPath);
+
+      return exists;
+    } catch {
+      return false;
+    }
+  }
+
   public async fileImageSaveOne(fileImageSaveOneRequest: IFileImageSaveOneRequest): Promise<IFileImageSaveOneResponse> {
     // Save original image
     const { path: finalPath, filename } = await this.fileSaveOne(fileImageSaveOneRequest);

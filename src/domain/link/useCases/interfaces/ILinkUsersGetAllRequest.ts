@@ -3,25 +3,7 @@ import { User } from '@domain/user/entities/User';
 export type ILinkUsersGetAllRequest = {
   session: User;
   linkId: number;
-  sort?:
-    | 'order'
-    | '-order'
-    | 'createdAt'
-    | '-createdAt'
-    | 'updatedAt'
-    | '-updatedAt'
-    | 'followers'
-    | '-followers'
-    | 'following'
-    | '-following'
-    | 'bookmarks'
-    | '-bookmarks'
-    | 'lists'
-    | '-lists';
+  sort?: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   size?: number;
   offset?: number;
-  filter?: {
-    name?: string;
-    tags?: string;
-  };
 };

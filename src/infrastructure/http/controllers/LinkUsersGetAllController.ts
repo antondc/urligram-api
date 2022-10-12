@@ -7,31 +7,13 @@ import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { TokenService } from '@shared/services/TokenService';
 import { BaseController } from './BaseController';
 
-const DEFAULT_USER_GET_ALL_SORT = '-createdAt';
+const DEFAULT_USER_GET_ALL_SORT = '-updatedAt';
 
 type LinkUsersGetAllControllerQueryType = {
-  sort?:
-    | 'order'
-    | '-order'
-    | 'createdAt'
-    | '-createdAt'
-    | 'updatedAt'
-    | '-updatedAt'
-    | 'followers'
-    | '-followers'
-    | 'following'
-    | '-following'
-    | 'bookmarks'
-    | '-bookmarks'
-    | 'lists'
-    | '-lists';
+  sort?: 'order' | '-order' | 'createdAt' | '-createdAt' | 'updatedAt' | '-updatedAt';
   page: {
     size: string;
     offset: string;
-  };
-  filter?: {
-    name?: string;
-    tags?: string;
   };
 };
 

@@ -98,15 +98,26 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkNotesGetAll({ linkId }) {
+  public async linkNotesGetAll({ linkId, sort, size, offset }) {
     const mySQL = new MySQL();
 
     try {
-      const linkNotesGetAllQuery = 'CALL link_notes_get_all_public(?)';
+      const linkNotesGetAllQuery = 'CALL link_notes_get_all_public(?, ?, ?, ?)';
 
-      const [results] = await mySQL.query(linkNotesGetAllQuery, [linkId]);
+      const [notes] = await mySQL.query(linkNotesGetAllQuery, [linkId, sort, size, offset]);
+      const notesWithoutTotal = notes.map((item) => ({ ...item, totalItems: undefined }));
 
-      return results;
+      const total = {
+        meta: {
+          totalItems: notes[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+        },
+        notesData: notesWithoutTotal,
+      };
+
+      return total;
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {
@@ -114,16 +125,25 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkUsersGetIds({ userId, linkId }) {
+  public async linkUsersGetIds({ userId, linkId, sort, size, offset }) {
     const mySQL = new MySQL();
 
     try {
-      const linkUsersGetAllQuery = 'CALL link_users_get_all(?, ?)';
+      const linkUsersGetAllQuery = 'CALL link_users_get_ids(?, ?, ?, ?, ?)';
+      const [users] = await mySQL.query(linkUsersGetAllQuery, [userId, linkId, sort, size, offset]);
+      const usersWithoutTotal = users?.map((item) => item.id);
 
-      const [results] = await mySQL.query(linkUsersGetAllQuery, [userId, linkId]);
-      const resultsArray = results?.map((item) => item.id);
+      const total = {
+        meta: {
+          totalItems: users[0]?.totalItems || 0,
+          size,
+          offset,
+          sort,
+        },
+        usersData: usersWithoutTotal,
+      };
 
-      return resultsArray;
+      return total;
     } catch (err) {
       throw new BaseError('Something went wrong', 500, err);
     } finally {

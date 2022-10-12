@@ -21,15 +21,21 @@ export class LinkUsersGetAllUseCase implements ILinkUsersGetAllUseCase {
   public async execute(linkUsersGetIdsRequest: ILinkUsersGetAllRequest): Promise<ILinkUsersGetAllResponse> {
     const { session, linkId, sort, size, offset } = linkUsersGetIdsRequest;
 
-    const userIds = await this.linkRepo.linkUsersGetIds({ userId: session?.id, linkId });
-    if (!userIds) throw new RequestError('Link does not exist', 404, { message: '404 Not Found' });
+    const { usersData: usersIds, meta } = await this.linkRepo.linkUsersGetIds({ userId: session?.id, linkId, sort, size, offset });
 
-    const { usersData, meta } = await this.userRepo.userGetByIds({ sessionId: session?.id, userIds, sort, size, offset });
+    if (!usersIds) throw new RequestError('Link does not exist', 404, { message: '404 Not Found' });
+
+    const { usersData } = await this.userRepo.userGetByIds({ sessionId: session?.id, userIds: usersIds, sort });
     const users = usersData.map((item) => new User(item));
 
     return {
       users,
-      meta,
+      meta: {
+        totalItems: meta?.totalItems,
+        sort,
+        size,
+        offset,
+      },
     };
   }
 }

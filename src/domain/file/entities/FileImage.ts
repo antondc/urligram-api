@@ -30,6 +30,15 @@ export class FileImage extends File {
   }
 
   async fileImageSaveOne(imageSaveOneRequest: IImageSaveOneRequest): Promise<IImageSaveOneResponse> {
+    const exists = await this.fileRepo.fileCheckIfExists({ fileUrl: imageSaveOneRequest.fileUrl });
+
+    if (!exists) {
+      return {
+        path: null,
+        ratio: null,
+      };
+    }
+
     const ratio = await this.getImageProportions(imageSaveOneRequest.fileUrl);
     const image = await this.fileRepo.fileImageSaveOne(imageSaveOneRequest);
 

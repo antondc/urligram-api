@@ -15,10 +15,15 @@ export class LinkNotesGetAllPublicUseCase implements ILinkNotesGetAllPublicUseCa
   }
 
   public async execute(linkNotesGetAllRequest: ILinkNotesGetAllPublicRequest): Promise<ILinkNotesGetAllPublicResponse> {
-    const result = await this.linkRepo.linkNotesGetAll(linkNotesGetAllRequest);
+    const { linkId, sort, size, offset } = linkNotesGetAllRequest;
 
-    if (!result) throw new RequestError('Link does not exist', 404, { message: '404 Not Found' });
+    const { notesData, meta } = await this.linkRepo.linkNotesGetAll({ linkId, sort, size, offset });
 
-    return result;
+    if (!notesData) throw new RequestError('Link does not exist', 404, { message: '404 Not Found' });
+
+    return {
+      meta,
+      notes: notesData,
+    };
   }
 }
