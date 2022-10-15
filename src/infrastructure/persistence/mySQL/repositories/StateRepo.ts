@@ -140,7 +140,7 @@ export class StateRepo {
     this.userList = fs.readFileSync(path.resolve(__dirname, '../sql/models/userList.sql')).toString();
     this.userLogins = fs.readFileSync(path.resolve(__dirname, '../sql/models/userLog.sql')).toString();
     this.userUser = fs.readFileSync(path.resolve(__dirname, '../sql/models/userUser.sql')).toString();
-    this.note = fs.readFileSync(path.resolve(__dirname, '../sql/models/note.sql')).toString();
+    this.note = fs.readFileSync(path.resolve(__dirname, '../sql/models/notes.sql')).toString();
 
     // Stored procedures
     this.debuggerProcedure = fs.readFileSync(path.resolve(__dirname, '../sql/storedProcedures/debugger.sql')).toString();
@@ -237,7 +237,7 @@ export class StateRepo {
     this.userListData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userList.sql')).toString();
     this.userLoginData = fs.readFileSync(path.resolve(__dirname, '../sql/data/userLog.sql')).toString();
     this.listBookmarkUserData = fs.readFileSync(path.resolve(__dirname, '../sql/data/listBookmarkUser.sql')).toString();
-    this.noteData = fs.readFileSync(path.resolve(__dirname, '../sql/data/note.sql')).toString();
+    this.noteData = fs.readFileSync(path.resolve(__dirname, '../sql/data/notes.sql')).toString();
   }
 
   public async resetContent() {

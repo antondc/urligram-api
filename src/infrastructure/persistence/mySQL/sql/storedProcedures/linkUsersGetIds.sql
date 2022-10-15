@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS link_users_get_ids;
 
+-- DELIMITER $$
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE link_users_get_ids(
   IN $SESSION_ID VARCHAR(40),
@@ -43,3 +45,5 @@ BEGIN
   ;
 
 END
+
+-- DELIMITER ;

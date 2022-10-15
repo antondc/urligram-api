@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS link_notes_get_all_public;
 
+-- DELIMITER $$
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE link_notes_get_all_public(
   IN $LINK_ID INT,
@@ -35,3 +37,5 @@ BEGIN
   ;
 
 END
+
+-- DELIMITER ;
