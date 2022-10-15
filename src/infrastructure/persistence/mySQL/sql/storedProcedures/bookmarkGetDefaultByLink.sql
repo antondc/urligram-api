@@ -103,4 +103,4 @@ BEGIN
 END
 
 -- DELIMITER ;
--- CALL bookmark_get_one_by_link_user(1);
+-- CALL bookmark_get_default_by_link(1);
