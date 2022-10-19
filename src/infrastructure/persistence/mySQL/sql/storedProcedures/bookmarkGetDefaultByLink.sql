@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS bookmark_get_default_by_link;
 
-DELIMITER $$
+-- DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE bookmark_get_default_by_link(
@@ -100,7 +100,7 @@ BEGIN
   LIMIT 1
   ;
 
-END $$
+END
 
-DELIMITER ;
+-- DELIMITER ;
 -- CALL bookmark_get_default_by_link(1);

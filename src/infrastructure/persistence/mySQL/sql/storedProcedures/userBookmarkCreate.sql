@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_bookmark_create;
 
+DELIMITER $$
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_create(
   IN $USER_ID VARCHAR(40),
@@ -102,4 +104,7 @@ BEGIN
   END WHILE;
 
   SELECT @bookmark_id AS id;
-END
+
+END $$
+
+DELIMITER ;

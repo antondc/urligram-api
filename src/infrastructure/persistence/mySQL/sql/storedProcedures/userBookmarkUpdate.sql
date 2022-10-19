@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_bookmark_update;
 
+-- DELIMITER $$
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_bookmark_update(
   IN $BOOKMARK_ID INT,
@@ -84,3 +86,5 @@ BEGIN
   ;
 
 END
+
+-- DELIMITER ;
