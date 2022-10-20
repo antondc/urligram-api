@@ -38,6 +38,27 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
     const userData = await this.userRepo.userGetOne({ sessionId: session?.id, userId: session?.id });
     const user = new User(userData);
 
-    return user;
+    const sessionData = {
+      id: user.id,
+      order: user.order,
+      name: user.name,
+      level: user.level,
+      email: user.email,
+      image: user.image,
+      status: user.status,
+      statement: user.statement,
+      location: user.location,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+    const sessionLogData = {
+      result: 'success',
+      type: 'login',
+      userId: sessionData.id,
+    };
+
+    await this.userRepo.userLogSession(sessionLogData);
+
+    return sessionData;
   }
 }
