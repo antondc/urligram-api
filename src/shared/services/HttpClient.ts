@@ -51,4 +51,5 @@ export class HttpClient {
   private paramsSerializer = (params) => QueryStringWrapper.stringifyQueryParams(params);
 }
 
+// Export singleton
 export default HttpClient.getInstance();
