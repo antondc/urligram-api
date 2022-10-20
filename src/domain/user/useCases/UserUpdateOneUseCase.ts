@@ -53,7 +53,7 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
     };
     const sessionLogData = {
       result: 'success',
-      type: 'login',
+      type: 'update data',
       userId: sessionData.id,
     };
 

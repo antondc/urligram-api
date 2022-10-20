@@ -58,6 +58,14 @@ export class UserResetPasswordUseCase implements IUserResetPasswordUseCase {
       updatedAt: user.updatedAt,
     };
 
+    const sessionLogData = {
+      result: 'success',
+      type: 'reset password',
+      userId: sessionData.id,
+    };
+
+    await this.userRepo.userLogSession(sessionLogData);
+
     return sessionData;
   }
 }
