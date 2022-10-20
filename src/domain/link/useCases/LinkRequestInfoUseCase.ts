@@ -1,11 +1,9 @@
-import { DEFAULT_LANGUAGE } from '@shared/constants/constants';
-import { DEFAULT_REQUEST_TIMEOUT } from '@shared/constants/constants';
+import { URLWrapper } from '@antoniodcorrea/utils';
+import { addDefaultHttps, testStringIsValidUrl } from '@antoniodcorrea/utils';
+import { DEFAULT_LANGUAGE, DEFAULT_REQUEST_TIMEOUT } from '@shared/constants/constants';
 import { RequestError } from '@shared/errors/RequestError';
 import HtmlScrapper from '@shared/services/HtmlScrapper';
 import { HttpClient } from '@shared/services/HttpClient';
-import { URLWrapper } from '@shared/services/UrlWrapper';
-import { addDefaultHttps } from '@tools/helpers/url/addDefaultHttps';
-import { testStringIsValidUrl } from '@tools/helpers/url/testStringIsValidUrl';
 import { ILinkRequestInfoRequest } from './interfaces/ILinkRequestInfoRequest';
 import { ILinkRequestInfoResponse } from './interfaces/ILinkRequestInfoResponse';
 

@@ -14,9 +14,10 @@ module.exports = {
       {
         groups: [
           ['^\\u0000', '^@?\\w'],
-          ['^(@domain|@adapter|@shared|@tools|@root|@infrastructure)(/.*|$)', '^\\.'],
+          ['^(@.*|$)', '^\\.'],
         ],
       },
     ],
+    'sort-imports': 0, // disables eslint's default sort imports rule
   },
 };

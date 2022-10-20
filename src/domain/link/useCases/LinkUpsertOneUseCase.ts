@@ -1,10 +1,9 @@
+import { URLWrapper } from '@antoniodcorrea/utils';
+import { addDefaultHttps, testStringIsValidUrl } from '@antoniodcorrea/utils';
 import { ILinkRepo } from '@domain/link/repositories/ILinkRepo';
 import { ILinkUpsertOneRequest } from '@domain/link/useCases/interfaces/ILinkUpsertOneRequest';
 import { ILinkUpsertOneResponse } from '@domain/link/useCases/interfaces/ILinkUpsertOneResponse';
 import { RequestError } from '@shared/errors/RequestError';
-import { URLWrapper } from '@shared/services/UrlWrapper';
-import { addDefaultHttps } from '@tools/helpers/url/addDefaultHttps';
-import { testStringIsValidUrl } from '@tools/helpers/url/testStringIsValidUrl';
 import { ILinkRequestInfoUseCase } from './LinkRequestInfoUseCase';
 
 export interface ILinkUpsertOneUseCase {

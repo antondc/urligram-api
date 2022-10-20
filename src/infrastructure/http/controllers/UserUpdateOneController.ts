@@ -1,12 +1,10 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT, URLWrapper } from '@antoniodcorrea/utils';
 import { User } from '@domain/user/entities/User';
 import { IUserUpdateOneRequest } from '@domain/user/useCases/interfaces/IUserUpdateOneRequest';
 import { IUserUpdateOneUseCase } from '@domain/user/useCases/UserUpdateOneUseCase';
-import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { JWT_SECRET } from '@shared/constants/env';
-import { URLWrapper } from '@shared/services/UrlWrapper';
+import { ENDPOINT_CLIENTS, JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserUpdateOneController extends BaseController {

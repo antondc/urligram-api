@@ -1,10 +1,9 @@
 import { TokenJWT } from '@antoniodcorrea/utils';
-
+import { PasswordHasher } from '@antoniodcorrea/utils';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { JWT_SECRET } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
-import { PasswordHasher } from '@shared/services/PasswordHasher';
 import { User } from '../entities/User';
 import { IUserResetPasswordRequest } from './interfaces/IUserResetPasswordRequest';
 import { IUserResetPasswordResponse } from './interfaces/IUserResetPasswordResponse';

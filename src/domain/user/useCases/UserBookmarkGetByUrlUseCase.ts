@@ -1,7 +1,7 @@
+import { URLWrapper } from '@antoniodcorrea/utils';
 import { ILinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { URLWrapper } from '@shared/services/UrlWrapper';
 import { IUserBookmarkGetByUrlRequest } from './interfaces/IUserBookmarkGetByUrlRequest';
 import { IUserBookmarkGetByUrlResponse } from './interfaces/IUserBookmarkGetByUrlResponse';
 

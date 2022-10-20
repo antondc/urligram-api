@@ -1,10 +1,10 @@
+import { URLWrapper } from '@antoniodcorrea/utils';
+import { testStringIsValidUrl } from '@antoniodcorrea/utils';
 import { ILinkUpsertOneUseCase } from '@domain/link/useCases/LinkUpsertOneUseCase';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserBookmarkCreateRequest } from '@domain/user/useCases/interfaces/IUserBookmarkCreateRequest';
 import { IUserBookmarkCreateResponse } from '@domain/user/useCases/interfaces/IUserBookmarkCreateResponse';
 import { RequestError } from '@shared/errors/RequestError';
-import { URLWrapper } from '@shared/services/UrlWrapper';
-import { testStringIsValidUrl } from '@tools/helpers/url/testStringIsValidUrl';
 
 export interface IUserBookmarkCreateUseCase {
   execute: (bookmarkCreateRequest: IUserBookmarkCreateRequest) => Promise<IUserBookmarkCreateResponse>;

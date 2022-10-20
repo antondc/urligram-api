@@ -4,6 +4,7 @@ import mkdirp from 'mkdirp';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
+import { toRelative, URLWrapper } from '@antoniodcorrea/utils';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { IFileCheckIfExistsRequest } from '@domain/file/repositories/interfaces/IFileCheckIfExistsRequest';
 import { IFileCheckIfExistsResponse } from '@domain/file/repositories/interfaces/IFileCheckIfExistsResponse';
@@ -19,8 +20,6 @@ import config from '@root/config.test.json';
 import { MS_30_MINS } from '@shared/constants/constants';
 import { URL_SERVER } from '@shared/constants/env';
 import { ServerError } from '@shared/errors/ServerError';
-import { URLWrapper } from '@shared/services/UrlWrapper';
-import { toRelative } from '@tools/helpers/url/toRelative';
 
 export class FileRepo implements IFileRepo {
   public async fileCheckIfExists(fileImageSaveOneRequest: IFileCheckIfExistsRequest): Promise<IFileCheckIfExistsResponse> {
