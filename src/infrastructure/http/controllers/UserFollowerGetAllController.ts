@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserFollowerGetAllUseCase } from '@domain/user/useCases/UserFollowerGetAllUseCase';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_FOLLOWERS_GET_ALL_SORT = 'name';
@@ -34,7 +35,7 @@ export class UserFollowerGetAllController extends BaseController {
     const { userId } = req.params;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const castedOffset = Number(offset) || undefined;
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const userOrSession = userId === 'me' ? session?.id : userId;
 

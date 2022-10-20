@@ -1,9 +1,10 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IUserLoginRequest } from '@domain/user/useCases/interfaces/IUserLoginRequest';
 import { IUserLoginUseCase } from '@domain/user/useCases/UserLoginUseCase';
 import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { URLWrapper } from '@shared/services/UrlWrapper';
 import { BaseController } from './BaseController';
 
@@ -24,7 +25,7 @@ export class UserLoginController extends BaseController {
     };
     const response = await this.useCase.execute(userLoginRequest);
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const sessionToken = tokenService.createToken(response);
 
     const formattedResponse = {

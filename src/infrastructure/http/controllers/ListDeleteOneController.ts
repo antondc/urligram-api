@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IListDeleteOneRequest } from '@domain/list/useCases/interfaces/IListDeleteOneRequest';
 import { IListDeleteOneUseCase } from '@domain/list/useCases/ListDeleteOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ListDeleteOneController extends BaseController {
@@ -18,7 +19,7 @@ export class ListDeleteOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { listId } = req.params;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const listDeleteOneRequest: IListDeleteOneRequest = {

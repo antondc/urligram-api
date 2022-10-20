@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserLogoutRequest } from '@domain/user/useCases/interfaces/UserLogOutRequest';
 import { IUserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';
 import { ENDPOINT_CLIENTS, PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { URLWrapper } from '@shared/services/UrlWrapper';
 import { BaseController } from './BaseController';
 
@@ -17,7 +18,7 @@ export class UserLogOutController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const listUserLogOutRequest: IUserLogoutRequest = {

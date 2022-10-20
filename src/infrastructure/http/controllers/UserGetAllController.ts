@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserGetAllUseCase } from '@domain/user/useCases/UserGetAllUseCase';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_USER_GET_ALL_SORT = '-createdAt';
@@ -45,7 +46,7 @@ export class UserGetAllController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { sort = DEFAULT_USER_GET_ALL_SORT, page: { size, offset } = {}, filter: { name, tags } = {} } = req.query as UserGetAllControllerQueryType;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const castedSort = sort || undefined;
     const castedSize = Number(size) || DEFAULT_PAGE_SIZE;

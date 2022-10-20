@@ -1,3 +1,4 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IListBookmarkGetAllRequest } from '@domain/list/useCases/interfaces/IListBookmarkGetAllRequest';
@@ -6,7 +7,7 @@ import { IListBookmarkGetAllUseCase } from '@domain/list/useCases/ListBookmarkGe
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_LIST_BOOKMARK_GET_ALL_SORT = '-createdAt';
@@ -40,7 +41,7 @@ export class ListBookmarkGetAllController extends BaseController {
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedAfter = Number(offset) || undefined;
     const { listId } = req.params;
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const listBookmarkGetAllRequest: IListBookmarkGetAllRequest = {

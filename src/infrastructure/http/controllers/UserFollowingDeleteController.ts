@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserFollowingDeleteRequest } from '@domain/user/useCases/interfaces/IUserFollowingDeleteRequest';
 import { IUserFollowingDeleteUseCase } from '@domain/user/useCases/UserFollowingDeleteUseCase';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class UserFollowingDeleteController extends BaseController {
@@ -19,7 +20,7 @@ export class UserFollowingDeleteController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { followedId } = req.params;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const userFollowingCreate: IUserFollowingDeleteRequest = {

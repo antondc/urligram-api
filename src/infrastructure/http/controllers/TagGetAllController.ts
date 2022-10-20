@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { ITagGetAllRequest } from '@domain/tag/useCases/interfaces/ITagGetAllRequest';
 import { ITagGetAllUseCase } from '@domain/tag/useCases/TagGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_USER_TAGS_GET_ALL_SORT = '-count';
@@ -32,7 +33,7 @@ export class TagGetAllController extends BaseController {
     const { sort = DEFAULT_USER_TAGS_GET_ALL_SORT, page: { size, offset } = {}, filter: { tags } = {} } = req.query as TagsGetAllControllerQueryType;
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const userUpdateRequest: ITagGetAllRequest = {

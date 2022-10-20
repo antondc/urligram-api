@@ -1,9 +1,10 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserGetByIdsUseCase } from '@domain/user/useCases/UserGetByIdsUseCase';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 type UserGetByIdsControllerQueryType = {
@@ -41,7 +42,7 @@ export class UserGetByIdsController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { sort, userIds, page: { size, offset } = {} } = req.query as UserGetByIdsControllerQueryType;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const castedSort = sort;
     const castedSize = Number(size) || null;

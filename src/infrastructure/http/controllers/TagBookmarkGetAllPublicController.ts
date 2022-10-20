@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { ITagBookmarkGetAllPublicRequest } from '@domain/tag/useCases/interfaces/ITagBookmarkGetAllPublicRequest';
 import { ITagBookmarkGetAllPublicUseCase } from '@domain/tag/useCases/TagBookmarkGetAllPublicUseCase';
 import { User } from '@domain/user/entities/User';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class TagBookmarkGetAllPublicController extends BaseController {
@@ -17,7 +18,7 @@ export class TagBookmarkGetAllPublicController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { tagId } = req.params;
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const tagBookmarkGetAllPublic: ITagBookmarkGetAllPublicRequest = {

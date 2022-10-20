@@ -1,3 +1,4 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IBookmarkGetAllPublicUseCase } from '@domain/bookmark/useCases/BookmarkGetAllPublicUseCase';
@@ -5,7 +6,7 @@ import { IBookmarkGetAllPublicRequest } from '@domain/bookmark/useCases/interfac
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_SORT = '-createdAt';
@@ -33,7 +34,7 @@ export class BookmarkGetAllPublicController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { sort = DEFAULT_SORT, page: { size, offset } = {}, filter: { tags, text } = {} } = req.query as BookmarkGetAllPublicControllerQueryType;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const checkedSize = Number(size) || DEFAULT_PAGE_SIZE;
     const checkedAfter = Number(offset) || undefined;

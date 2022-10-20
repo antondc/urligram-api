@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IListBookmarkUserGetAllRequest } from '@domain/list/useCases/interfaces/IListBookmarkUserGetAllRequest';
 import { IListBookmarkUserGetAllUseCase } from '@domain/list/useCases/ListBookmarkUserGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ListBookmarkUserGetAllController extends BaseController {
@@ -17,7 +18,7 @@ export class ListBookmarkUserGetAllController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const listBookmarkGetOneUseCase: IListBookmarkUserGetAllRequest = {

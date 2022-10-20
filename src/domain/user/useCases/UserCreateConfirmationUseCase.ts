@@ -1,9 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
+
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateConfirmationRequest } from '@domain/user/useCases/interfaces/IUserCreateConfirmationRequest';
 import { IUserCreateConfirmationResponse } from '@domain/user/useCases/interfaces/IUserCreateConfirmationResponse';
+import { JWT_SECRET } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
-import { TokenService } from '@shared/services/TokenService';
 import { User } from '../entities/User';
 
 export interface IUserCreateConfirmationUseCase {
@@ -20,7 +22,7 @@ export class UserCreateConfirmationUseCase implements IUserCreateConfirmationUse
   public async execute(userCreateConfirmationRequest: IUserCreateConfirmationRequest): Promise<IUserCreateConfirmationResponse> {
     const { name, token } = userCreateConfirmationRequest;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const decodedToken = tokenService.decodeToken<User>(token);
     if (decodedToken?.name !== name) throw new AuthenticationError('401 Unauthorized', 401);
 

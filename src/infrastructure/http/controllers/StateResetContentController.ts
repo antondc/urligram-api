@@ -1,9 +1,10 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IStateResetContentUseCaseRequest } from '@domain/state/useCases/interfaces/IStateResetContentUseCaseRequest';
 import { IStateResetContentUseCase } from '@domain/state/useCases/StateResetContentUseCase';
 import { User } from '@domain/user/entities/User';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class StateResetContentController extends BaseController {
@@ -15,7 +16,7 @@ export class StateResetContentController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const stateResetContentUseCaseRequest: IStateResetContentUseCaseRequest = {
       session,

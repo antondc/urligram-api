@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IListUserCreateOneRequest } from '@domain/list/useCases/interfaces/IListUserCreateOneRequest';
 import { IListUserCreateOneUseCase } from '@domain/list/useCases/ListUserCreateOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ListUserCreateOneController extends BaseController {
@@ -20,7 +21,7 @@ export class ListUserCreateOneController extends BaseController {
     const { listId, userId } = req.params;
     const { userRole } = req.body;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const userOrSession = userId === 'me' ? session?.id : userId;
 

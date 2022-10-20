@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { LinkUsersGetAllUseCase } from '@domain/link/useCases/LinkUsersGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_USER_GET_ALL_SORT = '-updatedAt';
@@ -30,7 +31,7 @@ export class LinkUsersGetAllController extends BaseController {
     const { sort = DEFAULT_USER_GET_ALL_SORT, page: { size, offset } = {} } = req.query as LinkUsersGetAllControllerQueryType;
     const { linkId } = req.params;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const castedLinkId = Number(linkId);
     const castedSort = sort || undefined;

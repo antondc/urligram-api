@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IListBookmarkUserUpsertOneRequest } from '@domain/list/useCases/interfaces/IListBookmarkUserUpsertOneRequest';
 import { IListBookmarkUserUpsertOneUseCase } from '@domain/list/useCases/ListBookmarkUserUpsertOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ListBookmarkUserUpsertOneController extends BaseController {
@@ -19,7 +20,7 @@ export class ListBookmarkUserUpsertOneController extends BaseController {
   async executeImpl(req: Request, res: Response) {
     const { listId, bookmarkId } = req.params;
     const { viewPending } = req.body;
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const listBookmarkGetOneUseCase: IListBookmarkUserUpsertOneRequest = {

@@ -1,8 +1,8 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { NextFunction, Request, Response } from 'express';
 
 import { AuthenticationError } from '@root/src/shared/errors/AuthenticationError';
-import { TokenService } from '@shared/services/TokenService';
-
+import { JWT_SECRET } from '@shared/constants/env';
 export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const regexTestMe = /\b(\/me)\b/i;
   const urlIncludesMe = regexTestMe.test(req.baseUrl);
@@ -19,7 +19,7 @@ export const AuthMiddleware = (req: Request, res: Response, next: NextFunction) 
     return next();
   }
 
-  const tokenService = new TokenService();
+  const tokenService = new TokenJWT(JWT_SECRET);
   const sessionTokenDecoded = tokenService.decodeToken(req.cookies.sessionToken);
 
   if (!sessionTokenDecoded) throw new AuthenticationError('401 Unauthorized', 401);

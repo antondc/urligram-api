@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { User } from '@domain/user/entities/User';
 import { IUserTagsGetAllRequest } from '@domain/user/useCases/interfaces/IUserTagsGetAllRequest';
 import { IUserTagsGetAllUseCase } from '@domain/user/useCases/UserTagsGetAllUseCase';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 const DEFAULT_USER_TAGS_GET_ALL_SORT = '-count';
@@ -30,7 +31,7 @@ export class UserTagsGetAllController extends BaseController {
     const { userId } = req.params;
     const castedSize = Number(size) || null;
     const castedOffset = Number(offset) || null;
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
     const userOrSession = userId === 'me' ? session?.id : userId;
 

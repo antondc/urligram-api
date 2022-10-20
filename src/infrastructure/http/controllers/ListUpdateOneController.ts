@@ -1,10 +1,11 @@
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
 import { IListUpdateOneRequest } from '@domain/list/useCases/interfaces/IListUpdateOneRequest';
 import { IListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
 import { User } from '@domain/user/entities/User';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';
-import { TokenService } from '@shared/services/TokenService';
+import { JWT_SECRET } from '@shared/constants/env';
 import { BaseController } from './BaseController';
 
 export class ListUpdateOneController extends BaseController {
@@ -19,7 +20,7 @@ export class ListUpdateOneController extends BaseController {
     const { listId } = req.params;
     const { name, description, isPrivate } = req.body;
 
-    const tokenService = new TokenService();
+    const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const listUpdateOneRequest: IListUpdateOneRequest = {
