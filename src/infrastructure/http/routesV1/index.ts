@@ -9,9 +9,11 @@ import { LoginRoute } from '@infrastructure/http/routesV1/LoginRoute';
 import { StateRoute } from '@infrastructure/http/routesV1/StateRoute';
 import { TagsRoute } from '@infrastructure/http/routesV1/TagsRoute';
 import { UsersRoute } from '@infrastructure/http/routesV1/UsersRoute';
+import { XmlRoute } from './XMLRoute';
 
 const RouterV1 = express.Router();
 
+RouterV1.use('/:language([a-z]{2})?/xml', XmlRoute);
 RouterV1.use('/state', StateRoute);
 RouterV1.use('/login', LoginRoute);
 RouterV1.use('/users', UsersRoute);

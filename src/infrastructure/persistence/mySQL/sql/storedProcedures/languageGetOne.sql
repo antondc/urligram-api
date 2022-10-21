@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS language_get_one;
 
+-- DELIMITER $$
+
 CREATE PROCEDURE language_get_one(
   IN $SLUG VARCHAR(4)
 )
@@ -12,6 +14,8 @@ BEGIN
     l.name,
     l.isDefault,
     l.slug,
+    l.createdAt,
+    l.updatedAt,
     JSON_OBJECT(
       'id', g.id,
       'home', g.home,
@@ -35,3 +39,5 @@ BEGIN
   WHERE l.slug = $SLUG;
 
 END
+
+-- DELIMITER ;
