@@ -40,7 +40,8 @@ export class FileHandler {
     // Filter out files with not accepted mime types or extensions
     const mimeType = file.mimetype;
     const mimeIncludesSomeMimeFileType = allowedFileExtensions.some((item) => mimeType.toLowerCase().includes(item.toLowerCase()));
-    const fileExtension = getExtension(file.originalname);
+    const fileExtension = getExtension(file.originalname).toLowerCase();
+
     const extensionIsAllowed = allowedFileExtensions.some((item) => item === fileExtension);
     if (mimeIncludesSomeMimeFileType && extensionIsAllowed) cb(null, true);
     if (!mimeIncludesSomeMimeFileType || !extensionIsAllowed) {

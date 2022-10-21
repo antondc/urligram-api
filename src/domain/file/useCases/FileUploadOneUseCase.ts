@@ -4,7 +4,6 @@ import { RequestError } from '@shared/errors/RequestError';
 import { IFileUploadOneRequest } from './interfaces/IFileUploadOneRequest';
 import { IFileUploadOneResponse } from './interfaces/IFileUploadOneResponse';
 
-
 export interface IFileUploadOneUseCase {
   execute: (imageUploadOneRequest: IFileUploadOneRequest) => Promise<IFileUploadOneResponse>;
 }
@@ -15,9 +14,11 @@ export class FileUploadOneUseCase implements IFileUploadOneUseCase {
   constructor(fileRepo: IFileRepo) {
     this.fileRepo = fileRepo;
   }
+
   public async execute(imageUploadOneRequest: IFileUploadOneRequest): Promise<IFileUploadOneResponse> {
     const { file } = imageUploadOneRequest;
-    if (!allowedFileExtensions.includes(file.extension)) throw new RequestError('Wrong file extension', 400);
+
+    if (!allowedFileExtensions.includes(file.extension.toLowerCase())) throw new RequestError('Wrong file extension', 400);
 
     const fileInstance = new File({ file, fileRepo: this.fileRepo });
 

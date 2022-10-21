@@ -61,7 +61,7 @@ export class FileRepo implements IFileRepo {
 
       // Define mime type
       let mime;
-      switch (formatOptions.extension) {
+      switch (formatOptions.extension.toLowerCase()) {
         case 'png':
           mime = Jimp.MIME_PNG;
           break;

@@ -20,6 +20,7 @@ export class BookmarkGetOneByLinkUserUseCase implements IBookmarkGetOneByLinkUse
   public async execute(listBookmarkGetOneByLinkUserRequest: IBookmarkGetOneByLinkUserRequest): Promise<IBookmarkGetOneByLinkUserResponse> {
     const { session, linkId } = listBookmarkGetOneByLinkUserRequest;
     const bookmark = await this.bookmarkRepo.bookmarkGetOneByLinkUser({ linkId, userId: session?.id });
+
     const bookmarkDefault = await this.bookmarkRepo.bookmarkGetDefaultByLink({ userId: session?.id, linkId });
     const bookmarkOrDefault = !!bookmark?.id ? bookmark : bookmarkDefault;
     if (!bookmarkOrDefault) throw new RequestError('Bookmark not found', 404, { message: '404 Not found' });
