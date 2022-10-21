@@ -22,10 +22,7 @@ export class BookmarkRepo implements IBookmarkRepo {
 
   public async bookmarkGetOneByLinkUser({ userId, linkId }) {
     const mySQL = new MySQL();
-    console.log('=======');
-    console.log('{ userId, linkId }:');
-    console.log(JSON.stringify({ userId, linkId }, null, 4));
-    console.log('=======');
+
     try {
       const bookmarkGetOneQuery = 'CALL bookmark_get_one_by_link_user(?, ?)';
 

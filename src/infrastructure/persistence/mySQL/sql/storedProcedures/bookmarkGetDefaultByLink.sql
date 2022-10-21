@@ -95,6 +95,15 @@ BEGIN
           bookmark.isPrivate IS NOT TRUE
         OR
           bookmark.user_id = $SESSION_ID
+        or json_contains(
+          (
+            select json_arrayagg(list_bookmark_user.user_id)
+            from list_bookmark_user
+            where list_bookmark_user.bookmark_id = bookmark.id
+          ),
+          json_quote($SESSION_ID),
+          '$'
+        )
       )
   ORDER BY bookmark.updatedAt DESC
   LIMIT 1

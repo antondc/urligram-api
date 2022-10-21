@@ -19,14 +19,13 @@ export class BookmarkGetOneByLinkUserUseCase implements IBookmarkGetOneByLinkUse
 
   public async execute(listBookmarkGetOneByLinkUserRequest: IBookmarkGetOneByLinkUserRequest): Promise<IBookmarkGetOneByLinkUserResponse> {
     const { session, linkId } = listBookmarkGetOneByLinkUserRequest;
+
     const bookmark = await this.bookmarkRepo.bookmarkGetOneByLinkUser({ linkId, userId: session?.id });
 
     const bookmarkDefault = await this.bookmarkRepo.bookmarkGetDefaultByLink({ userId: session?.id, linkId });
     const bookmarkOrDefault = !!bookmark?.id ? bookmark : bookmarkDefault;
-    if (!bookmarkOrDefault) throw new RequestError('Bookmark not found', 404, { message: '404 Not found' });
 
-    if (bookmarkOrDefault.isPrivate && session?.id !== bookmarkOrDefault.userId)
-      throw new RequestError('You have no permission to retrieve this bookmarkOrDefault', 403, { message: '403 Forbidden' });
+    if (!bookmarkOrDefault) throw new RequestError('Bookmark not found', 404, { message: '404 Not found' });
 
     const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: bookmarkOrDefault.linkId, session });
 
