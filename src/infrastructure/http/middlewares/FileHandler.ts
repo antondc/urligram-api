@@ -27,7 +27,7 @@ export class FileHandler {
       type: file.mimetype,
       content: file.buffer,
       size: file.size,
-      extension: `${file.originalname.split('.').pop()}`,
+      extension: `${file.originalname.toLowerCase().split('.').pop()}`,
     };
     Object.assign(req.body, {
       file: mappedFiles,
