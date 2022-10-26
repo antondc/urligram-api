@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_user_get_one_by_list_id;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 CREATE PROCEDURE list_user_get_one_by_list_id(
   IN $USER_ID TEXT,
@@ -14,7 +14,6 @@ BEGIN
   IFNULL(user.id, user2.id) AS `id`,
   IFNULL(user.name, user2.name) AS `name`,
   IFNULL(user.level, user2.level) AS `level`,
-  IFNULL(user.email, user2.email) AS `email`,
   IFNULL(user.image, user2.image) AS `image`,
   IFNULL(user.status, user2.status) AS `status`,
   IFNULL(user.statement, user2.statement) AS `statement`,
@@ -44,6 +43,6 @@ BEGIN
 
 END
 
-/* DELIMITER ; */
+-- DELIMITER ;
 
 /* CALL list_user_get_one_by_list_id("e4e2bb46-c210-4a47-9e84-f45c789fcec1", 8) */

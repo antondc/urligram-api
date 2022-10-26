@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_get_by_ids;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 CREATE PROCEDURE user_get_by_ids(
   IN $SESSION_ID VARCHAR(40),
@@ -19,7 +19,6 @@ BEGIN
     `user`.`order`,
     `user`.`name`,
     `user`.`level`,
-    `user`.`email`,
     `user`.`image`,
     `user`.`status`,
     `user`.`statement`,
@@ -152,5 +151,5 @@ BEGIN
 
 END
 
-/* DELIMITER ; */
+-- DELIMITER ;
 /* CALL user_get_by_ids("e4e2bb46-c210-4a47-9e84-f45c789fcec1", '["e4e2bb46-c210-4a47-9e84-f45c789fcec1", "92fac4aa-5b6a-11eb-ae93-0242ac130002"]', NULL, NULL, NULL); */

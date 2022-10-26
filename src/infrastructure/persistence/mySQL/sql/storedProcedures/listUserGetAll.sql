@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS list_user_get_all;
 
-/* DELIMITER $$ */
+-- DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE list_user_get_all(
@@ -14,7 +14,6 @@ BEGIN
     user.id,
     user.name,
     user.level,
-    user.email,
     user.status,
     user.image,
     user.statement,
@@ -45,6 +44,6 @@ BEGIN
 
 END
 
-/* DELIMITER ;
+-- DELIMITER ;
 
-CALL list_user_get_all("11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000", 1); */
+-- CALL list_user_get_all("11bf5b37-e0b8-42e0-8dcf-dc8c4aefc000", 1); */

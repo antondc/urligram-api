@@ -24,7 +24,6 @@ BEGIN
     `follower`.`name`,
     `follower`.`image`,
     `follower`.`level`,
-    `follower`.`email`,
     `follower`.`status`,
     `follower`.`statement`,
     `follower`.`location`,
