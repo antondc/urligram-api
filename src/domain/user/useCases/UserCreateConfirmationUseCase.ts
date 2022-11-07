@@ -1,5 +1,4 @@
 import { TokenJWT } from '@antoniodcorrea/utils';
-
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateConfirmationRequest } from '@domain/user/useCases/interfaces/IUserCreateConfirmationRequest';
 import { IUserCreateConfirmationResponse } from '@domain/user/useCases/interfaces/IUserCreateConfirmationResponse';
@@ -32,6 +31,7 @@ export class UserCreateConfirmationUseCase implements IUserCreateConfirmationUse
     const userData = await this.userRepo.userGetOne({ userId: activatedUser?.id });
     if (decodedToken?.name !== userData?.name) throw new AuthenticationError('401 Unauthorized', 401);
     if (!userData?.id) throw new UserError('User not found', 404);
+    const userCredentials = await this.userRepo.userGetCredentials({ userId: userData?.id });
 
     const user = new User(userData);
 
@@ -40,7 +40,7 @@ export class UserCreateConfirmationUseCase implements IUserCreateConfirmationUse
       order: user.order,
       name: user.name,
       level: user.level,
-      email: user.email,
+      email: userCredentials?.email,
       image: user.image,
       status: user.status,
       statement: user.statement,

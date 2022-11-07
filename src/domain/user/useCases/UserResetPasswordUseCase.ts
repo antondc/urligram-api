@@ -40,6 +40,7 @@ export class UserResetPasswordUseCase implements IUserResetPasswordUseCase {
     const userData = await this.userRepo.userGetOne({
       userId: userWithPasswordUpdated?.id,
     });
+    const userCredentials = await this.userRepo.userGetCredentials({ userId: userData?.id });
 
     const user = new User(userData);
 
@@ -48,7 +49,7 @@ export class UserResetPasswordUseCase implements IUserResetPasswordUseCase {
       order: user.order,
       name: user.name,
       level: user.level,
-      email: user.email,
+      email: userCredentials?.email,
       image: user.image,
       status: user.status,
       statement: user.statement,

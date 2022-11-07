@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_get_credentials;
 
- /* DELIMITER $$ */
+--  DELIMITER $$
 
 CREATE PROCEDURE user_get_credentials(
   IN $USER_ID VARCHAR(40)
@@ -11,6 +11,7 @@ BEGIN
 SELECT
   `user`.`name`,
   `user`.`password`,
+  `user`.`email`,
   `user`.`status`
   FROM `user`
   WHERE
@@ -19,6 +20,6 @@ SELECT
 
 END
 
- /* DELIMITER ;
+--  DELIMITER ;
 
- CALL user_get_credentials("9b360676-5b69-11eb-ae93-0242ac130002"); */
+--  CALL user_get_credentials("9b360676-5b69-11eb-ae93-0242ac130002"); */

@@ -36,6 +36,8 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
     await this.userRepo.userUpdateOne({ ...userUpdateRequest, userId: session?.id, image: savedImage?.path });
 
     const userData = await this.userRepo.userGetOne({ sessionId: session?.id, userId: session?.id });
+    const userCredentials = await this.userRepo.userGetCredentials({ userId: userData?.id });
+
     const user = new User(userData);
 
     const sessionData = {
@@ -43,7 +45,7 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
       order: user.order,
       name: user.name,
       level: user.level,
-      email: user.email,
+      email: userCredentials?.email,
       image: user.image,
       status: user.status,
       statement: user.statement,

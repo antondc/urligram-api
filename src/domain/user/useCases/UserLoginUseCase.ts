@@ -22,7 +22,7 @@ export class UserLoginUseCase implements IUserLoginUseCase {
     const userData = await this.userRepo.userGetOne({ name: nameOrEmail, email: nameOrEmail });
     if (!userData) throw new AuthenticationError('User doesn’t exist', 500, 'nameOrEmail');
 
-    const { password: existingHash } = await this.userRepo.userGetCredentials({ userId: userData?.id });
+    const { password: existingHash, email } = await this.userRepo.userGetCredentials({ userId: userData?.id });
 
     const passwordHasher = new PasswordHasher();
     const hashBuffer = await passwordHasher.hashToBuffer(existingHash);
@@ -36,7 +36,7 @@ export class UserLoginUseCase implements IUserLoginUseCase {
       order: user.order,
       name: user.name,
       level: user.level,
-      email: user.email,
+      email: email,
       image: user.image,
       status: user.status,
       statement: user.statement,
