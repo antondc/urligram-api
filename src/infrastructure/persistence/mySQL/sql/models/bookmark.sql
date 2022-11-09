@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `bookmark` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `order` INT(11) NULL DEFAULT '10000',
   `title` VARCHAR(255) NOT NULL,
-  `isPrivate` TINYINT(1) NULL DEFAULT '0',
+  `isPrivate` TINYINT(1) NULL DEFAULT '1',
   `saved` TINYINT(1) NULL DEFAULT '0',
   `notes` TEXT DEFAULT NULL,
   `createdAt` int(11) DEFAULT NULL,

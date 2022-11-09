@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `list` (
   `order` INT(11) NULL DEFAULT '10000',
   `name` VARCHAR(255) NOT NULL,
   `description` VARCHAR(255) NULL DEFAULT NULL,
-  `isPrivate` TINYINT(1) NULL DEFAULT '0',
+  `isPrivate` TINYINT(1) NULL DEFAULT '1',
   `userId` CHAR(36) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   `createdAt` int(11) DEFAULT NULL,
   `updatedAt` int(11) DEFAULT NULL,
