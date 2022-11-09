@@ -24,7 +24,7 @@ export class ListBookmarkUserUpsertOneUseCase implements IListBookmarkUserUpsert
     if (!bookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
     const userInList = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
-    if (!userInList && (!!list.isPrivate || !!bookmark.isPrivate)) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
+    if (!userInList && (!list.isPublic || !bookmark.isPublic)) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
     const listBookmarkUserUpdated = await this.listRepo.listBookmarkUserUpsertOne({ listId, bookmarkId, userId: session?.id, viewPending });
 

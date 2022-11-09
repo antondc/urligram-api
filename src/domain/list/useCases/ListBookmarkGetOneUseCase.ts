@@ -29,7 +29,7 @@ export class ListBookmarkGetOneUseCase implements IListBookmarkGetOneUseCase {
     const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: bookmark.linkId, session });
 
     const userInList = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
-    if (!userInList && (!!list.isPrivate || !!bookmark.isPrivate)) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
+    if (!userInList && (!list.isPublic || !bookmark.isPublic)) throw new RequestError('Bookmark not found', 404, { message: '404 Not Found' });
 
     return {
       ...bookmark,

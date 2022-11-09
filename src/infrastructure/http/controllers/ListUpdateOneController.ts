@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { IListUpdateOneRequest } from '@domain/list/useCases/interfaces/IListUpdateOneRequest';
 import { IListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
 import { User } from '@domain/user/entities/User';
@@ -18,7 +18,7 @@ export class ListUpdateOneController extends BaseController {
 
   async executeImpl(req: Request, res: Response) {
     const { listId } = req.params;
-    const { name, description, isPrivate } = req.body;
+    const { name, description, isPublic } = req.body;
 
     const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
@@ -27,7 +27,7 @@ export class ListUpdateOneController extends BaseController {
       listId: Number(listId),
       name,
       description,
-      isPrivate,
+      isPublic,
       session,
     };
 

@@ -3,7 +3,7 @@ import { Tag } from '@domain/tag/entities/Tag';
 export class List {
   id: number;
   name: string;
-  isPrivate: boolean;
+  isPublic: boolean;
   description: string;
   userId: string;
   image: string;
@@ -20,7 +20,7 @@ export class List {
   constructor(options) {
     this.id = options.id;
     this.name = options.name;
-    this.isPrivate = options.isPrivate;
+    this.isPublic = options.isPublic;
     this.description = options.description;
     this.userId = options.userId;
     this.image = options.image;

@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { IListCreateOneRequest } from '@domain/list/useCases/interfaces/IListCreateOneRequest';
 import { IListCreateOneUseCase } from '@domain/list/useCases/ListCreateOneUseCase';
 import { User } from '@domain/user/entities/User';
@@ -17,7 +17,7 @@ export class ListCreateOneController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { listName, listDescription, listIsPrivate } = req.body;
+    const { listName, listDescription, listIsPublic } = req.body;
 
     const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
@@ -26,7 +26,7 @@ export class ListCreateOneController extends BaseController {
       session,
       listName,
       listDescription,
-      listIsPrivate,
+      listIsPublic,
     };
 
     const response = await this.useCase.execute(listCreateOneRequest);

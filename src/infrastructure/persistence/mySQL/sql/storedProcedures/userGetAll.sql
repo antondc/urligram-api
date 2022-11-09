@@ -35,7 +35,7 @@ BEGIN
       WHERE user.id = bookmark.user_id
         AND
           (
-            bookmark.isPrivate IS NOT TRUE
+            bookmark.isPublic IS TRUE
             OR
             bookmark.user_id = $SESSION_ID
           )
@@ -58,7 +58,7 @@ BEGIN
           list.userId = user.id
           AND
           (
-            list.isPrivate IS NOT TRUE
+            list.isPublic IS TRUE
             OR
             list.userId = $SESSION_ID
           )
@@ -82,7 +82,7 @@ BEGIN
           `user_list`.user_id = user.id
           AND
           (
-            list.isPrivate IS NOT TRUE
+            list.isPublic IS TRUE
             OR
             `user_list`.user_id = $SESSION_ID
           )
@@ -121,7 +121,7 @@ BEGIN
           WHERE bookmark.user_id = user.id
           AND
             (
-              bookmark.isPrivate IS NOT TRUE
+              bookmark.isPublic IS TRUE
               OR
               bookmark.user_id = $SESSION_ID
             )

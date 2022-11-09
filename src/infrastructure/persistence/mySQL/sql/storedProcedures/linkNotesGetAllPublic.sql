@@ -24,7 +24,7 @@ BEGIN
   FROM `bookmark`
   INNER JOIN user ON user.id = bookmark.user_id
   WHERE bookmark.link_id      = $LINK_ID
-    AND bookmark.isPrivate    IS NOT TRUE
+    AND bookmark.isPublic     IS TRUE
     AND bookmark.notes        IS NOT NULL
     AND TRIM(bookmark.notes)  != ''
   ORDER BY

@@ -32,7 +32,7 @@ BEGIN
     -- Return users in list if list is not private
     -- or $SESSION_ID is within user_list for this list id
     (
-      list.isPrivate IS NOT TRUE
+      list.isPublic IS TRUE
       OR
       list.userId = $SESSION_ID
       OR $SESSION_ID IN (

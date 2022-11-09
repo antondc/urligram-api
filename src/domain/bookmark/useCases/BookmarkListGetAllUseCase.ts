@@ -18,12 +18,12 @@ export class BookmarkListGetAllUseCase implements IBookmarkListGetAllUseCase {
     const { bookmarkId, session } = bookmarkListGetAllRequest;
 
     const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId, sessionId: session?.id });
-    if (bookmark.isPrivate && session?.id !== bookmark.userId) throw new RequestError('Bookmark is private', 403, { message: '403 Forbidden' }); // (1)
+    if (!bookmark.isPublic && session?.id !== bookmark.userId) throw new RequestError('Bookmark is private', 403, { message: '403 Forbidden' }); // (1)
 
     const bookmarkLists = await this.bookmarkRepo.bookmarkListGetAll({ bookmarkId });
 
     const filteredBookmarkLists = bookmarkLists.filter((bookmarkList) => {
-      return !bookmarkList.isPrivate || bookmarkList.members.some((item) => item?.id === session.id);
+      return bookmarkList.isPublic || bookmarkList.members.some((item) => item?.id === session.id);
     }); // (2)
 
     return filteredBookmarkLists;

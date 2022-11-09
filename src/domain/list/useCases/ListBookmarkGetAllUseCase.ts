@@ -47,7 +47,7 @@ export class ListBookmarkGetAllUseCase implements IListBookmarkGetAllUseCase {
 
     const userInList = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
 
-    if (!userInList && !!list.isPrivate) throw new RequestError('List not found', 404, { message: '404 Not Found' });
+    if (!userInList && !list.isPublic) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
     return {
       bookmarks: bookmarksWithVotes,

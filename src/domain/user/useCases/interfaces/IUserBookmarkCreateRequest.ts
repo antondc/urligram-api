@@ -7,7 +7,7 @@ type Tag = {
 export interface IUserBookmarkCreateRequest {
   title: string;
   saved: boolean;
-  isPrivate: boolean;
+  isPublic: boolean;
   url: string;
   tags?: Tag[];
   session: User;

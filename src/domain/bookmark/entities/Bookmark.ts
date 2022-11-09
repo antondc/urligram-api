@@ -6,7 +6,7 @@ export class Bookmark {
   title: string;
   vote: boolean;
   favicon: string;
-  isPrivate: boolean;
+  isPublic: boolean;
   createdAt: Date;
   updatedAt: Date;
   userId: string;
@@ -28,7 +28,7 @@ export class Bookmark {
     this.id = options.id;
     this.title = options.title;
     this.vote = options.vote;
-    this.isPrivate = options.isPrivate;
+    this.isPublic = options.isPublic;
     this.createdAt = options.createdAt;
     this.updatedAt = options.updatedAt;
     this.userId = options.userId;

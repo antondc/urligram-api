@@ -4,5 +4,5 @@ export interface IListCreateOneRequest {
   session: User;
   listName: string;
   listDescription: string;
-  listIsPrivate: boolean;
+  listIsPublic: boolean;
 }

@@ -24,7 +24,7 @@ export class ListUserGetAllUseCase implements IListUserGetAllUseCase {
     if (!list) throw new RequestError('List not found', 404, { message: '404 Not Found' });
 
     const listUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id });
-    if (!!list.isPrivate && !listUser) throw new RequestError('This list is private', 403, { message: '403 Forbidden' });
+    if (!list.isPublic && !listUser) throw new RequestError('This list is private', 403, { message: '403 Forbidden' });
 
     const listUsersData = await this.listRepo.listUserGetAll({ listId, sessionId: session?.id });
 

@@ -25,7 +25,7 @@ BEGIN
     link.id AS linkId,
     `link`.`favicon`,
     bookmark.user_id AS userId,
-    bookmark.isPrivate,
+    bookmark.isPublic,
     bookmark.saved,
     bookmark.createdAt,
     bookmark.updatedAt,
@@ -82,7 +82,7 @@ BEGIN
       FROM `bookmark`
       WHERE bookmark.link_id = link.id
       AND (
-        bookmark.isPrivate IS NOT TRUE
+        bookmark.isPublic IS TRUE
         OR bookmark.user_id = $SESSION_ID
       )
     ) AS bookmarksRelated
@@ -96,7 +96,7 @@ BEGIN
     list.id                                   = $LIST_ID
     AND
       (
-        `bookmark`.`isPrivate` IS NOT TRUE
+        `bookmark`.`isPublic` IS TRUE
         OR
         `list`.`userId`       = $SESSION_ID
          OR

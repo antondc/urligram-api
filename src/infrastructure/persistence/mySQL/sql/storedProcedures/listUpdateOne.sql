@@ -6,7 +6,7 @@ CREATE PROCEDURE list_update_one(
   IN $USER_ID TEXT,
   IN $NAME TEXT,
   IN $DESCRIPTION TEXT,
-  IN $IS_PRIVATE BOOLEAN
+  IN $IS_PUBLIC BOOLEAN
 )
 
 BEGIN
@@ -15,7 +15,7 @@ BEGIN
   SET
     `name`          = $NAME,
     `description`   = $DESCRIPTION,
-    `isPrivate`     = $IS_PRIVATE,
+    `isPublic`      = $IS_PUBLIC,
     `updatedAt`     = UNIX_TIMESTAMP()
   WHERE `list`.`id` = $LIST_ID
   ;

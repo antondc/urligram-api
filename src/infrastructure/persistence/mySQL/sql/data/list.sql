@@ -3,7 +3,7 @@ INSERT INTO `list` (
     `order`,
     `name`,
     `description`,
-    `isPrivate`,
+    `isPublic`,
     `userId`,
     `createdAt`,
     `updatedAt`

@@ -27,7 +27,7 @@ BEGIN
     list.name,
     list.userId,
     list.createdAt,
-    list.isPrivate,
+    list.isPublic,
     IFNULL(
       (
         SELECT
@@ -100,7 +100,7 @@ BEGIN
           WHERE bookmark_list.list_id = `list`.id
           AND
             (
-              bookmark.isPrivate IS NOT TRUE
+              bookmark.isPublic IS TRUE
               OR
               bookmark.user_id = $SESSION_ID
             )
@@ -118,7 +118,7 @@ BEGIN
     )
     AND
     (
-      list.isPrivate IS NOT TRUE
+      list.isPublic IS TRUE
       OR
       (
         list.userId = $SESSION_ID AND $SESSION_ID = $USER_ID

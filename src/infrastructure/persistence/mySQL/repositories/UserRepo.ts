@@ -370,13 +370,13 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkCreate({ userId, linkId, title, isPrivate, tags, notes }) {
+  public async userBookmarkCreate({ userId, linkId, title, isPublic, tags, notes }) {
     const mySQL = new MySQL();
 
     try {
       const userBookmarkCreateQuery = 'CALL user_bookmark_create(?, ?, ?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(userBookmarkCreateQuery, [userId, linkId, title, isPrivate, JSON.stringify(tags), notes]);
+      const [[results]] = await mySQL.query(userBookmarkCreateQuery, [userId, linkId, title, isPublic, JSON.stringify(tags), notes]);
 
       return results;
     } catch (err) {
@@ -386,13 +386,13 @@ export class UserRepo implements IUserRepo {
     }
   }
 
-  public async userBookmarkUpdate({ bookmarkId, order, title, isPrivate, tags, notes }) {
+  public async userBookmarkUpdate({ bookmarkId, order, title, isPublic, tags, notes }) {
     const mySQL = new MySQL();
 
     try {
       const userBookmarkUpdateQuery = 'CALL user_bookmark_update(?, ?, ?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(userBookmarkUpdateQuery, [bookmarkId, order, title, isPrivate, JSON.stringify(tags), notes]);
+      const [[results]] = await mySQL.query(userBookmarkUpdateQuery, [bookmarkId, order, title, isPublic, JSON.stringify(tags), notes]);
 
       return results;
     } catch (err) {

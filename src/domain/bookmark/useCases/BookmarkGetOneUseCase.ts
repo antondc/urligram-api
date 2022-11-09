@@ -23,7 +23,7 @@ export class BookmarkGetOneUseCase implements IBookmarkGetOneUseCase {
 
     if (!bookmark) throw new RequestError('Bookmark not found', 404, { message: '404 Not found' });
 
-    if (bookmark.isPrivate && session?.id !== bookmark.userId)
+    if (!bookmark.isPublic && session?.id !== bookmark.userId)
       throw new RequestError('You have no permission to retrieve this bookmark', 403, { message: '403 Forbidden' });
 
     const statistics = await this.linkGetStatisticsUseCase.execute({ linkId: bookmark.linkId, session });

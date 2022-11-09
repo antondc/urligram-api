@@ -16,7 +16,7 @@ BEGIN
   INNER JOIN bookmark ON bookmark.id = bookmark_tag.bookmark_id
   WHERE
     bookmark.link_id = $LINK_ID
-    AND bookmark.isPrivate IS NOT TRUE
+    AND bookmark.isPublic IS TRUE
   GROUP BY tag.id
   ;
 

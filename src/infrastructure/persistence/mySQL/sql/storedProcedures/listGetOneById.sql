@@ -15,7 +15,7 @@ BEGIN
     `list`.`name`,
     `list`.`description`,
     `list`.`userId`,
-    `list`.`isPrivate`,
+    `list`.`isPublic`,
     `list`.`createdAt`,
     `list`.`updatedAt`,
     (
@@ -85,7 +85,7 @@ BEGIN
       `list`.`id` = $LIST_ID
       AND
       (
-        `list`.isPrivate IS NOT TRUE
+        `list`.isPublic IS TRUE
         OR
         `list`.`userId` = $SESSION_ID
         OR

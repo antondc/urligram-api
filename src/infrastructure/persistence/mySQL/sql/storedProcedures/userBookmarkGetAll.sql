@@ -24,7 +24,7 @@ BEGIN
     CONCAT(domain.domain, link.path) AS url,
     bookmark.link_id AS linkId,
     `link`.`favicon`,
-    bookmark.isPrivate,
+    bookmark.isPublic,
     bookmark.saved,
     bookmark.user_id AS userId,
     bookmark.createdAt,
@@ -79,7 +79,7 @@ BEGIN
       FROM `bookmark`
       WHERE bookmark.link_id = link.id
       AND (
-        bookmark.isPrivate IS NOT TRUE
+        bookmark.isPublic IS TRUE
         OR bookmark.user_id = $SESSION_ID
       )
     ) AS bookmarksRelated
@@ -94,7 +94,7 @@ BEGIN
         (
           bookmark.`user_id` = $USER_ID
           AND
-          bookmark.isPrivate IS NOT TRUE
+          bookmark.isPublic IS TRUE
         )
         OR
         (

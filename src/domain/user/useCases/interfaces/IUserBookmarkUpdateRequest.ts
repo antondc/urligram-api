@@ -9,7 +9,7 @@ export interface IUserBookmarkUpdateRequest {
   order: number;
   title: string;
   saved: boolean;
-  isPrivate: boolean;
+  isPublic: boolean;
   tags: Tag[];
   notes: string;
   session: User;

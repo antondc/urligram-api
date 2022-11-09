@@ -16,7 +16,7 @@ BEGIN
     bookmark.user_id AS userId,
     CONCAT(domain.domain, link.path) AS url,
     `link`.`favicon`,
-    bookmark.isPrivate,
+    bookmark.isPublic,
     bookmark.saved,
     (
       SELECT

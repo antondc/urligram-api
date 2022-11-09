@@ -21,7 +21,7 @@ SELECT
     `list`.`id`,
     `list`.`name`,
     `list`.`description`,
-    `list`.`isPrivate`,
+    `list`.`isPublic`,
     `list`.`userId`,
     `list`.`createdAt`,
     `list`.`updatedAt`,
@@ -86,7 +86,7 @@ SELECT
           WHERE bookmark_list.list_id = `list`.id
           AND
             (
-              bookmark.isPrivate IS NOT TRUE
+              bookmark.isPublic IS TRUE
               OR
               bookmark.user_id = $SESSION_ID
             )
@@ -97,7 +97,7 @@ SELECT
     FROM `list`
     LEFT JOIN user_list   ON `list`.id = user_list.list_id
     WHERE
-      `list`.`isPrivate` IS NOT TRUE
+      `list`.`isPublic` IS TRUE
       OR `list`.`userId`       = $SESSION_ID
       OR `user_list`.`user_id` = $SESSION_ID
     GROUP BY list.id

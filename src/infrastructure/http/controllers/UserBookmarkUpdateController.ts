@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { User } from '@domain/user/entities/User';
 import { IUserBookmarkUpdateRequest } from '@domain/user/useCases/interfaces/IUserBookmarkUpdateRequest';
 import { IUserBookmarkUpdateUseCase } from '@domain/user/useCases/UserBookmarkUpdateUseCase';
@@ -17,7 +17,7 @@ export class UserBookmarkUpdateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { order, saved, isPrivate, tags, title, notes } = req.body;
+    const { order, saved, isPublic, tags, title, notes } = req.body;
     const { bookmarkId } = req.params;
 
     const tokenService = new TokenJWT(JWT_SECRET);
@@ -28,7 +28,7 @@ export class UserBookmarkUpdateController extends BaseController {
       order,
       title,
       saved,
-      isPrivate,
+      isPublic,
       tags,
       session,
       notes,

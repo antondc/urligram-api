@@ -3,7 +3,7 @@ INSERT INTO `bookmark` (
     `order`,
     `title`,
     `notes`,
-    `isPrivate`,
+    `isPublic`,
     `saved`,
     `createdAt`,
     `updatedAt`,

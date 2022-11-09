@@ -22,7 +22,7 @@ BEGIN
     `url`,
     `linkId`,
     `userId`,
-    `isPrivate`,
+    `isPublic`,
     `saved`,
     `createdAt`,
     `updatedAt`,
@@ -43,7 +43,7 @@ BEGIN
         CONCAT(domain.domain, link.path) AS url,
         link.id AS linkId,
         bookmark.user_id AS userId,
-        bookmark.isPrivate,
+        bookmark.isPublic,
         bookmark.saved,
         bookmark.createdAt,
         bookmark.updatedAt,
@@ -77,7 +77,7 @@ BEGIN
           FROM bookmark_list
           JOIN `list` ON bookmark_list.list_id = list.id
           JOIN user_list ON user_list.list_id = list.id
-          WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPrivate != 1
+          WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPublic IS TRUE
         ) AS lists,
         (
           SELECT
@@ -108,7 +108,7 @@ BEGIN
           FROM `bookmark`
           WHERE bookmark.link_id = link.id
           AND (
-            bookmark.isPrivate IS NOT TRUE
+            bookmark.isPublic IS TRUE
             OR bookmark.user_id = $SESSION_ID
           )
         ) AS bookmarksRelated
@@ -121,7 +121,7 @@ BEGIN
       WHERE
         user_user.user_id = $SESSION_ID
         AND
-          bookmark.isPrivate IS NOT TRUE
+          bookmark.isPublic IS TRUE
       GROUP BY link.id
     )
 
@@ -137,7 +137,7 @@ BEGIN
         CONCAT(domain.domain, link.path) AS url,
         link.id AS linkId,
         bookmark.user_id AS userId,
-        bookmark.isPrivate,
+        bookmark.isPublic,
         bookmark.saved,
         bookmark.createdAt,
         bookmark.updatedAt,
@@ -171,7 +171,7 @@ BEGIN
           FROM bookmark_list
           JOIN `list` ON bookmark_list.list_id = list.id
           JOIN user_list ON user_list.list_id = list.id
-          WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPrivate != 1
+          WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPublic IS TRUE
         ) AS lists,
         (
           SELECT
@@ -202,7 +202,7 @@ BEGIN
           FROM `bookmark`
           WHERE bookmark.link_id = link.id
           AND (
-            bookmark.isPrivate IS NOT TRUE
+            bookmark.isPublic IS TRUE
             OR bookmark.user_id = $SESSION_ID
           )
         ) AS bookmarksRelated

@@ -3,5 +3,5 @@ export interface IListUpdateOneRequest {
   userId: string;
   name: string;
   description: string;
-  isPrivate: boolean;
+  isPublic: boolean;
 }

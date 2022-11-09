@@ -11,7 +11,7 @@ BEGIN
     `list`.`id`,
     `list`.`name`,
     `list`.`description`,
-    `list`.`isPrivate`,
+    `list`.`isPublic`,
     `list`.`createdAt`,
     `list`.`updatedAt`
     FROM `list`
@@ -19,8 +19,8 @@ BEGIN
     JOIN bookmark ON bookmark_list.bookmark_id    = bookmark_id
     JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
     WHERE bookmark_tag.tag_id                     = $TAG_ID
-      AND bookmark.isPrivate IS NOT TRUE
-      AND list.isPrivate IS NOT TRUE
+      AND bookmark.isPublic IS TRUE
+      AND list.isPublic IS TRUE
     GROUP BY list.id
   ;
 

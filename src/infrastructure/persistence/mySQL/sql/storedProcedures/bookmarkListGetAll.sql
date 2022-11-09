@@ -12,7 +12,7 @@ BEGIN
     list.id,
     list.name,
     list.description,
-    list.isPrivate,
+    list.isPublic,
     list.userId,
     list.createdAt,
     list.updatedAt,

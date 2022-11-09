@@ -43,7 +43,7 @@ BEGIN
         JOIN `bookmark` ON bookmark.id = bookmark_tag.bookmark_id
         WHERE bookmark.link_id = link.id
         AND (
-          bookmark.isPrivate != TRUE
+          bookmark.isPublic IS TRUE
           OR bookmark.user_id = $SESSION_ID
         )
       ) AS tags,
@@ -54,7 +54,7 @@ BEGIN
       JOIN user ON bookmark.user_id = user.id
       WHERE bookmark.link_id = link.id
       AND (
-        bookmark.isPrivate != TRUE
+        bookmark.isPublic IS TRUE
         OR bookmark.user_id = $SESSION_ID
       )
     ) AS users,
@@ -74,7 +74,7 @@ BEGIN
       FROM `bookmark`
       WHERE bookmark.link_id = link.id
       AND (
-        bookmark.isPrivate != TRUE
+        bookmark.isPublic IS TRUE
         OR bookmark.user_id = $SESSION_ID
       )
     ) AS bookmarksRelated

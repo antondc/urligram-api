@@ -7,7 +7,7 @@ CREATE PROCEDURE user_bookmark_create(
   IN $USER_ID VARCHAR(40),
   IN $LINK_ID INT,
   IN $TITLE VARCHAR(255),
-  IN $IS_PRIVATE BOOLEAN,
+  IN $IS_PUBLIC BOOLEAN,
   IN $TAGS JSON,
   IN $NOTES TEXT
 )
@@ -20,7 +20,7 @@ BEGIN
   -- Upsert into bookmark
   INSERT INTO bookmark (
     `bookmark`.`title`,
-    `bookmark`.`isPrivate`,
+    `bookmark`.`isPublic`,
     `bookmark`.`user_id`,
     `bookmark`.`link_id`,
     `bookmark`.`notes`,
@@ -28,14 +28,14 @@ BEGIN
     updatedAt
   ) VALUES (
     $TITLE,
-    $IS_PRIVATE,
+    $IS_PUBLIC,
     $USER_ID,
     $LINK_ID,
     $NOTES,
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP()
   ) ON DUPLICATE KEY UPDATE
-    isPrivate   = $IS_PRIVATE,
+    isPublic    = $IS_PUBLIC,
     title       = $TITLE,
     notes       = $NOTES,
     updatedAt   = UNIX_TIMESTAMP()

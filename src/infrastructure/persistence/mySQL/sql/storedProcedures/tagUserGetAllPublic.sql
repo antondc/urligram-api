@@ -20,7 +20,7 @@ BEGIN
   JOIN bookmark ON user.id = bookmark.user_id
   JOIN bookmark_tag ON bookmark_tag.bookmark_id = bookmark.id
   WHERE bookmark_tag.tag_id                     = $TAG_ID
-    AND bookmark.isPrivate IS NOT TRUE
+    AND bookmark.isPublic IS TRUE
   GROUP BY user.id
   ;
 

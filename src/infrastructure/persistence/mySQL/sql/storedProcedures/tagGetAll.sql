@@ -42,7 +42,7 @@ BEGIN
         )
         AND
           (
-            bookmark.isPrivate IS NOT TRUE
+            bookmark.isPublic IS TRUE
             OR
             bookmark.user_id = $SESSION_ID
           )

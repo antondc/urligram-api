@@ -91,7 +91,7 @@ BEGIN
       FROM `bookmark`
       WHERE bookmark.link_id = link.id
       AND (
-        bookmark.isPrivate != TRUE
+        bookmark.isPublic IS TRUE
         OR bookmark.user_id = $SESSION_ID
       )
     ) AS bookmarksRelated
@@ -107,7 +107,7 @@ BEGIN
     OR
     CASE WHEN @filterTags IS NULL THEN TRUE END
     AND (
-      bookmark.isPrivate IS NOT TRUE
+      bookmark.isPublic IS TRUE
       OR
       bookmark.`user_id` = $SESSION_ID
     )

@@ -6,7 +6,7 @@ export interface IUserBookmarkCreateRequest {
   userId: string;
   linkId: number;
   title: string;
-  isPrivate: boolean;
+  isPublic: boolean;
   tags?: Tag[];
   notes: string;
 }

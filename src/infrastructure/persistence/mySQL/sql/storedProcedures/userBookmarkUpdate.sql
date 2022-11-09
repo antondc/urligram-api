@@ -7,7 +7,7 @@ CREATE PROCEDURE user_bookmark_update(
   IN $BOOKMARK_ID INT,
   IN $ORDER INT,
   IN $TITLE VARCHAR(255),
-  IN $IS_PRIVATE BOOLEAN,
+  IN $IS_PUBLIC BOOLEAN,
   IN $TAGS JSON,
   IN $NOTES TEXT
 )
@@ -20,7 +20,7 @@ BEGIN
   -- Upsert into bookmark
   UPDATE bookmark
   SET
-    `bookmark`.`isPrivate`  = $IS_PRIVATE,
+    `bookmark`.`isPublic`   = $IS_PUBLIC,
     `bookmark`.`order`      = $ORDER,
     `bookmark`.`title`      = $TITLE,
     `bookmark`.`notes`      = $NOTES

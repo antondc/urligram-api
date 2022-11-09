@@ -12,14 +12,14 @@ BEGIN
       list.id,
       list.name,
       list.description,
-      list.isPrivate,
+      list.isPublic,
       list.userId,
-      bookmark.isPrivate
+      bookmark.isPublic
     FROM `list`
     JOIN bookmark_list ON bookmark_list.list_id = list.id
     JOIN bookmark ON bookmark_list.bookmark_id = bookmark.id
     WHERE bookmark.link_id = $LINK_ID
-      AND bookmark.isPrivate IS NOT TRUE
+      AND bookmark.isPublic IS TRUE
   ;
 
 END

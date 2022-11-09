@@ -6,7 +6,7 @@ export interface IUserBookmarkUpdateRequest {
   bookmarkId: number;
   order: number;
   title: string;
-  isPrivate: boolean;
+  isPublic: boolean;
   tags: Tag[];
   notes: string;
 }

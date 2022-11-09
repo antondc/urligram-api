@@ -15,7 +15,7 @@ BEGIN
     link.id AS linkId,
     link.image AS img,
     bookmark.user_id AS userId,
-    bookmark.isPrivate,
+    bookmark.isPublic,
     bookmark.saved,
     bookmark.createdAt,
     bookmark.updatedAt,
@@ -49,7 +49,7 @@ BEGIN
       FROM bookmark_list
       JOIN `list` ON bookmark_list.list_id = list.id
       JOIN user_list ON user_list.list_id = list.id
-      WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPrivate != 1
+      WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPublic IS TRUE
     ) AS lists
   FROM bookmark
   INNER JOIN `link` ON bookmark.link_id = link.id

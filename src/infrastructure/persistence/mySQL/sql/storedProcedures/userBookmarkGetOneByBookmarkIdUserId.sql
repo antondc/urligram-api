@@ -20,7 +20,7 @@ BEGIN
     `bookmark`.`title`,
     `bookmark`.`user_id` AS userId,
     `link`.`favicon`,
-    `bookmark`.`isPrivate`,
+    `bookmark`.`isPublic`,
     `bookmark`.`saved`,
     `bookmark`.`createdAt`,
     `bookmark`.`updatedAt`,
@@ -59,7 +59,7 @@ BEGIN
       FROM `bookmark`
       WHERE bookmark.link_id = link.id
       AND (
-        bookmark.isPrivate IS NOT TRUE
+        bookmark.isPublic IS TRUE
         OR bookmark.user_id = $USER_ID
       )
     ) AS bookmarksRelated

@@ -18,7 +18,7 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
   }
 
   public async execute(userBookmarkUpdateRequest: IUserBookmarkUpdateRequest): Promise<IUserBookmarkUpdateResponse> {
-    const { session, bookmarkId, order, title, isPrivate, tags, notes } = userBookmarkUpdateRequest;
+    const { session, bookmarkId, order, title, isPublic, tags, notes } = userBookmarkUpdateRequest;
 
     const bookmarkExists = await this.userRepo.userBookmarkGetOneByBookmarkIdUserId({
       sessionId: session?.id,
@@ -31,7 +31,7 @@ export class UserBookmarkUpdateUseCase implements IUserBookmarkUpdateUseCase {
       bookmarkId,
       order,
       title,
-      isPrivate,
+      isPublic,
       tags,
       notes,
     });

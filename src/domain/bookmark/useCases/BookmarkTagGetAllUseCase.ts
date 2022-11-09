@@ -18,7 +18,7 @@ export class BookmarkTagGetAllUseCase implements IBookmarkTagGetAllUseCase {
     const { bookmarkId, session } = bookmarkTagGetAllRequest;
 
     const bookmark = await this.bookmarkRepo.bookmarkGetOne({ bookmarkId, sessionId: session?.id });
-    if (bookmark.isPrivate && session?.id !== bookmark.userId) throw new RequestError("Bookmark doesn't exist", 404, { message: '404 Not Found' });
+    if (!bookmark.isPublic && session?.id !== bookmark.userId) throw new RequestError("Bookmark doesn't exist", 404, { message: '404 Not Found' });
 
     const tags = await this.bookmarkRepo.bookmarkTagGetAll({ bookmarkId });
 

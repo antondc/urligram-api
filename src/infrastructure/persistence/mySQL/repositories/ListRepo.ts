@@ -45,13 +45,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listCreateOne({ userId, listName, listDescription, listIsPrivate }) {
+  public async listCreateOne({ userId, listName, listDescription, listIsPublic }) {
     const mySQL = new MySQL();
 
     try {
       const listCreateOneQuery = 'CALL list_create(?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listCreateOneQuery, [userId, listName, listDescription, listIsPrivate]);
+      const [[results]] = await mySQL.query(listCreateOneQuery, [userId, listName, listDescription, listIsPublic]);
 
       return results;
     } catch (err) {
@@ -77,13 +77,13 @@ export class ListRepo implements IListRepo {
     }
   }
 
-  public async listUpdateOne({ listId, userId, name, description, isPrivate }) {
+  public async listUpdateOne({ listId, userId, name, description, isPublic }) {
     const mySQL = new MySQL();
 
     try {
       const listUpdateOneQuery = 'CALL list_update_one(?, ?, ?, ?, ?)';
 
-      const [[results]] = await mySQL.query(listUpdateOneQuery, [listId, userId, name, description, isPrivate]);
+      const [[results]] = await mySQL.query(listUpdateOneQuery, [listId, userId, name, description, isPublic]);
 
       return results;
     } catch (err) {

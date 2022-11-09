@@ -29,13 +29,13 @@ export class ListUserCreateOneUseCase implements IListUserCreateOneUseCase {
     if (!!listUser) throw new RequestError('User is already in that list', 409, { message: '409 Conflict' }); // (3)
 
     const listSessionUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id });
-    if (!!list.isPrivate && !listSessionUser) throw new RequestError('This list is private', 403, { message: '403 Forbidden' });
-    if (!!list.isPrivate && listSessionUser.userRole !== 'admin')
+    if (!list.isPublic && !listSessionUser) throw new RequestError('This list is private', 403, { message: '403 Forbidden' });
+    if (!list.isPublic && listSessionUser.userRole !== 'admin')
       throw new RequestError('You have no permission to edit this list', 403, { message: '403 Forbidden' });
 
-    if (!list.isPrivate) await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending', userRole });
+    if (!!list.isPublic) await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending', userRole });
 
-    if (!!list.isPrivate && userId !== session?.id && listSessionUser.userRole === 'admin')
+    if (!list.isPublic && userId !== session?.id && listSessionUser.userRole === 'admin')
       await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending', userRole });
 
     const listUserCreated = await this.listRepo.listUserGetOneByListId({ listId, userId: userId });

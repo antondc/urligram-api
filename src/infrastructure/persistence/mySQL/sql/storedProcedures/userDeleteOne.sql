@@ -22,10 +22,10 @@ BEGIN
   WHERE user_id   = $USER_ID
   ;
 
-  -- Dont remove the lists, but set them as private
+  -- Dont remove the bookmarks, but set them as private
   UPDATE bookmark
   SET
-   `isPrivate`  = TRUE,
+   `isPublic`   = FALSE,
    `updatedAt`  = UNIX_TIMESTAMP()
   WHERE user_id = $USER_ID
   ;
@@ -45,9 +45,9 @@ BEGIN
   -- Dont remove the bookmarks, but set them as private
   UPDATE list
   SET
-   `isPrivate`  = TRUE,
+   `isPublic`   = FALSE,
    `updatedAt`  = UNIX_TIMESTAMP()
-  WHERE userId = $USER_ID
+  WHERE userId  = $USER_ID
   ;
 
   -- Delete followers

@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils';
 import { User } from '@domain/user/entities/User';
 import { IUserBookmarkCreateRequest } from '@domain/user/useCases/interfaces/IUserBookmarkCreateRequest';
 import { IUserBookmarkCreateUseCase } from '@domain/user/useCases/UserBookmarkCreateUseCase';
@@ -17,14 +17,14 @@ export class UserBookmarkCreateController extends BaseController {
   }
 
   async executeImpl(req: Request, res: Response) {
-    const { title, saved, isPrivate, url, tags, notes } = req.body;
+    const { title, saved, isPublic, url, tags, notes } = req.body;
     const tokenService = new TokenJWT(JWT_SECRET);
     const session = tokenService.decodeToken<User>(req.cookies.sessionToken);
 
     const linkCreateRequest: IUserBookmarkCreateRequest = {
       title,
       saved,
-      isPrivate,
+      isPublic,
       url,
       tags,
       notes,

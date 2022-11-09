@@ -15,7 +15,7 @@ export class ListUpdateOneUseCase implements IListUpdateOneUseCase {
   }
 
   public async execute(listUpdateOneRequest: IListUpdateOneRequest): Promise<IListUpdateOneResponse> {
-    const { session, listId, name, description, isPrivate } = listUpdateOneRequest;
+    const { session, listId, name, description, isPublic } = listUpdateOneRequest;
 
     const originalList = await this.listRepo.listGetOneById({ listId, sessionId: session?.id });
     if (!originalList) throw new RequestError('List does not exist', 404, { message: '404 Not Found' });
@@ -26,7 +26,7 @@ export class ListUpdateOneUseCase implements IListUpdateOneUseCase {
     });
     if (!listUser || listUser?.userRole === 'reader') throw new RequestError('You are not allowed to edit this list', 403, { message: '403 Forbidden' });
 
-    const result = await this.listRepo.listUpdateOne({ listId, userId: session?.id, name, description, isPrivate });
+    const result = await this.listRepo.listUpdateOne({ listId, userId: session?.id, name, description, isPublic });
 
     const updatedList = await this.listRepo.listGetOneById({ listId: result.listId, sessionId: session?.id });
 

@@ -19,7 +19,7 @@ SELECT DISTINCT
     `list`.`id`,
     `list`.`name`,
     `list`.`description`,
-    `list`.`isPrivate`,
+    `list`.`isPublic`,
     `list`.`userId`,
     `list`.`createdAt`,
     `list`.`updatedAt`,
@@ -38,15 +38,15 @@ SELECT DISTINCT
           AND
           (
             (
-              bookmark.isPrivate IS NOT TRUE
+              bookmark.isPublic IS TRUE
               AND
-              bookmark.isPrivate IS NOT TRUE
+              bookmark.isPublic IS TRUE
             )
             OR
             (
-              bookmark.isPrivate IS TRUE
+              bookmark.isPublic IS NOT TRUE
               AND
-              list.isPrivate IS TRUE
+              list.isPublic IS NOT TRUE
             )
           )
       ) AS derivedAlias
@@ -92,7 +92,7 @@ SELECT DISTINCT
       )
       AND
         (
-          `list`.`isPrivate` IS NOT TRUE
+          `list`.`isPublic` IS TRUE
           OR
             (
               `list`.`userId`       = $SESSION_ID
