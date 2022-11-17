@@ -60,8 +60,8 @@
     "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
     "EMAIL_PORT": 465,
     "EMAIL_USER": "hello@urligram.com",
-    "RESTORE_MODELS": false,
-    "RESTORE_DATA": false,
+    "RESTORE_MODELS": true,
+    "RESTORE_DATA": true,
     "RESTORE_PROCEDURES": true,
     "DEFAULT_LOCATION": "Frankfurt"
   },
