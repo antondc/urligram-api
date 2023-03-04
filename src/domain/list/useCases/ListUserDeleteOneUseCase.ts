@@ -1,6 +1,7 @@
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
+import { ListUserRole } from '../entitites/ListUserRole';
 import { IListUserDeleteOneRequest } from './interfaces/IListUserDeleteOneRequest';
 import { IListUserDeleteOneResponse } from './interfaces/IListUserDeleteOneResponse';
 
@@ -29,13 +30,13 @@ export class ListUserDeleteOneUseCase implements IListUserDeleteOneUseCase {
     const listUser = await this.listRepo.listUserGetOneByListId({ listId, userId });
     if (!listUser) throw new RequestError('User is not in that list', 404, { message: '404 Not Found' }); // (3)
 
-    if (listUser.userRole === 'admin') throw new RequestError('Admins can not be removed from lists', 409, { message: '409 Conflict' }); // (4)
+    if (listUser.userRole === ListUserRole.Admin) throw new RequestError('Admins can not be removed from lists', 409, { message: '409 Conflict' }); // (4)
 
     const listSessionUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id });
-    if (userId === session?.id && listSessionUser?.userRole === 'admin')
+    if (userId === session?.id && listSessionUser?.userRole === ListUserRole.Admin)
       throw new RequestError('You can not remove yourself from your list', 409, { message: '409 Conflict' }); // (5)
 
-    if (userId !== session?.id && (!listSessionUser || listSessionUser?.userRole !== 'admin'))
+    if (userId !== session?.id && (!listSessionUser || listSessionUser?.userRole !== ListUserRole.Admin))
       throw new RequestError('You have no permission to edit this list', 403, { message: '403 Forbidden' }); // (6)
 
     const deletedUser = await this.listRepo.listUserDeleteOne({ listId, userId });

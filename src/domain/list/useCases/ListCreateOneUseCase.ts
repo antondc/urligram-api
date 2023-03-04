@@ -1,5 +1,6 @@
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { RequestError } from '@shared/errors/RequestError';
+import { ListUserRole } from '../entitites/ListUserRole';
 import { IListCreateOneRequest } from './interfaces/IListCreateOneRequest';
 import { IListCreateOneResponse } from './interfaces/IListCreateOneResponse';
 
@@ -18,7 +19,7 @@ export class ListCreateOneUseCase implements IListCreateOneUseCase {
     const { session, listName, listDescription, listIsPublic } = listCreateOneRequest;
 
     const userInList = await this.listRepo.listUserGetOneByListName({ listName, userId: session?.id });
-    if (!!userInList && userInList?.userRole === 'admin') throw new RequestError('List already exists', 409, { message: '409 Conflict' });
+    if (!!userInList && userInList?.userRole === ListUserRole.Admin) throw new RequestError('List already exists', 409, { message: '409 Conflict' });
 
     const createList = await this.listRepo.listCreateOne({
       listName,

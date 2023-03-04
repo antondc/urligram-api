@@ -1,4 +1,5 @@
 import { IStateRepo } from '@domain/state/repositories/IStateRepo';
+import { UserLevel } from '@domain/user/entities/UserLevel';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { IStateResetContentUseCaseRequest } from './interfaces/IStateResetContentUseCaseRequest';
 
@@ -15,7 +16,7 @@ export class StateResetContentUseCase {
 
   public async execute(stateResetContentUseCaseRequest: IStateResetContentUseCaseRequest) {
     const { session } = stateResetContentUseCaseRequest;
-    if (session?.level !== 'admin') throw new AuthenticationError('401 Unauthorized', 401); // (1)
+    if (session?.level !== UserLevel.Admin) throw new AuthenticationError('401 Unauthorized', 401); // (1)
 
     const response = await this.stateRepo.resetContent();
 

@@ -3,6 +3,7 @@ import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { User } from '../entities/User';
+import { UserStatus } from '../entities/UserStatus';
 import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
 
@@ -24,7 +25,7 @@ export class UserDeleteOneUseCase implements IUserDeleteOneUseCase {
 
     const userData = await this.userRepo.userGetOne({ userId: session?.id });
     if (!userData) throw new RequestError('User does not exist', 404);
-    if (userData.status === 'disabled') throw new RequestError('User was already removed', 409);
+    if (userData.status === UserStatus.Disabled) throw new RequestError('User was already removed', 409);
 
     const user = new User(userData);
     const fileInstance = new File({ fileRepo: this.fileRepo });

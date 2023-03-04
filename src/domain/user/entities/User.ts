@@ -1,6 +1,8 @@
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
 import { ListUserRole } from '@domain/list/entitites/ListUserRole';
+import { UserLevel } from './UserLevel';
+import { UserStatus } from './UserStatus';
 
 export const userImageFormat: IFileImageFormatOptions = {
   extension: 'png',
@@ -26,10 +28,10 @@ export class User {
   id: string;
   order: string;
   name: string;
-  level: string;
+  level: UserLevel;
   email: string;
   image: { [key: string]: string };
-  status: string;
+  status: UserStatus;
   password: string;
   statement: string;
   location: string;
