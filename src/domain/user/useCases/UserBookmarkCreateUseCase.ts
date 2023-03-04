@@ -31,18 +31,18 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
     });
     const userBookmarksPrivate = userBookmarks.filter((item) => !item.isPublic);
     const userBookmarksPrivateRatio = (userBookmarksPrivate.length / userBookmarks.length) * 100;
-
     if (
-      session.accountType === UserAccountType.Advanced && //(1)
+      session.accountType === UserAccountType.Advanced &&
       userBookmarks.length > USER_BASIC_BOOKMARKS_PRIVATE_FREE_LIMIT &&
       userBookmarksPrivateRatio > USER_BASIC_BOOKMARKS_PRIVATE_RATIO_LIMIT
     ) {
-      throw new UserError('Too many private bookmarks', 403, '403 Forbidden');
-    }
+      throw new UserError('User reached limit of private bookmarks', 403, '403 Forbidden');
+    } // (1)
 
     const urlWithDefaultProtocol = addDefaultHttps(url);
     const stringIsValidUrl = testStringIsValidUrl(urlWithDefaultProtocol);
     if (!stringIsValidUrl) throw new RequestError('Url is not valid', 409, { message: '409 Conflict' });
+    // (2)
 
     const parsedUrl = new URLWrapper(url);
     const domain = parsedUrl.getDomain();
@@ -54,7 +54,7 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
       domain,
       userId: session?.id,
     });
-    if (!!bookmarkExist) throw new RequestError('Bookmark already exists', 409, { message: '409 Conflict' });
+    if (!!bookmarkExist) throw new RequestError('Bookmark already exists', 409, { message: '409 Conflict' }); // (3)
 
     const link = await this.linkUpsertOneUseCase.execute({ session, url, alternativeTitle: title });
 
@@ -81,7 +81,10 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
 /* --- DOC ---
   Creates a new Bookmark for given User
   Exceptions:
-  (1) User is a basic user, and
-        has more than USER_BASIC_BOOKMARKS_PRIVATE_FREE_LIMIT
-        ratio private/public is more than USER_BASIC_BOOKMARKS_PRIVATE_RATIO_LIMIT
+    (1) User is a basic user, and
+          has more than USER_BASIC_BOOKMARKS_PRIVATE_FREE_LIMIT
+          ratio private/public is more than USER_BASIC_BOOKMARKS_PRIVATE_RATIO_LIMIT
+    (2) URL is not valid
+    (3) Bookmark already exists
+    (4) Bookmark creation failed
 */
