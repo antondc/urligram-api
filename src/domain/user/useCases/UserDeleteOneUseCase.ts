@@ -1,9 +1,9 @@
 import { File } from '@domain/file/entities/File';
 import { IFileRepo } from '@domain/file/repositories/IFileRepo';
+import { User } from '@domain/user/entities/User';
+import { UserStatus } from '@domain/user/entities/UserStatus';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { User } from '../entities/User';
-import { UserStatus } from '../entities/UserStatus';
 import { IUserDeleteOneRequest } from './interfaces/IUserDeleteOneRequest';
 import { IUserDeleteOneResponse } from './interfaces/IUserDeleteOneResponse';
 

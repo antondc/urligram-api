@@ -1,7 +1,7 @@
+import { ListUserRole } from '@domain/list/entitites/ListUserRole';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { ListUserRole } from '../entitites/ListUserRole';
 import { IListUserDeleteOneRequest } from './interfaces/IListUserDeleteOneRequest';
 import { IListUserDeleteOneResponse } from './interfaces/IListUserDeleteOneResponse';
 

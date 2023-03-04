@@ -1,8 +1,8 @@
+import { ListUserRole } from '@domain/list/entitites/ListUserRole';
+import { ListUserStatus } from '@domain/list/entitites/ListUserStatus';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { ListUserRole } from '../entitites/ListUserRole';
-import { ListUserStatus } from '../entitites/ListUserStatus';
 import { IListUserUpsertOneRequest } from './interfaces/IListUserUpsertOneRequest';
 import { IListUserUpsertOneResponse } from './interfaces/IListUserUpsertOneResponse';
 

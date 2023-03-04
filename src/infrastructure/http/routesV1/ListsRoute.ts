@@ -22,6 +22,8 @@ import { ListBookmarkCreateOneController } from '@infrastructure/http/controller
 import { ListBookmarkDeleteOneController } from '@infrastructure/http/controllers/ListBookmarkDeleteOneController';
 import { ListBookmarkGetAllController } from '@infrastructure/http/controllers/ListBookmarkGetAllController';
 import { ListBookmarkGetOneController } from '@infrastructure/http/controllers/ListBookmarkGetOneController';
+import { ListBookmarkUserGetAllController } from '@infrastructure/http/controllers/ListBookmarkUserGetAllController';
+import { ListBookmarkUserUpsertOneController } from '@infrastructure/http/controllers/ListBookmarkUserUpsertOneController';
 import { ListCreateOneController } from '@infrastructure/http/controllers/ListCreateOneController';
 import { ListDeleteOneController } from '@infrastructure/http/controllers/ListDeleteOneController';
 import { ListGetAllController } from '@infrastructure/http/controllers/ListGetAllController';
@@ -37,8 +39,6 @@ import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/Boo
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { ListBookmarkUserGetAllController } from '../controllers/ListBookmarkUserGetAllController';
-import { ListBookmarkUserUpsertOneController } from '../controllers/ListBookmarkUserUpsertOneController';
 
 const ListsRoute = express.Router();
 

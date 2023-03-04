@@ -1,6 +1,6 @@
+import { ListUserRole } from '@domain/list/entitites/ListUserRole';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { ListUserRole } from '../entitites/ListUserRole';
 import { IListDeleteOneRequest } from './interfaces/IListDeleteOneRequest';
 import { IListDeleteOneResponse } from './interfaces/IListDeleteOneResponse';
 

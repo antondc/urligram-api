@@ -1,10 +1,13 @@
-import { URLWrapper } from '@antoniodcorrea/utils';
+import { addDefaultHttps, URLWrapper } from '@antoniodcorrea/utils';
 import { testStringIsValidUrl } from '@antoniodcorrea/utils';
 import { ILinkUpsertOneUseCase } from '@domain/link/useCases/LinkUpsertOneUseCase';
+import { UserAccountType } from '@domain/user/entities/UserAccountType';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserBookmarkCreateRequest } from '@domain/user/useCases/interfaces/IUserBookmarkCreateRequest';
 import { IUserBookmarkCreateResponse } from '@domain/user/useCases/interfaces/IUserBookmarkCreateResponse';
+import { USER_BASIC_BOOKMARKS_PRIVATE_FREE_LIMIT, USER_BASIC_BOOKMARKS_PRIVATE_RATIO_LIMIT } from '@shared/constants/constants';
 import { RequestError } from '@shared/errors/RequestError';
+import { UserError } from '@shared/errors/UserError';
 
 export interface IUserBookmarkCreateUseCase {
   execute: (bookmarkCreateRequest: IUserBookmarkCreateRequest) => Promise<IUserBookmarkCreateResponse>;
@@ -22,7 +25,23 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
   public async execute(bookmarkCreateRequest: IUserBookmarkCreateRequest): Promise<IUserBookmarkCreateResponse> {
     const { session, url, title, isPublic, tags, notes } = bookmarkCreateRequest;
 
-    const stringIsValidUrl = testStringIsValidUrl(url);
+    const { bookmarks: userBookmarks } = await this.userRepo.userBookmarkGetAll({
+      userId: session.id,
+      sessionId: session?.id,
+    });
+    const userBookmarksPrivate = userBookmarks.filter((item) => !item.isPublic);
+    const userBookmarksPrivateRatio = (userBookmarksPrivate.length / userBookmarks.length) * 100;
+
+    if (
+      session.accountType === UserAccountType.Advanced && //(1)
+      userBookmarks.length > USER_BASIC_BOOKMARKS_PRIVATE_FREE_LIMIT &&
+      userBookmarksPrivateRatio > USER_BASIC_BOOKMARKS_PRIVATE_RATIO_LIMIT
+    ) {
+      throw new UserError('Too many private bookmarks', 403, '403 Forbidden');
+    }
+
+    const urlWithDefaultProtocol = addDefaultHttps(url);
+    const stringIsValidUrl = testStringIsValidUrl(urlWithDefaultProtocol);
     if (!stringIsValidUrl) throw new RequestError('Url is not valid', 409, { message: '409 Conflict' });
 
     const parsedUrl = new URLWrapper(url);
@@ -58,3 +77,11 @@ export class UserBookmarkCreateUseCase implements IUserBookmarkCreateUseCase {
     return response;
   }
 }
+
+/* --- DOC ---
+  Creates a new Bookmark for given User
+  Exceptions:
+  (1) User is a basic user, and
+        has more than USER_BASIC_BOOKMARKS_PRIVATE_FREE_LIMIT
+        ratio private/public is more than USER_BASIC_BOOKMARKS_PRIVATE_RATIO_LIMIT
+*/

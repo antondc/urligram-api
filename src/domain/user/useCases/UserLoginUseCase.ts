@@ -36,6 +36,7 @@ export class UserLoginUseCase implements IUserLoginUseCase {
       order: user.order,
       name: user.name,
       level: user.level,
+      accountType: user.accountType,
       email: email,
       image: user.image,
       status: user.status,

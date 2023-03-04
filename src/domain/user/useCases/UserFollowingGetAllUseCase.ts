@@ -1,5 +1,5 @@
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { User } from '../entities/User';
+import { User } from '@domain/user/entities/User';
 import { IUserFollowingGetAllRequest } from './interfaces/IUserFollowingGetAllRequest';
 import { IUserFollowingGetAllResponse } from './interfaces/IUserFollowingGetAllResponse';
 

@@ -1,5 +1,5 @@
+import { User } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
-import { User } from '../entities/User';
 import { IUserGetByIdsRequest } from './interfaces/IUserGetByIdsRequest';
 import { IUserGetByIdsResponse } from './interfaces/IUserGetByIdsResponse';
 

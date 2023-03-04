@@ -8,13 +8,13 @@ import { BookmarkListGetAllUseCase } from '@domain/bookmark/useCases/BookmarkLis
 import { BookmarkTagGetAllUseCase } from '@domain/bookmark/useCases/BookmarkTagGetAllUseCase';
 import { LinkGetStatisticsUseCase } from '@domain/link/useCases/LinkGetStatistics';
 import { BookmarkGetAllPublicController } from '@infrastructure/http/controllers/BookmarkGetAllPublicController';
+import { BookmarkGetByIdsController } from '@infrastructure/http/controllers/BookmarkGetByIdsController';
+import { BookmarkGetByLinkIdAndUserIdController } from '@infrastructure/http/controllers/BookmarkGetOneByLinkUserController';
 import { BookmarkGetOneController } from '@infrastructure/http/controllers/BookmarkGetOneController';
 import { BookmarkListGetAllController } from '@infrastructure/http/controllers/BookmarkListGetAllController';
 import { BookmarkTagGetAllController } from '@infrastructure/http/controllers/BookmarkTagGetAllController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
-import { BookmarkGetByIdsController } from '../controllers/BookmarkGetByIdsController';
-import { BookmarkGetByLinkIdAndUserIdController } from '../controllers/BookmarkGetOneByLinkUserController';
 
 const BookmarksRoute = express.Router();
 

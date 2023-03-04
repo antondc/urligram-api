@@ -1,6 +1,6 @@
+import { ListUserRole } from '@domain/list/entitites/ListUserRole';
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { RequestError } from '@shared/errors/RequestError';
-import { ListUserRole } from '../entitites/ListUserRole';
 import { IListCreateOneRequest } from './interfaces/IListCreateOneRequest';
 import { IListCreateOneResponse } from './interfaces/IListCreateOneResponse';
 

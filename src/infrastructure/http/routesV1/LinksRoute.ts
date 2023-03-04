@@ -12,14 +12,14 @@ import { LinkVoteOneUseCase } from '@domain/link/useCases/LinkVoteOneUseCase';
 import { LinkGetAllController } from '@infrastructure/http/controllers/LinkGetAllController';
 import { LinkGetOneController } from '@infrastructure/http/controllers/LinkGetOneController';
 import { LinkListGetAllPublicController } from '@infrastructure/http/controllers/LinkListGetAllPublicController';
+import { LinkNotesGetAllController } from '@infrastructure/http/controllers/LinkNotesGetAllController';
 import { LinkRequestInfoController } from '@infrastructure/http/controllers/LinkRequestInfoController';
 import { LinkTagGetAllController } from '@infrastructure/http/controllers/LinkTagGetAllController';
+import { LinkUsersGetAllController } from '@infrastructure/http/controllers/LinkUsersGetAllController';
 import { LinkVoteOneController } from '@infrastructure/http/controllers/LinkVoteOneController';
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
-import { LinkNotesGetAllController } from '../controllers/LinkNotesGetAllController';
-import { LinkUsersGetAllController } from '../controllers/LinkUsersGetAllController';
 
 const LinksRoute = express.Router();
 

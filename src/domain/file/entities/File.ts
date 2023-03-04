@@ -1,4 +1,4 @@
-import { IFileRepo } from '../repositories/IFileRepo';
+import { IFileRepo } from '@domain/file/repositories/IFileRepo';
 import { FileDTO } from './FileDTO';
 import { IFileDeleteOneRequest } from './interfaces/IFileDeleteOneRequest';
 import { IFileDeleteOneResponse } from './interfaces/IFileDeleteOneResponse';

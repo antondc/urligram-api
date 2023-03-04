@@ -45,6 +45,7 @@ export class UserUpdateOneUseCase implements IUserUpdateOneUseCase {
       order: user.order,
       name: user.name,
       level: user.level,
+      accountType: user.accountType,
       email: userCredentials?.email,
       image: user.image,
       status: user.status,

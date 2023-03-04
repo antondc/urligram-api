@@ -1,11 +1,11 @@
 import { TokenJWT } from '@antoniodcorrea/utils';
+import { User } from '@domain/user/entities/User';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateConfirmationRequest } from '@domain/user/useCases/interfaces/IUserCreateConfirmationRequest';
 import { IUserCreateConfirmationResponse } from '@domain/user/useCases/interfaces/IUserCreateConfirmationResponse';
 import { JWT_SECRET } from '@shared/constants/env';
 import { AuthenticationError } from '@shared/errors/AuthenticationError';
 import { UserError } from '@shared/errors/UserError';
-import { User } from '../entities/User';
 
 export interface IUserCreateConfirmationUseCase {
   execute: (userCreateConfirmationRequest: IUserCreateConfirmationRequest) => Promise<IUserCreateConfirmationResponse>;
@@ -40,6 +40,7 @@ export class UserCreateConfirmationUseCase implements IUserCreateConfirmationUse
       order: user.order,
       name: user.name,
       level: user.level,
+      accountType: user.accountType,
       email: userCredentials?.email,
       image: user.image,
       status: user.status,
