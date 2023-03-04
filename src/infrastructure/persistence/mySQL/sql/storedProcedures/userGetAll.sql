@@ -22,6 +22,7 @@ BEGIN
     `user`.`order`,
     `user`.`name`,
     `user`.`level`,
+    `user`.`accountType`,
     `user`.`image`,
     `user`.`status`,
     `user`.`statement`,

@@ -17,6 +17,7 @@ SELECT
   `user`.`id`,
   `user`.`name`,
   `user`.`level`,
+  `user`.`accountType`,
   `user`.`status`,
   `user`.`image`,
   `user`.`statement`,

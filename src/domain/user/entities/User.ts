@@ -63,6 +63,7 @@ export class User {
     this.order = user?.order;
     this.name = user?.name;
     this.level = user?.level;
+    this.accountType = user?.accountType;
     this.email = user?.email;
     this.image = imageFormatted;
     this.status = user?.status;

@@ -13,6 +13,7 @@ BEGIN
     `user`.`id`,
     `user`.`name`,
     `user`.`level`,
+    `user`.`accountType`,
     `user`.`email`,
     `user`.`status`,
     `user`.`image`,

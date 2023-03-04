@@ -24,6 +24,7 @@ BEGIN
     `follower`.`name`,
     `follower`.`image`,
     `follower`.`level`,
+    `follower`.`accountType`,
     `follower`.`status`,
     `follower`.`statement`,
     `follower`.`location`,

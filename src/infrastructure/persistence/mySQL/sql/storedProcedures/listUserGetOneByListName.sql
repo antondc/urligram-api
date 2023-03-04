@@ -13,6 +13,7 @@ BEGIN
   IFNULL(user.id, user2.id) AS `id`,
   IFNULL(user.name, user2.name) AS `name`,
   IFNULL(user.level, user2.level) AS `level`,
+  IFNULL(user.accountType, user2.accountType) AS `accountType`,
   IFNULL(user.status, user2.status) AS `status`,
   IFNULL(user.image, user2.image) AS `image`,
   IFNULL(user.statement, user2.statement) AS `statement`,

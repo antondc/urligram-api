@@ -13,6 +13,7 @@ BEGIN
  SELECT
     user.id,
     user.name,
+    user.accountType,
     user.level,
     user.status,
     user.image,

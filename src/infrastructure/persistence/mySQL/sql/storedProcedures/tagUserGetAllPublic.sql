@@ -11,6 +11,7 @@ BEGIN
     user.id,
     user.name,
     user.level,
+    user.accountType,
     user.image,
     user.statement,
     user.location,

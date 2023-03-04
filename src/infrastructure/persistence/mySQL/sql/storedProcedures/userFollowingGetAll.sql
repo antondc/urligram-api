@@ -21,6 +21,7 @@ BEGIN
     `following`.`order`,
     `following`.`name`,
     `following`.`level`,
+    `following`.`accountType`,
     `following`.`image`,
     `following`.`status`,
     `following`.`statement`,
