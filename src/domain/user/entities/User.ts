@@ -1,5 +1,6 @@
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
+import { ListUserRole } from '@domain/list/entitites/ListUserRole';
 
 export const userImageFormat: IFileImageFormatOptions = {
   extension: 'png',
@@ -37,7 +38,7 @@ export class User {
   following: number[];
   lists: {
     id: number;
-    userRole: 'reader' | 'editor' | 'admin';
+    userRole: ListUserRole;
   }[];
   tags: {
     id: number;

@@ -1,4 +1,5 @@
 import { Tag } from '@domain/tag/entities/Tag';
+import { ListUserRole } from './ListUserRole';
 
 export class List {
   id: number;
@@ -11,7 +12,7 @@ export class List {
   linksIds: number[];
   members: {
     id: string;
-    role: 'admin' | 'editor';
+    role: ListUserRole;
   }[];
   tags: Tag[];
   createdAt: Date;

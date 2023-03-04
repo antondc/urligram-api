@@ -1,6 +1,8 @@
 import { IListRepo } from '@domain/list/repositories/IListRepo';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
+import { ListUserRole } from '../entitites/ListUserRole';
+import { ListUserStatus } from '../entitites/ListUserStatus';
 import { IListUserUpsertOneRequest } from './interfaces/IListUserUpsertOneRequest';
 import { IListUserUpsertOneResponse } from './interfaces/IListUserUpsertOneResponse';
 
@@ -28,36 +30,37 @@ export class ListUserUpsertOneUseCase implements IListUserUpsertOneUseCase {
     const listUser = await this.listRepo.listUserGetOneByListId({ listId, userId });
     const listSessionUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id });
 
-    if (userId !== session?.id && !listUser && listSessionUser?.userRole === 'admin') {
-      await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending', userRole });
+    if (userId !== session?.id && !listUser && listSessionUser?.userRole === ListUserRole.Admin) {
+      await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: ListUserStatus.Pending, userRole });
       const createdListUser = await this.listRepo.listUserGetOneByListId({ listId, userId });
 
       return createdListUser;
     } // (3)
 
-    if (userId !== session?.id && !!listUser && listSessionUser?.userRole === 'admin') {
+    if (userId !== session?.id && !!listUser && listSessionUser?.userRole === ListUserRole.Admin) {
       await this.listRepo.listUserUpdateOne({ listId, userId, userListStatus: listUser.userListStatus, userRole });
       const createdListUser = await this.listRepo.listUserGetOneByListId({ listId, userId });
 
       return createdListUser;
     } // (3.5)
 
-    if (userId === session?.id && listUser?.userListStatus === 'pending') {
-      await this.listRepo.listUserUpdateOne({ listId, userId, userListStatus: 'active', userRole: listUser?.userRole });
+    if (userId === session?.id && listUser?.userListStatus === ListUserStatus.Pending) {
+      await this.listRepo.listUserUpdateOne({ listId, userId, userListStatus: ListUserStatus.Active, userRole: listUser?.userRole });
 
       const updatedListUser = await this.listRepo.listUserGetOneByListId({ listId, userId });
 
       return updatedListUser;
     } // (4)
 
-    if (!listSessionUser || listSessionUser?.userRole !== 'admin')
+    if (!listSessionUser || listSessionUser?.userRole !== ListUserRole.Admin)
       throw new RequestError('You have no permission to edit this list', 403, { message: '403 Forbidden' }); // (5)
-    if (listUser?.userListStatus === 'pending') throw new RequestError("The user didn't accept the invitation yet", 403, { message: '403 Forbidden' }); // (6)
-    if (listSessionUser.id !== userId && String(userRole) === 'admin')
+    if (listUser?.userListStatus === ListUserStatus.Pending)
+      throw new RequestError("The user didn't accept the invitation yet", 403, { message: '403 Forbidden' }); // (6)
+    if (listSessionUser.id !== userId && String(userRole) === ListUserRole.Admin)
       throw new RequestError('Only you can be the admin of that list', 409, { message: '409 Conflict' }); // (7)
 
-    if (listUser?.userListStatus === 'active' && listSessionUser.userRole === 'admin')
-      await this.listRepo.listUserUpdateOne({ listId, userId, userListStatus: 'active', userRole }); // (8)
+    if (listUser?.userListStatus === ListUserStatus.Active && listSessionUser.userRole === ListUserRole.Admin)
+      await this.listRepo.listUserUpdateOne({ listId, userId, userListStatus: ListUserStatus.Active, userRole }); // (8)
 
     const updatedListUser = await this.listRepo.listUserGetOneByListId({ listId, userId: userId });
 
