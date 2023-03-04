@@ -1,6 +1,4 @@
 import { IListRepo } from '@domain/list/repositories/IListRepo';
-import { UserListRole } from '@domain/user/entities/UserListRole';
-import { UserListStatus } from '@domain/user/entities/UserListStatus';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { RequestError } from '@shared/errors/RequestError';
 import { IListUserCreateOneRequest } from './interfaces/IListUserCreateOneRequest';
@@ -32,13 +30,13 @@ export class ListUserCreateOneUseCase implements IListUserCreateOneUseCase {
 
     const listSessionUser = await this.listRepo.listUserGetOneByListId({ listId, userId: session?.id });
     if (!list.isPublic && !listSessionUser) throw new RequestError('This list is private', 403, { message: '403 Forbidden' });
-    if (!list.isPublic && listSessionUser.userRole !== UserListRole.Admin)
+    if (!list.isPublic && listSessionUser.userRole !== 'admin')
       throw new RequestError('You have no permission to edit this list', 403, { message: '403 Forbidden' });
 
-    if (!!list.isPublic) await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: UserListStatus.Pending, userRole });
+    if (!!list.isPublic) await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending', userRole });
 
-    if (!list.isPublic && userId !== session?.id && listSessionUser.userRole === UserListRole.Admin)
-      await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: UserListStatus.Pending, userRole });
+    if (!list.isPublic && userId !== session?.id && listSessionUser.userRole === 'admin')
+      await this.listRepo.listUserCreateOne({ listId, userId, userListStatus: 'pending', userRole });
 
     const listUserCreated = await this.listRepo.listUserGetOneByListId({ listId, userId: userId });
 
