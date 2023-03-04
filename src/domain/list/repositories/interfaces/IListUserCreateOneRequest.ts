@@ -1,6 +1,9 @@
+import { UserListRole } from '@domain/user/entities/UserListRole';
+import { UserListStatus } from '@domain/user/entities/UserListStatus';
+
 export type IListUserCreateOneRequest = {
   listId: number;
   userId: string;
-  userListStatus: 'pending' | 'active';
-  userRole: 'reader' | 'editor';
+  userListStatus: UserListStatus;
+  userRole: UserListRole;
 };

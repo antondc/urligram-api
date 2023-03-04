@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS user (
   `id` CHAR(40) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL,
   `name` VARCHAR(255) UNIQUE NULL DEFAULT NULL,
+  `accountType` ENUM('basic', 'advanced') NOT NULL DEFAULT 'basic',
   `level` ENUM('admin', 'user') NOT NULL DEFAULT 'user',
   `email` VARCHAR(255) UNIQUE NULL DEFAULT NULL,
   `image` TEXT NULL DEFAULT NULL,
