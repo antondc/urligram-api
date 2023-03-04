@@ -1,6 +1,7 @@
 import { FileImage } from '@domain/file/entities/FileImage';
 import { IFileImageFormatOptions } from '@domain/file/entities/interfaces/IFileImageFormatOptions';
 import { ListUserRole } from '@domain/list/entitites/ListUserRole';
+import { UserAccountType } from './UserAccountType';
 import { UserLevel } from './UserLevel';
 import { UserStatus } from './UserStatus';
 
@@ -28,10 +29,11 @@ export class User {
   id: string;
   order: string;
   name: string;
+  accountType: UserAccountType;
   level: UserLevel;
+  status: UserStatus;
   email: string;
   image: { [key: string]: string };
-  status: UserStatus;
   password: string;
   statement: string;
   location: string;

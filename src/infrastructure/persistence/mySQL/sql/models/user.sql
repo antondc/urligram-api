@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS user (
   `email` VARCHAR(255) UNIQUE NULL DEFAULT NULL,
   `image` TEXT NULL DEFAULT NULL,
   `password` VARCHAR(255) NOT NULL,
+  `accountType` ENUM('basic', 'advanced') NOT NULL DEFAULT 'basic',
   `status` ENUM('inactive', 'active', 'disabled', 'removed') NOT NULL DEFAULT 'inactive',
   `statement` TEXT NULL DEFAULT NULL,
   `location` VARCHAR(255) NULL DEFAULT NULL,
