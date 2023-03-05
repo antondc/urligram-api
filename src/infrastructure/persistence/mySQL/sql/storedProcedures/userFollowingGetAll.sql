@@ -41,6 +41,15 @@ BEGIN
             bookmark.user_id = $SESSION_ID
           )
     ) AS bookmarksIds,
+    (
+      SELECT
+        IF($SESSION_ID = following.id, COUNT(bookmark.id), NULL)
+      FROM bookmark
+      WHERE
+        user.id = bookmark.user_id
+        AND
+        bookmark.isPublic IS FALSE
+    ) AS bookmarksPrivate,
     JSON_MERGE(
       (
         SELECT
@@ -157,4 +166,4 @@ BEGIN
 END
 
 -- DELIMITER ;
--- CALL user_following_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL, '{"tags": ["vestido"]}');
+-- CALL user_following_get_all('e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'e4e2bb46-c210-4a47-9e84-f45c789fcec1', 'order', NULL, NULL, NULL);

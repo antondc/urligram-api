@@ -38,6 +38,7 @@ export class User {
   statement: string;
   location: string;
   bookmarksIds: number[];
+  bookmarksPrivate: number;
   followers: number[];
   following: number[];
   lists: {
@@ -70,6 +71,7 @@ export class User {
     this.statement = user?.statement;
     this.location = user?.location;
     this.bookmarksIds = user?.bookmarksIds;
+    this.bookmarksPrivate = user?.bookmarksPrivate;
     this.followers = user?.followers;
     this.following = user?.following;
     this.lists = user?.lists;

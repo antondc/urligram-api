@@ -41,6 +41,15 @@ BEGIN
             bookmark.user_id = $SESSION_ID
           )
     ) AS bookmarksIds,
+    (
+      SELECT
+        IF($SESSION_ID = follower.id, COUNT(bookmark.id), NULL)
+      FROM bookmark
+      WHERE
+        user.id = bookmark.user_id
+        AND
+        bookmark.isPublic IS FALSE
+    ) AS bookmarksPrivate,
     JSON_MERGE(
       (
         SELECT

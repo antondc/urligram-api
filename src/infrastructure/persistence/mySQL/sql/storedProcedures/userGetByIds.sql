@@ -38,6 +38,15 @@ BEGIN
             bookmark.user_id = $SESSION_ID
           )
     ) AS bookmarksIds,
+    (
+      SELECT
+        IF($SESSION_ID = user.id, COUNT(bookmark.id), NULL)
+      FROM bookmark
+      WHERE
+        user.id = bookmark.user_id
+        AND
+        bookmark.isPublic IS FALSE
+    ) AS bookmarksPrivate,
     JSON_MERGE(
       (
         SELECT
@@ -153,4 +162,5 @@ BEGIN
 END
 
 -- DELIMITER ;
+
 /* CALL user_get_by_ids("e4e2bb46-c210-4a47-9e84-f45c789fcec1", '["e4e2bb46-c210-4a47-9e84-f45c789fcec1", "92fac4aa-5b6a-11eb-ae93-0242ac130002"]', NULL, NULL, NULL); */
