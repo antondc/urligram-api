@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS link_notes_get_all_public;
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE link_notes_get_all_public(
+  IN $SESSION_ID VARCHAR(40),
   IN $LINK_ID INT,
   IN $SORT VARCHAR(40),
   IN $SIZE INT,
@@ -22,9 +23,14 @@ BEGIN
     user.name as userName,
     bookmark.notes as notes
   FROM `bookmark`
-  INNER JOIN user ON user.id = bookmark.user_id
-  WHERE bookmark.link_id      = $LINK_ID
-    AND bookmark.isPublic     IS TRUE
+  INNER JOIN user ON user.id  = bookmark.user_id
+  WHERE
+    bookmark.link_id          = $LINK_ID
+    AND (
+      bookmark.isPublic       IS TRUE
+      OR
+      bookmark.user_id        = $SESSION_ID
+    )
     AND bookmark.notes        IS NOT NULL
     AND TRIM(bookmark.notes)  != ''
   ORDER BY
@@ -39,3 +45,5 @@ BEGIN
 END
 
 -- DELIMITER ;
+
+-- CALL link_notes_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", 123,NULL, NULL, NULL);

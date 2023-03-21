@@ -98,13 +98,13 @@ export class LinkRepo implements ILinkRepo {
     }
   }
 
-  public async linkNotesGetAll({ linkId, sort, size, offset }) {
+  public async linkNotesGetAll({ sessionId, linkId, sort, size, offset }) {
     const mySQL = new MySQL();
 
     try {
-      const linkNotesGetAllQuery = 'CALL link_notes_get_all_public(?, ?, ?, ?)';
+      const linkNotesGetAllQuery = 'CALL link_notes_get_all_public(?, ?, ?, ?, ?)';
 
-      const [notes] = await mySQL.query(linkNotesGetAllQuery, [linkId, sort, size, offset]);
+      const [notes] = await mySQL.query(linkNotesGetAllQuery, [sessionId, linkId, sort, size, offset]);
       const notesWithoutTotal = notes.map((item) => ({ ...item, totalItems: undefined }));
 
       const total = {
