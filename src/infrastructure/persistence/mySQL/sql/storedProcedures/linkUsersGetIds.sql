@@ -32,6 +32,18 @@ BEGIN
           bookmark.isPublic IS TRUE
         OR
           bookmark.user_id = $SESSION_ID
+        OR bookmark.id IN (
+          SELECT
+          bookmark.id
+          FROM bookmark_list
+          INNER JOIN user_list ON bookmark_list.list_id = user_list.list_id
+          INNER JOIN list ON bookmark_list.list_id = list.id
+          INNER JOIN bookmark ON bookmark.id = bookmark_list.bookmark_id
+          WHERE
+            user_list.user_id = $SESSION_ID
+            OR
+            list.userId = $SESSION_ID
+        )
       )
   ORDER BY
     CASE WHEN $SORT = 'order'          THEN `user`.order      	                ELSE NULL END ASC,
@@ -47,3 +59,5 @@ BEGIN
 END
 
 -- DELIMITER ;
+
+-- CALL link_users_get_ids("e4e2bb46-c210-4a47-9e84-f45c789fcec1", 123, NULL, NULL, NULL);
