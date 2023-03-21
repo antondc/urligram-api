@@ -30,6 +30,20 @@ BEGIN
       bookmark.isPublic       IS TRUE
       OR
       bookmark.user_id        = $SESSION_ID
+      -- Select bookmark notes present in shared lists, or lists created by me
+      -- regardless if is private or public
+      OR bookmark.id IN (
+        SELECT
+        bookmark.id
+        FROM bookmark_list
+        INNER JOIN user_list ON bookmark_list.list_id = user_list.list_id
+        INNER JOIN list ON bookmark_list.list_id = list.id
+        INNER JOIN bookmark ON bookmark.id = bookmark_list.bookmark_id
+        WHERE
+          user_list.user_id = $SESSION_ID
+          OR
+          list.userId = $SESSION_ID
+      )
     )
     AND bookmark.notes        IS NOT NULL
     AND TRIM(bookmark.notes)  != ''
