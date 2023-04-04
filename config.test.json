@@ -28,7 +28,7 @@
       "user": "w_9aIfE2XpoYz"
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "api-staging.urligram.com",
+    "HOST_SERVER": "www.api-staging.urligram.com",
     "PORT_SERVER_HTTP": 3001,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://www.staging.urligram.com",
@@ -51,7 +51,7 @@
       "port": 3306
     },
     "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "api.urligram.com",
+    "HOST_SERVER": "www.api.urligram.com",
     "PORT_SERVER_HTTP": 3002,
     "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://www.urligram.com",
