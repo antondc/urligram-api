@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS language_get_all;
 
--- DELIMITER $$
+DELIMITER $$
 
 CREATE PROCEDURE language_get_all()
 
@@ -15,7 +15,6 @@ BEGIN
     l.createdAt,
     l.updatedAt,
     JSON_OBJECT(
-      'id', g.id,
       'home', g.home,
       'login', g.login,
       'logout', g.logout,
@@ -33,11 +32,77 @@ BEGIN
       'followers', g.followers,
       'following', g.following,
       'since', g.since,
-      'serverError', g.serverError
+      'serverError', g.serverError,
+      'myTags', g.myTags,
+      'myLists', g.myLists,
+      'created', g.created,
+      'updated', g.updated,
+      'members', g.members,
+      'addToList', g.addToList,
+      'selectTags', g.selectTags,
+      'allLists', g.allLists,
+      'addBookmark', g.addBookmark,
+      'forgotPassword', g.forgotPassword,
+      'passwordForgotten', g.passwordForgotten,
+      'nameOrEmail', g.nameOrEmail,
+      'rememberIt', g.rememberIt,
+      'dontHaveAccount', g.dontHaveAccount,
+      'signUp', g.signUp,
+      'create', g.create,
+      'resetPassword', g.resetPassword,
+      'extension', g.extension,
+      'bookmarked', g.bookmarked,
+      'date', g.date,
+      'search', g.search,
+      'newList', g.newList,
+      'isPublic', g.isPublic,
+      'notes', g.notes,
+      'title', g.title,
+      'save', g.save,
+      'listName', g.listName,
+      'listDescription', g.listDescription,
+      'removeList', g.removeList,
+      'myProfile', g.myProfile,
+      'allUsers', g.allUsers,
+      'name', g.name,
+      'addList', g.addList,
+      'totalBookmarks', g.totalBookmarks,
+      'seeMore', g.seeMore,
+      'weDidNotFindAnyList', g.weDidNotFindAnyList,
+      'weDidNotFindAnyBookmark', g.weDidNotFindAnyBookmark,
+      'password', g.password,
+      'enter', g.enter,
+      'exit', g.exit,
+      'accept', g.accept,
+      'reject', g.reject,
+      'docs', g.docs,
+      'privateBookmarks', g.privateBookmarks,
+      'publicBookmarks', g.publicBookmarks,
+      'deleteUser', g.deleteUser,
+      'thisActionCanNotBeUndone', g.thisActionCanNotBeUndone,
+      'delete', g.delete,
+      'weDidNotFindAnyUser', g.weDidNotFindAnyUser,
+      'thisUserHasNoBookmarksYet', g.thisUserHasNoBookmarksYet,
+      'addUser', g.addUser,
+      'userLists', g.userLists,
+      'updateBookmark', g.updateBookmark,
+      'weUseACookie', g.weUseACookie,
+      'weDoNotShareIt', g.weDoNotShareIt,
+      'youCanFindAllTheInfoAt', g.youCanFindAllTheInfoAt,
+      'thePolicyPage', g.thePolicyPage,
+      'editList', g.editList,
+      'leaveList', g.leaveList,
+      'allTags', g.allTags,
+      'repeatPassword', g.repeatPassword,
+      'email', g.email,
+      'alreadyHaveAnAccount', g.alreadyHaveAnAccount,
+      'userBookmarks', g.userBookmarks,
+      'userTags', g.userTags,
+      'deleteConfirmMessage', g.deleteConfirmMessage
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id;
 
-END
+END $$
 
--- DELIMITER ;
+DELIMITER ;
