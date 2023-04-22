@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS language_get_all;
 
-DELIMITER $$
+-- DELIMITER $$
 
 CREATE PROCEDURE language_get_all()
 
@@ -98,11 +98,12 @@ BEGIN
       'alreadyHaveAnAccount', g.alreadyHaveAnAccount,
       'userBookmarks', g.userBookmarks,
       'userTags', g.userTags,
-      'deleteConfirmMessage', g.deleteConfirmMessage
+      'deleteConfirmMessage', g.deleteConfirmMessage,
+      'connections', g.connections
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id;
 
-END $$
+END
 
-DELIMITER ;
+-- DELIMITER ;
