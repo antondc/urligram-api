@@ -88,6 +88,9 @@ INSERT INTO `glossary` (
     `deleteConfirmMessage`,
     `connection`,
     `connections`,
+    `updateList`,
+    `createList`,
+    `isPublicFem`,
 
     `createdAt`,
     `updatedAt`
@@ -181,6 +184,9 @@ VALUES (
     'Are you sure?\nThis action can not be undone',
     'Connection',
     'Connections',
+    'Update List',
+    'Create List',
+    'Is public',
 
     1617143194,
     1617143194
@@ -273,6 +279,9 @@ VALUES (
     '¿Estás seguro?\nEsta acción no tiene vuelta atrás.',
     'Conexión',
     'Conexiones',
+    'Editar lista',
+    'Crear lista',
+    'Es pública',
 
     1617143194,
     1617143194

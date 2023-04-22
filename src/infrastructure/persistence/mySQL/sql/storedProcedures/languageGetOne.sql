@@ -102,7 +102,10 @@ BEGIN
       'userTags', g.userTags,
       'deleteConfirmMessage', g.deleteConfirmMessage,
       'connection', g.connection,
-      'connections', g.connections
+      'connections', g.connections,
+      'updateList', g.updateList,
+      'createList', g.createList,
+      'isPublicFem', g.isPublicFem
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id

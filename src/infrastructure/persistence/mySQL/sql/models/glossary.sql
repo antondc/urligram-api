@@ -87,6 +87,9 @@ CREATE TABLE IF NOT EXISTS glossary (
   `deleteConfirmMessage` VARCHAR(255) NULL DEFAULT NULL,
   `connection` TEXT NULL DEFAULT NULL,
   `connections` TEXT NULL DEFAULT NULL,
+  `updateList` TEXT NULL DEFAULT NULL,
+  `createList` TEXT NULL DEFAULT NULL,
+  `isPublicFem` TEXT NULL DEFAULT NULL,
 
   `createdAt`       int(11) DEFAULT NULL,
   `updatedAt`       int(11) DEFAULT NULL,
