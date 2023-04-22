@@ -101,6 +101,7 @@ BEGIN
       'userBookmarks', g.userBookmarks,
       'userTags', g.userTags,
       'deleteConfirmMessage', g.deleteConfirmMessage,
+      'connection', g.connection,
       'connections', g.connections
     ) glossary
   FROM language l

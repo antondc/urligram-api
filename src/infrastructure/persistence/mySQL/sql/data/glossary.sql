@@ -86,6 +86,7 @@ INSERT INTO `glossary` (
     `userBookmarks`,
     `userTags`,
     `deleteConfirmMessage`,
+    `connection`,
     `connections`,
 
     `createdAt`,
@@ -178,6 +179,7 @@ VALUES (
     'User Bookmarks',
     'User Tags',
     'Are you sure?\nThis action can not be undone',
+    'Connection',
     'Connections',
 
     1617143194,
@@ -269,6 +271,7 @@ VALUES (
     'Bookmarks del usuario',
     'Tags del usuario',
     '¿Estás seguro?\nEsta acción no tiene vuelta atrás.',
+    'Conexión',
     'Conexiones',
 
     1617143194,

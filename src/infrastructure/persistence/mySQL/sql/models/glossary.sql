@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS glossary (
   `userBookmarks` VARCHAR(255) NULL DEFAULT NULL,
   `userTags` VARCHAR(255) NULL DEFAULT NULL,
   `deleteConfirmMessage` VARCHAR(255) NULL DEFAULT NULL,
+  `connection` TEXT NULL DEFAULT NULL,
   `connections` TEXT NULL DEFAULT NULL,
 
   `createdAt`       int(11) DEFAULT NULL,
