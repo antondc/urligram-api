@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS user_create;
 
+DELIMITER $$
+
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_create(
   IN $NAME VARCHAR(40),
@@ -20,14 +22,18 @@ BEGIN
     `email`,
     `password`,
     `image`,
-    `activationToken`
+    `activationToken`,
+    `createdAt`,
+    `updatedAt`
   ) VALUES (
     @id,
     $NAME,
     $EMAIL,
     $PASSWORD_,
     $IMAGE_,
-    $ACTIVATION_TOKEN
+    $ACTIVATION_TOKEN,
+    UNIX_TIMESTAMP(),
+    UNIX_TIMESTAMP()
   );
 
   -- Retrieve user
@@ -41,4 +47,6 @@ BEGIN
   FROM user
   WHERE id = @id;
 
-END
+END $$
+
+DELIMITER ;
