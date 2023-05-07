@@ -27,8 +27,12 @@ export class ListBookmarkCreateOneUseCase implements IListBookmarkCreateOneUseCa
     if (!bookmark) throw new RequestError('Bookmark does not exist', 404, { message: '404 Not Found' }); // (2)
     if (bookmark.userId !== session.id) throw new RequestError('Bookmark not owned by user', 403, { message: '403 Forbidden' }); // (3)
 
+    const bookmarkIsPublic = bookmark.isPublic;
+    const listIsPublic = list.isPublic;
+    if (listIsPublic && !bookmarkIsPublic) throw new RequestError('Bookmark can not be added to this list', 403, { message: '403 Forbidden' }); // (4)
+
     const listUser = await this.listRepo.listUserGetOneByListId({ userId: session?.id, listId });
-    if (!listUser || listUser?.userRole === 'reader') throw new RequestError('You can not edit this list', 403, { message: '403 Forbidden' }); // (4)
+    if (!listUser || listUser?.userRole === 'reader') throw new RequestError('You can not edit this list', 403, { message: '403 Forbidden' }); // (5)
 
     const listBookmark = await this.listRepo.listBookmarkGetOne({ sessionId: session?.id, listId, bookmarkId });
     if (!!listBookmark) throw new RequestError('List bookmark already exists', 409, { message: '409 Conflict' }); // (6)
@@ -54,8 +58,7 @@ export class ListBookmarkCreateOneUseCase implements IListBookmarkCreateOneUseCa
   (1) List doesn't exists
   (2) Bookmark doesn't exists
   (3) Bookmark not owned by user
-  (4) User is not in that list, or is in that list as a reader
-  (5) The bookmark is already in that list
-  Comments
-  (6) Add listUserBookmark table entry to track that user has new items for this list
+  (4) Bookmark is private but list is public
+  (5) User is not in that list, or is in that list as a reader
+  (6) The bookmark is already in that list
 */
