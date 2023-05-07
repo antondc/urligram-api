@@ -10,7 +10,7 @@ import { UserLogOutController } from '@infrastructure/http/controllers/UserLogOu
 import { UserResetPasswordController } from '@infrastructure/http/controllers/UserResetPasswordController';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
-const LoginRoute = express.Router();
+const LoginRoute = express.Router({ mergeParams: true });
 
 LoginRoute.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const userRepo = new UserRepo();

@@ -6,7 +6,7 @@ import { LanguageGetAllController } from '@infrastructure/http/controllers/Langu
 import { LanguageGetOneController } from '@infrastructure/http/controllers/LanguageGetOneController';
 import { LanguageRepo } from '@infrastructure/persistence/mySQL/repositories/LanguageRepo';
 
-const LanguagesRoute = express.Router();
+const LanguagesRoute = express.Router({ mergeParams: true });
 
 LanguagesRoute.get('/:slug', async (req: Request, res: Response, next: NextFunction) => {
   const languageRepo = new LanguageRepo();

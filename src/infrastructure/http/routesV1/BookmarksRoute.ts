@@ -16,7 +16,7 @@ import { BookmarkTagGetAllController } from '@infrastructure/http/controllers/Bo
 import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/BookmarkRepo';
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 
-const BookmarksRoute = express.Router();
+const BookmarksRoute = express.Router({ mergeParams: true });
 
 BookmarksRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const bookmarkRepo = new BookmarkRepo();

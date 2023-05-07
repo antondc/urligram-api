@@ -1,6 +1,6 @@
 import { ILanguageGetAllUseCase } from '@domain/language/useCases/LanguageGetAllUseCase';
 import { IXmlSitemapGetAllResponse } from '@domain/xml/useCases/interfaces/IXmlSitemapGetAllResponse';
-import { ENDPOINT_CLIENT, ENDPOINT_CLIENTS } from '@shared/constants/env';
+import { ENDPOINT_CLIENT } from '@shared/constants/env';
 import XmlSitemapService from '@shared/services/XmlSitemapService';
 
 export interface IXmlSitemapGetAllUseCase {
@@ -34,16 +34,62 @@ export class XmlSitemapGetAllUseCase implements IXmlSitemapGetAllUseCase {
       };
     });
 
-    const about = {
-      url: `${ENDPOINT_CLIENT}/about`,
+    const bookmarks = {
+      url: `${ENDPOINT_CLIENT}/bookmarks`,
       date: defaultLanguage.updatedAt,
       changeFreq: 'hourly',
       priority: 0.9,
     };
 
-    const aboutWithLanguages = languages.map((language) => {
+    const bookmarksWithLanguages = languages.map((language) => {
       return {
-        url: `${ENDPOINT_CLIENT}/${language.slug}/about`,
+        url: `${ENDPOINT_CLIENT}/${language.slug}/bookmarks`,
+        date: language.updatedAt,
+        changeFreq: 'hourly',
+        priority: 0.8,
+      };
+    });
+
+    const users = {
+      url: `${ENDPOINT_CLIENT}/users`,
+      date: defaultLanguage.updatedAt,
+      changeFreq: 'hourly',
+      priority: 0.9,
+    };
+
+    const usersWithLanguages = languages.map((language) => {
+      return {
+        url: `${ENDPOINT_CLIENT}/${language.slug}/users`,
+        date: language.updatedAt,
+        changeFreq: 'hourly',
+        priority: 0.8,
+      };
+    });
+    const followers = {
+      url: `${ENDPOINT_CLIENT}/followers`,
+      date: defaultLanguage.updatedAt,
+      changeFreq: 'hourly',
+      priority: 0.9,
+    };
+
+    const followersWithLanguages = languages.map((language) => {
+      return {
+        url: `${ENDPOINT_CLIENT}/${language.slug}/followers`,
+        date: language.updatedAt,
+        changeFreq: 'hourly',
+        priority: 0.8,
+      };
+    });
+    const following = {
+      url: `${ENDPOINT_CLIENT}/following`,
+      date: defaultLanguage.updatedAt,
+      changeFreq: 'hourly',
+      priority: 0.9,
+    };
+
+    const followingWithLanguages = languages.map((language) => {
+      return {
+        url: `${ENDPOINT_CLIENT}/${language.slug}/following`,
         date: language.updatedAt,
         changeFreq: 'hourly',
         priority: 0.8,
@@ -82,9 +128,32 @@ export class XmlSitemapGetAllUseCase implements IXmlSitemapGetAllUseCase {
       };
     });
 
+    const docs = {
+      url: `${ENDPOINT_CLIENT}/docs`,
+      date: defaultLanguage.updatedAt,
+      changeFreq: 'hourly',
+      priority: 0.9,
+    };
+
     const xmlSitemapService = new XmlSitemapService();
     const rssFeed = xmlSitemapService.createFeed({
-      items: [home, ...(homeWithLanguages || []), about, ...aboutWithLanguages, lists, ...(listsWithLanguages || []), tags, ...(tagsWithLanguages || [])],
+      items: [
+        home,
+        ...(homeWithLanguages || []),
+        bookmarks,
+        ...(bookmarksWithLanguages || []),
+        users,
+        ...(usersWithLanguages || []),
+        followers,
+        ...(followersWithLanguages || []),
+        following,
+        ...(followingWithLanguages || []),
+        lists,
+        ...(listsWithLanguages || []),
+        tags,
+        ...(tagsWithLanguages || []),
+        docs,
+      ],
     });
 
     return rssFeed;

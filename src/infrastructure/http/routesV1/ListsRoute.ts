@@ -40,7 +40,7 @@ import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRep
 import { ListRepo } from '@infrastructure/persistence/mySQL/repositories/ListRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
-const ListsRoute = express.Router();
+const ListsRoute = express.Router({ mergeParams: true });
 
 ListsRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const listRepo = new ListRepo();

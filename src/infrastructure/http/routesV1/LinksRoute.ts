@@ -21,7 +21,7 @@ import { BookmarkRepo } from '@infrastructure/persistence/mySQL/repositories/Boo
 import { LinkRepo } from '@infrastructure/persistence/mySQL/repositories/LinkRepo';
 import { UserRepo } from '@infrastructure/persistence/mySQL/repositories/UserRepo';
 
-const LinksRoute = express.Router();
+const LinksRoute = express.Router({ mergeParams: true });
 
 LinksRoute.get('/url', async (req: Request, res: Response, next: NextFunction) => {
   const linkRequestInfoUseCase = new LinkRequestInfoUseCase();

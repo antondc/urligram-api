@@ -6,7 +6,7 @@ import { StateHealthCheckController } from '@infrastructure/http/controllers/Sta
 import { StateResetContentController } from '@infrastructure/http/controllers/StateResetContentController';
 import { StateRepo } from '@infrastructure/persistence/mySQL/repositories/StateRepo';
 
-const StateRoute = express.Router();
+const StateRoute = express.Router({ mergeParams: true });
 
 StateRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const stateRepo = new StateRepo();

@@ -10,7 +10,7 @@ import { TagListGetAllPublicController } from '@infrastructure/http/controllers/
 import { TagUserGetAllPublicController } from '@infrastructure/http/controllers/TagUserGetAllPublicController';
 import { TagRepo } from '@infrastructure/persistence/mySQL/repositories/TagRepo';
 
-const TagsRoute = express.Router();
+const TagsRoute = express.Router({ mergeParams: true });
 
 TagsRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const tagRepo = new TagRepo();

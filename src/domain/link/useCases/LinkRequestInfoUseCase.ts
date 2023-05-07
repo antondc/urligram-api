@@ -1,6 +1,6 @@
 import { URLWrapper } from '@antoniodcorrea/utils';
 import { addDefaultHttps, testStringIsValidUrl } from '@antoniodcorrea/utils';
-import { DEFAULT_LANGUAGE, DEFAULT_REQUEST_TIMEOUT } from '@shared/constants/constants';
+import { DEFAULT_LANGUAGE_SLUG, DEFAULT_REQUEST_TIMEOUT } from '@shared/constants/constants';
 import { RequestError } from '@shared/errors/RequestError';
 import HtmlScrapper from '@shared/services/HtmlScrapper';
 import { HttpClient } from '@shared/services/HttpClient';
@@ -44,11 +44,11 @@ export class LinkRequestInfoUseCase implements ILinkRequestInfoUseCase {
     } catch {
       const htmlScraper = new HtmlScrapper('');
       const favicon = htmlScraper.getDefaultFavicon(origin);
-      const defaultLanguage = DEFAULT_LANGUAGE;
+      const defaultLanguageSlug = DEFAULT_LANGUAGE_SLUG;
 
       return {
         favicon,
-        language: defaultLanguage,
+        language: defaultLanguageSlug,
       };
     }
   }
