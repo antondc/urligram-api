@@ -3,7 +3,7 @@ import { DEFAULT_USER_IMAGE } from '@domain/file/entities/constants';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
 import { IUserCreateOneResponse } from '@domain/user/useCases/interfaces/IUserCreateOneResponse';
-import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENTS } from '@shared/constants/env';
+import { EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT, EMAIL_USER, ENDPOINT_CLIENT } from '@shared/constants/env';
 import { JWT_SECRET } from '@shared/constants/env';
 import { UserError } from '@shared/errors/UserError';
 import { MailService } from '@shared/services/MailService';
@@ -48,7 +48,7 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
       from: EMAIL_USER,
       to: email,
       subject: `Hello ${name}`,
-      text: `Welcome ${name}! Click here to confirm your account: ${ENDPOINT_CLIENTS[0]}/sign-up-confirmation/check?name=${name}&token=${token}`,
+      text: `Welcome ${name}! Click here to confirm your account: ${ENDPOINT_CLIENT}/sign-up-confirmation/check?name=${name}&token=${token}`,
     };
     const { success } = await emailService.sendMail(emailOptions);
 

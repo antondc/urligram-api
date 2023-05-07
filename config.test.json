@@ -11,7 +11,7 @@
     "PORT_SERVER_HTTP": 0,
     "PORT_SERVER_HTTPS": 3000,
     "ENDPOINT_CLIENT": "https://www.dev.urligram.com",
-    "ENDPOINT_CLIENTS": ["http://www.dev.urligram.com", "https://www.dev.urligram.com"],
+    "ENDPOINT_CLIENTS": ["https://dev.urligram.com", "https://www.dev.urligram.com"],
     "LOGGING": true,
     "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
     "EMAIL_PORT": 465,
