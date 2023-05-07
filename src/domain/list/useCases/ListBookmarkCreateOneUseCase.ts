@@ -39,7 +39,6 @@ export class ListBookmarkCreateOneUseCase implements IListBookmarkCreateOneUseCa
 
     const createdBookmarkInList = await this.listRepo.listBookmarkCreateOne({ listId, bookmarkId });
 
-    // (5)
     const membersIds = list?.members?.map((item) => item.id);
     const usersToNotify = [...(membersIds || []), list?.userId].filter((item) => item !== session?.id);
     const listMembersPromises = usersToNotify?.map(async (item) => {
