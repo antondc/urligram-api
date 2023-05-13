@@ -1,4 +1,4 @@
-import { PasswordHasher, TokenJWT, validateEmailAddress } from '@antoniodcorrea/utils';
+import { PasswordHasher, TokenJWT, validateEmailAddress, validateUserName } from '@antoniodcorrea/utils';
 import { DEFAULT_USER_IMAGE } from '@domain/file/entities/constants';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';
@@ -25,6 +25,9 @@ export class UserCreateOneUseCase implements IUserCreateOneUseCase {
     if (!name) throw new UserError('User name incorrect', 409, 'name');
 
     if (password !== password_repeated) throw new UserError('Passwords are not equal', 409, 'password');
+
+    const nameIsValid = validateUserName(name);
+    if (!nameIsValid) throw new UserError('User name invalid', 409, 'user name');
 
     const isEmail = validateEmailAddress(email);
     if (!isEmail) throw new UserError('Email incorrect', 409, 'email');
