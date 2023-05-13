@@ -91,6 +91,9 @@ INSERT INTO `glossary` (
     `updateList`,
     `createList`,
     `isPublicFem`,
+    `accountTypeTitle`,
+    `accountTypeBasic`,
+    `accountTypeAdvanced`,
 
     `createdAt`,
     `updatedAt`
@@ -187,6 +190,9 @@ VALUES (
     'Update List',
     'Create List',
     'Is public',
+    'Account Type',
+    'Basic',
+    'Advanced',
 
     1617143194,
     1617143194
@@ -282,6 +288,9 @@ VALUES (
     'Editar lista',
     'Crear lista',
     'Es pública',
+    'Tipo de cuenta',
+    'Básica',
+    'Avanzada',
 
     1617143194,
     1617143194

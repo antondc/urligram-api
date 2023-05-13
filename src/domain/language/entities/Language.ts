@@ -1,18 +1,4 @@
-export type Glossary = {
-  Home: string;
-  Login: string;
-  LogOut: string;
-  Control: string;
-  NotFound: string;
-  Tags: string;
-  Trending: string;
-  Lists: string;
-  Bookmarks: string;
-  Links: string;
-  Users: string;
-  Followers: string;
-  Following: string;
-};
+import { Glossary } from './Glossary';
 
 export class Language {
   id: number;

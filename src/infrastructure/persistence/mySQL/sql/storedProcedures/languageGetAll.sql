@@ -103,7 +103,10 @@ BEGIN
       'connections', g.connections,
       'updateList', g.updateList,
       'createList', g.createList,
-      'isPublicFem', g.isPublicFem
+      'isPublicFem', g.isPublicFem,
+      'accountTypeTitle', g.accountTypeTitle,
+      'accountTypeBasic', g.accountTypeBasic,
+      'accountTypeAdvanced', g.accountTypeAdvanced
     ) glossary
   FROM language l
   INNER JOIN glossary g ON l.id = g.id;

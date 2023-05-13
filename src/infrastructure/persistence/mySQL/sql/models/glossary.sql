@@ -90,6 +90,9 @@ CREATE TABLE IF NOT EXISTS glossary (
   `updateList` TEXT NULL DEFAULT NULL,
   `createList` TEXT NULL DEFAULT NULL,
   `isPublicFem` TEXT NULL DEFAULT NULL,
+  `accountTypeTitle` TEXT NULL DEFAULT NULL,
+  `accountTypeBasic` TEXT NULL DEFAULT NULL,
+  `accountTypeAdvanced` TEXT NULL DEFAULT NULL,
 
   `createdAt`       int(11) DEFAULT NULL,
   `updatedAt`       int(11) DEFAULT NULL,
