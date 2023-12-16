@@ -144,6 +144,6 @@ BEGIN
 
 END
 
-DELIMITER ;
+-- DELIMITER ;
 
 -- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{ "text": "parusnik.ru" }');
