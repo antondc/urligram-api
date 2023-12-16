@@ -119,6 +119,8 @@ BEGIN
     (
       CASE WHEN @filterText IS NOT NULL AND UPPER(bookmark.title) LIKE CONCAT('%', UPPER(@filterText), '%') THEN TRUE END
       OR
+      CASE WHEN @filterText IS NOT NULL AND UPPER(url) LIKE CONCAT('%', UPPER(@filterText), '%') THEN TRUE END
+      OR
       CASE WHEN @filterText IS NULL THEN TRUE END
     )
     AND
@@ -142,6 +144,6 @@ BEGIN
 
 END
 
--- DELIMITER ;
+DELIMITER ;
 
--- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{ "tags": [ "electronics" ], "text": "eard" }');
+-- CALL bookmark_get_all_public("e4e2bb46-c210-4a47-9e84-f45c789fcec1", NULL, NULL, NULL, '{ "text": "parusnik.ru" }');
