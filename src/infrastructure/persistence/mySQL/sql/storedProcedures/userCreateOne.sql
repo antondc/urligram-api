@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS user_create;
 
-DELIMITER $$
+-- DELIMITER $$
 
 -- Stored procedure to insert post and tags
 CREATE PROCEDURE user_create(
@@ -47,6 +47,6 @@ BEGIN
   FROM user
   WHERE id = @id;
 
-END $$
+END 
 
-DELIMITER ;
+-- DELIMITER ;
