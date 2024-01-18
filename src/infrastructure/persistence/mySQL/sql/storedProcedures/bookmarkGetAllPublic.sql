@@ -68,7 +68,18 @@ BEGIN
       FROM bookmark_list
       JOIN `list` ON bookmark_list.list_id = list.id
       JOIN user_list ON user_list.list_id = list.id
-      WHERE bookmark.id = bookmark_list.bookmark_id AND list.isPublic IS TRUE
+      WHERE
+        bookmark.id = bookmark_list.bookmark_id
+      	AND (
+		      list.isPublic IS TRUE
+			    OR
+			    $SESSION_ID IN (
+        	  SELECT
+        	    user_id
+        	  FROM
+        	    user_list
+		      )
+	      )
     ) AS lists,
     (
       SELECT
@@ -124,10 +135,18 @@ BEGIN
       CASE WHEN @filterText IS NULL THEN TRUE END
     )
     AND
+    -- Only public bookmarks or bookmarks in list where user is a member or owner
     (
       bookmark.isPublic IS TRUE
       OR
       bookmark.`user_id` = $SESSION_ID
+      OR
+        $SESSION_ID IN (
+          SELECT
+            user_id
+          FROM
+            user_list
+        )
     )
   ORDER BY
     CASE WHEN $SORT = 'id'          THEN `bookmark`.id      	ELSE NULL END ASC,
