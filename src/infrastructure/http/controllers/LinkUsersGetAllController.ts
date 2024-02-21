@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { LinkUsersGetAllUseCase } from '@domain/link/useCases/LinkUsersGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { DEFAULT_PAGE_SIZE } from '@shared/constants/constants';

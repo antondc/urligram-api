@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { User } from '@domain/user/entities/User';
 import { IUserGetByIdsUseCase } from '@domain/user/useCases/UserGetByIdsUseCase';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';

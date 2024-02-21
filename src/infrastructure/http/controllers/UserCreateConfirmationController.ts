@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
-import { TokenJWT, URLWrapper } from '@antoniodcorrea/utils';
+import { URLWrapper } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { IUserCreateConfirmationRequest } from '@domain/user/useCases/interfaces/IUserCreateConfirmationRequest';
 import { IUserCreateConfirmationUseCase } from '@domain/user/useCases/UserCreateConfirmationUseCase';
 import { ENDPOINT_CLIENTS, JWT_SECRET, PATH_API_V1, URL_SERVER } from '@shared/constants/env';

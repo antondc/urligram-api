@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { ITagGetAllRequest } from '@domain/tag/useCases/interfaces/ITagGetAllRequest';
 import { ITagGetAllUseCase } from '@domain/tag/useCases/TagGetAllUseCase';
 import { User } from '@domain/user/entities/User';

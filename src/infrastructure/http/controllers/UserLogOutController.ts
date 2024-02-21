@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
-import { TokenJWT, URLWrapper } from '@antoniodcorrea/utils';
+import { URLWrapper } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { User } from '@domain/user/entities/User';
 import { IUserLogoutRequest } from '@domain/user/useCases/interfaces/UserLogOutRequest';
 import { IUserLogOutUseCase } from '@domain/user/useCases/UserLogOutUseCase';

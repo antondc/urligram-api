@@ -1,4 +1,5 @@
-import { PasswordHasher, TokenJWT, validateEmailAddress, validateUserName } from '@antoniodcorrea/utils';
+import { validateEmailAddress, validateUserName } from '@antoniodcorrea/utils';
+import { PasswordHasher, TokenJWT } from '@antoniodcorrea/utils-backend';
 import { DEFAULT_USER_IMAGE } from '@domain/file/entities/constants';
 import { IUserRepo } from '@domain/user/repositories/IUserRepo';
 import { IUserCreateOneRequest } from '@domain/user/useCases/interfaces/IUserCreateOneRequest';

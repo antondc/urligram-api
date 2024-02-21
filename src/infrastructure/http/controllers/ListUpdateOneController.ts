@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { TokenJWT } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { IListUpdateOneRequest } from '@domain/list/useCases/interfaces/IListUpdateOneRequest';
 import { IListUpdateOneUseCase } from '@domain/list/useCases/ListUpdateOneUseCase';
 import { User } from '@domain/user/entities/User';

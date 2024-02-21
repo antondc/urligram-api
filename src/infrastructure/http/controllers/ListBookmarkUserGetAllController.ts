@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { IListBookmarkUserGetAllRequest } from '@domain/list/useCases/interfaces/IListBookmarkUserGetAllRequest';
 import { IListBookmarkUserGetAllUseCase } from '@domain/list/useCases/ListBookmarkUserGetAllUseCase';
 import { User } from '@domain/user/entities/User';

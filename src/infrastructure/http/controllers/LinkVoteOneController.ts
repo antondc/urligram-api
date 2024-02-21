@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { ILinkVoteOneRequest } from '@domain/link/useCases/interfaces/ILinkVoteOneRequest';
 import { ILinkVoteOneUseCase } from '@domain/link/useCases/LinkVoteOneUseCase';
 import { User } from '@domain/user/entities/User';
