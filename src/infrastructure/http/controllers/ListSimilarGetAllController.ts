@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { IListSimilarGetAllUseCase } from '@domain/list/useCases/ListSimilarGetAllUseCase';
 import { User } from '@domain/user/entities/User';
 import { PATH_API_V1, URL_SERVER } from '@shared/constants/env';

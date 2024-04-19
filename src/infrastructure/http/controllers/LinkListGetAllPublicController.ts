@@ -1,6 +1,6 @@
-import { TokenJWT } from '@antoniodcorrea/utils';
 import { Request, Response } from 'express';
 
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { ILinkListGetAllPublicRequest } from '@domain/link/useCases/interfaces/ILinkListGetAllPublicRequest';
 import { ILinkListGetAllPublicUseCase } from '@domain/link/useCases/LinkListGetAllPublicUseCase';
 import { User } from '@domain/user/entities/User';

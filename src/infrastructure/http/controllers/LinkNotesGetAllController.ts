@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { TokenJWT } from '@antoniodcorrea/utils';
+import { TokenJWT } from '@antoniodcorrea/utils-backend';
 import { ILinkNotesGetAllPublicRequest } from '@domain/link/useCases/interfaces/ILinkNotesGetAllPublicRequest';
 import { ILinkNotesGetAllPublicUseCase } from '@domain/link/useCases/LinkNotesGetAllPublicUseCase';
 import { User } from '@domain/user/entities/User';
