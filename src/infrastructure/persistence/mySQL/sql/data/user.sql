@@ -20,7 +20,7 @@ VALUES (
     'advanced',
     'hello@antoniodiaz.me',
     'https://dev.urligram.com:3000/media/files/users/image/original/35001bcc-dfdb-4943-8cf5-874e6ef72960.jpg',
-    'AAAAEAANUVftWlCR+CtW2FMuL/xGX1B3mQM5y0Uw',
+    'AAAAEAANUVeKFk6NN6vInJA1YmFjtA39xK3LQVWb',
     'active',
     'The quick brown fox jumps over the lazy dog',
     'Mars',

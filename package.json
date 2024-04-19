@@ -22,7 +22,7 @@
   "author": "Antonio Díaz",
   "license": "ISC",
   "dependencies": {
-    "@antoniodcorrea/components": "^2.0.3",
+    "@antoniodcorrea/components": "^2.0.8",
     "@antoniodcorrea/utils": "^1.0.279",
     "@antoniodcorrea/utils-backend": "^1.0.278",
     "@types/express": "^4.17.6",
