@@ -141,12 +141,38 @@ BEGIN
       OR
       bookmark.`user_id` = $SESSION_ID
       OR
-        $SESSION_ID IN (
-          SELECT
-            user_id
-          FROM
-            user_list
-        )
+        $SESSION_ID IN  /*
+          Returns only public lists or those where user is in
+          Unsorted
+          */
+          (
+            SELECT
+              CAST(
+                CONCAT('[',
+                  GROUP_CONCAT(
+                    DISTINCT JSON_OBJECT(
+                      'id', list.id,
+                      'name', list.name
+                    ) SEPARATOR ','
+                ), ']'
+              ) AS JSON
+            ) AS lists
+            FROM bookmark_list
+            JOIN `list` ON bookmark_list.list_id = list.id
+            JOIN user_list ON user_list.list_id = list.id
+            WHERE
+              bookmark.id = bookmark_list.bookmark_id
+              AND (
+                list.isPublic IS TRUE
+                OR
+                $SESSION_ID IN (
+                  SELECT
+                    user_id
+                  FROM
+                    user_list
+                )
+              )
+          )
     )
   ORDER BY
     CASE WHEN $SORT = 'id'          THEN `bookmark`.id      	ELSE NULL END ASC,
