@@ -1,7 +1,7 @@
 {
-  "name": "clean-architecture-node-api-starter",
+  "name": "urligram-api",
   "version": "1.0.0",
-  "description": "Clean Architecture API starter kit",
+  "description": "Monolith API REST for urligram.com",
   "keywords": [
     "node",
     "clean-architecture",
@@ -10,7 +10,7 @@
   "scripts": {
     "http:dev": "concurrently --raw \"npm run build:dev\" \"npm run copy:sql\" \"npm run run:http:dev\" ",
     "cli:prod": "concurrently --raw \"npm run build\"  \"npm run copy:sql\" \"npm run run:cli:prod\" ",
-    "copy:sql": "rsync -a --prune-empty-dirs --exclude 'dist/*' --include '*/' --include '*.sql' --exclude '*' ./ ./dist/",
+    "copy:sql": "rsync -a --prune-empty-dirs --exclude 'dist/*' --include '*/' --include '*.sql' --include 'config.test.json' --exclude '*' ./ ./dist/",
     "build": "tsc",
     "build:dev": "tsc --watch",
     "run:http:dev": "env NODE_ENV=development nodemon -q --inspect dist/src/infrastructure/http/http.js",

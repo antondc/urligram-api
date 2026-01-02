@@ -1,15 +1,7 @@
 {
   "development": {
-    "database": {
-      "host": "127.0.0.1",
-      "database": "linking_stage_local",
-      "user": "w_9aIfE2XpoYz",
-      "port": 3306
-    },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.dev.urligram.com",
-    "PORT_SERVER_HTTP": 0,
-    "PORT_SERVER_HTTPS": 3000,
     "ENDPOINT_CLIENT": "https://www.dev.urligram.com",
     "ENDPOINT_CLIENTS": ["https://dev.urligram.com", "https://www.dev.urligram.com"],
     "LOGGING": true,
@@ -21,39 +13,9 @@
     "RESTORE_PROCEDURES": true,
     "DEFAULT_LOCATION": "Madrid"
   },
-  "staging": {
-    "database": {
-      "host": "127.0.0.1",
-      "database": "urligram_stage",
-      "user": "w_9aIfE2XpoYz"
-    },
-    "PROTOCOL_SERVER": "https://",
-    "HOST_SERVER": "www.api-staging.urligram.com",
-    "PORT_SERVER_HTTP": 3001,
-    "PORT_SERVER_HTTPS": 0,
-    "ENDPOINT_CLIENT": "https://www.staging.urligram.com",
-    "ENDPOINT_CLIENTS": ["https://staging.urligram.com", "https://www.staging.urligram.com"],
-    "LOGGING": true,
-    "EMAIL_HOST": "urligram-com.correoseguro.dinaserver.com",
-    "EMAIL_PORT": 465,
-    "EMAIL_USER": "hello@urligram.com",
-    "RESTORE_MODELS": false,
-    "RESTORE_DATA": false,
-    "RESTORE_PROCEDURES": true,
-    "DEFAULT_LOCATION": "Frankfurt"
-  },
   "production": {
-    "database": {
-      "host": "127.0.0.1",
-      "database": "urligram_production",
-      "user": "r_Klo9WfxWzg8",
-
-      "port": 3306
-    },
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.api.urligram.com",
-    "PORT_SERVER_HTTP": 3002,
-    "PORT_SERVER_HTTPS": 0,
     "ENDPOINT_CLIENT": "https://www.urligram.com",
     "ENDPOINT_CLIENTS": ["https://urligram.com", "https://www.urligram.com"],
     "LOGGING": false,

@@ -2,19 +2,45 @@ image: node:18
 
 before_script:
   - apt-get update -qq
-  - apt-get install -qq git
-  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
-  - eval $(ssh-agent -s)
-  - ssh-add <(echo "$SERVER_KEY" | base64 -d)
+  - apt-get install -qq git openssh-client
+
+  # Create SSH directory
   - mkdir -p ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - chmod 700 ~/.ssh
+
+  # Start ssh-agent ONCE
+  - eval $(ssh-agent -s)
+
+  # Add SERVER_KEY (base64)
+  - echo "$SERVER_KEY" | base64 -d > ~/.ssh/id_rsa_server
+  - chmod 600 ~/.ssh/id_rsa_server
+  - ssh-add ~/.ssh/id_rsa_server
+
+  # Add GitHub deploy key (base64)
+  - echo "$GITHUB_KEY" | base64 -d > ~/.ssh/id_rsa_github
+  - chmod 600 ~/.ssh/id_rsa_github
+  - ssh-add ~/.ssh/id_rsa_github
+
+  # Disable strict host key checking
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 
 stages:
+  - github_clone
   - install
-  # - test
   - build
-  - deploy_staging
   - deploy_production
+
+github_clone:
+  stage: github_clone
+  variables:
+    GIT_DEPTH: "0"
+  script:
+    - git checkout -B "$CI_COMMIT_REF_NAME"
+    - git remote remove github || true
+    - git remote add github "git@github.com:${GITHUB_ACCOUNT}/${GITHUB_PROJECT}.git"
+    - git remote -v
+    - git push github --all
+    - git push github --tags
 
 cache:
   paths:
@@ -28,53 +54,10 @@ install:
     paths:
       - node_modules/
 
-# test:
-#   stage: test
-#   script:
-#     - npm test
-#   artifacts:
-#     paths:
-#       - node_modules/
-
 build:
   stage: build
   script:
     - npm run build
-
-deploy_staging:
-  stage: deploy_staging
-  only:
-    - staging
-  script:
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_STAGING}
-        && rm -rf node_modules dist/* tmp
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_STAGING}
-        && git pull origin staging
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        source ~/.bash_profile
-        && export NPM_TOKEN=${NPM_TOKEN}
-        && cd ${SERVER_PATH_STAGING}
-        && nvm use --delete-prefix
-        && git checkout staging
-        && npm ci --verbose
-        && npm run build
-        && npm run copy:sql
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_STAGING}
-        && pm2 delete api-staging.urligram.com
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_STAGING}
-        && export EMAIL_PASSWORD=${EMAIL_PASSWORD}
-        && export DATABASE_PASSWORD=${DATABASE_PASSWORD_STAGING}
-        && export JWT_SECRET=${JWT_SECRET}
-        && NODE_ENV=staging pm2 start ./dist/src/infrastructure/http/http.js --name api-staging.urligram.com --update-env
-      "
 
 deploy_production:
   stage: deploy_production
@@ -82,31 +65,23 @@ deploy_production:
     - master
   script:
     - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_PRODUCTION}
-        && rm -rf node_modules dist/* tmp
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_PRODUCTION}
-        && git pull origin master
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        source ~/.bash_profile
-        && export NPM_TOKEN=${NPM_TOKEN}
-        && cd ${SERVER_PATH_PRODUCTION}
-        && nvm use --delete-prefix
+        cd ${SERVER_PROJECT_PATH}/${SERVER_SOURCE_CODE_FOLDER}
         && git checkout master
-        && npm ci --verbose
-        && npm run build
-        && npm run copy:sql
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_PRODUCTION}
-        && pm2 delete api.urligram.com
-      "
-    - ssh ${SERVER_USER}@${SERVER_ADDRESS} "
-        cd ${SERVER_PATH_PRODUCTION}
-        && export EMAIL_PASSWORD=${EMAIL_PASSWORD}
-        && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION}
+        && git pull origin master
+        && mkdir -p ${SERVER_PROJECT_PATH}/mysql ${SERVER_PROJECT_PATH}/media
         && export JWT_SECRET=${JWT_SECRET}
-        && NODE_ENV=production pm2 start ./dist/src/infrastructure/http/http.js --name api.urligram.com --update-env
+        && export SERVER_PROJECT_PATH=${SERVER_PROJECT_PATH}
+        && export SERVER_SOURCE_CODE_FOLDER=${SERVER_SOURCE_CODE_FOLDER}
+        && export EMAIL_PASSWORD=${EMAIL_PASSWORD}
+        && export DATABASE_HOST=${DATABASE_HOST}
+        && export DATABASE_PORT=${DATABASE_PORT}
+        && export DATABASE_NAME=${DATABASE_NAME_PRODUCTION}
+        && export DATABASE_USER=${DATABASE_USER_PRODUCTION}
+        && export DATABASE_PASSWORD=${DATABASE_PASSWORD_PRODUCTION}
+        && export MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        && export NPM_TOKEN=${NPM_TOKEN}
+        && export PORT_SERVER_HTTP=${PORT_SERVER_HTTP}
+        && export PORT_SERVER_HTTPS=${PORT_SERVER_HTTPS}
+        && export NODE_ENV=production
+        && docker compose -p api_urligram_com -f docker-compose.base.yml -f docker-compose.prod.yml up -d --build
       "

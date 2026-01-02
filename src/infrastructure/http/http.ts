@@ -74,7 +74,6 @@ try {
   httpServer.listen(PORT_SERVER_HTTP, () => {
     const address = httpServer.address() as AddressInfo;
     console.log('=> App listening to HTTP on port: ' + address.port);
-    console.log('--------------------------------------------------------');
   });
 }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

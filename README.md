@@ -1,19 +1,18 @@
-# Woprs API
-
-## Debug
-
-Add local api of the machine running the app to config.test.json
-
-    "ENDPOINT_CLIENTS": ["https://192.168.88.193", "http://dev.urligram.com", "https://dev.urligram.com"],
+# Urligram API
 
 ## Environment variables
 
-Add .env file with environment variables:
+The application can be run via Makefile commands.
+These commands take the proper docker compose configuration files and launch the app.
+- On development, the environment variables come from the .env file. See ./.env-example for reference.
+- On production, the environment variables come from the context of the pipeline runner, which are passed inlined to the Make command.
 
-    JWT_SECRET=xxxx
-    DATABASE_PASSWORD=xxxx
-    EMAIL_PASSWORD=xxxx
-    NODE_TLS_REJECT_UNAUTHORIZED=0
+## Launch
+
+    npm install
+    make start-dev # For development
+    make start-prod # For production
+
 
 ## Conventions
 
@@ -32,4 +31,4 @@ E. g.:
 
 ## Rebuild
 
-1
+[1][2][3]
