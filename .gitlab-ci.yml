@@ -83,5 +83,5 @@ deploy_production:
         && export PORT_SERVER_HTTP=${PORT_SERVER_HTTP}
         && export PORT_SERVER_HTTPS=${PORT_SERVER_HTTPS}
         && export NODE_ENV=production
-        && docker compose -p api_urligram_com -f docker-compose.base.yml -f docker-compose.prod.yml up -d --build
+        && docker compose -p ${PROJECT_NAME} -f docker-compose.base.yml -f docker-compose.prod.yml up -d --build
       "
