@@ -10,6 +10,7 @@ services:
   api:
     environment:
       NODE_ENV: development
+      APP_ENV: localDevelopment
     env_file:
       - .env
     volumes:

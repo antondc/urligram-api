@@ -1,5 +1,5 @@
 {
-  "development": {
+  "localDevelopment": {
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.dev.urligram.com",
     "ENDPOINT_CLIENT": "https://www.dev.urligram.com",
@@ -13,7 +13,7 @@
     "RESTORE_PROCEDURES": true,
     "DEFAULT_LOCATION": "Madrid"
   },
-  "production": {
+  "deployProduction": {
     "PROTOCOL_SERVER": "https://",
     "HOST_SERVER": "www.api.urligram.com",
     "ENDPOINT_CLIENT": "https://www.urligram.com",

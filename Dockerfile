@@ -3,6 +3,10 @@ FROM node:18-bookworm AS build
 
 WORKDIR /app
 
+ARG APP_ENV
+ENV APP_ENV=${APP_ENV}
+ARG NPM_TOKEN
+
 # Native deps for modules like `mmmagic` (libmagic) + build tooling
 RUN apt-get update -o Acquire::Retries=5 -o Acquire::http::Timeout="30" \
   && apt-get install -y --no-install-recommends \
@@ -15,7 +19,7 @@ COPY .npmrc ./.npmrc
 
 # If you use private packages, set NPM_TOKEN at build time:
 COPY .npmrc ./.npmrc
-ARG NPM_TOKEN
+
 RUN npm ci
 
 COPY . .
